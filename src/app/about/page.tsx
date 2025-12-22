@@ -37,7 +37,7 @@ export default function AboutPage() {
       <section className="bg-(--color-primary) pt-[220px] pb-32 text-white overflow-hidden relative">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[url('/assets/images/banner_section_background.jpg')] bg-cover opacity-10 pointer-events-none"></div>
         <div className="container mx-auto px-4 relative z-10 text-center">
-            <h1 className="text-6xl lg:text-8xl font-bold mb-8 leading-tight">
+            <h1 className="text-6xl lg:text-8xl font-bold mb-8 leading-tight text-(--color-gallery)">
                Affirming Your <br />
                <span className="text-(--color-roti)">Identity & Faith</span>
             </h1>
