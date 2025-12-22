@@ -1,13 +1,13 @@
-'use client';
-
 import Link from 'next/link';
 import Image from 'next/image';
-import { useUser } from '@clerk/nextjs';
+import { auth } from '@clerk/nextjs/server';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
-export default function TeacherCollectivePage() {
-  const { isSignedIn } = useUser();
+export default async function TeacherCollectivePage() {
+  const { userId } = await auth();
+  const isSignedIn = !!userId;
+
   const benefits = [
     {
       title: 'Community Connection',
