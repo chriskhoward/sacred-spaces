@@ -52,8 +52,8 @@ export default function AboutPage() {
          <div className="container mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
             <div className="relative h-[650px] rounded-[5rem_0_5rem_0] overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.2)]">
                <Image 
-                  src="/assets/images/about_img_1.jpg" 
-                  alt="Flow in Faith Collective" 
+                  src="/assets/images/8.jpg" 
+                  alt="Christian Yoga Teachers of Color in quiet time, studying and reflecting together with Bibles and notebooks" 
                   fill
                   className="object-cover"
                />
@@ -75,6 +75,19 @@ export default function AboutPage() {
                   </p>
                </div>
             </div>
+         </div>
+      </section>
+
+      {/* Community Showcase Section */}
+      <section className="py-0">
+         <div className="relative w-full h-[600px] lg:h-[800px] overflow-hidden">
+            <Image 
+               src="/assets/images/about-group.jpg" 
+               alt="Christian Yoga Teachers of Color practicing together in community" 
+               fill
+               className="object-cover"
+               priority
+            />
          </div>
       </section>
 
