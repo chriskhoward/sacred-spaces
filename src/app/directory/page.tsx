@@ -1,0 +1,53 @@
+import { clerkClient } from '@clerk/nextjs/server';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import DirectoryClient from './DirectoryClient';
+import { teachers as staticTeachers, Teacher } from '@/data/teachers';
+
+export const dynamic = 'force-dynamic';
+
+export default async function DirectoryPage() {
+  const client = await clerkClient();
+  
+  // Fetch users with membershipType 'teacher'
+  const response = await client.users.getUserList({
+    limit: 100,
+  });
+  
+  const realTeachers: Teacher[] = response.data
+    .filter((user: any) => user.publicMetadata?.membershipType === 'teacher')
+    .map((user: any) => {
+        const profile = user.publicMetadata.teacherProfile || {};
+        return {
+            id: user.id,
+            name: profile.name || `${user.firstName} ${user.lastName}`.trim(),
+            location: profile.location || 'Online',
+            specialties: Array.isArray(profile.specialties) ? profile.specialties : [],
+            certifications: Array.isArray(profile.certifications) ? profile.certifications : [],
+            bio: profile.bio || 'Member of the Sacred Spaces Teacher Collective.',
+            image: user.imageUrl,
+            email: user.emailAddresses[0]?.emailAddress,
+            website: profile.website,
+        };
+    });
+
+  // Combine static and real teachers
+  const allTeachers = [...staticTeachers, ...realTeachers];
+
+  return (
+    <main className="bg-(--color-gallery) min-h-screen">
+      <Navbar />
+      
+      <header className="bg-(--color-primary) pt-[200px] pb-24 text-center">
+        <div className="container mx-auto px-4">
+          <h1 className="text-5xl lg:text-7xl font-bold mb-6 text-white leading-tight">Teacher Directory</h1>
+          <p className="text-xl text-(--color-sidecar) opacity-90">Find a Christ-centered yoga teacher near you or online.</p>
+        </div>
+      </header>
+
+      <DirectoryClient teachers={allTeachers} />
+
+      <Footer />
+    </main>
+  );
+}

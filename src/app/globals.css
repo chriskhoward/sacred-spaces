@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+@theme {
+  /* Flow in Faith Brand Colors */
+  --color-martinique: #413356;
+  --color-roti: #C7A254;
+  --color-gallery: #ECECEC;
+  --color-sidecar: #F6EDC8;
+  --color-bronzetone: #553F0F;
+  
+  /* Semantic Color Mappings */
+  --color-primary: #413356; /* Martinique */
+  --color-secondary: #C7A254; /* Roti */
+  --color-accent: #553F0F; /* Bronzetone */
+  --color-light: #ECECEC; /* Gallery */
+  --color-soft: #F6EDC8; /* Sidecar */
+  --color-text: #413356; /* Martinique for text */
+  --color-white: #ffffff;
+
+  --font-body: var(--font-body);
+  --font-heading: var(--font-heading);
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+
+  html,
+  body {
+    max-width: 100vw;
+    overflow-x: hidden;
+    font-family: var(--font-body);
+    color: var(--color-text);
+    scroll-behavior: smooth;
+    background-color: var(--color-white);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    color: var(--color-primary);
+    font-weight: 700;
+  }
+
+  p {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+  }
+}
+
+@layer components {
+  /* Base Button Styles */
+  .btn {
+    @apply inline-flex items-center justify-center px-8 py-4 rounded-[2rem_0_2rem_0] font-bold transition-all duration-300;
+  }
+
+  .btn-primary {
+    @apply bg-(--color-sidecar) text-(--color-bronzetone) hover:bg-(--color-roti) hover:text-white hover:-translate-y-1 active:translate-y-0 transition-all;
+  }
+}
+
+.container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
