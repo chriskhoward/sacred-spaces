@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { DM_Sans, Playfair_Display } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
+import { draftMode } from "next/headers";
 import "./globals.css";
+import VisualEditing from "@/components/VisualEditing";
 
 const dmSans = DM_Sans({
   variable: "--font-body",
@@ -21,7 +23,7 @@ export const metadata: Metadata = {
 // Force dynamic rendering to avoid Clerk publishableKey error during static generation
 export const dynamic = 'force-dynamic';
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -34,6 +36,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={`${dmSans.variable} ${playfair.variable} antialiased`}>
           {children}
+          {(await draftMode()).isEnabled && <VisualEditing />}
         </body>
       </html>
     </ClerkProvider>
