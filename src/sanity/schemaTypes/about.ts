@@ -1,0 +1,34 @@
+import { defineField, defineType } from 'sanity'
+
+export const aboutType = defineType({
+  name: 'about',
+  title: 'About Page',
+  type: 'document',
+  fields: [
+    defineField({
+      name: 'title',
+      title: 'Page Title',
+      type: 'string',
+      initialValue: 'About Page',
+      readOnly: true,
+    }),
+    defineField({
+      name: 'content',
+      title: 'Page Content',
+      type: 'array',
+      of: [
+        { type: 'heroBlock' },
+        { type: 'brandBlock' },
+        { type: 'pillarsBlock' },
+        { type: 'benefitsBlock' },
+        { type: 'mediaTextBlock' },
+        { type: 'imageBlock' },
+        { type: 'videoBlock' },
+        { type: 'testimonialBlock' },
+        { type: 'teamBlock' },
+        { type: 'richTextBlock' },
+        { type: 'ctaBlock' },
+      ],
+    }),
+  ],
+})

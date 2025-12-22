@@ -1,0 +1,122 @@
+{
+  "home": {
+    "_type": "home",
+    "_id": "home",
+    "content": [
+      {
+        "_type": "heroBlock",
+        "_key": "h1",
+        "badge": "Teacher's Collective",
+        "title": "Where Your Calling Meets Community",
+        "subtitle": "A community-powered home created exclusively for Christian Yoga Teachers of Color—a space where your faith, culture, and calling are honored without compromise.",
+        "primaryButtonText": "Join the Collective",
+        "secondaryButtonText": "Learn More",
+        "localImage": "public/assets/images/uploads/11.jpg"
+      },
+      {
+        "_type": "brandBlock",
+        "_key": "b1",
+        "quote": "\"Christian Yoga Teachers of Color have carried their callings in silos for far too long. We’re here to change that.\"",
+        "body": "We created the Flow in Faith Teachers Collective so teachers could have a place to grow, collaborate, and be affirmed in the fullness of their identity, their faith, and their culture—without shrinking or separating pieces of themselves to belong."
+      },
+      {
+        "_type": "pillarsBlock",
+        "_key": "p1",
+        "heading": "How You Evolve",
+        "subheading": "Pillars of Transformation",
+        "description": "We provide a culturally-grounded home where your faith and practice can flourish together.",
+        "items": [
+          { "title": "Belonging", "description": "Feel seen, supported, and connected inside a community that understands your faith, culture, and calling.", "icon": "🤝" },
+          { "title": "Visibility", "description": "Access opportunities that highlight your gifts and amplify your voice in meaningful and aligned spaces.", "icon": "✨" },
+          { "title": "Connection", "description": "Build relationships that spark creativity, deepen your teaching, and reaffirm you don’t have to grow alone.", "icon": "🔗" },
+          { "title": "Lead Boldly", "description": "Move with confidence into the spaces God is guiding you—held by a community that affirms your presence and purpose.", "icon": "🛡️" }
+        ]
+      },
+      {
+        "_type": "benefitsBlock",
+        "_key": "ben1",
+        "badge": "Core Benefits",
+        "title": "What You Receive Inside the Collective",
+        "description": "Beyond community, we provide the tools and opportunities you need to expand your reach and deepen your impact.",
+        "buttonText": "See All Member Perks",
+        "items": [
+          { "title": "Daily Community Space", "description": "A private online space to connect, ask questions, share wins, and collaborate." },
+          { "title": "Monthly Check-ins", "description": "Virtual gatherings for networking and sharing challenges/opportunities." },
+          { "title": "Directory Placement", "description": "Public listing so practitioners can find and hire you worldwide." },
+          { "title": "Masterclasses", "description": "Quarterly workshops on business, theology, and trauma-informed practice." },
+          { "title": "Promotion", "description": "Highlighting your offerings on our social channels and newsletter." },
+          { "title": "Teaching Roles", "description": "Paid opportunities to host classes for our practitioner membership." }
+        ]
+      },
+      {
+        "_type": "ctaBlock",
+        "_key": "c1",
+        "title": "Ready to Begin Your Journey?",
+        "description": "Join a community that honors your practice, your faith, and your culture.",
+        "buttonText": "Join the Collective",
+        "buttonLink": "/sign-up"
+      }
+    ]
+  },
+  "about": {
+    "_type": "about",
+    "_id": "about",
+    "content": [
+      {
+        "_type": "heroBlock",
+        "_key": "ah1",
+        "title": "Affirming Your Identity & Faith",
+        "subtitle": "A space built by Christian Yoga Teachers of Color, for Christian Yoga Teachers of Color."
+      },
+      {
+        "_type": "mediaTextBlock",
+        "_key": "aj1",
+        "badge": "Our Story",
+        "title": "Our Journey...",
+        "imagePosition": "left",
+        "localImage": "public/assets/images/8.jpg",
+        "body": [
+          {
+            "_type": "block",
+            "children": [{ "_type": "span", "text": "In July 2025, Queen hosted the inaugural Flow in Faith Virtual Summit and put out a call for Christian Yoga Teachers of Color to teach and speak. More than 50 teachers registered, showing just how many of us were out here doing this work." }]
+          },
+          {
+            "_type": "block",
+            "children": [{ "_type": "span", "text": "Throughout the summit, it became clear that we needed a community where our voices, faith, and practice could belong together." }]
+          },
+          {
+            "_type": "block",
+            "children": [{ "_type": "span", "text": "De and Queen began imagining what that could look like, a space made for us and by us. Soon after, Eboni and Morenike joined the vision, bringing their gifts and leadership to help shape what is now the Flow in Faith Teachers Collective." }]
+          }
+        ]
+      },
+      {
+        "_type": "teamBlock",
+        "_key": "at1",
+        "heading": "Leadership Team",
+        "description": "When we gather, we’re reminded we were never meant to walk this calling alone.",
+        "members": [
+          { "name": "‘Queen’ Robertson", "role": "Founder / Vision Holder", "localImage": "public/assets/images/team/queen_robertson.png" },
+          { "name": "De Bolton", "role": "Founder / Vision Holder", "localImage": "public/assets/images/team/de_bolton.png" },
+          { "name": "Eboni Howell", "role": "Visibility & Media", "localImage": "public/assets/images/team/eboni_howell.png" },
+          { "name": "Morenike Olorunnisomo", "role": "Community Steward", "localImage": "public/assets/images/team/morenike_olorunnisomo.png" }
+        ]
+      },
+      {
+        "_type": "imageBlock",
+        "_key": "as1",
+        "caption": "Our Collective in Practice",
+        "fullWidth": true,
+        "localImage": "public/assets/images/about-group.jpg"
+      },
+      {
+        "_type": "ctaBlock",
+        "_key": "ac1",
+        "title": "Join our Sacred Space",
+        "description": "Be part of a legacy that honors God and our heritage.",
+        "buttonText": "Join Now",
+        "buttonLink": "/sign-up"
+      }
+    ]
+  }
+}
