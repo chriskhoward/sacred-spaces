@@ -46,7 +46,7 @@ export default function Home() {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center pt-24 bg-(--color-primary) overflow-hidden">
+      <section className="relative min-h-screen flex items-center pt-[150px] pb-[75px] bg-(--color-primary) overflow-hidden">
         {/* ... */}
         
         <div className="container mx-auto px-4 relative z-10">
