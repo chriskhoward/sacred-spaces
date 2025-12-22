@@ -4,6 +4,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { draftMode } from "next/headers";
 import "./globals.css";
 import VisualEditing from "@/components/VisualEditing";
+import { Analytics } from "@vercel/analytics/next";
 
 const dmSans = DM_Sans({
   variable: "--font-body",
@@ -37,6 +38,7 @@ export default async function RootLayout({
         <body className={`${dmSans.variable} ${playfair.variable} antialiased`}>
           {children}
           {(await draftMode()).isEnabled && <VisualEditing />}
+          <Analytics />
         </body>
       </html>
     </ClerkProvider>

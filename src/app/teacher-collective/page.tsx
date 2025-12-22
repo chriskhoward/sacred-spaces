@@ -2,10 +2,12 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { useUser } from '@clerk/nextjs';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
 export default function TeacherCollectivePage() {
+  const { isSignedIn } = useUser();
   const benefits = [
     {
       title: 'Community Connection',
@@ -43,8 +45,8 @@ export default function TeacherCollectivePage() {
               A dedicated space for Christian yoga teachers of color to connect, learn, and grow together.
               Grounded, expressive, and assured.
             </p>
-            <Link href="/sign-up" className="btn btn-primary">
-              Join the Collective
+            <Link href={isSignedIn ? "/dashboard" : "/sign-up"} className="btn btn-primary">
+              {isSignedIn ? "Go to Dashboard" : "Join the Collective"}
             </Link>
           </div>
         </div>
@@ -121,7 +123,9 @@ export default function TeacherCollectivePage() {
                   <span>Member Discounts</span>
                 </li>
               </ul>
-              <Link href="/sign-up" className="btn-outline w-full py-4 rounded-[15px_0_15px_0] font-bold text-center border-2 border-(--color-primary) text-(--color-primary) hover:bg-(--color-primary) hover:text-white transition-all">Start Monthly</Link>
+              <Link href={isSignedIn ? "/dashboard" : "/sign-up"} className="btn-outline w-full py-4 rounded-[15px_0_15px_0] font-bold text-center border-2 border-(--color-primary) text-(--color-primary) hover:bg-(--color-primary) hover:text-white transition-all">
+                {isSignedIn ? "Go to Dashboard" : "Start Monthly"}
+              </Link>
             </div>
             <div className="bg-(--color-martinique) p-12 rounded-[30px_0_30px_0] text-center relative flex flex-col items-center text-white border-2 border-(--color-roti) scale-105 shadow-xl">
               <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-(--color-roti) text-white px-6 py-2 rounded-full text-sm font-bold uppercase tracking-wider">Best Value</div>
@@ -145,7 +149,9 @@ export default function TeacherCollectivePage() {
                   <span>Priority Directory Placement</span>
                 </li>
               </ul>
-              <Link href="/sign-up" className="btn btn-primary">Join Annually</Link>
+              <Link href={isSignedIn ? "/dashboard" : "/sign-up"} className="btn btn-primary">
+                {isSignedIn ? "Go to Dashboard" : "Join Annually"}
+              </Link>
             </div>
           </div>
         </div>
