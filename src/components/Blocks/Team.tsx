@@ -37,7 +37,7 @@ export default function TeamBlock({
                 <div key={i} className="flex items-center gap-6 p-4 rounded-2xl hover:bg-(--color-gallery) transition-colors">
                   <div className="relative w-20 h-20 rounded-full overflow-hidden border-2 border-(--color-roti) bg-white shrink-0 shadow-lg">
                       <Image 
-                        src={(typeof m.image === 'object' && m.image?.asset) ? urlForImage(m.image).url() : (typeof m.image === 'string' ? m.image : '/assets/images/team/placeholder.png')} 
+                        src={(typeof m.image === 'object' && m.image?.asset) ? urlForImage(m.image).url() : (typeof m.image === 'string' ? m.image : '/assets/images/team/queen_robertson.png')} 
                         alt={m.name} 
                         fill 
                         className="object-cover" 
