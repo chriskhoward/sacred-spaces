@@ -15,170 +15,99 @@ Flow in Faith Teachers Collective is a community-powered platform created exclus
 KEY FEATURES & PAGES
 
 HOME PAGE (/)
-• Hero section introducing the collective with clear call-to-action buttons
-• Four core pillars: Belonging, Visibility, Connection, and Lead Boldly
-• Benefits overview highlighting what members receive
-• Responsive design that works beautifully on all devices
+• Full Dynamic Hero: Customizable images, badges, and primary/secondary actions.
+• Four Core Pillars: Deeply integrated Brand Message and Pillars of Transformation.
+• Benefits Grid: Mobile-optimized display of member perks and calls to action.
+• Live Content: Now powered 100% by your Sanity CMS.
 
 ABOUT PAGE (/about)
-• Mission and vision of the collective
-• Leadership team profiles
-• Core beliefs and values
-• Community showcase imagery
+• Visual Storytelling: "Our Journey" section with side-by-side media and text.
+• Leadership Team: Elegant, sticky layout for founder profiles.
+• Immersive Gallery: Full-width showcase imagery to highlight community moments.
+
+PAGE BUILDER SYSTEM
+• Modular Content: You can now "build" pages by stacking various blocks including:
+  - Media + Text (highly flexible storytelling)
+  - Showcase Images (full-width impact)
+  - Video Blocks (YouTube/Vimeo support)
+  - Testimonial Grids (social proof)
+  - Rich Text (articles and long-form content)
+• Visual Editing: Edit your site in real-time using the Sanity Presentation tool—click a text block on the site and edit it instantly in your Studio.
+
+DYNAMIC PAGES
+• Custom Landing Pages: Create any new page (e.g., /retreats or /events) simply by adding a new "Page" document in your CMS. These will automatically appear in your navigation menu.
+
+COMPONENT GUIDE (/component-guide)
+• Internal Design Library: A private, non-indexed page where you can see every available building block in its demo state for design reference.
 
 TEACHER COLLECTIVE (/teacher-collective)
-• Information about the teacher membership program
-• Resources and community calls sections
-• Details about benefits and opportunities
+• Information about the teacher membership program.
+• Resources and community calls sections.
 
 DIRECTORY (/directory)
-• Public directory of Christian Yoga Teachers of Color
-• Searchable listings for practitioners to find teachers
-• Individual teacher profile pages
+• Searchable public directory of Christian Yoga Teachers of Color.
+• Individual teacher profile pages managed via the app or CMS.
 
 DASHBOARD (/dashboard)
-• Personalized dashboard for logged-in members
-• Different views for Teachers vs. Practitioners
-• Quick access to key features based on membership type
-
-VIDEO LIBRARY (/video-library)
-• On-demand video content for members
-• Curated classes and teachings
-
-COMMUNITY (/community)
-• Private community forum (coming soon)
-• Space for daily encouragement, prayer threads, and collaboration
+• Personalized views for Teachers vs. Practitioners based on their membership type.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 USER AUTHENTICATION & MEMBERSHIP
 
-The website uses Clerk for secure user authentication. There are two types of members:
+The website uses Clerk for secure user authentication. 
 
-1. TEACHERS
-   • Access to teaching resources
-   • Directory profile management
-   • Community calls participation
-   • Teaching opportunities
+1. TEACHERS: Access to resources, directory management, and community calls.
+2. PRACTITIONERS: Access to video libraries and live class schedules.
 
-2. PRACTITIONERS
-   • Video library access
-   • Live class schedules
-   • Directory search to find teachers
-   • Community engagement
-
-When users first sign up, they go through an onboarding process to select their membership type (Teacher or Practitioner). This determines what features and content they can access.
+The onboarding process ensures new users are correctly categorized and gain the right access immediately.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-NAVIGATION
+NAVIGATION & RESPONSIVENESS
 
-DESKTOP NAVIGATION
-• Fixed navigation bar at the top with logo and menu items
-• Main links: Home, Teacher Collective, Directory, About
-• Dynamic authentication buttons:
-  - "Sign In" button for logged-out users
-  - "Dashboard" link and user profile button for logged-in users
-
-MOBILE NAVIGATION
-• Hamburger menu icon on mobile devices
-• Slide-in menu with all navigation options
-• Same authentication features as desktop
-• Fully responsive and touch-friendly
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-RESPONSIVE DESIGN
-
-The website is fully responsive and optimized for:
-• Desktop computers
-• Tablets
-• Mobile phones
-
-All pages adapt seamlessly to different screen sizes, ensuring a great user experience on any device.
+• Dynamic Navbar: Menu links update automatically as you add new pages in Sanity.
+• Desktop & Mobile: Fully optimized for all screen sizes with a clean, touch-friendly mobile menu.
+• SEO: Automated best practices (Meta tags, Open Graph images, and semantic HTML) are built into every section.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 TECHNICAL DETAILS
 
-• Built with Next.js (React framework)
-• Secure authentication via Clerk
-• Modern, accessible design
-• Fast loading times
-• SEO-friendly structure
-• Mobile-first approach
+• Core: Next.js (for speed) & Tailwind CSS (for custom branding).
+• CMS: Sanity.io (for content flexibility & visual editing).
+• Auth: Clerk (for world-class security).
+• Images: Automated optimization and CDN delivery for fast loading.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-GETTING STARTED
+MANAGEMENT & GETTING STARTED
 
 For you as the administrator:
-1. Access your dashboard by signing in
-2. Manage user accounts through Clerk dashboard
-3. Update content through the codebase (or we can set up a CMS if needed)
-4. Monitor community engagement
-
-For your members:
-1. Visit the website
-2. Click "Join the Collective" or "Sign In"
-3. Complete the onboarding process
-4. Access their personalized dashboard
+1. Content Management: Log in to your Sanity Studio to update any text or swap photos across the site.
+2. Real-time Preview: Use "Draft Mode" to see your changes exactly as they will look before you hit publish.
+3. User Management: Manage member accounts and roles through the Clerk dashboard.
+4. Auto-Migration: Your original brand kit content has already been successfully migrated and is waiting for you in the CMS!
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 STAGING REVIEW
 
-The website is currently in a staging environment for your review. Please take some time to:
-
-1. Review all pages and content for accuracy
-2. Test the sign-up and onboarding flow
-3. Check navigation on both desktop and mobile devices
-4. Review the design and user experience
-5. Test the authentication flow (sign up, sign in, dashboard access)
-6. Provide feedback on any changes or adjustments needed
-
-Please note: This is a staging/preview version. Any data or accounts created during testing will not carry over to the live site.
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-NEXT STEPS AFTER REVIEW
-
-Once you've reviewed the staging site and provided feedback:
-
-1. We'll make any necessary adjustments based on your input
-2. Finalize content and imagery
-3. Prepare for launch (domain setup, final testing, etc.)
-4. Go live with your community!
-
-For launch, we'll also want to:
-• Add your first teacher profiles to the directory
-• Upload initial video content to the library
-• Prepare content for the community forum launch
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-STAGING ACCESS
-
-You can access the staging site at: [STAGING URL HERE]
-
-Please review the site thoroughly and let me know:
-• What you like and what works well
-• Any content that needs to be updated or corrected
-• Design or functionality changes you'd like to see
-• Any bugs or issues you encounter
-• Questions about how features work
+Please take some time to:
+1. Review the Home and About pages (now dynamic!).
+2. Create a "Test Page" in Sanity to see how easy it is to build new content.
+3. Verify that the brand photos and team bios are up to date.
+4. Test the sign-up flow and member dashboard.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 SUPPORT
 
-If you have any questions about how the website works, need clarification on features, or want to discuss changes, please don't hesitate to reach out. I'm here to support you through this review process and ensure the platform perfectly serves your community.
-
-Thank you for the opportunity to build this meaningful platform for Christian Yoga Teachers of Color. I'm looking forward to your feedback and making this exactly what your community needs!
+If you have any questions or would like a quick walkthrough of the new CMS features, I'm here to help. I'm excited for you to see how easy it is to manage your community!
 
 Blessings,
 [Your Name]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-P.S. All recent updates including the mobile menu and about page enhancements are included in this staging version for your review.
+P.S. All recent updates—including the new Video blocks, Testimonials, and automatic image handling—are live in this staging version.
