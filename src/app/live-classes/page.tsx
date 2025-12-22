@@ -2,10 +2,12 @@ import { client } from '@/sanity/lib/client';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
+import { auth } from '@clerk/nextjs/server';
 
 export const dynamic = 'force-dynamic';
 
 export default async function LiveClassesPage() {
+  const { userId } = await auth();
   const query = `*[_type == "liveClass"] | order(dateTime asc) {
     _id,
     title,
@@ -94,9 +96,21 @@ export default async function LiveClassesPage() {
               We are always looking for passionate teachers to lead our community. 
               Join the Teacher Collective to apply for teaching opportunities.
             </p>
-            <Link href="/sign-up" className="text-(--color-roti) font-bold text-lg hover:underline">
-              Join the Collective →
-            </Link>
+            {userId ? (
+              <Link href="/dashboard" className="text-(--color-roti) font-bold text-lg hover:underline">
+                Go to Dashboard →
+              </Link>
+            ) : (
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <Link href="/sign-up" className="text-(--color-roti) font-bold text-lg hover:underline">
+                  Join the Collective →
+                </Link>
+                <span className="text-gray-400 hidden sm:inline">|</span>
+                <Link href="/sign-in" className="text-gray-600 font-bold text-lg hover:underline">
+                  Sign In
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </section>
