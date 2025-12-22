@@ -3,6 +3,9 @@ import Footer from '@/components/Footer';
 import Image from 'next/image';
 import Link from 'next/link';
 
+// Force dynamic rendering to avoid Clerk publishableKey error during static generation
+export const dynamic = 'force-dynamic';
+
 export default function AboutPage() {
   const beliefs = [
     {
