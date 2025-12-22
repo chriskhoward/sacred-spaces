@@ -69,5 +69,19 @@ export const videoType = defineType({
         title: 'Video URL (Vimeo/YouTube/S3)',
         type: 'url',
     }),
+    defineField({
+        name: 'targetAudience',
+        title: 'Target Audience',
+        type: 'string',
+        options: {
+            list: [
+                { title: 'Practitioner Only', value: 'practitioner' },
+                { title: 'Teacher Only', value: 'teacher' },
+                { title: 'Everyone', value: 'all' },
+            ],
+        },
+        initialValue: 'all',
+        validation: (Rule) => Rule.required(),
+    }),
   ],
 })

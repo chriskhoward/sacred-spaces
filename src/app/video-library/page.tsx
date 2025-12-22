@@ -1,16 +1,17 @@
 import { client } from '@/sanity/lib/client';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-
-// Re-add interactive client-side logic for filtering (which needs 'use client') 
-// But we also need async data fetching. 
-// Best practice: Fetch data in a Server Component, pass to Client Component.
 import VideoLibraryClient from './VideoLibraryClient';
+import { currentUser } from '@clerk/nextjs/server';
 
 export const dynamic = 'force-dynamic';
 
 export default async function VideoLibraryPage() {
-  const query = `*[_type == "video"] {
+  const user = await currentUser();
+  const membershipType = user?.publicMetadata?.membershipType as string || 'practitioner';
+
+  // Filter based on audience tag
+  const query = `*[_type == "video" && (targetAudience == "all" || targetAudience == "${membershipType}")] {
     _id,
     title,
     instructor,

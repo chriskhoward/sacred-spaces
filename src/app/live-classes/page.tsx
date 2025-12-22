@@ -2,13 +2,16 @@ import { client } from '@/sanity/lib/client';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
-import { auth } from '@clerk/nextjs/server';
+import { auth, currentUser } from '@clerk/nextjs/server';
 
 export const dynamic = 'force-dynamic';
 
 export default async function LiveClassesPage() {
   const { userId } = await auth();
-  const query = `*[_type == "liveClass"] | order(dateTime asc) {
+  const user = userId ? await (await currentUser()) : null;
+  const membershipType = user?.publicMetadata?.membershipType as string || 'practitioner';
+
+  const query = `*[_type == "liveClass" && (targetAudience == "all" || targetAudience == "${membershipType}")] | order(dateTime asc) {
     _id,
     title,
     instructor,

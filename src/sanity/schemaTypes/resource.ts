@@ -53,6 +53,20 @@ export const resourceType = defineType({
         title: 'Premium Member Only?',
         type: 'boolean',
         initialValue: true,
-    })
+    }),
+    defineField({
+        name: 'targetAudience',
+        title: 'Target Audience',
+        type: 'string',
+        options: {
+            list: [
+                { title: 'Practitioner Only', value: 'practitioner' },
+                { title: 'Teacher Only', value: 'teacher' },
+                { title: 'Everyone', value: 'all' },
+            ],
+        },
+        initialValue: 'teacher',
+        validation: (Rule) => Rule.required(),
+    }),
   ],
 })

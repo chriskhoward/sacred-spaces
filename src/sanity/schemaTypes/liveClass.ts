@@ -51,5 +51,19 @@ export const liveClassType = defineType({
         title: 'Zoom/Meeting Link',
         type: 'url',
     }),
+    defineField({
+        name: 'targetAudience',
+        title: 'Target Audience',
+        type: 'string',
+        options: {
+            list: [
+                { title: 'Practitioner Only', value: 'practitioner' },
+                { title: 'Teacher Only', value: 'teacher' },
+                { title: 'Everyone', value: 'all' },
+            ],
+        },
+        initialValue: 'all',
+        validation: (Rule) => Rule.required(),
+    }),
   ],
 })
