@@ -3,6 +3,7 @@ import Image from 'next/image';
 import HeroBlock from '@/components/Blocks/Hero';
 import CTABlock from '@/components/Blocks/CTA';
 import FAQBlock from '@/components/Blocks/FAQ';
+import FilloutForm from '@/components/FilloutForm';
 import { auth } from '@clerk/nextjs/server';
 
 export default async function HomePageContent() {
@@ -449,12 +450,9 @@ export default async function HomePageContent() {
             <p className="text-2xl text-white/95 mb-12 leading-relaxed">
               Are you ready to grow in a space where your faith, culture, and practice are fully welcome?
             </p>
-            <Link 
-              href={isSignedIn ? "/dashboard" : "/sign-up"}
-              className="inline-block px-12 py-6 bg-(--color-roti) text-white rounded-full font-bold text-xl hover:bg-white hover:text-(--color-primary) transition-all shadow-2xl hover:scale-105 transform"
-            >
-              YES! I&apos;M READY TO LEAD BOLDLY IN MY CALLING!!
-            </Link>
+            <div className="bg-white rounded-[2rem_0_2rem_0] p-8 shadow-2xl">
+              <FilloutForm />
+            </div>
           </div>
         </div>
       </section>

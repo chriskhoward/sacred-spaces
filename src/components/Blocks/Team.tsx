@@ -1,10 +1,24 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { urlForImage } from '@/sanity/lib/image';
 
 interface TeamMember {
   name: string;
   role: string;
   image?: { asset?: any } | string;
+  bioLink?: string;
+}
+
+// Helper function to get bio link based on member name
+function getBioLink(name: string): string | null {
+  const nameLower = name.toLowerCase();
+  if (nameLower.includes('queen') || nameLower.includes("'queen'")) {
+    return '/queen-robertson';
+  }
+  if (nameLower.includes('de') && nameLower.includes('bolton')) {
+    return '/de-bolton';
+  }
+  return null;
 }
 
 interface TeamBlockProps {
@@ -33,22 +47,38 @@ export default function TeamBlock({
               {description}
             </p>
             <div className="space-y-6">
-              {members.map((m, i) => (
-                <div key={i} className="flex items-center gap-6 p-4 rounded-2xl hover:bg-(--color-gallery) transition-colors">
-                  <div className="relative w-20 h-20 rounded-full overflow-hidden border-2 border-(--color-roti) bg-white shrink-0 shadow-lg">
-                      <Image 
-                        src={(typeof m.image === 'object' && m.image?.asset) ? urlForImage(m.image).url() : (typeof m.image === 'string' ? m.image : '/assets/images/team/queen_robertson.png')} 
-                        alt={m.name} 
-                        fill 
-                        className="object-cover" 
-                      />
+              {members.map((m, i) => {
+                const bioLink = m.bioLink || getBioLink(m.name);
+                const MemberCard = (
+                  <div className={`flex items-center gap-6 p-4 rounded-2xl hover:bg-(--color-gallery) transition-colors ${bioLink ? 'cursor-pointer group' : ''}`}>
+                    <div className="relative w-20 h-20 rounded-full overflow-hidden border-2 border-(--color-roti) bg-white shrink-0 shadow-lg group-hover:shadow-xl transition-shadow">
+                        <Image 
+                          src={(typeof m.image === 'object' && m.image?.asset) ? urlForImage(m.image).url() : (typeof m.image === 'string' ? m.image : '/assets/images/team/queen_robertson.png')} 
+                          alt={m.name} 
+                          fill 
+                          className="object-cover" 
+                        />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className={`font-bold text-(--color-primary) text-xl group-hover:text-(--color-roti) transition-colors ${bioLink ? 'flex items-center gap-2' : ''}`}>
+                        {m.name}
+                        {bioLink && (
+                          <span className="text-sm text-(--color-roti) opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+                        )}
+                      </h4>
+                      <p className="text-gray-600 font-medium">{m.role}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="font-bold text-(--color-primary) text-xl">{m.name}</h4>
-                    <p className="text-gray-600 font-medium">{m.role}</p>
-                  </div>
-                </div>
-              ))}
+                );
+
+                return bioLink ? (
+                  <Link key={i} href={bioLink} className="block">
+                    {MemberCard}
+                  </Link>
+                ) : (
+                  <div key={i}>{MemberCard}</div>
+                );
+              })}
             </div>
           </div>
           <div className="lg:w-2/3 bg-(--color-sidecar)/30 p-12 lg:p-20 rounded-[4rem_0_4rem_0]">
