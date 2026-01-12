@@ -15,13 +15,13 @@ interface HeroBlockProps {
 export default function HeroBlock({
   badge = "Teacher's Collective",
   title = "Where Your Calling Meets Community",
-  subtitle = "A community-powered home created exclusively for Christian Yoga Teachers of Color—a space where your faith, culture, and calling are honored without compromise.",
+  subtitle = "A community-powered home created exclusively for Christ-Centered Yoga Teachers of Color—a space where your faith, culture, and calling are honored without compromise.",
   image,
   secondaryImage,
   primaryButtonText = "Join the Collective",
   secondaryButtonText = "Learn More"
 }: HeroBlockProps) {
-  const imageUrl = image?.asset ? urlForImage(image).url() : '/assets/images/uploads/11.jpg';
+  const imageUrl = image?.asset ? urlForImage(image).url() : '/assets/images/shkrabaanthony.jpg';
   const secondaryImageUrl = secondaryImage?.asset ? urlForImage(secondaryImage).url() : null;
 
   return (
@@ -42,10 +42,10 @@ export default function HeroBlock({
       <div className="container mx-auto px-4 relative z-10">
         <div className="flex flex-col lg:flex-row items-center gap-16">
           <div className="lg:flex-1 text-center lg:text-left">
-            <span className="inline-block py-2 px-6 rounded-full bg-white/10 text-(--color-roti) font-bold tracking-[3px] uppercase text-sm mb-6 border border-white/20">
+            <span className="inline-block py-2 px-6 rounded-full bg-white/10 text-(--color-roti) font-bold tracking-[3px] text-sm mb-6 border border-white/20">
               {badge}
             </span>
-            <h1 className="text-white text-5xl lg:text-8xl font-bold mb-8 leading-tight">
+            <h1 className="text-white text-4xl lg:text-7xl font-bold mb-8 leading-tight">
               {title}
             </h1>
             <p className="text-white/80 text-xl mb-12 max-w-xl mx-auto lg:mx-0 leading-relaxed">
@@ -60,6 +60,7 @@ export default function HeroBlock({
                 src={imageUrl} 
                 alt={title} 
                 fill
+                sizes="(max-width: 768px) 100vw, 600px"
                 className="object-cover rounded-[50px] drop-shadow-[0_20px_50px_rgba(0,0,0,0.3)] relative z-10"
                 priority
               />

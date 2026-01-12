@@ -39,7 +39,7 @@ export default async function OnboardingPage() {
               <div className="text-5xl mb-6">🧘‍♀️</div>
               <h3 className="text-2xl font-bold text-(--color-primary) mb-4">I am a Teacher</h3>
               <p className="text-gray-600 mb-8">
-                I want to join the Teacher Collective, list myself in the directory, and access resources for Christian yoga teachers.
+                I want to join the Teacher Collective, list myself in the directory, and access resources for Christ-Centered Yoga Teachers of Color.
               </p>
               <span className="inline-block px-6 py-2 bg-(--color-sidecar) text-(--color-bronzetone) font-bold rounded-full group-hover:bg-(--color-roti) group-hover:text-white transition-colors">
                 Select Teacher Path

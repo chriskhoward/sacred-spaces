@@ -3,22 +3,22 @@
 @theme {
   /* Flow in Faith Brand Colors */
   --color-martinique: #413356;
-  --color-roti: #C7A254;
-  --color-gallery: #ECECEC;
-  --color-sidecar: #F6EDC8;
-  --color-bronzetone: #553F0F;
-  
+  --color-roti: #c7a254;
+  --color-gallery: #ececec;
+  --color-sidecar: #f6edc8;
+  --color-bronzetone: #553f0f;
+
   /* Semantic Color Mappings */
   --color-primary: #413356; /* Martinique */
-  --color-secondary: #C7A254; /* Roti */
-  --color-accent: #553F0F; /* Bronzetone */
-  --color-light: #ECECEC; /* Gallery */
-  --color-soft: #F6EDC8; /* Sidecar */
+  --color-secondary: #c7a254; /* Roti */
+  --color-accent: #553f0f; /* Bronzetone */
+  --color-light: #ececec; /* Gallery */
+  --color-soft: #f6edc8; /* Sidecar */
   --color-text: #413356; /* Martinique for text */
   --color-white: #ffffff;
 
   --font-body: var(--font-body);
-  --font-heading: var(--font-heading);
+  --font-heading: var(--font-body);
 }
 
 @layer base {
@@ -38,7 +38,12 @@
     background-color: var(--color-white);
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-heading);
     color: var(--color-primary);
     font-weight: 700;

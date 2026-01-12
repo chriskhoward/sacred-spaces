@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DM_Sans, Playfair_Display } from "next/font/google";
+import { DM_Sans } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { draftMode } from "next/headers";
 import "./globals.css";
@@ -11,14 +11,11 @@ const dmSans = DM_Sans({
   subsets: ["latin"],
 });
 
-const playfair = Playfair_Display({
-  variable: "--font-heading",
-  subsets: ["latin"],
-});
+
 
 export const metadata: Metadata = {
   title: "Sacred Spaces Yoga HTX",
-  description: "A membership community for Christian yoga teachers of color and practitioners.",
+  description: "A membership community for Christ-Centered Yoga Teachers of Color and practitioners.",
 };
 
 // Force dynamic rendering to avoid Clerk publishableKey error during static generation
@@ -34,8 +31,8 @@ export default async function RootLayout({
   
   return (
     <ClerkProvider publishableKey={publishableKey}>
-      <html lang="en">
-        <body className={`${dmSans.variable} ${playfair.variable} antialiased`}>
+      <html lang="en" data-scroll-behavior="smooth">
+        <body className={`${dmSans.variable} antialiased`}>
           {children}
           {(await draftMode()).isEnabled && <VisualEditing />}
           <Analytics />

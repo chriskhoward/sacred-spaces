@@ -4,7 +4,7 @@ interface BrandBlockProps {
 }
 
 export default function BrandBlock({
-  quote = '"Christian Meta Teachers of Color have carried their callings in silos for far too long. We’re here to change that."',
+  quote = '"Christ-Centered Yoga Teachers of Color have carried their callings in silos for far too long. We're here to change that."',
   body = "We created the Flow in Faith Teachers Collective so teachers could have a place to grow, collaborate, and be affirmed in the fullness of their identity, their faith, and their culture—without shrinking or separating pieces of themselves to belong."
 }: BrandBlockProps) {
   return (

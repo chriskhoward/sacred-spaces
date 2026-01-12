@@ -85,7 +85,7 @@ export default function TeamBlock({
             <h3 className="text-3xl font-bold text-(--color-primary) mb-12">Our Journey...</h3>
             <div className="prose prose-xl text-(--color-bronzetone) space-y-10 leading-relaxed italic">
               <p>
-                In July 2025, Queen hosted the inaugural Flow in Faith Virtual Summit and put out a call for Christian Yoga Teachers of Color to teach and speak. More than 50 teachers registered, showing just how many of us were out here doing this work.
+                In July 2025, Queen hosted the inaugural Flow in Faith Virtual Summit and put out a call for Christ-Centered Yoga Teachers of Color to teach and speak. More than 50 teachers registered, showing just how many of us were out here doing this work.
               </p>
               <p>
                 Throughout the summit, it became clear that we needed a community where our voices, faith, and practice could belong together.

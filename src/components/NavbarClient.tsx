@@ -20,12 +20,8 @@ export default function NavbarClient({ dynamicPages }: NavbarClientProps) {
     setIsMenuOpen(false);
   };
 
-  const mainLinks = [
-    { label: "Home", href: "/" },
-    { label: "Teacher Collective", href: "/teacher-collective" },
-    { label: "Directory", href: "/directory" },
-    { label: "About", href: "/about" },
-  ];
+// mainLinks removed as requested to keep only 'Join Now'
+  const mainLinks: { label: string; href: string }[] = [];
 
   return (
     <>
@@ -60,11 +56,9 @@ export default function NavbarClient({ dynamicPages }: NavbarClientProps) {
             ))}
           </ul>
           <div className="flex items-center ml-4">
-            <SignedOut>
-              <Link href="/sign-in" className="px-8 py-3 bg-(--color-sidecar) text-(--color-bronzetone) rounded-full font-bold hover:bg-(--color-roti) hover:text-white transition-all text-sm whitespace-nowrap shadow-lg">
-                Sign In
-              </Link>
-            </SignedOut>
+            <Link href="/apply" className="px-8 py-3 bg-(--color-roti) text-white rounded-full font-bold hover:bg-white hover:text-(--color-roti) transition-all text-sm whitespace-nowrap shadow-lg border-2 border-transparent hover:border-(--color-roti)">
+              Join Now
+            </Link>
             <SignedIn>
               <div className="flex items-center gap-4">
                 <Link href="/dashboard" className="text-white hover:text-(--color-roti) font-bold transition-colors">Dashboard</Link>
@@ -136,15 +130,13 @@ export default function NavbarClient({ dynamicPages }: NavbarClientProps) {
           </ul>
           
           <div className="mt-8 pt-8 border-t border-white/20">
-            <SignedOut>
-              <Link 
-                href="/sign-in" 
-                className="block w-full px-8 py-4 bg-(--color-sidecar) text-(--color-bronzetone) rounded-full font-bold hover:bg-(--color-roti) hover:text-white transition-all text-center shadow-lg"
-                onClick={closeMenu}
-              >
-                Sign In
-              </Link>
-            </SignedOut>
+            <Link 
+              href="/apply" 
+              className="block w-full px-8 py-4 bg-(--color-roti) text-white rounded-full font-bold hover:bg-white hover:text-(--color-roti) transition-all text-center shadow-lg border-2 border-transparent hover:border-(--color-roti)"
+              onClick={closeMenu}
+            >
+              Join Now
+            </Link>
             <SignedIn>
               <div className="flex flex-col gap-4">
                 <Link 

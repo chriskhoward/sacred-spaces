@@ -25,7 +25,7 @@ export default async function AboutPage() {
             _type: 'heroBlock', 
             _key: 'default-hero',
             title: "Affirming Your Identity & Faith",
-            subtitle: "A space built by Christian Yoga Teachers of Color, for Christian Yoga Teachers of Color."
+            subtitle: "A space built by Christ-Centered Yoga Teachers of Color, for Christ-Centered Yoga Teachers of Color."
           },
           { _type: 'teamBlock', _key: 'default-team' },
           { _type: 'ctaBlock', _key: 'default-cta' }

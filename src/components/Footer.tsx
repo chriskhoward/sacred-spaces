@@ -15,7 +15,7 @@ export default function Footer() {
               className="h-16 w-auto object-contain"
             />
           </Link>
-          <p className="text-white text-base mt-6">A dedicated space for Christian yoga teachers of color and their students to connect, learn, and grow together.</p>
+          <p className="text-white text-base mt-6">A dedicated space for Christ-Centered Yoga Teachers of Color and their students to connect, learn, and grow together.</p>
         </div>
         
         <div className="text-center md:text-left">

@@ -70,7 +70,7 @@ export default async function DashboardPage() {
             <div className="bg-(--color-martinique) p-10 rounded-[30px_0_30px_0] shadow-xl text-white">
               <h3 className="text-white text-3xl mb-6 font-bold">Community</h3>
               <p className="text-white/80 mb-10 text-lg leading-relaxed">
-                Connect with other {isTeacher ? 'Christian yoga teachers' : 'practitioners'} and grow in your faith-led journey.
+                Connect with other {isTeacher ? 'Christ-Centered Yoga Teachers of Color' : 'practitioners'} and grow in your faith-led journey.
               </p>
               <Link href="/community" className="btn btn-primary w-full text-center py-4 rounded-[15px_0_15px_0] font-bold">Enter Forum</Link>
             </div>

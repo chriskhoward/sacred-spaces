@@ -11,23 +11,23 @@ export default async function TeacherCollectivePage() {
   const benefits = [
     {
       title: 'Community Connection',
-      description: 'Connect with a global network of Christian yoga teachers of color.',
-      icon: '🤝'
+      description: 'Connect with a global network of Christ-Centered Yoga Teachers of Color.',
+
     },
     {
       title: 'Resource Library',
       description: 'Access curated sequences, meditations, and business resources.',
-      icon: '📚'
+
     },
     {
       title: 'Teacher Directory',
       description: 'Get discovered by practitioners looking for Christ-centered yoga.',
-      icon: '🔍'
+
     },
     {
       title: 'Monthly Workshops',
       description: 'Deepen your practice and teaching with expert-led sessions.',
-      icon: '✨'
+
     }
   ];
 
@@ -42,10 +42,10 @@ export default async function TeacherCollectivePage() {
             <span className="block uppercase tracking-[4px] mb-4 text-(--color-roti) font-bold">Flow in Faith</span>
             <h1 className="text-5xl lg:text-8xl mb-8 text-white font-bold leading-tight">Teacher&apos;s Collective</h1>
             <p className="max-w-2xl mx-auto mb-12 text-xl leading-relaxed text-(--color-sidecar) opacity-90">
-              A dedicated space for Christian yoga teachers of color to connect, learn, and grow together.
+              A dedicated space for Christ-Centered Yoga Teachers of Color to connect, learn, and grow together.
               Grounded, expressive, and assured.
             </p>
-            <Link href={isSignedIn ? "/dashboard" : "/sign-up"} className="btn btn-primary">
+            <Link href={isSignedIn ? "/dashboard" : "/apply"} className="btn btn-primary">
               {isSignedIn ? "Go to Dashboard" : "Join the Collective"}
             </Link>
           </div>
@@ -85,7 +85,7 @@ export default async function TeacherCollectivePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {benefits.map((benefit, index) => (
               <div key={index} className="bg-white p-10 rounded-[20px_0_20px_0] text-center transition-transform hover:-translate-y-2 shadow-sm hover:shadow-md">
-                <div className="text-5xl mb-6">{benefit.icon}</div>
+
                 <h3 className="text-(--color-primary) text-2xl font-bold mb-4">{benefit.title}</h3>
                 <p className="text-gray-600">{benefit.description}</p>
               </div>
@@ -102,55 +102,83 @@ export default async function TeacherCollectivePage() {
             <p className="text-xl text-gray-600">Choose the path that best supports your journey.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {/* EPM LITE */}
             <div className="bg-(--color-gallery) p-12 rounded-[30px_0_30px_0] text-center relative flex flex-col items-center">
-              <h3 className="text-(--color-primary) text-3xl font-bold mb-4">Monthly Member</h3>
-              <div className="text-(--color-primary) text-5xl font-bold my-6">$29<span className="text-2xl font-normal">/mo</span></div>
+              <h3 className="text-(--color-primary) text-3xl font-bold mb-4">EPM LITE</h3>
+              <div className="text-(--color-primary) text-2xl font-bold my-2">$35 / MONTH</div>
+              <div className="text-(--color-primary) text-2xl font-bold mb-6">$350 / YEAR</div>
               <ul className="text-left w-full mb-10 space-y-4">
                 <li className="flex gap-3 items-start text-gray-700">
                   <span className="text-(--color-roti) font-bold">✓</span>
-                  <span>Full Directory Listing</span>
+                  <span>Step-by-Step Guides</span>
                 </li>
                 <li className="flex gap-3 items-start text-gray-700">
                   <span className="text-(--color-roti) font-bold">✓</span>
-                  <span>Access to Resource Library</span>
+                  <span>Membership Resources</span>
                 </li>
                 <li className="flex gap-3 items-start text-gray-700">
                   <span className="text-(--color-roti) font-bold">✓</span>
-                  <span>Monthly Community Calls</span>
+                  <span>Quarterly Challenges</span>
                 </li>
                 <li className="flex gap-3 items-start text-gray-700">
                   <span className="text-(--color-roti) font-bold">✓</span>
-                  <span>Member Discounts</span>
+                  <span>Bonus: Resource lists</span>
                 </li>
               </ul>
-              <Link href={isSignedIn ? "/dashboard" : "/sign-up"} className="btn-outline w-full py-4 rounded-[15px_0_15px_0] font-bold text-center border-2 border-(--color-primary) text-(--color-primary) hover:bg-(--color-primary) hover:text-white transition-all">
-                {isSignedIn ? "Go to Dashboard" : "Start Monthly"}
+              <Link href={isSignedIn ? "/dashboard" : "/apply"} className="btn-outline w-full py-4 rounded-[15px_0_15px_0] font-bold text-center border-2 border-(--color-primary) text-(--color-primary) hover:bg-(--color-primary) hover:text-white transition-all mt-auto">
+                {isSignedIn ? "Go to Dashboard" : "Join EPM Lite"}
               </Link>
             </div>
+
+            {/* EPM PLUS */}
             <div className="bg-(--color-martinique) p-12 rounded-[30px_0_30px_0] text-center relative flex flex-col items-center text-white border-2 border-(--color-roti) scale-105 shadow-xl">
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-(--color-roti) text-white px-6 py-2 rounded-full text-sm font-bold uppercase tracking-wider">Best Value</div>
-              <h3 className="text-white text-3xl font-bold mb-4">Annual Member</h3>
-              <div className="text-white text-5xl font-bold my-6">$290<span className="text-2xl font-normal">/yr</span></div>
+              <h3 className="text-white text-3xl font-bold mb-4">EPM PLUS</h3>
+              <div className="text-white text-2xl font-bold my-2">$80 / MONTH</div>
+              <div className="text-white text-2xl font-bold mb-6">$800 / YEAR</div>
               <ul className="text-left w-full mb-10 space-y-4 text-gray-200">
                 <li className="flex gap-3 items-start">
                   <span className="text-(--color-roti) font-bold">✓</span>
-                  <span>All Monthly Benefits</span>
+                  <span>Step-by-Step Guides</span>
                 </li>
                 <li className="flex gap-3 items-start">
                   <span className="text-(--color-roti) font-bold">✓</span>
-                  <span>2 Months Free</span>
+                  <span>Membership Resources</span>
                 </li>
                 <li className="flex gap-3 items-start">
                   <span className="text-(--color-roti) font-bold">✓</span>
-                  <span>Exclusive Annual Workshop</span>
+                  <span>Quarterly Challenges + Prizes</span>
                 </li>
                 <li className="flex gap-3 items-start">
                   <span className="text-(--color-roti) font-bold">✓</span>
-                  <span>Priority Directory Placement</span>
+                  <span>Email and Sales Copy Templates</span>
+                </li>
+                 <li className="flex gap-3 items-start">
+                  <span className="text-(--color-roti) font-bold">✓</span>
+                  <span>PACE (Planning, Accountability, Coworking, and Expansion) Sessions</span>
+                </li>
+                <li className="flex gap-3 items-start">
+                  <span className="text-(--color-roti) font-bold">✓</span>
+                  <span>Bonus: Resource lists</span>
+                </li>
+                <li className="flex gap-3 items-start">
+                  <span className="text-(--color-roti) font-bold">✓</span>
+                  <span>Bonus: Community</span>
+                </li>
+                <li className="flex gap-3 items-start">
+                  <span className="text-(--color-roti) font-bold">✓</span>
+                  <span>Bonus: Future Experiment tickets</span>
+                </li>
+                <li className="flex gap-3 items-start">
+                  <span className="text-(--color-roti) font-bold">✓</span>
+                  <span>Bonus: Discounts on 1:1 Coaching hours</span>
+                </li>
+                <li className="flex gap-3 items-start font-bold text-yellow-400">
+                  <span className="text-(--color-roti)">✓</span>
+                  <span>Purchase the Annual Plan and score access to this exclusive BONUS!</span>
                 </li>
               </ul>
-              <Link href={isSignedIn ? "/dashboard" : "/sign-up"} className="btn btn-primary">
-                {isSignedIn ? "Go to Dashboard" : "Join Annually"}
+              <Link href={isSignedIn ? "/dashboard" : "/apply"} className="btn btn-primary mt-auto">
+                {isSignedIn ? "Go to Dashboard" : "Join EPM Plus"}
               </Link>
             </div>
           </div>
