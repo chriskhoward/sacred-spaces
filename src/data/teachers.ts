@@ -30,7 +30,7 @@ export const teachers: Teacher[] = [
     certifications: ["RYT-200", "Ph.D. in Theology"],
     bio: "Dr. Marcus combines his deep theological background with restorative yoga to create a space for profound spiritual and physical rest. He believes that stillness is where we hear God's voice most clearly.",
     image: "/assets/images/our_team_2.png",
-    email: "marcus@sacredspaces.com"
+    email: "marcus@flowinfaith.com"
   },
   {
     id: "3",
@@ -40,7 +40,7 @@ export const teachers: Teacher[] = [
     certifications: ["RPYT (Registered Prenatal)", "RYT-200"],
     bio: "Elena specializes in supporting mothers through every stage of their pregnancy journey, integrating scripture and gentle movement to provide comfort and spiritual grounding.",
     image: "/assets/images/our_team_3.png",
-    email: "elena@sacredspaces.com"
+    email: "elena@flowinfaith.com"
   },
   {
     id: "4",

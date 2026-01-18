@@ -19,20 +19,20 @@ export default async function OnboardingPage() {
   return (
     <main className="bg-(--color-gallery) min-h-screen">
       <Navbar />
-      
+
       <section className="pt-[160px] pb-24">
         <div className="container mx-auto px-4 max-w-4xl">
           <div className="text-center mb-16">
             <h1 className="text-5xl font-bold text-(--color-primary) mb-6 font-heading">Final Step: Choose Your Path</h1>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Welcome to Sacred Spaces, {user.firstName}! To personalize your experience, please tell us how you&apos;ll be using the platform.
+              Welcome to Flow in Faith, {user.firstName}! To personalize your experience, please tell us how you&apos;ll be using the platform.
             </p>
           </div>
 
           <form action={completeOnboarding} className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <button 
-              type="submit" 
-              name="membershipType" 
+            <button
+              type="submit"
+              name="membershipType"
               value="teacher"
               className="bg-white p-10 rounded-[30px_0_30px_0] shadow-xl border-2 border-transparent hover:border-(--color-roti) transition-all text-left group"
             >
@@ -46,9 +46,9 @@ export default async function OnboardingPage() {
               </span>
             </button>
 
-            <button 
-              type="submit" 
-              name="membershipType" 
+            <button
+              type="submit"
+              name="membershipType"
               value="practitioner"
               className="bg-white p-10 rounded-[30px_0_30px_0] shadow-xl border-2 border-transparent hover:border-(--color-roti) transition-all text-left group"
             >

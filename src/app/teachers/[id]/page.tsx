@@ -12,7 +12,7 @@ interface PageProps {
 
 export default async function TeacherProfile({ params }: PageProps) {
   const { id } = await params;
-  
+
   // Try to find in static data first
   let teacher: Teacher | undefined = teachers.find(t => t.id === id);
 
@@ -21,21 +21,21 @@ export default async function TeacherProfile({ params }: PageProps) {
     try {
       const client = await clerkClient();
       const user = await client.users.getUser(id);
-      
+
       // Ensure the user is actually a teacher
       if (user && user.publicMetadata?.membershipType === 'teacher') {
-         const profile: any = user.publicMetadata.teacherProfile || {};
-         teacher = {
-            id: user.id,
-            name: profile.name || `${user.firstName} ${user.lastName}`.trim(),
-            location: profile.location || 'Online',
-            specialties: Array.isArray(profile.specialties) ? profile.specialties : [],
-            certifications: Array.isArray(profile.certifications) ? profile.certifications : [],
-            bio: profile.bio || 'Member of the Sacred Spaces Teacher Collective.',
-            image: user.imageUrl,
-            email: user.emailAddresses[0]?.emailAddress,
-            website: profile.website,
-         };
+        const profile: any = user.publicMetadata.teacherProfile || {};
+        teacher = {
+          id: user.id,
+          name: profile.name || `${user.firstName} ${user.lastName}`.trim(),
+          location: profile.location || 'Online',
+          specialties: Array.isArray(profile.specialties) ? profile.specialties : [],
+          certifications: Array.isArray(profile.certifications) ? profile.certifications : [],
+          bio: profile.bio || 'Member of the Flow in Faith Teacher Collective.',
+          image: user.imageUrl,
+          email: user.emailAddresses[0]?.emailAddress,
+          website: profile.website,
+        };
       }
     } catch (error) {
       // User not found or error fetching
@@ -50,7 +50,7 @@ export default async function TeacherProfile({ params }: PageProps) {
   return (
     <main className="bg-white">
       <Navbar />
-      
+
       <section className="bg-(--color-primary) pt-[220px] pb-32 text-white overflow-hidden">
         <div className="container mx-auto px-4 relative z-10">
           <Link href="/directory" className="text-(--color-roti) hover:text-white mb-16 inline-flex items-center gap-2 transition-colors font-bold uppercase tracking-wider text-sm group">
@@ -59,12 +59,12 @@ export default async function TeacherProfile({ params }: PageProps) {
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-20 items-center">
             <div className="flex justify-center">
               <div className="relative w-[380px] h-[500px]">
-                <Image 
-                   src={teacher.image || '/assets/images/placeholder_teacher.png'} 
-                   alt={teacher.name} 
-                   fill
-                   className="rounded-[4rem_0_4rem_0] shadow-[0_40px_80px_rgba(0,0,0,0.5)] object-cover"
-                   priority
+                <Image
+                  src={teacher.image || '/assets/images/placeholder_teacher.png'}
+                  alt={teacher.name}
+                  fill
+                  className="rounded-[4rem_0_4rem_0] shadow-[0_40px_80px_rgba(0,0,0,0.5)] object-cover"
+                  priority
                 />
               </div>
             </div>
@@ -99,7 +99,7 @@ export default async function TeacherProfile({ params }: PageProps) {
             <h2 className="text-4xl font-bold mb-8 text-(--color-primary)">About {teacher.name.split(' ')[0]}</h2>
             <p className="text-xl leading-relaxed text-gray-700">{teacher.bio}</p>
           </div>
-          
+
           <div className="space-y-8">
             <div className="bg-(--color-gallery) p-10 rounded-[2.5rem_0_2.5rem_0]">
               <h3 className="text-2xl font-bold mb-6 text-(--color-primary)">Certifications</h3>
@@ -111,7 +111,7 @@ export default async function TeacherProfile({ params }: PageProps) {
                 ))}
               </ul>
             </div>
-            
+
             <div className="bg-(--color-gallery) p-10 rounded-[2.5rem_0_2.5rem_0]">
               <h3 className="text-2xl font-bold mb-6 text-(--color-primary)">Practice Style</h3>
               <p className="text-gray-700">Specialized in {teacher.specialties.join(', ')}.</p>

@@ -14,7 +14,7 @@ const dmSans = DM_Sans({
 
 
 export const metadata: Metadata = {
-  title: "Sacred Spaces Yoga HTX",
+  title: "Flow in Faith - Christ-Centered Yoga",
   description: "A membership community for Christ-Centered Yoga Teachers of Color and practitioners.",
 };
 
@@ -28,7 +28,7 @@ export default async function RootLayout({
 }>) {
   // Get publishableKey from environment variable
   const publishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
-  
+
   return (
     <ClerkProvider publishableKey={publishableKey}>
       <html lang="en" data-scroll-behavior="smooth">

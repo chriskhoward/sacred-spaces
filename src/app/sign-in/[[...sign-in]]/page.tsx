@@ -6,9 +6,9 @@ export default function SignInPage() {
       <div className="max-w-md w-full">
         <div className="text-center mb-8">
           <h2 className="text-4xl font-bold text-white mb-2">Welcome Back</h2>
-          <p className="text-(--color-sidecar)">Sign in to access your Sacred Spaces account</p>
+          <p className="text-(--color-sidecar)">Sign in to access your Flow in Faith account</p>
         </div>
-        <SignIn 
+        <SignIn
           fallbackRedirectUrl="/dashboard"
           appearance={{
             elements: {

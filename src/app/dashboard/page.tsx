@@ -6,7 +6,7 @@ import Footer from '@/components/Footer'
 
 export default async function DashboardPage() {
   const user = await currentUser()
-  
+
   if (!user) {
     redirect('/sign-in')
   }
@@ -22,7 +22,7 @@ export default async function DashboardPage() {
   return (
     <main className="bg-(--color-gallery) min-h-screen">
       <Navbar />
-      
+
       <section className="pt-[160px] pb-24 min-h-[80vh]">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="text-center mb-16">
@@ -33,10 +33,10 @@ export default async function DashboardPage() {
               Welcome, {user.firstName || 'Friend'}! 🙏
             </h1>
             <p className="text-(--color-text) text-xl max-w-2xl mx-auto">
-              You&apos;re now part of the Sacred Spaces community. Explore your personalized {isTeacher ? 'teaching resources' : 'practice area'} below.
+              You&apos;re now part of the Flow in Faith community. Explore your personalized {isTeacher ? 'teaching resources' : 'practice area'} below.
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="bg-white p-10 rounded-[30px_0_30px_0] shadow-xl hover:-translate-y-2 transition-all group">
               <h3 className="text-(--color-primary) text-3xl mb-6 font-bold">My Account</h3>
@@ -47,7 +47,7 @@ export default async function DashboardPage() {
               </div>
               <Link href="/user-profile" className="text-(--color-roti) font-bold hover:underline transition-all">Manage Account →</Link>
             </div>
-            
+
             <div className="bg-white p-10 rounded-[30px_0_30px_0] shadow-xl hover:-translate-y-2 transition-all">
               <h3 className="text-(--color-primary) text-3xl mb-6 font-bold">Quick Access</h3>
               <ul className="space-y-4">
@@ -66,7 +66,7 @@ export default async function DashboardPage() {
                 )}
               </ul>
             </div>
-            
+
             <div className="bg-(--color-martinique) p-10 rounded-[30px_0_30px_0] shadow-xl text-white">
               <h3 className="text-white text-3xl mb-6 font-bold">Community</h3>
               <p className="text-white/80 mb-10 text-lg leading-relaxed">
@@ -77,7 +77,7 @@ export default async function DashboardPage() {
           </div>
         </div>
       </section>
-      
+
       <Footer />
     </main>
   )

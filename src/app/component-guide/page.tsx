@@ -14,7 +14,7 @@ import RichTextBlock from '@/components/Blocks/RichText';
 import CTABlock from '@/components/Blocks/CTA';
 
 export const metadata: Metadata = {
-  title: 'Component Guide | Sacred Spaces',
+  title: 'Component Guide | Flow in Faith',
   robots: {
     index: false,
     follow: false,
@@ -37,13 +37,13 @@ export default function ComponentGuidePage() {
   return (
     <main className="bg-white">
       <Navbar />
-      
+
       {/* Introduction */}
       <section className="bg-(--color-gallery) pt-40 pb-24 border-b border-gray-200">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl lg:text-7xl font-bold text-(--color-primary) mb-6">Component Guide</h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            A living library of modular building blocks designed for the Sacred Spaces platform. 
+            A living library of modular building blocks designed for the Flow in Faith platform.
             All components are fully responsive and integrated with Sanity CMS.
           </p>
         </div>
@@ -52,7 +52,7 @@ export default function ComponentGuidePage() {
       {/* Hero Block */}
       <section>
         <SectionHeader title="Hero" />
-        <HeroBlock 
+        <HeroBlock
           badge="Design System"
           title="The Hero Block Title"
           subtitle="This is where the main value proposition goes. It's designed to be big, bold, and immersive."
@@ -64,7 +64,7 @@ export default function ComponentGuidePage() {
       {/* Brand Block */}
       <section>
         <SectionHeader title="Brand Message / Quote" />
-        <BrandBlock 
+        <BrandBlock
           quote="This is a featured brand quote or mission statement that spans the width of the page."
           body="Smaller supporting text can go here to add more context to the message above."
         />
@@ -73,7 +73,7 @@ export default function ComponentGuidePage() {
       {/* Pillars Block */}
       <section>
         <SectionHeader title="Pillars of Transformation" />
-        <PillarsBlock 
+        <PillarsBlock
           heading="Our Core Pillars"
           subheading="The Foundation"
           description="A demonstration of the four-column layout used for core values or pillars."
@@ -89,7 +89,7 @@ export default function ComponentGuidePage() {
       {/* Media + Text Block (Left) */}
       <section>
         <SectionHeader title="Media + Text (Image Left)" />
-        <MediaTextBlock 
+        <MediaTextBlock
           badge="Layout Option A"
           title="Image on the Left"
           imagePosition="left"
@@ -105,7 +105,7 @@ export default function ComponentGuidePage() {
       {/* Media + Text Block (Right) */}
       <section>
         <SectionHeader title="Media + Text (Image Right)" />
-        <MediaTextBlock 
+        <MediaTextBlock
           badge="Layout Option B"
           title="Image on the Right"
           imagePosition="right"
@@ -121,7 +121,7 @@ export default function ComponentGuidePage() {
       {/* Showcase Image Block */}
       <section>
         <SectionHeader title="Showcase Image (Full Width)" />
-        <ShowcaseImage 
+        <ShowcaseImage
           caption="Immersive Photography / Full Width Brand Moment"
           fullWidth={true}
         />
@@ -130,7 +130,7 @@ export default function ComponentGuidePage() {
       {/* Video Block */}
       <section>
         <SectionHeader title="Video Embed" />
-        <VideoBlock 
+        <VideoBlock
           title="Video Presentation Layout"
           url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
         />
@@ -139,7 +139,7 @@ export default function ComponentGuidePage() {
       {/* Benefits Block */}
       <section>
         <SectionHeader title="Benefits Grid" />
-        <BenefitsBlock 
+        <BenefitsBlock
           title="Core Membership Perks"
           description="A layout combining a left-side description with a right-side grid of benefits."
           items={[
@@ -155,7 +155,7 @@ export default function ComponentGuidePage() {
       {/* Team Block */}
       <section>
         <SectionHeader title="Leadership Team" />
-        <TeamBlock 
+        <TeamBlock
           heading="Sticky Leadership Layout"
           description="This component features a sticky left column for the heading and an scrolling right column for the story content."
         />
@@ -164,7 +164,7 @@ export default function ComponentGuidePage() {
       {/* Testimonials Block */}
       <section>
         <SectionHeader title="Testimonial Grid" />
-        <TestimonialsBlock 
+        <TestimonialsBlock
           heading="Student Feedback"
           items={[
             { quote: "This collective has completely changed how I approach my teaching and my faith.", author: "Jane Doe", role: "Yoga Teacher" },
@@ -176,7 +176,7 @@ export default function ComponentGuidePage() {
       {/* Rich Text Block */}
       <section>
         <SectionHeader title="Rich Text Center" />
-        <RichTextBlock 
+        <RichTextBlock
           heading="Long-form Content Layout"
           body={[
             {
@@ -194,7 +194,7 @@ export default function ComponentGuidePage() {
       {/* CTA Block */}
       <section>
         <SectionHeader title="Call to Action (CTA)" />
-        <CTABlock 
+        <CTABlock
           title="The Final Step"
           description="Designed to catch the eye at the end of a page and drive users toward registration or discovery."
           buttonText="Get Started Today"
