@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic';
 export async function POST(req: NextRequest) {
   try {
     const payload = await req.formData();
-    
+
     // Thrivecart sends data as form-data
     const event = payload.get('thrivecart_secret');
     const customerEmail = payload.get('customer[email]') as string;
@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
     const orderId = payload.get('order_id');
 
     // Verify Secret (in a real app, check against your ENV variable)
-    // if (event !== process.env.THRIVECART_SECRET) return NextResponse.json({error: 'Unauthorized'}, {status: 401});
+    if (event !== process.env.THRIVECART_SECRET) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
     if (!customerEmail) {
       return NextResponse.json({ error: 'Missing email' }, { status: 400 });
