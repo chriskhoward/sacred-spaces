@@ -49,6 +49,47 @@ function isDirectVideo(url: string): boolean {
   return !!url?.match(/\.(mp4|webm|ogg)$/i);
 }
 
+// Get thumbnail URL from video URL (YouTube/Vimeo)
+function getVideoThumbnail(url: string): string | null {
+  if (!url) return null;
+
+  // YouTube - get high quality thumbnail
+  const youtubeMatch = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]+)/);
+  if (youtubeMatch) {
+    // maxresdefault is highest quality, falls back to hqdefault if not available
+    return `https://img.youtube.com/vi/${youtubeMatch[1]}/maxresdefault.jpg`;
+  }
+
+  // Vimeo - requires API call, but we can use a placeholder approach
+  // For Vimeo, we'll return null and let the component handle it differently
+  const vimeoMatch = url.match(/(?:vimeo\.com\/)(\d+)/);
+  if (vimeoMatch) {
+    // Vimeo thumbnails require an API call, so we'll use a different approach
+    return `https://vumbnail.com/${vimeoMatch[1]}.jpg`;
+  }
+
+  return null;
+}
+
+// Get the best available thumbnail
+function getThumbnailUrl(video: { thumbnail?: any; videoUrl?: string }): string {
+  // First priority: uploaded thumbnail in Sanity
+  if (video.thumbnail) {
+    return urlForImage(video.thumbnail).url();
+  }
+
+  // Second priority: auto-generated from video URL
+  if (video.videoUrl) {
+    const autoThumbnail = getVideoThumbnail(video.videoUrl);
+    if (autoThumbnail) {
+      return autoThumbnail;
+    }
+  }
+
+  // Fallback: placeholder image
+  return '/assets/images/placeholder_teacher.png';
+}
+
 export default function VideoLibraryClient({ initialVideos }: VideoLibraryClientProps) {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
@@ -153,7 +194,7 @@ export default function VideoLibraryClient({ initialVideos }: VideoLibraryClient
                   className="relative aspect-video bg-black/20 rounded-3xl overflow-hidden shadow-2xl border border-white/10 group cursor-pointer hover:border-(--color-roti) transition-all"
                 >
                     <Image
-                    src={featuredVideo.thumbnail ? urlForImage(featuredVideo.thumbnail).url() : '/assets/images/placeholder_teacher.png'}
+                    src={getThumbnailUrl(featuredVideo)}
                     alt={featuredVideo.title}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-700"
@@ -197,7 +238,7 @@ export default function VideoLibraryClient({ initialVideos }: VideoLibraryClient
               >
                 <div className="relative aspect-video bg-gray-200">
                   <Image
-                     src={video.thumbnail ? urlForImage(video.thumbnail).url() : '/assets/images/placeholder_teacher.png'}
+                     src={getThumbnailUrl(video)}
                      alt={video.title}
                      fill
                      className="object-cover"
