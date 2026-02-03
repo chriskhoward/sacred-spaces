@@ -10,6 +10,13 @@ import ShowcaseImage from './ShowcaseImage';
 import VideoBlock from './VideoBlock';
 import TestimonialsBlock from './Testimonials';
 import FAQBlock from './FAQ';
+import EmpathySectionBlock from './EmpathySection';
+import HighlightTextBlock from './HighlightText';
+import FeatureGridBlock from './FeatureGrid';
+import PremiumFeaturesBlock from './PremiumFeatures';
+import FounderBioBlock from './FounderBio';
+import TextCtaBlock from './TextCta';
+import ChecklistBlock from './Checklist';
 
 interface BlockRendererProps {
   blocks: Array<{ _type: string; _key: string; [key: string]: any }>;
@@ -78,6 +85,20 @@ export default function BlockRenderer({ blocks, documentId, documentType }: Bloc
             return wrapWithSanity(<CTABlock {...blockProps} />);
           case 'faqBlock':
             return wrapWithSanity(<FAQBlock {...blockProps} />);
+          case 'empathySectionBlock':
+            return wrapWithSanity(<EmpathySectionBlock {...blockProps} />);
+          case 'highlightTextBlock':
+            return wrapWithSanity(<HighlightTextBlock {...blockProps} />);
+          case 'featureGridBlock':
+            return wrapWithSanity(<FeatureGridBlock {...blockProps} />);
+          case 'premiumFeaturesBlock':
+            return wrapWithSanity(<PremiumFeaturesBlock {...blockProps} />);
+          case 'founderBioBlock':
+            return wrapWithSanity(<FounderBioBlock {...blockProps} />);
+          case 'textCtaBlock':
+            return wrapWithSanity(<TextCtaBlock {...blockProps} />);
+          case 'checklistBlock':
+            return wrapWithSanity(<ChecklistBlock {...blockProps} />);
           default:
             return <div key={_key}>Unknown block type: {_type}</div>;
         }

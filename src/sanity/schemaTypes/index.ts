@@ -18,7 +18,14 @@ import {
   teamBlock,
   richTextBlock,
   ctaBlock,
-  faqBlock
+  faqBlock,
+  empathySectionBlock,
+  highlightTextBlock,
+  featureGridBlock,
+  premiumFeaturesBlock,
+  founderBioBlock,
+  textCtaBlock,
+  checklistBlock
 } from './pageBuilder'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
@@ -41,6 +48,13 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     richTextBlock,
     ctaBlock,
     faqBlock,
+    empathySectionBlock,
+    highlightTextBlock,
+    featureGridBlock,
+    premiumFeaturesBlock,
+    founderBioBlock,
+    textCtaBlock,
+    checklistBlock,
     allowedUserType
   ],
 }

@@ -252,3 +252,207 @@ export const faqBlock = defineType({
     })
   ]
 })
+
+// Empathy Section Block - For "What if you could..." and "I see you" sections
+export const empathySectionBlock = defineType({
+  name: 'empathySectionBlock',
+  title: 'Empathy Section',
+  type: 'object',
+  fields: [
+    defineField({ name: 'heading', title: 'Heading', type: 'string' }),
+    defineField({
+      name: 'items',
+      title: 'Bullet Points',
+      type: 'array',
+      of: [{ type: 'text' }],
+      description: 'Each item becomes a styled bullet point'
+    }),
+    defineField({
+      name: 'style',
+      title: 'Section Style',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Light (White background)', value: 'light' },
+          { title: 'Dark (Primary background)', value: 'dark' },
+        ],
+        layout: 'radio'
+      },
+      initialValue: 'light'
+    }),
+    defineField({ name: 'buttonText', title: 'Button Text (Optional)', type: 'string' }),
+    defineField({ name: 'buttonLink', title: 'Button Link', type: 'string' }),
+  ]
+})
+
+// Highlight Text Block - For large emphasized statements
+export const highlightTextBlock = defineType({
+  name: 'highlightTextBlock',
+  title: 'Highlight Text Section',
+  type: 'object',
+  fields: [
+    defineField({
+      name: 'statements',
+      title: 'Statements',
+      type: 'array',
+      of: [{ type: 'text' }],
+      description: 'Each statement is displayed prominently'
+    }),
+    defineField({
+      name: 'style',
+      title: 'Section Style',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Light (White background)', value: 'light' },
+          { title: 'Dark (Primary background)', value: 'dark' },
+          { title: 'Cream (Gallery background)', value: 'cream' },
+        ],
+        layout: 'radio'
+      },
+      initialValue: 'light'
+    }),
+  ]
+})
+
+// Feature Grid Block - For 4-column membership features
+export const featureGridBlock = defineType({
+  name: 'featureGridBlock',
+  title: 'Feature Grid',
+  type: 'object',
+  fields: [
+    defineField({ name: 'heading', title: 'Heading (Optional)', type: 'string' }),
+    defineField({ name: 'subheading', title: 'Subheading (Optional)', type: 'string' }),
+    defineField({
+      name: 'items',
+      title: 'Feature Items',
+      type: 'array',
+      of: [{
+        type: 'object',
+        fields: [
+          defineField({ name: 'title', title: 'Title', type: 'string' }),
+          defineField({ name: 'description', title: 'Description', type: 'text' }),
+          defineField({ name: 'icon', title: 'Icon (Emoji)', type: 'string' }),
+        ]
+      }]
+    }),
+    defineField({
+      name: 'style',
+      title: 'Section Style',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Light (White background)', value: 'light' },
+          { title: 'Cream (Gallery background)', value: 'cream' },
+        ],
+        layout: 'radio'
+      },
+      initialValue: 'light'
+    }),
+  ]
+})
+
+// Premium Features Block - For premium member benefits with icons
+export const premiumFeaturesBlock = defineType({
+  name: 'premiumFeaturesBlock',
+  title: 'Premium Features List',
+  type: 'object',
+  fields: [
+    defineField({ name: 'heading', title: 'Heading', type: 'string' }),
+    defineField({
+      name: 'items',
+      title: 'Feature Items',
+      type: 'array',
+      of: [{
+        type: 'object',
+        fields: [
+          defineField({ name: 'title', title: 'Title', type: 'string' }),
+          defineField({ name: 'description', title: 'Description', type: 'text' }),
+        ]
+      }]
+    }),
+    defineField({ name: 'buttonText', title: 'Button Text (Optional)', type: 'string' }),
+    defineField({ name: 'buttonLink', title: 'Button Link', type: 'string' }),
+  ]
+})
+
+// Founder Bio Block - For founder/about section with image
+export const founderBioBlock = defineType({
+  name: 'founderBioBlock',
+  title: 'Founder Bio Section',
+  type: 'object',
+  fields: [
+    defineField({ name: 'badge', title: 'Badge Text', type: 'string' }),
+    defineField({ name: 'name', title: 'Name', type: 'string' }),
+    defineField({ name: 'title', title: 'Title/Role', type: 'string' }),
+    defineField({
+      name: 'bio',
+      title: 'Bio',
+      type: 'array',
+      of: [{ type: 'block' }]
+    }),
+    defineField({ name: 'image', title: 'Image', type: 'image', options: { hotspot: true } }),
+    defineField({ name: 'closingText', title: 'Closing Text', type: 'text' }),
+    defineField({ name: 'buttonText', title: 'Button Text', type: 'string' }),
+    defineField({ name: 'buttonLink', title: 'Button Link', type: 'string' }),
+  ]
+})
+
+// Text CTA Block - Simple centered text with CTA button
+export const textCtaBlock = defineType({
+  name: 'textCtaBlock',
+  title: 'Text + CTA Section',
+  type: 'object',
+  fields: [
+    defineField({ name: 'heading', title: 'Heading', type: 'string' }),
+    defineField({ name: 'body', title: 'Body Text', type: 'text' }),
+    defineField({ name: 'buttonText', title: 'Button Text', type: 'string' }),
+    defineField({ name: 'buttonLink', title: 'Button Link', type: 'string' }),
+    defineField({
+      name: 'style',
+      title: 'Section Style',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Light (White background)', value: 'light' },
+          { title: 'Dark (Primary background)', value: 'dark' },
+          { title: 'Cream (Gallery background)', value: 'cream' },
+        ],
+        layout: 'radio'
+      },
+      initialValue: 'light'
+    }),
+    defineField({
+      name: 'size',
+      title: 'Text Size',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Normal', value: 'normal' },
+          { title: 'Large', value: 'large' },
+        ],
+        layout: 'radio'
+      },
+      initialValue: 'normal'
+    }),
+  ]
+})
+
+// Checklist Block - For "This Sanctuary is for you if..." sections
+export const checklistBlock = defineType({
+  name: 'checklistBlock',
+  title: 'Checklist Section',
+  type: 'object',
+  fields: [
+    defineField({ name: 'heading', title: 'Heading', type: 'string' }),
+    defineField({
+      name: 'items',
+      title: 'Checklist Items',
+      type: 'array',
+      of: [{ type: 'text' }]
+    }),
+    defineField({ name: 'closingText', title: 'Closing Text', type: 'string' }),
+    defineField({ name: 'buttonText', title: 'Button Text', type: 'string' }),
+    defineField({ name: 'buttonLink', title: 'Button Link', type: 'string' }),
+  ]
+})
