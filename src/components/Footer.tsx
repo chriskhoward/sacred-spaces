@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import FooterLinks from './FooterLinks';
 
 export default function Footer() {
   return (
@@ -20,13 +21,7 @@ export default function Footer() {
 
         <div className="text-center md:text-left">
           <h4 className="text-white text-2xl font-bold mb-8">Quick Links</h4>
-          <ul className="list-none p-0 m-0 space-y-4">
-            <li><Link href="/" className="hover:text-(--color-roti) transition-colors">Home</Link></li>
-            <li><Link href="/about" className="hover:text-(--color-roti) transition-colors">About Us</Link></li>
-            <li><Link href="/teacher-collective" className="hover:text-(--color-roti) transition-colors">Teacher Collective</Link></li>
-            <li><Link href="/directory" className="hover:text-(--color-roti) transition-colors">Directory</Link></li>
-            <li><Link href="/video-library" className="hover:text-(--color-roti) transition-colors">Video Library</Link></li>
-          </ul>
+          <FooterLinks />
         </div>
 
         <div className="text-center md:text-left">

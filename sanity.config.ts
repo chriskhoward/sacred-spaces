@@ -66,6 +66,25 @@ export default defineConfig({
           enable: '/api/draft',
         },
       },
+      resolve: {
+        // Map document types to their preview URLs
+        locations: {
+          home: {
+            select: { title: 'title' },
+            resolve: () => ({
+              locations: [{ title: 'Homepage', href: '/' }],
+            }),
+          },
+          page: {
+            select: { title: 'title', slug: 'slug.current' },
+            resolve: (doc) => ({
+              locations: doc?.slug
+                ? [{ title: doc.title || 'Untitled', href: `/${doc.slug}` }]
+                : [],
+            }),
+          },
+        },
+      },
     }),
     // Vision is a tool that lets you query your content with GROQ in the studio
     // https://www.sanity.io/docs/the-vision-plugin

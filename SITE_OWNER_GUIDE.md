@@ -35,13 +35,15 @@
 
 | Task | Where to Do It |
 |------|----------------|
+| **Edit homepage** | Sanity Studio → Homepage |
 | Add/edit videos | Sanity Studio → Video Library |
 | Add/edit live classes | Sanity Studio → Live Class Schedule |
 | Add/edit resources | Sanity Studio → Teacher Resources |
 | Add teacher manually | Sanity Studio → Allowed User |
 | View/manage users | Clerk Dashboard |
 | View payments | Thrivecart Dashboard |
-| Edit website pages | Sanity Studio → Pages |
+| Edit other pages | Sanity Studio → Dynamic Pages |
+| Visual editing mode | Sanity Studio → Presentation |
 
 ---
 
@@ -269,10 +271,33 @@ Resources are teaching materials for the Teacher Collective (PDFs, guides, maste
 
 You can create and edit pages directly in Sanity without touching code.
 
-### Creating a New Page
+### Editing the Homepage
+
+The homepage is now fully editable in Sanity!
 
 1. **Go to Sanity Studio**: https://www.flowinfaith.com/studio
-2. **Click "Pages"** in the left sidebar
+2. **Click "Homepage"** in the left sidebar (it's a singleton - only one exists)
+3. **Add or edit content blocks** using the Page Builder
+4. **Click "Publish"** to make changes live
+
+**Note**: If the Homepage has no content blocks in Sanity, the site will display the default hardcoded content. Once you add content blocks in Sanity, they will replace the default content.
+
+### Visual Editing (Presentation Mode)
+
+For a more visual editing experience:
+
+1. **Go to Sanity Studio**: https://www.flowinfaith.com/studio
+2. **Click "Presentation"** in the top bar
+3. **Navigate to any page** (Homepage, dynamic pages)
+4. **Click on any editable section** - it will highlight and let you edit directly
+5. **Make changes** and click "Publish"
+
+This is the easiest way to edit your site - you see the live preview while editing!
+
+### Creating a New Dynamic Page
+
+1. **Go to Sanity Studio**: https://www.flowinfaith.com/studio
+2. **Click "Dynamic Pages"** in the left sidebar
 3. **Click the + button** to create new
 4. **Fill in**:
    - **Title**: Page name (appears in navigation)
@@ -297,6 +322,7 @@ The page will automatically appear in the navigation!
 | **Team Block** | Team member profiles |
 | **Rich Text Block** | Free-form text content |
 | **CTA Block** | Call-to-action button section |
+| **FAQ Block** | Collapsible FAQ accordion |
 
 ---
 

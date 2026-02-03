@@ -1,7 +1,8 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import HomePageContent from '@/components/Home/HomePageContent';
-import FAQBlock from '@/components/Blocks/FAQ';
+import BlockRenderer from '@/components/Blocks/BlockRenderer';
+import { client } from '@/sanity/lib/client';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -13,11 +14,38 @@ export const metadata: Metadata = {
   }
 };
 
+// Query to fetch homepage content from Sanity
+const homeQuery = `*[_type == "home"][0]{
+  _id,
+  _type,
+  title,
+  content[]{
+    _key,
+    _type,
+    ...
+  }
+}`;
+
 export default async function Home() {
+  // Try to fetch homepage content from Sanity
+  const homeData = await client.fetch(homeQuery);
+
+  // If we have Sanity content, use BlockRenderer
+  // Otherwise, fall back to the hardcoded HomePageContent
+  const hasSanityContent = homeData?.content && homeData.content.length > 0;
+
   return (
     <main className="min-h-screen bg-white">
       <Navbar />
-      <HomePageContent />
+      {hasSanityContent ? (
+        <BlockRenderer
+          blocks={homeData.content}
+          documentId={homeData._id}
+          documentType={homeData._type}
+        />
+      ) : (
+        <HomePageContent />
+      )}
       <Footer />
     </main>
   );

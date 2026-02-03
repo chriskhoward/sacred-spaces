@@ -10,8 +10,8 @@ interface HeroBlockProps {
   secondaryImage?: { asset?: any };
   primaryButtonText?: string;
   secondaryButtonText?: string;
-  primaryButtonUrl?: string;
-  secondaryButtonUrl?: string;
+  primaryButtonLink?: string;
+  secondaryButtonLink?: string;
 }
 
 export default function HeroBlock({
@@ -22,8 +22,8 @@ export default function HeroBlock({
   secondaryImage,
   primaryButtonText = "Join the Collective",
   secondaryButtonText = "Learn More",
-  primaryButtonUrl,
-  secondaryButtonUrl
+  primaryButtonLink,
+  secondaryButtonLink
 }: HeroBlockProps) {
   const imageUrl = image?.asset ? urlForImage(image).url() : '/assets/images/shkrabaanthony.jpg';
   const secondaryImageUrl = secondaryImage?.asset ? urlForImage(secondaryImage).url() : null;
@@ -58,8 +58,8 @@ export default function HeroBlock({
             <HeroButtons
               primaryText={primaryButtonText}
               secondaryText={secondaryButtonText}
-              primaryUrl={primaryButtonUrl}
-              secondaryUrl={secondaryButtonUrl}
+              primaryUrl={primaryButtonLink}
+              secondaryUrl={secondaryButtonLink}
             />
           </div>
           <div className="lg:flex-1 flex justify-center lg:justify-end">

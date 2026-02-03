@@ -17,7 +17,8 @@ import {
   testimonialBlock,
   teamBlock,
   richTextBlock,
-  ctaBlock
+  ctaBlock,
+  faqBlock
 } from './pageBuilder'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
@@ -39,6 +40,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     teamBlock,
     richTextBlock,
     ctaBlock,
+    faqBlock,
     allowedUserType
   ],
 }

@@ -9,7 +9,7 @@ export default function SanctuaryPage() {
                 title="Where Wellness Meets Worship"
                 subtitle="A sacred space at the intersection of Christian spirituality, emotional wellness, and embodied practice."
                 primaryButtonText="Join the Sanctuary"
-                primaryButtonUrl="/join"
+                primaryButtonLink="/join"
                 secondaryButtonText="Learn More"
             />
             <div className="container mx-auto px-4 py-24 text-center">

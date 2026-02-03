@@ -28,6 +28,7 @@ export const homeType = defineType({
         { type: 'teamBlock' },
         { type: 'richTextBlock' },
         { type: 'ctaBlock' },
+        { type: 'faqBlock' },
       ],
     }),
   ],

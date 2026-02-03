@@ -1,0 +1,35 @@
+'use client';
+
+import Link from 'next/link';
+import { useUser } from '@clerk/nextjs';
+
+export default function FooterLinks() {
+  const { isSignedIn } = useUser();
+
+  return (
+    <ul className="list-none p-0 m-0 space-y-4">
+      <li><Link href="/" className="hover:text-(--color-roti) transition-colors">Home</Link></li>
+      <li><Link href="/about" className="hover:text-(--color-roti) transition-colors">About Us</Link></li>
+      <li><Link href="/teacher-collective" className="hover:text-(--color-roti) transition-colors">Teacher Collective</Link></li>
+      <li><Link href="/directory" className="hover:text-(--color-roti) transition-colors">Directory</Link></li>
+      <li><Link href="/video-library" className="hover:text-(--color-roti) transition-colors">Video Library</Link></li>
+      <li className="pt-2">
+        {isSignedIn ? (
+          <Link
+            href="/dashboard"
+            className="inline-block px-6 py-2 bg-(--color-roti) text-(--color-primary) rounded-full font-bold hover:bg-white transition-colors"
+          >
+            Dashboard
+          </Link>
+        ) : (
+          <Link
+            href="/sign-in"
+            className="inline-block px-6 py-2 bg-(--color-roti) text-(--color-primary) rounded-full font-bold hover:bg-white transition-colors"
+          >
+            Member Login
+          </Link>
+        )}
+      </li>
+    </ul>
+  );
+}

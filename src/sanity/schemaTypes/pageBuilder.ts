@@ -11,11 +11,23 @@ export const heroBlock = defineType({
     defineField({ name: 'subtitle', title: 'Subtitle', type: 'text' }),
     defineField({ name: 'image', title: 'Hero Image', type: 'image', options: { hotspot: true } }),
     defineField({ name: 'primaryButtonText', title: 'Primary Button Text', type: 'string' }),
+    defineField({
+      name: 'primaryButtonLink',
+      title: 'Primary Button Link',
+      type: 'string',
+      description: 'Internal path (e.g., /sign-up) or external URL (e.g., https://example.com)'
+    }),
     defineField({ name: 'secondaryButtonText', title: 'Secondary Button Text', type: 'string' }),
-    defineField({ 
-      name: 'secondaryImage', 
-      title: 'Secondary/Overlay Image', 
-      type: 'image', 
+    defineField({
+      name: 'secondaryButtonLink',
+      title: 'Secondary Button Link',
+      type: 'string',
+      description: 'Internal path (e.g., /about) or external URL'
+    }),
+    defineField({
+      name: 'secondaryImage',
+      title: 'Secondary/Overlay Image',
+      type: 'image',
       options: { hotspot: true },
       description: 'Used for decorative overlays or background textures'
     }),
@@ -216,5 +228,27 @@ export const ctaBlock = defineType({
     defineField({ name: 'description', title: 'Description', type: 'text' }),
     defineField({ name: 'buttonText', title: 'Button Text', type: 'string' }),
     defineField({ name: 'buttonLink', title: 'Button Link', type: 'string', description: 'Internal (e.g. /sign-up) or External URL' }),
+  ]
+})
+
+// FAQ Block
+export const faqBlock = defineType({
+  name: 'faqBlock',
+  title: 'FAQ Section',
+  type: 'object',
+  fields: [
+    defineField({ name: 'heading', title: 'Heading', type: 'string' }),
+    defineField({
+      name: 'items',
+      title: 'FAQ Items',
+      type: 'array',
+      of: [{
+        type: 'object',
+        fields: [
+          defineField({ name: 'question', title: 'Question', type: 'string' }),
+          defineField({ name: 'answer', title: 'Answer', type: 'text' }),
+        ]
+      }]
+    })
   ]
 })
