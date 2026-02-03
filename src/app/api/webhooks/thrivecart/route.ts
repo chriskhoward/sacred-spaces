@@ -11,14 +11,34 @@ export const dynamic = 'force-dynamic';
 
 export async function POST(req: NextRequest) {
   try {
-    const payload = await req.formData();
+    const url = new URL(req.url);
+    if (url.searchParams.get('debug_env') === 'true') {
+      return NextResponse.json({
+        hasSecret: !!process.env.THRIVECART_SECRET,
+        secretLength: process.env.THRIVECART_SECRET?.length || 0
+      });
+    }
 
-    // Thrivecart data
-    const eventSecret = payload.get('thrivecart_secret');
-    const customerEmail = payload.get('customer[email]') as string;
-    // const customerFirstName = payload.get('customer[first_name]') as string;
-    const orderId = payload.get('order_id') as string;
-    const productName = payload.get('product_name') as string || 'Unknown Product';
+    let eventSecret = '';
+    let customerEmail = '';
+    let orderId = '';
+    let productName = '';
+
+    const contentType = req.headers.get('content-type') || '';
+
+    if (contentType.includes('application/json')) {
+      const json = await req.json();
+      eventSecret = json.thrivecart_secret;
+      customerEmail = json.customer?.email;
+      orderId = json.order_id;
+      productName = json.product_name || 'Unknown Product';
+    } else {
+      const formData = await req.formData();
+      eventSecret = formData.get('thrivecart_secret') as string;
+      customerEmail = formData.get('customer[email]') as string;
+      orderId = formData.get('order_id') as string;
+      productName = (formData.get('product_name') as string) || 'Unknown Product';
+    }
 
     // 1. Verify Secret
     const isValid = eventSecret === process.env.THRIVECART_SECRET;
