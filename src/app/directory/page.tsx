@@ -1,9 +1,10 @@
-import { clerkClient } from '@clerk/nextjs/server';
+import { clerkClient, currentUser } from '@clerk/nextjs/server';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import DirectoryClient from './DirectoryClient';
 import { Teacher } from '@/data/teachers';
 import { Metadata } from 'next';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: "Find a Teacher | Flow in Faith Directory",
@@ -13,6 +14,44 @@ export const metadata: Metadata = {
 export const dynamic = 'force-dynamic';
 
 export default async function DirectoryPage() {
+  const user = await currentUser();
+
+  // Require login to access directory
+  if (!user) {
+    return (
+      <main className="bg-(--color-gallery) min-h-screen">
+        <Navbar />
+        <section className="pt-[160px] pb-24">
+          <div className="container mx-auto px-4 text-center">
+            <div className="max-w-2xl mx-auto bg-white rounded-[3rem_0_3rem_0] p-12 shadow-xl">
+              <h1 className="text-4xl font-bold text-(--color-primary) mb-6">
+                Members Only
+              </h1>
+              <p className="text-xl text-gray-600 mb-8">
+                Sign in to access our directory of Christ-centered yoga teachers.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link
+                  href="/sign-in"
+                  className="btn btn-primary px-8 py-4 text-lg"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  href="/sign-up"
+                  className="px-8 py-4 border-2 border-(--color-primary) text-(--color-primary) rounded-[2rem_0_2rem_0] font-bold hover:bg-(--color-primary) hover:text-white transition-all text-center text-lg"
+                >
+                  Create Account
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+        <Footer />
+      </main>
+    );
+  }
+
   const client = await clerkClient();
 
   // Fetch users with membershipType 'teacher'
