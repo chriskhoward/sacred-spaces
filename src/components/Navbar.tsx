@@ -2,7 +2,7 @@ import { client } from '@/sanity/lib/client';
 import NavbarClient from './NavbarClient';
 
 export default async function Navbar() {
-  const query = `*[_type == "page"] {
+  const query = `*[_type == "page" && showInNav == true] {
     title,
     "slug": slug.current
   }`;

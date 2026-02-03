@@ -22,6 +22,13 @@ export const pageType = defineType({
       validation: Rule => Rule.required(),
     }),
     defineField({
+      name: 'showInNav',
+      title: 'Show in Navigation',
+      type: 'boolean',
+      description: 'If enabled, this page will appear in the main navigation menu',
+      initialValue: true,
+    }),
+    defineField({
       name: 'content',
       title: 'Page Content',
       type: 'array',
