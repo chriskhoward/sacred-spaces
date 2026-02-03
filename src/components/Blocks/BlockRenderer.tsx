@@ -39,44 +39,47 @@ export default function BlockRenderer({ blocks, documentId, documentType }: Bloc
   return (
     <>
       {blocks.map((block) => {
+        // Destructure out Sanity internal fields, keep the rest as props
+        const { _type, _key, ...blockProps } = block;
+
         // Create the path for this block in the content array
-        const blockPath = `content[_key=="${block._key}"]`;
+        const blockPath = `content[_key=="${_key}"]`;
         const sanityAttrs = createSanityDataAttribute(documentId, documentType, blockPath);
 
         // Wrapper div with data-sanity for click-to-edit
         const wrapWithSanity = (component: React.ReactNode) => (
-          <div key={block._key} {...sanityAttrs}>
+          <div key={_key} {...sanityAttrs}>
             {component}
           </div>
         );
 
-        switch (block._type) {
+        switch (_type) {
           case 'heroBlock':
-            return wrapWithSanity(<HeroBlock {...block} />);
+            return wrapWithSanity(<HeroBlock {...blockProps} />);
           case 'pillarsBlock':
-            return wrapWithSanity(<PillarsBlock {...block} />);
+            return wrapWithSanity(<PillarsBlock {...blockProps} />);
           case 'benefitsBlock':
-            return wrapWithSanity(<BenefitsBlock {...block} />);
+            return wrapWithSanity(<BenefitsBlock {...blockProps} />);
           case 'brandBlock':
-            return wrapWithSanity(<BrandBlock {...block} />);
+            return wrapWithSanity(<BrandBlock {...blockProps} />);
           case 'mediaTextBlock':
-            return wrapWithSanity(<MediaTextBlock {...block} />);
+            return wrapWithSanity(<MediaTextBlock {...blockProps} />);
           case 'imageBlock':
-            return wrapWithSanity(<ShowcaseImage {...block} />);
+            return wrapWithSanity(<ShowcaseImage {...blockProps} />);
           case 'videoBlock':
-            return wrapWithSanity(<VideoBlock {...block} />);
+            return wrapWithSanity(<VideoBlock {...blockProps} />);
           case 'testimonialBlock':
-            return wrapWithSanity(<TestimonialsBlock {...block} />);
+            return wrapWithSanity(<TestimonialsBlock {...blockProps} />);
           case 'teamBlock':
-            return wrapWithSanity(<TeamBlock {...block} />);
+            return wrapWithSanity(<TeamBlock {...blockProps} />);
           case 'richTextBlock':
-            return wrapWithSanity(<RichTextBlock {...block} />);
+            return wrapWithSanity(<RichTextBlock {...blockProps} />);
           case 'ctaBlock':
-            return wrapWithSanity(<CTABlock {...block} />);
+            return wrapWithSanity(<CTABlock {...blockProps} />);
           case 'faqBlock':
-            return wrapWithSanity(<FAQBlock {...block} />);
+            return wrapWithSanity(<FAQBlock {...blockProps} />);
           default:
-            return <div key={block._key}>Unknown block type: {block._type}</div>;
+            return <div key={_key}>Unknown block type: {_type}</div>;
         }
       })}
     </>
