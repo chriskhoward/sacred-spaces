@@ -16,6 +16,14 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
   title: "Flow in Faith - Christ-Centered Yoga",
   description: "A membership community for Christ-Centered Yoga Teachers of Color and practitioners.",
+  icons: {
+    icon: [
+      { url: '/icon.png', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-icon.png', type: 'image/png' },
+    ],
+  },
 };
 
 // Force dynamic rendering to avoid Clerk publishableKey error during static generation
