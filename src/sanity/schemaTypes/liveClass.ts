@@ -38,6 +38,7 @@ export const liveClassType = defineType({
                 { title: 'Meditation', value: 'Meditation' },
                 { title: 'Hatha', value: 'Hatha' },
                 { title: 'Workshop', value: 'Workshop' },
+                { title: 'Restorative', value: 'Restorative' },
             ]
         }
     }),
@@ -50,6 +51,33 @@ export const liveClassType = defineType({
         name: 'zoomLink',
         title: 'Zoom/Meeting Link',
         type: 'url',
+    }),
+    defineField({
+        name: 'isRecurring',
+        title: 'Recurring Class',
+        type: 'boolean',
+        description: 'Enable if this class repeats on a schedule',
+        initialValue: false,
+    }),
+    defineField({
+        name: 'recurrencePattern',
+        title: 'Recurrence Pattern',
+        type: 'string',
+        options: {
+            list: [
+                { title: 'Weekly', value: 'weekly' },
+                { title: 'Bi-weekly', value: 'biweekly' },
+                { title: 'Monthly', value: 'monthly' },
+            ],
+        },
+        hidden: ({ parent }) => !parent?.isRecurring,
+    }),
+    defineField({
+        name: 'recurrenceEndDate',
+        title: 'Recurrence End Date',
+        type: 'date',
+        description: 'When should this recurring class stop? Leave empty for indefinite.',
+        hidden: ({ parent }) => !parent?.isRecurring,
     }),
     defineField({
         name: 'targetAudience',
@@ -66,4 +94,25 @@ export const liveClassType = defineType({
         validation: (Rule) => Rule.required(),
     }),
   ],
+  preview: {
+    select: {
+      title: 'title',
+      instructor: 'instructor',
+      dateTime: 'dateTime',
+      isRecurring: 'isRecurring',
+    },
+    prepare({ title, instructor, dateTime, isRecurring }) {
+      const date = dateTime ? new Date(dateTime).toLocaleDateString('en-US', {
+        weekday: 'short',
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit'
+      }) : 'No date';
+      return {
+        title: `${title}${isRecurring ? ' 🔄' : ''}`,
+        subtitle: `${date} • ${instructor}`,
+      };
+    },
+  },
 })
