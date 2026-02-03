@@ -230,15 +230,20 @@ export default async function TeacherCollectivePage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
               {benefits.map((benefit, index) => (
-                <div key={index} className="bg-white rounded-[3rem_0_3rem_0] overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.15)] transition-all group border-2 border-transparent hover:border-(--color-sidecar) hover:-translate-y-2">
-                  {/* Benefit Header Image Placeholder */}
-                  <div className="h-48 bg-gray-200 w-full flex items-center justify-center text-gray-500 relative">
-                    <Image src={`/assets/images/benefit_header_${index + 1}.png`} fill className="object-cover" alt={benefit.title} />
+                <div key={index} className="bg-white rounded-[2rem_0_2rem_0] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group border border-gray-100 hover:border-(--color-sidecar) hover:-translate-y-1">
+                  {/* Benefit Header Image */}
+                  <div className="aspect-square w-full relative overflow-hidden bg-(--color-gallery)">
+                    <Image 
+                      src={`/assets/images/benefit_header_${index + 1}.png`} 
+                      fill 
+                      className="object-contain transition-transform duration-500 group-hover:scale-105" 
+                      alt={benefit.title} 
+                    />
                   </div>
 
-                  <div className="p-10">
-                    <h4 className="text-2xl font-bold text-(--color-primary) mb-4">{benefit.title}</h4>
-                    <p className="text-gray-700 leading-relaxed">
+                  <div className="p-8">
+                    <h4 className="text-xl font-bold text-(--color-primary) mb-3 leading-tight">{benefit.title}</h4>
+                    <p className="text-gray-600 leading-relaxed text-sm">
                       {benefit.description}
                     </p>
                   </div>
@@ -346,7 +351,7 @@ export default async function TeacherCollectivePage() {
         </div>
       </section>
 
-      {/* Imagine Section - Updated with Image Placeholders */}
+      {/* Imagine Section */}
       <section className="py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
@@ -355,18 +360,22 @@ export default async function TeacherCollectivePage() {
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
               {[
-                "Teach with confidence, knowing your faith and practice are not in conflict.",
-                "Be surrounded by teachers who understand the nuance of your journey.",
-                "Have access to opportunities that support both your spiritual and professional growth.",
-                "Stop doing this work alone — and feel held by community."
-              ].map((text, i) => (
-                <div key={i} className="bg-(--color-gallery) rounded-[2rem_0_2rem_0] text-center hover:bg-(--color-sidecar) transition-all hover:shadow-lg hover:-translate-y-1 overflow-hidden h-full flex flex-col">
-                  {/* Image Placeholder */}
-                  <div className="h-40 bg-gray-300 w-full flex items-center justify-center text-gray-600 text-sm">
-                    Image {i + 1}
+                { text: "Teach with confidence, knowing your faith and practice are not in conflict.", image: "/assets/images/pexels-shkrabaanthony-5890690.jpg" },
+                { text: "Be surrounded by teachers who understand the nuance of your journey.", image: "/assets/images/pexels-shkrabaanthony-5890703.jpg" },
+                { text: "Have access to opportunities that support both your spiritual and professional growth.", image: "/assets/images/pexels-tima-miroshnichenko-6860493.jpg" },
+                { text: "Stop doing this work alone — and feel held by community.", image: "/assets/images/pexels-shkrabaanthony-5890690.jpg" }
+              ].map((item, i) => (
+                <div key={i} className="bg-(--color-gallery) rounded-[2rem_0_2rem_0] text-center hover:bg-(--color-sidecar) transition-all hover:shadow-lg hover:-translate-y-1 overflow-hidden h-full flex flex-col group">
+                  <div className="aspect-[4/3] w-full relative overflow-hidden">
+                    <Image 
+                      src={item.image} 
+                      alt="" 
+                      fill 
+                      className="object-cover transition-transform duration-500 group-hover:scale-105" 
+                    />
                   </div>
-                  <div className="p-8 flex-grow flex items-center justify-center">
-                    <p className="text-gray-700 leading-relaxed font-medium">{text}</p>
+                  <div className="p-6 flex-grow flex items-center justify-center">
+                    <p className="text-gray-700 leading-relaxed font-medium text-sm">{item.text}</p>
                   </div>
                 </div>
               ))}
