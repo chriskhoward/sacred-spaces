@@ -3,6 +3,12 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import DirectoryClient from './DirectoryClient';
 import { teachers as staticTeachers, Teacher } from '@/data/teachers';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Find a Teacher | Flow in Faith Directory",
+  description: "Connect with Christ-Centered Yoga Teachers of Color worldwide. Find classes, workshops, and retreats that honor your faith and culture.",
+};
 
 export const dynamic = 'force-dynamic';
 

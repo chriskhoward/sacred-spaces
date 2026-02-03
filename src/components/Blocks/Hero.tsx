@@ -10,6 +10,8 @@ interface HeroBlockProps {
   secondaryImage?: { asset?: any };
   primaryButtonText?: string;
   secondaryButtonText?: string;
+  primaryButtonUrl?: string;
+  secondaryButtonUrl?: string;
 }
 
 export default function HeroBlock({
@@ -19,7 +21,9 @@ export default function HeroBlock({
   image,
   secondaryImage,
   primaryButtonText = "Join the Collective",
-  secondaryButtonText = "Learn More"
+  secondaryButtonText = "Learn More",
+  primaryButtonUrl,
+  secondaryButtonUrl
 }: HeroBlockProps) {
   const imageUrl = image?.asset ? urlForImage(image).url() : '/assets/images/shkrabaanthony.jpg';
   const secondaryImageUrl = secondaryImage?.asset ? urlForImage(secondaryImage).url() : null;
@@ -27,13 +31,13 @@ export default function HeroBlock({
   return (
     <section className="relative min-h-screen flex items-center pt-[150px] pb-[75px] bg-(--color-primary) overflow-hidden">
       <div className="absolute inset-0 bg-[url('/assets/images/banner_section_background.jpg')] bg-cover bg-center opacity-10"></div>
-      
+
       {/* Secondary Decorative Image */}
       {secondaryImageUrl && (
         <div className="absolute top-0 right-0 w-1/2 h-full opacity-20 pointer-events-none">
-          <Image 
-            src={secondaryImageUrl} 
-            alt="Decorative Element" 
+          <Image
+            src={secondaryImageUrl}
+            alt="Decorative Element"
             fill
             className="object-contain object-top-right"
           />
@@ -51,14 +55,19 @@ export default function HeroBlock({
             <p className="text-white/80 text-xl mb-12 max-w-xl mx-auto lg:mx-0 leading-relaxed">
               {subtitle}
             </p>
-            <HeroButtons primaryText={primaryButtonText} secondaryText={secondaryButtonText} />
+            <HeroButtons
+              primaryText={primaryButtonText}
+              secondaryText={secondaryButtonText}
+              primaryUrl={primaryButtonUrl}
+              secondaryUrl={secondaryButtonUrl}
+            />
           </div>
           <div className="lg:flex-1 flex justify-center lg:justify-end">
             <div className="relative w-full max-w-[600px] aspect-square">
               <div className="absolute inset-0 bg-linear-to-br from-(--color-roti) to-transparent opacity-20 rounded-full blur-2xl animate-pulse"></div>
-              <Image 
-                src={imageUrl} 
-                alt={title} 
+              <Image
+                src={imageUrl}
+                alt={title}
                 fill
                 sizes="(max-width: 768px) 100vw, 600px"
                 className="object-cover rounded-[50px] drop-shadow-[0_20px_50px_rgba(0,0,0,0.3)] relative z-10"
