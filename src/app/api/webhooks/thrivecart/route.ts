@@ -9,6 +9,15 @@ import { clerkClient } from '@clerk/nextjs/server';
 
 export const dynamic = 'force-dynamic';
 
+// GET handler for browser verification
+export async function GET() {
+  return NextResponse.json({
+    status: 'active',
+    message: 'Thrivecart webhook endpoint is ready',
+    timestamp: new Date().toISOString()
+  });
+}
+
 export async function POST(req: NextRequest) {
   try {
     const url = new URL(req.url);
@@ -19,34 +28,63 @@ export async function POST(req: NextRequest) {
       });
     }
 
+    // Clone the request to read body twice if needed
+    const clonedReq = req.clone();
+
     let eventSecret = '';
     let customerEmail = '';
     let orderId = '';
     let productName = '';
+    let isEmptyOrTestPing = false;
 
     const contentType = req.headers.get('content-type') || '';
 
-    if (contentType.includes('application/json')) {
-      const json = await req.json();
-      eventSecret = json.thrivecart_secret;
-      customerEmail = json.customer?.email;
-      orderId = json.order_id;
-      productName = json.product_name || 'Unknown Product';
-    } else {
-      const formData = await req.formData();
-      eventSecret = formData.get('thrivecart_secret') as string;
-      customerEmail = formData.get('customer[email]') as string;
-      orderId = formData.get('order_id') as string;
-      productName = (formData.get('product_name') as string) || 'Unknown Product';
+    try {
+      if (contentType.includes('application/json')) {
+        const text = await clonedReq.text();
+        // Handle empty body (Thrivecart verification ping)
+        if (!text || text.trim() === '' || text.trim() === '{}') {
+          isEmptyOrTestPing = true;
+        } else {
+          const json = JSON.parse(text);
+          // Check if this is a test/ping with no real data
+          if (!json.customer && !json.thrivecart_secret && !json.order_id) {
+            isEmptyOrTestPing = true;
+          } else {
+            eventSecret = json.thrivecart_secret || '';
+            customerEmail = json.customer?.email || '';
+            orderId = json.order_id || '';
+            productName = json.product_name || 'Unknown Product';
+          }
+        }
+      } else {
+        const formData = await req.formData();
+        eventSecret = formData.get('thrivecart_secret') as string || '';
+        customerEmail = formData.get('customer[email]') as string || '';
+        orderId = formData.get('order_id') as string || '';
+        productName = (formData.get('product_name') as string) || 'Unknown Product';
+
+        // Check if this is a verification ping (no meaningful data)
+        if (!customerEmail && !eventSecret && !orderId) {
+          isEmptyOrTestPing = true;
+        }
+      }
+    } catch (parseError) {
+      // If we can't parse the body, treat it as a verification ping
+      console.log('[Thrivecart] Could not parse body, treating as verification ping');
+      isEmptyOrTestPing = true;
     }
 
-    // 1. Verify Secret
+    // Handle Thrivecart verification ping - return 200 OK
+    if (isEmptyOrTestPing) {
+      console.log('[Thrivecart] Verification ping received - returning 200 OK');
+      return NextResponse.json({ success: true, message: 'Webhook endpoint active' });
+    }
+
+    // 1. Verify Secret (only for real webhook calls with data)
     const isValid = eventSecret === process.env.THRIVECART_SECRET;
     if (!isValid) {
-      // Return 200 to prevent Thrivecart retries if just unauthorized, 
-      // but strictly speaking 401 is correct for unauthorized. 
-      // Thrivecart retries on non-200.
-      console.error('Invalid Thrivecart Secret');
+      console.error('[Thrivecart] Invalid secret received');
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
