@@ -2,7 +2,7 @@ import { clerkClient } from '@clerk/nextjs/server';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import DirectoryClient from './DirectoryClient';
-import { teachers as staticTeachers, Teacher } from '@/data/teachers';
+import { Teacher } from '@/data/teachers';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -20,13 +20,14 @@ export default async function DirectoryPage() {
     limit: 100,
   });
 
-  const realTeachers: Teacher[] = response.data
+  // Only show real teachers from Clerk who have completed their profile
+  const teachers: Teacher[] = response.data
     .filter((user: any) => user.publicMetadata?.membershipType === 'teacher')
     .map((user: any) => {
       const profile = user.publicMetadata.teacherProfile || {};
       return {
         id: user.id,
-        name: profile.name || `${user.firstName} ${user.lastName}`.trim(),
+        name: profile.name || `${user.firstName || ''} ${user.lastName || ''}`.trim() || 'Teacher',
         location: profile.location || 'Online',
         specialties: Array.isArray(profile.specialties) ? profile.specialties : [],
         certifications: Array.isArray(profile.certifications) ? profile.certifications : [],
@@ -36,9 +37,6 @@ export default async function DirectoryPage() {
         website: profile.website,
       };
     });
-
-  // Combine static and real teachers
-  const allTeachers = [...staticTeachers, ...realTeachers];
 
   return (
     <main className="bg-(--color-gallery) min-h-screen">
@@ -51,7 +49,7 @@ export default async function DirectoryPage() {
         </div>
       </header>
 
-      <DirectoryClient teachers={allTeachers} />
+      <DirectoryClient teachers={teachers} />
 
       <Footer />
     </main>
