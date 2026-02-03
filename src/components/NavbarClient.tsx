@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/nextjs";
 import { useState } from "react";
 
 interface NavbarClientProps {
@@ -11,6 +11,7 @@ interface NavbarClientProps {
 
 export default function NavbarClient({ dynamicPages }: NavbarClientProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user, isLoaded } = useUser();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -20,8 +21,28 @@ export default function NavbarClient({ dynamicPages }: NavbarClientProps) {
     setIsMenuOpen(false);
   };
 
-  // mainLinks removed as requested to keep only 'Join Now'
-  const mainLinks: { label: string; href: string }[] = [];
+  // Get membership type from user metadata
+  const membershipType = user?.publicMetadata?.membershipType as string | undefined;
+  const isTeacher = membershipType === 'teacher';
+  const isPractitioner = membershipType === 'practitioner';
+  const isMember = isTeacher || isPractitioner;
+
+  // Navigation links for teachers
+  const teacherLinks = [
+    { label: 'Resources', href: '/teacher-collective/resources' },
+    { label: 'Community Calls', href: '/teacher-collective/calls' },
+    { label: 'Directory', href: '/directory' },
+  ];
+
+  // Navigation links for practitioners
+  const practitionerLinks = [
+    { label: 'Video Library', href: '/video-library' },
+    { label: 'Live Classes', href: '/live-classes' },
+    { label: 'Find a Teacher', href: '/directory' },
+  ];
+
+  // Get the appropriate links based on membership
+  const memberLinks = isTeacher ? teacherLinks : isPractitioner ? practitionerLinks : [];
 
   return (
     <>
@@ -41,12 +62,7 @@ export default function NavbarClient({ dynamicPages }: NavbarClientProps) {
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-10">
             <ul className="flex items-center gap-8 list-none m-0 p-0">
-              {mainLinks.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className="font-bold text-white hover:text-(--color-roti) transition-colors whitespace-nowrap">{link.label}</Link>
-                </li>
-              ))}
-              {/* Dynamic Sanity Pages */}
+              {/* Dynamic Sanity Pages (shown to everyone) */}
               {dynamicPages.map((page) => (
                 <li key={page.slug}>
                   <Link href={`/${page.slug}`} className="font-bold text-white hover:text-(--color-roti) transition-colors whitespace-nowrap">
@@ -54,22 +70,30 @@ export default function NavbarClient({ dynamicPages }: NavbarClientProps) {
                   </Link>
                 </li>
               ))}
+              {/* Member-specific links (only shown when signed in with membership) */}
+              {isMember && memberLinks.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="font-bold text-white hover:text-(--color-roti) transition-colors whitespace-nowrap">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
-            <div className="flex items-center ml-4">
-              <Link href="/apply" className="px-8 py-3 bg-(--color-roti) text-white rounded-full font-bold hover:bg-white hover:text-(--color-roti) transition-all text-sm whitespace-nowrap shadow-lg border-2 border-transparent hover:border-(--color-roti)">
-                Join Now
-              </Link>
+            <div className="flex items-center gap-4 ml-4">
+              <SignedOut>
+                <Link href="/apply" className="px-8 py-3 bg-(--color-roti) text-white rounded-full font-bold hover:bg-white hover:text-(--color-roti) transition-all text-sm whitespace-nowrap shadow-lg border-2 border-transparent hover:border-(--color-roti)">
+                  Join Now
+                </Link>
+              </SignedOut>
               <SignedIn>
-                <div className="flex items-center gap-4">
-                  <Link href="/dashboard" className="text-white hover:text-(--color-roti) font-bold transition-colors">Dashboard</Link>
-                  <UserButton
-                    appearance={{
-                      elements: {
-                        avatarBox: "w-11 h-11 border-2 border-white/20 hover:border-(--color-roti) transition-all"
-                      }
-                    }}
-                  />
-                </div>
+                <Link href="/dashboard" className="text-white hover:text-(--color-roti) font-bold transition-colors">Dashboard</Link>
+                <UserButton
+                  appearance={{
+                    elements: {
+                      avatarBox: "w-11 h-11 border-2 border-white/20 hover:border-(--color-roti) transition-all"
+                    }
+                  }}
+                />
               </SignedIn>
             </div>
           </div>
@@ -98,21 +122,10 @@ export default function NavbarClient({ dynamicPages }: NavbarClientProps) {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="lg:hidden fixed top-20 left-0 right-0 bg-[#413356] z-[60] shadow-lg">
+        <div className="lg:hidden fixed top-20 left-0 right-0 bg-[#413356] z-[60] shadow-lg max-h-[calc(100vh-5rem)] overflow-y-auto">
           <div className="flex flex-col pt-8 px-6 pb-8">
             <ul className="flex flex-col gap-6 list-none m-0 p-0">
-              {mainLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="font-bold text-white hover:text-(--color-roti) transition-colors text-xl py-2 block"
-                    onClick={closeMenu}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-              {/* Dynamic Sanity Pages */}
+              {/* Dynamic Sanity Pages (shown to everyone) */}
               {dynamicPages.map((page) => (
                 <li key={page.slug}>
                   <Link
@@ -124,26 +137,40 @@ export default function NavbarClient({ dynamicPages }: NavbarClientProps) {
                   </Link>
                 </li>
               ))}
+              {/* Member-specific links */}
+              {isMember && memberLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="font-bold text-white hover:text-(--color-roti) transition-colors text-xl py-2 block"
+                    onClick={closeMenu}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
 
             <div className="mt-8 pt-8 border-t border-white/20">
-              <Link
-                href="/apply"
-                className="block w-full px-8 py-4 bg-(--color-roti) text-white rounded-full font-bold hover:bg-white hover:text-(--color-roti) transition-all text-center shadow-lg border-2 border-transparent hover:border-(--color-roti)"
-                onClick={closeMenu}
-              >
-                Join Now
-              </Link>
+              <SignedOut>
+                <Link
+                  href="/apply"
+                  className="block w-full px-8 py-4 bg-(--color-roti) text-white rounded-full font-bold hover:bg-white hover:text-(--color-roti) transition-all text-center shadow-lg border-2 border-transparent hover:border-(--color-roti)"
+                  onClick={closeMenu}
+                >
+                  Join Now
+                </Link>
+              </SignedOut>
               <SignedIn>
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-4 mt-4">
                   <Link
                     href="/dashboard"
-                    className="text-white hover:text-(--color-roti) font-bold transition-colors text-xl py-2 block text-center"
+                    className="block w-full px-8 py-4 bg-(--color-roti) text-white rounded-full font-bold hover:bg-white hover:text-(--color-roti) transition-all text-center shadow-lg border-2 border-transparent hover:border-(--color-roti)"
                     onClick={closeMenu}
                   >
                     Dashboard
                   </Link>
-                  <div className="flex justify-center">
+                  <div className="flex justify-center mt-4">
                     <UserButton
                       appearance={{
                         elements: {
