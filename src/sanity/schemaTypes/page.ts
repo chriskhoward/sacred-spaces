@@ -37,6 +37,7 @@ export const pageType = defineType({
         { type: 'teamBlock' },
         { type: 'richTextBlock' },
         { type: 'ctaBlock' },
+        { type: 'faqBlock' },
       ],
     }),
   ],
