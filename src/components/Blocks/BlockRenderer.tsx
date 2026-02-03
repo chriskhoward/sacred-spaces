@@ -17,6 +17,12 @@ import PremiumFeaturesBlock from './PremiumFeatures';
 import FounderBioBlock from './FounderBio';
 import TextCtaBlock from './TextCta';
 import ChecklistBlock from './Checklist';
+import IntroTextBlock from './IntroText';
+import ProseSectionBlock from './ProseSection';
+import TwoColumnCompareBlock from './TwoColumnCompare';
+import SpaceCardsBlock from './SpaceCards';
+import PathChooserBlock from './PathChooser';
+import ClosingStatementBlock from './ClosingStatement';
 
 interface BlockRendererProps {
   blocks: Array<{ _type: string; _key: string; [key: string]: any }>;
@@ -99,6 +105,18 @@ export default function BlockRenderer({ blocks, documentId, documentType }: Bloc
             return wrapWithSanity(<TextCtaBlock {...blockProps} />);
           case 'checklistBlock':
             return wrapWithSanity(<ChecklistBlock {...blockProps} />);
+          case 'introTextBlock':
+            return wrapWithSanity(<IntroTextBlock {...blockProps} />);
+          case 'proseSectionBlock':
+            return wrapWithSanity(<ProseSectionBlock {...blockProps} />);
+          case 'twoColumnCompareBlock':
+            return wrapWithSanity(<TwoColumnCompareBlock {...blockProps} />);
+          case 'spaceCardsBlock':
+            return wrapWithSanity(<SpaceCardsBlock {...blockProps} />);
+          case 'pathChooserBlock':
+            return wrapWithSanity(<PathChooserBlock {...blockProps} />);
+          case 'closingStatementBlock':
+            return wrapWithSanity(<ClosingStatementBlock {...blockProps} />);
           default:
             return <div key={_key}>Unknown block type: {_type}</div>;
         }

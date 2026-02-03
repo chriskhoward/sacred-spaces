@@ -456,3 +456,212 @@ export const checklistBlock = defineType({
     defineField({ name: 'buttonLink', title: 'Button Link', type: 'string' }),
   ]
 })
+
+// Intro Text Block - Simple centered intro/tagline section
+export const introTextBlock = defineType({
+  name: 'introTextBlock',
+  title: 'Intro Text Section',
+  type: 'object',
+  fields: [
+    defineField({
+      name: 'lines',
+      title: 'Text Lines',
+      type: 'array',
+      of: [{ type: 'string' }],
+      description: 'Each line will be displayed with a line break'
+    }),
+    defineField({
+      name: 'style',
+      title: 'Style',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Light (White background)', value: 'light' },
+          { title: 'Cream (Gallery background)', value: 'cream' },
+        ],
+        layout: 'radio'
+      },
+      initialValue: 'light'
+    }),
+  ]
+})
+
+// Prose Section Block - For longer descriptive text sections
+export const proseSectionBlock = defineType({
+  name: 'proseSectionBlock',
+  title: 'Prose Section',
+  type: 'object',
+  fields: [
+    defineField({ name: 'heading', title: 'Heading', type: 'string' }),
+    defineField({
+      name: 'paragraphs',
+      title: 'Paragraphs',
+      type: 'array',
+      of: [{ type: 'text' }]
+    }),
+    defineField({
+      name: 'style',
+      title: 'Style',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Light (White background)', value: 'light' },
+          { title: 'Cream (Gallery background)', value: 'cream' },
+        ],
+        layout: 'radio'
+      },
+      initialValue: 'cream'
+    }),
+  ]
+})
+
+// Two Column Compare Block - For "Why Flow in Faith Exists" style sections
+export const twoColumnCompareBlock = defineType({
+  name: 'twoColumnCompareBlock',
+  title: 'Two Column Compare',
+  type: 'object',
+  fields: [
+    defineField({ name: 'heading', title: 'Heading', type: 'string' }),
+    defineField({ name: 'leftIntro', title: 'Left Column Intro', type: 'string' }),
+    defineField({
+      name: 'leftItems',
+      title: 'Left Column Items (Problems)',
+      type: 'array',
+      of: [{ type: 'string' }]
+    }),
+    defineField({ name: 'rightHeading', title: 'Right Column Heading', type: 'string' }),
+    defineField({ name: 'rightIntro', title: 'Right Column Intro', type: 'string' }),
+    defineField({
+      name: 'rightItems',
+      title: 'Right Column Items (Solutions)',
+      type: 'array',
+      of: [{ type: 'string' }]
+    }),
+    defineField({ name: 'closingText', title: 'Closing Text', type: 'text' }),
+  ]
+})
+
+// Space Cards Block - For "Our Two Sacred Spaces" style sections
+export const spaceCardsBlock = defineType({
+  name: 'spaceCardsBlock',
+  title: 'Space Cards Section',
+  type: 'object',
+  fields: [
+    defineField({ name: 'heading', title: 'Heading', type: 'string' }),
+    defineField({ name: 'subheading', title: 'Subheading', type: 'text' }),
+    defineField({ name: 'description', title: 'Description', type: 'text' }),
+    defineField({
+      name: 'cards',
+      title: 'Cards',
+      type: 'array',
+      of: [{
+        type: 'object',
+        fields: [
+          defineField({ name: 'title', title: 'Title', type: 'string' }),
+          defineField({ name: 'badge', title: 'Badge/Tagline', type: 'string' }),
+          defineField({ name: 'description', title: 'Description', type: 'text' }),
+          defineField({
+            name: 'bulletPoints',
+            title: 'Bullet Points (Optional)',
+            type: 'array',
+            of: [{ type: 'string' }]
+          }),
+          defineField({ name: 'closingText', title: 'Closing Text (Italic)', type: 'string' }),
+          defineField({ name: 'buttonText', title: 'Button Text', type: 'string' }),
+          defineField({ name: 'buttonLink', title: 'Button Link', type: 'string' }),
+          defineField({
+            name: 'buttonStyle',
+            title: 'Button Style',
+            type: 'string',
+            options: {
+              list: [
+                { title: 'Primary', value: 'primary' },
+                { title: 'Secondary', value: 'secondary' },
+              ],
+              layout: 'radio'
+            },
+            initialValue: 'primary'
+          }),
+        ]
+      }]
+    }),
+  ]
+})
+
+// Path Chooser Block - For "Choose Your Path" style sections
+export const pathChooserBlock = defineType({
+  name: 'pathChooserBlock',
+  title: 'Path Chooser Section',
+  type: 'object',
+  fields: [
+    defineField({ name: 'heading', title: 'Heading', type: 'string' }),
+    defineField({ name: 'intro', title: 'Intro Text', type: 'string' }),
+    defineField({
+      name: 'options',
+      title: 'Path Options',
+      type: 'array',
+      of: [{ type: 'string' }]
+    }),
+    defineField({ name: 'closingText', title: 'Closing Text', type: 'string' }),
+    defineField({
+      name: 'buttons',
+      title: 'CTA Buttons',
+      type: 'array',
+      of: [{
+        type: 'object',
+        fields: [
+          defineField({ name: 'text', title: 'Button Text', type: 'string' }),
+          defineField({ name: 'link', title: 'Button Link', type: 'string' }),
+          defineField({
+            name: 'style',
+            title: 'Button Style',
+            type: 'string',
+            options: {
+              list: [
+                { title: 'Primary', value: 'primary' },
+                { title: 'Secondary', value: 'secondary' },
+              ],
+              layout: 'radio'
+            },
+            initialValue: 'primary'
+          }),
+        ]
+      }]
+    }),
+  ]
+})
+
+// Closing Statement Block - For branded closing statements
+export const closingStatementBlock = defineType({
+  name: 'closingStatementBlock',
+  title: 'Closing Statement Section',
+  type: 'object',
+  fields: [
+    defineField({
+      name: 'lines',
+      title: 'Statement Lines',
+      type: 'array',
+      of: [{
+        type: 'object',
+        fields: [
+          defineField({ name: 'text', title: 'Text', type: 'string' }),
+          defineField({
+            name: 'style',
+            title: 'Style',
+            type: 'string',
+            options: {
+              list: [
+                { title: 'Normal', value: 'normal' },
+                { title: 'Bold', value: 'bold' },
+                { title: 'Highlight (Gold)', value: 'highlight' },
+                { title: 'Large Highlight', value: 'largeHighlight' },
+              ],
+              layout: 'radio'
+            },
+            initialValue: 'normal'
+          }),
+        ]
+      }]
+    }),
+  ]
+})

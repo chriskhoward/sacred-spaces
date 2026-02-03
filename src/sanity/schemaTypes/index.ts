@@ -25,7 +25,13 @@ import {
   premiumFeaturesBlock,
   founderBioBlock,
   textCtaBlock,
-  checklistBlock
+  checklistBlock,
+  introTextBlock,
+  proseSectionBlock,
+  twoColumnCompareBlock,
+  spaceCardsBlock,
+  pathChooserBlock,
+  closingStatementBlock
 } from './pageBuilder'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
@@ -55,6 +61,12 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     founderBioBlock,
     textCtaBlock,
     checklistBlock,
+    introTextBlock,
+    proseSectionBlock,
+    twoColumnCompareBlock,
+    spaceCardsBlock,
+    pathChooserBlock,
+    closingStatementBlock,
     allowedUserType
   ],
 }
