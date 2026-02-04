@@ -13,6 +13,35 @@ export const teacherType = defineType({
             readOnly: true,
         }),
         defineField({
+            name: 'membershipId',
+            title: 'Membership ID',
+            type: 'string',
+            description: 'The internal membership ID (e.g., from Thrivecart or Airtable)',
+        }),
+        defineField({
+            name: 'slug',
+            title: 'Slug',
+            type: 'slug',
+            options: {
+                source: 'name',
+                maxLength: 96,
+            },
+            validation: Rule => Rule.required(),
+        }),
+        defineField({
+            name: 'status',
+            title: 'Status',
+            type: 'string',
+            initialValue: 'active',
+            options: {
+                list: [
+                    { title: 'Active', value: 'active' },
+                    { title: 'Inactive', value: 'inactive' },
+                    { title: 'Pending', value: 'pending' },
+                ],
+            },
+        }),
+        defineField({
             name: 'name',
             title: 'Display Name',
             type: 'string',

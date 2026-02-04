@@ -107,10 +107,14 @@ export async function POST(req: Request) {
                     { id }
                 )
 
+                const teacherName = profile.name || `${first_name || ''} ${last_name || ''}`.trim() || 'Teacher'
                 const teacherData = {
                     _type: 'teacher',
                     clerkId: id,
-                    name: profile.name || `${first_name || ''} ${last_name || ''}`.trim() || 'Teacher',
+                    membershipId: public_metadata?.membershipId || '',
+                    status: public_metadata?.status || 'active',
+                    name: teacherName,
+                    slug: { _type: 'slug', current: teacherName.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '') },
                     location: profile.location || 'Online',
                     bio: profile.bio || 'Member of the Flow in Faith Teacher Collective.',
                     image: image_url,

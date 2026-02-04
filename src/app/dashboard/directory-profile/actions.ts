@@ -72,6 +72,8 @@ export async function updateDirectoryProfile(formData: FormData) {
       _type: 'teacher',
       clerkId: userId,
       name,
+      slug: { _type: 'slug', current: name.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '') },
+      status: 'active',
       location,
       bio,
       image: clerkUser.imageUrl,
