@@ -13,7 +13,7 @@ export default function FooterLinks() {
       <li><Link href="/teacher-collective" className="hover:text-(--color-roti) transition-colors">Teacher Collective</Link></li>
       <li><Link href="/directory" className="hover:text-(--color-roti) transition-colors">Directory</Link></li>
       <li><Link href="/video-library" className="hover:text-(--color-roti) transition-colors">Video Library</Link></li>
-      <li className="pt-2">
+      <li className="pt-2 flex flex-col gap-3">
         {isSignedIn ? (
           <Link
             href="/dashboard"
@@ -22,12 +22,20 @@ export default function FooterLinks() {
             Dashboard
           </Link>
         ) : (
-          <Link
-            href="/sign-in"
-            className="inline-block px-6 py-2 bg-(--color-roti) text-(--color-primary) rounded-full font-bold hover:bg-white transition-colors"
-          >
-            Member Login
-          </Link>
+          <>
+            <Link
+              href="/sign-in"
+              className="inline-block px-6 py-2 border-2 border-white text-white rounded-full font-bold hover:bg-white hover:text-(--color-primary) transition-colors text-center"
+            >
+              Member Login
+            </Link>
+            <Link
+              href="/apply"
+              className="inline-block px-6 py-2 bg-(--color-roti) text-(--color-primary) rounded-full font-bold hover:bg-white transition-colors text-center"
+            >
+              Join Now
+            </Link>
+          </>
         )}
       </li>
     </ul>

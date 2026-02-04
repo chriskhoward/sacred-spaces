@@ -81,6 +81,9 @@ export default function NavbarClient({ dynamicPages }: NavbarClientProps) {
             </ul>
             <div className="flex items-center gap-4 ml-4">
               <SignedOut>
+                <Link href="/sign-in" className="text-white hover:text-(--color-roti) font-bold transition-colors whitespace-nowrap">
+                  Member Login
+                </Link>
                 <Link href="/apply" className="px-8 py-3 bg-(--color-roti) text-white rounded-full font-bold hover:bg-white hover:text-(--color-roti) transition-all text-sm whitespace-nowrap shadow-lg border-2 border-transparent hover:border-(--color-roti)">
                   Join Now
                 </Link>
@@ -153,13 +156,22 @@ export default function NavbarClient({ dynamicPages }: NavbarClientProps) {
 
             <div className="mt-8 pt-8 border-t border-white/20">
               <SignedOut>
-                <Link
-                  href="/apply"
-                  className="block w-full px-8 py-4 bg-(--color-roti) text-white rounded-full font-bold hover:bg-white hover:text-(--color-roti) transition-all text-center shadow-lg border-2 border-transparent hover:border-(--color-roti)"
-                  onClick={closeMenu}
-                >
-                  Join Now
-                </Link>
+                <div className="flex flex-col gap-4">
+                  <Link
+                    href="/sign-in"
+                    className="block w-full px-8 py-4 border-2 border-white text-white rounded-full font-bold hover:bg-white hover:text-(--color-primary) transition-all text-center"
+                    onClick={closeMenu}
+                  >
+                    Member Login
+                  </Link>
+                  <Link
+                    href="/apply"
+                    className="block w-full px-8 py-4 bg-(--color-roti) text-white rounded-full font-bold hover:bg-white hover:text-(--color-roti) transition-all text-center shadow-lg border-2 border-transparent hover:border-(--color-roti)"
+                    onClick={closeMenu}
+                  >
+                    Join Now
+                  </Link>
+                </div>
               </SignedOut>
               <SignedIn>
                 <div className="flex flex-col gap-4 mt-4">
