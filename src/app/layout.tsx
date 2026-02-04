@@ -38,7 +38,11 @@ export default async function RootLayout({
   const publishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
   return (
-    <ClerkProvider publishableKey={publishableKey}>
+    <ClerkProvider
+      publishableKey={publishableKey}
+      afterSignInUrl="/dashboard"
+      afterSignUpUrl="/onboarding"
+    >
       <html lang="en" data-scroll-behavior="smooth">
         <body className={`${dmSans.variable} antialiased`}>
           {children}
