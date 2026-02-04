@@ -8,6 +8,7 @@ import { homeType } from './home'
 import { aboutType } from './about'
 import { allowedUserType } from './allowedUser'
 import { pageType } from './page'
+import { teacherType } from './teacher'
 import {
   heroBlock,
   brandBlock,
@@ -71,6 +72,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     spaceCardsBlock,
     pathChooserBlock,
     closingStatementBlock,
-    allowedUserType
+    allowedUserType,
+    teacherType
   ],
 }

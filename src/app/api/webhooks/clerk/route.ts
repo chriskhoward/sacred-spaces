@@ -92,5 +92,49 @@ export async function POST(req: Request) {
         }
     }
 
+    if (eventType === 'user.updated') {
+        const { id, email_addresses, image_url, public_metadata, first_name, last_name } = evt.data
+        const membershipType = public_metadata?.membershipType
+        const profile = (public_metadata?.teacherProfile as any) || {}
+
+        if (membershipType === 'teacher') {
+            console.log(`[Clerk Webhook] Syncing teacher profile for ${id} to Sanity...`)
+
+            try {
+                // Find existing teacher by clerkId or create new
+                const existingTeacher = await writeClient.fetch(
+                    `*[_type == "teacher" && clerkId == $id][0]`,
+                    { id }
+                )
+
+                const teacherData = {
+                    _type: 'teacher',
+                    clerkId: id,
+                    name: profile.name || `${first_name || ''} ${last_name || ''}`.trim() || 'Teacher',
+                    location: profile.location || 'Online',
+                    bio: profile.bio || 'Member of the Flow in Faith Teacher Collective.',
+                    image: image_url,
+                    email: email_addresses[0]?.email_address,
+                    website: profile.website,
+                    specialties: Array.isArray(profile.specialties) ? profile.specialties : [],
+                    certifications: Array.isArray(profile.certifications) ? profile.certifications : [],
+                    lastSync: new Date().toISOString(),
+                }
+
+                if (existingTeacher) {
+                    await writeClient.patch(existingTeacher._id)
+                        .set(teacherData)
+                        .commit()
+                } else {
+                    await writeClient.create(teacherData)
+                }
+
+                console.log(`[Clerk Webhook] Successfully synced teacher ${id} to Sanity`)
+            } catch (error) {
+                console.error(`[Clerk Webhook] Failed to sync teacher profile:`, error)
+            }
+        }
+    }
+
     return new Response('Webhook received', { status: 200 })
 }
