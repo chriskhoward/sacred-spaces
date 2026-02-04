@@ -1,6 +1,8 @@
 import { type SchemaTypeDefinition } from 'sanity'
 import { videoType } from './video'
+import { videoCategoryType } from './videoCategory'
 import { resourceType } from './resource'
+import { resourceCategoryType } from './resourceCategory'
 import { liveClassType } from './liveClass'
 import { homeType } from './home'
 import { aboutType } from './about'
@@ -37,7 +39,9 @@ import {
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
     videoType,
+    videoCategoryType,
     resourceType,
+    resourceCategoryType,
     liveClassType,
     homeType,
     aboutType,

@@ -9,22 +9,35 @@ export default async function TeachingResourcesPage() {
   const user = await currentUser();
   const membershipType = user?.publicMetadata?.membershipType as string || 'practitioner';
 
-  const query = `*[_type == "resource" && (targetAudience == "all" || targetAudience == "${membershipType}")] {
+  // Fetch categories ordered by display order
+  const categoriesQuery = `*[_type == "resourceCategory"] | order(order asc) {
     _id,
     title,
-    category,
+    "slug": slug.current
+  }`;
+
+  // Fetch resources with expanded category reference
+  const resourcesQuery = `*[_type == "resource" && (targetAudience == "all" || targetAudience == "${membershipType}")] {
+    _id,
+    title,
+    "category": category->title,
+    "categorySlug": category->slug.current,
     description,
     isLocked
   }`;
 
-  const resources = await client.fetch(query);
+  const [categories, resources] = await Promise.all([
+    client.fetch(categoriesQuery),
+    client.fetch(resourcesQuery),
+  ]);
 
-  // Group resources by category
-  const categories = Array.from(new Set(resources.map((r: any) => r.category)));
-  const groupedResources = categories.map(cat => ({
-    category: cat as string,
-    items: resources.filter((r: any) => r.category === cat)
-  }));
+  // Group resources by category, maintaining category order from Sanity
+  const groupedResources = categories
+    .filter((cat: any) => resources.some((r: any) => r.category === cat.title))
+    .map((cat: any) => ({
+      category: cat.title,
+      items: resources.filter((r: any) => r.category === cat.title)
+    }));
 
   return (
     <main className="bg-(--color-gallery) min-h-screen">
@@ -48,7 +61,7 @@ export default async function TeachingResourcesPage() {
                     No resources found. Check back later!
                 </div>
             ) : (
-                groupedResources.map((section, idx) => (
+                groupedResources.map((section: { category: string; items: any[] }, idx: number) => (
                 <div key={idx}>
                     <h2 className="text-3xl font-bold text-(--color-primary) mb-8 flex items-center gap-4">
                     <span className="w-8 h-8 rounded-full bg-(--color-roti) block"></span>

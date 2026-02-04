@@ -26,16 +26,8 @@ export const videoType = defineType({
     defineField({
         name: 'category',
         title: 'Category',
-        type: 'string',
-        options: {
-            list: [
-                { title: 'Vinyasa', value: 'Vinyasa' },
-                { title: 'Restorative', value: 'Restorative' },
-                { title: 'Meditation', value: 'Meditation' },
-                { title: 'Workshop', value: 'Workshop' },
-                { title: 'Hatha', value: 'Hatha' },
-            ],
-        },
+        type: 'reference',
+        to: [{ type: 'videoCategory' }],
         validation: (Rule) => Rule.required(),
     }),
     defineField({

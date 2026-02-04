@@ -49,25 +49,36 @@ export default async function VideoLibraryPage() {
 
   const membershipType = user?.publicMetadata?.membershipType as string || 'practitioner';
 
-  // Filter based on audience tag
-  const query = `*[_type == "video" && (targetAudience == "all" || targetAudience == "${membershipType}")] {
+  // Fetch categories ordered by display order
+  const categoriesQuery = `*[_type == "videoCategory"] | order(order asc) {
+    _id,
+    title,
+    "slug": slug.current
+  }`;
+
+  // Filter videos based on audience tag and expand category reference
+  const videosQuery = `*[_type == "video" && (targetAudience == "all" || targetAudience == "${membershipType}")] {
     _id,
     title,
     instructor,
     duration,
-    category,
+    "category": category->title,
+    "categorySlug": category->slug.current,
     level,
     description,
     thumbnail,
     videoUrl
   }`;
 
-  const videos = await client.fetch(query);
+  const [categories, videos] = await Promise.all([
+    client.fetch(categoriesQuery),
+    client.fetch(videosQuery),
+  ]);
 
   return (
     <main className="bg-(--color-gallery) min-h-screen">
       <Navbar />
-      <VideoLibraryClient initialVideos={videos} />
+      <VideoLibraryClient initialVideos={videos} categories={categories} />
       <Footer />
     </main>
   );

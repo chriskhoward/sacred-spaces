@@ -10,14 +10,22 @@ interface Video {
   instructor: string;
   duration: string;
   category: string;
+  categorySlug?: string;
   level: string;
   description: string;
   thumbnail: any;
   videoUrl?: string;
 }
 
+interface Category {
+  _id: string;
+  title: string;
+  slug: string;
+}
+
 interface VideoLibraryClientProps {
   initialVideos: Video[];
+  categories: Category[];
 }
 
 // Helper to convert video URLs to embeddable format
@@ -90,10 +98,12 @@ function getThumbnailUrl(video: { thumbnail?: any; videoUrl?: string }): string 
   return '/assets/images/placeholder_teacher.png';
 }
 
-export default function VideoLibraryClient({ initialVideos }: VideoLibraryClientProps) {
+export default function VideoLibraryClient({ initialVideos, categories }: VideoLibraryClientProps) {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
-  const categories = ['All', 'Vinyasa', 'Restorative', 'Meditation', 'Workshop'];
+
+  // Build category list with "All" at the front
+  const categoryOptions = ['All', ...categories.map(c => c.title)];
 
   const filteredVideos = selectedCategory === 'All'
     ? initialVideos
@@ -217,7 +227,7 @@ export default function VideoLibraryClient({ initialVideos }: VideoLibraryClient
 
           {/* Filters */}
           <div className="flex flex-wrap gap-4 mb-12 justify-center">
-            {categories.map(cat => (
+            {categoryOptions.map(cat => (
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}

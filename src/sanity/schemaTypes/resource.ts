@@ -14,15 +14,9 @@ export const resourceType = defineType({
     defineField({
         name: 'category',
         title: 'Category',
-        type: 'string',
-        options: {
-            list: [
-                { title: 'Masterclass', value: 'Masterclass' },
-                { title: 'Business & Growth', value: 'Business & Growth' },
-                { title: 'Class Sequencing', value: 'Class Sequencing' },
-                { title: 'Theology', value: 'Theology' },
-            ],
-        },
+        type: 'reference',
+        to: [{ type: 'resourceCategory' }],
+        validation: (Rule) => Rule.required(),
     }),
     defineField({
         name: 'description',
