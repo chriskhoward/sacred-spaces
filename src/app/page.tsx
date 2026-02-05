@@ -27,25 +27,13 @@ const homeQuery = `*[_type == "home"][0]{
 }`;
 
 export default async function Home() {
-  // Try to fetch homepage content from Sanity
-  const homeData = await client.fetch(homeQuery);
-
-  // If we have Sanity content, use BlockRenderer
-  // Otherwise, fall back to the hardcoded HomePageContent
-  const hasSanityContent = homeData?.content && homeData.content.length > 0;
+  // Using the new Teacher Collective homepage design
+  // Note: Previous Sanity-based content has been replaced with the Teacher Collective landing page
 
   return (
     <main className="min-h-screen bg-white">
       <Navbar />
-      {hasSanityContent ? (
-        <BlockRenderer
-          blocks={homeData.content}
-          documentId={homeData._id}
-          documentType={homeData._type}
-        />
-      ) : (
-        <HomePageContent />
-      )}
+      <HomePageContent />
       <Footer />
     </main>
   );
