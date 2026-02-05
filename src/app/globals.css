@@ -81,3 +81,103 @@
   background-color: #413356 !important;
   opacity: 1 !important;
 }
+
+/* FAQ accordion — hide default details marker */
+details > summary::-webkit-details-marker {
+  display: none;
+}
+details > summary::marker {
+  content: '';
+}
+
+/* It's Time to.. section: gold button with dark text to match screenshot */
+.fillout-cta-its-time a,
+.fillout-cta-its-time button,
+.fillout-cta-its-time button[class*="fillout-embed-popup-button"] {
+  background-color: #c7a254 !important;
+  background: #c7a254 !important;
+  color: #413356 !important;
+  border: none !important;
+  border-radius: 0.5rem !important;
+  padding: 0.875rem 1.75rem !important;
+  font-weight: 700 !important;
+  font-size: 1rem !important;
+  cursor: pointer !important;
+  transition: opacity 0.2s ease !important;
+}
+/* Override Fillout inline styles on their popup button */
+button[class*="fillout-embed-popup-button"] {
+  background-color: #c7a254 !important;
+  background: #c7a254 !important;
+  color: #413356 !important;
+  border: none !important;
+  font-weight: 700 !important;
+}
+.fillout-cta-its-time a:hover,
+.fillout-cta-its-time button:hover {
+  opacity: 0.95 !important;
+}
+
+/* Final CTA "So, what do you say?" section: gold button */
+.fillout-cta-final a,
+.fillout-cta-final button,
+.fillout-cta-final button[class*="fillout-embed-popup-button"] {
+  background-color: #c7a254 !important;
+  background: #c7a254 !important;
+  color: #413356 !important;
+  border: none !important;
+  border-radius: 0.5rem !important;
+  padding: 0.875rem 2rem !important;
+  font-weight: 700 !important;
+  font-size: 1.125rem !important;
+  cursor: pointer !important;
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+.fillout-cta-final a:hover,
+.fillout-cta-final button:hover {
+  opacity: 0.9 !important;
+}
+
+/* Bottom line section: gold outline button */
+.fillout-cta-bottom a,
+.fillout-cta-bottom button,
+.fillout-cta-bottom button[class*="fillout-embed-popup-button"] {
+  background-color: #c7a254 !important;
+  background: #c7a254 !important;
+  color: #413356 !important;
+  border: 2px solid #c7a254 !important;
+  border-radius: 0.5rem !important;
+  padding: 0.75rem 2rem !important;
+  font-weight: 700 !important;
+  font-size: 1rem !important;
+  cursor: pointer !important;
+  display: inline-block !important;
+}
+.fillout-cta-bottom a:hover,
+.fillout-cta-bottom button:hover {
+  opacity: 0.9 !important;
+}
+
+/* Bottom line section: gold button */
+.fillout-cta-bottom-line a,
+.fillout-cta-bottom-line button,
+.fillout-cta-bottom-line button[class*="fillout-embed-popup-button"] {
+  background-color: #c7a254 !important;
+  background: #c7a254 !important;
+  color: #413356 !important;
+  border: none !important;
+  border-radius: 0.5rem !important;
+  padding: 0.875rem 2rem !important;
+  font-weight: 700 !important;
+  font-size: 1rem !important;
+  cursor: pointer !important;
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+.fillout-cta-bottom-line a:hover,
+.fillout-cta-bottom-line button:hover {
+  opacity: 0.9 !important;
+}
