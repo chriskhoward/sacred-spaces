@@ -35,6 +35,24 @@ export default async function CommunityCallsPage() {
     .sort((a, b) => new Date(a.dateTime).getTime() - new Date(b.dateTime).getTime())
     .slice(0, 5); // Show top 5 upcoming
 
+  const getGoogleCalendarUrl = (call: LiveClass) => {
+    const startDate = new Date(call.dateTime);
+    // Default to 1 hour if duration is not provided or easily parseable
+    const endDate = new Date(startDate.getTime() + 60 * 60 * 1000);
+
+    const fmtDate = (date: Date) => date.toISOString().replace(/-|:|\.\d\d\d/g, "");
+
+    const params = new URLSearchParams({
+      action: 'TEMPLATE',
+      text: call.title,
+      dates: `${fmtDate(startDate)}/${fmtDate(endDate)}`,
+      details: `${call.description}\n\nJoin via Zoom: ${call.zoomLink || 'No link provided'}`,
+      location: call.zoomLink || 'Online',
+    });
+
+    return `https://www.google.com/calendar/render?${params.toString()}`;
+  };
+
   return (
     <main className="bg-(--color-gallery) min-h-screen">
       <Navbar />
@@ -80,9 +98,14 @@ export default async function CommunityCallsPage() {
                           {call.description}
                         </p>
                         <div className="flex gap-4">
-                          <button className="btn btn-primary px-8 py-3 text-sm">
+                          <a
+                            href={getGoogleCalendarUrl(call)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn btn-primary px-8 py-3 text-sm text-center"
+                          >
                             Add to Calendar
-                          </button>
+                          </a>
                           {call.zoomLink && (
                             <a
                               href={call.zoomLink}
