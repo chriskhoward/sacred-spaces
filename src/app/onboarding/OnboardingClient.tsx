@@ -24,7 +24,7 @@ function TeacherDirectoryForm({
   showHeading?: boolean;
 }) {
   return (
-    <div className="bg-white p-12 rounded-[30px_0_30px_0] shadow-xl">
+    <div className="bg-white p-12 rounded-3xl shadow-xl">
       {showHeading && (
         <>
           <h2 className="text-3xl font-bold text-(--color-primary) mb-6">Complete Your Directory Profile</h2>
@@ -166,7 +166,7 @@ function TeacherDirectoryForm({
         </div>
         <button
           type="submit"
-          className="w-full bg-(--color-roti) text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-(--color-primary) transition-all shadow-lg"
+          className="w-full bg-(--color-roti) text-white px-6 py-3 rounded-full font-bold text-sm hover:bg-(--color-primary) transition-all shadow-lg"
         >
           Complete Profile & Continue
         </button>
@@ -214,7 +214,7 @@ export default function OnboardingClient({
       <button
         type="button"
         onClick={() => setSelectedPath('teacher')}
-        className="bg-white p-10 rounded-[30px_0_30px_0] shadow-xl border-2 border-transparent hover:border-(--color-roti) transition-all text-left group"
+        className="bg-white p-10 rounded-3xl shadow-xl border-2 border-transparent hover:border-(--color-roti) transition-all text-left group"
       >
         <div className="text-5xl mb-6">🧘‍♀️</div>
         <h3 className="text-2xl font-bold text-(--color-primary) mb-4">I am a Teacher</h3>
@@ -230,7 +230,7 @@ export default function OnboardingClient({
         <input type="hidden" name="membershipType" value="practitioner" />
         <button
           type="submit"
-          className="bg-white p-10 rounded-[30px_0_30px_0] shadow-xl border-2 border-transparent hover:border-(--color-roti) transition-all text-left group"
+          className="bg-white p-10 rounded-3xl shadow-xl border-2 border-transparent hover:border-(--color-roti) transition-all text-left group"
         >
           <div className="text-5xl mb-6">✨</div>
           <h3 className="text-2xl font-bold text-(--color-primary) mb-4">I am a Practitioner</h3>

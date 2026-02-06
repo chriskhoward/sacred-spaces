@@ -83,7 +83,7 @@ export default async function TeacherProfile({ params }: PageProps) {
                   src={teacher.image || '/assets/images/placeholder_teacher.png'}
                   alt={teacher.name}
                   fill
-                  className="rounded-[4rem_0_4rem_0] shadow-[0_40px_80px_rgba(0,0,0,0.5)] object-cover"
+                  className="rounded-3xl shadow-[0_40px_80px_rgba(0,0,0,0.5)] object-cover"
                   priority
                 />
               </div>
@@ -104,13 +104,13 @@ export default async function TeacherProfile({ params }: PageProps) {
               )}
               <div className="flex flex-col sm:flex-row gap-6">
                 {teacher.email && (
-                  <a href={`mailto:${teacher.email}`} className="px-10 py-5 bg-(--color-sidecar) text-(--color-bronzetone) rounded-[2rem_0_2rem_0] font-bold hover:bg-(--color-roti) hover:text-white transition-all text-center min-w-[220px] inline-flex items-center justify-center gap-3">
+                  <a href={`mailto:${teacher.email}`} className="px-6 py-3 bg-(--color-sidecar) text-(--color-bronzetone) rounded-full font-bold text-sm hover:bg-(--color-roti) hover:text-white transition-all text-center min-w-[180px] inline-flex items-center justify-center gap-3">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
                     Email
                   </a>
                 )}
                 {teacher.website && (
-                  <a href={teacher.website} target="_blank" rel="noopener noreferrer" className="px-10 py-5 border-2 border-white text-white rounded-[2rem_0_2rem_0] font-bold hover:bg-white hover:text-(--color-primary) transition-all text-center min-w-[220px] inline-flex items-center justify-center gap-3">
+                  <a href={teacher.website} target="_blank" rel="noopener noreferrer" className="px-6 py-3 border-2 border-white text-white rounded-full font-bold text-sm hover:bg-white hover:text-(--color-primary) transition-all text-center min-w-[180px] inline-flex items-center justify-center gap-3">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" /></svg>
                     Website
                   </a>
@@ -130,7 +130,7 @@ export default async function TeacherProfile({ params }: PageProps) {
 
           <div className="space-y-8">
             {teacher.certifications.length > 0 && (
-              <div className="bg-(--color-gallery) p-10 rounded-[2.5rem_0_2.5rem_0]">
+              <div className="bg-(--color-gallery) p-10 rounded-3xl">
                 <h3 className="text-2xl font-bold mb-6 text-(--color-primary)">Certifications</h3>
                 <ul className="space-y-3">
                   {teacher.certifications.map(cert => (
@@ -143,7 +143,7 @@ export default async function TeacherProfile({ params }: PageProps) {
             )}
 
             {teacher.specialties.length > 0 && (
-              <div className="bg-(--color-gallery) p-10 rounded-[2.5rem_0_2.5rem_0]">
+              <div className="bg-(--color-gallery) p-10 rounded-3xl">
                 <h3 className="text-2xl font-bold mb-6 text-(--color-primary)">Practice Style</h3>
                 <p className="text-gray-700">Specialized in {teacher.specialties.join(', ')}.</p>
               </div>
@@ -151,7 +151,7 @@ export default async function TeacherProfile({ params }: PageProps) {
 
             {/* Social Media */}
             {hasSocialMedia && (
-              <div className="bg-(--color-gallery) p-10 rounded-[2.5rem_0_2.5rem_0]">
+              <div className="bg-(--color-gallery) p-10 rounded-3xl">
                 <h3 className="text-2xl font-bold mb-6 text-(--color-primary)">Connect</h3>
                 <div className="flex flex-wrap gap-4">
                   {socialMedia.instagram && (

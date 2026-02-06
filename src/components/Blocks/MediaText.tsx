@@ -24,7 +24,7 @@ export default function MediaTextBlock({
     <section className="py-24 overflow-hidden">
       <div className="container mx-auto px-4">
         <div className={`grid grid-cols-1 lg:grid-cols-2 gap-20 items-center ${isRight ? 'lg:flex-row-reverse' : ''}`}>
-          <div className={`relative h-[500px] lg:h-[650px] rounded-[5rem_0_5rem_0] overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.2)] ${isRight ? 'lg:order-2' : ''}`}>
+          <div className={`relative h-[500px] lg:h-[650px] rounded-3xl overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.2)] ${isRight ? 'lg:order-2' : ''}`}>
             <Image 
               src={imageUrl} 
               alt={title || "Media Section"} 

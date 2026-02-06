@@ -258,7 +258,7 @@ export default function VideoLibraryClient({ initialVideos, categories, featured
                     </div>
                     <button
                       onClick={() => openVideo(featuredVideo)}
-                      className="btn btn-primary px-8 py-4 text-lg flex items-center gap-3"
+                      className="btn btn-primary flex items-center gap-3"
                     >
                     <span className="text-2xl">▶</span> Watch Now
                     </button>
@@ -311,7 +311,7 @@ export default function VideoLibraryClient({ initialVideos, categories, featured
               <select
                 value={selectedDuration}
                 onChange={(e) => setSelectedDuration(e.target.value)}
-                className="px-4 py-2.5 rounded-lg border border-gray-300 bg-white text-gray-700 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-(--color-roti) focus:border-transparent"
+                className="px-4 py-2.5 rounded-full border border-gray-300 bg-white text-gray-700 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-(--color-roti) focus:border-transparent"
               >
                 {durationOptions.map(opt => (
                   <option key={opt} value={opt}>{opt === 'All' ? 'All Durations' : opt}</option>
@@ -322,7 +322,7 @@ export default function VideoLibraryClient({ initialVideos, categories, featured
               <select
                 value={selectedTeacher}
                 onChange={(e) => setSelectedTeacher(e.target.value)}
-                className="px-4 py-2.5 rounded-lg border border-gray-300 bg-white text-gray-700 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-(--color-roti) focus:border-transparent"
+                className="px-4 py-2.5 rounded-full border border-gray-300 bg-white text-gray-700 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-(--color-roti) focus:border-transparent"
               >
                 {teacherOptions.map((opt, i) => (
                   <option key={`teacher-${i}-${opt}`} value={opt}>{opt === 'All' ? 'All Teachers' : opt}</option>
@@ -333,7 +333,7 @@ export default function VideoLibraryClient({ initialVideos, categories, featured
               <select
                 value={selectedLevel}
                 onChange={(e) => setSelectedLevel(e.target.value)}
-                className="px-4 py-2.5 rounded-lg border border-gray-300 bg-white text-gray-700 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-(--color-roti) focus:border-transparent"
+                className="px-4 py-2.5 rounded-full border border-gray-300 bg-white text-gray-700 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-(--color-roti) focus:border-transparent"
               >
                 {levelOptions.map((opt, i) => (
                   <option key={`level-${i}-${opt}`} value={opt}>{opt === 'All' ? 'All Levels' : opt}</option>
@@ -363,7 +363,7 @@ export default function VideoLibraryClient({ initialVideos, categories, featured
               <div
                 key={video._id}
                 onClick={() => openVideo(video)}
-                className="bg-white rounded-[2rem_0_2rem_0] overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:-translate-y-2 group cursor-pointer"
+                className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:-translate-y-2 group cursor-pointer"
               >
                 <div className="relative aspect-video bg-gray-200">
                   <Image

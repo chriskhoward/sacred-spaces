@@ -16,7 +16,7 @@ export default function ShowcaseImage({
 
   return (
     <section className={fullWidth ? "py-0" : "py-24 container mx-auto px-4"}>
-      <div className={`relative w-full overflow-hidden ${fullWidth ? 'h-[600px] lg:h-[800px]' : 'h-[500px] rounded-[4rem_0_4rem_0] shadow-2xl'}`}>
+      <div className={`relative w-full overflow-hidden ${fullWidth ? 'h-[600px] lg:h-[800px]' : 'h-[500px] rounded-3xl shadow-2xl'}`}>
         <Image 
           src={imageUrl} 
           alt={caption || "Gallery Image"} 

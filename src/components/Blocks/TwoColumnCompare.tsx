@@ -43,7 +43,7 @@ export default function TwoColumnCompareBlock({
               </ul>
             </div>
 
-            <div className="bg-(--color-primary)/5 p-10 rounded-[3rem_0_3rem_0] border-l-4 border-(--color-roti)">
+            <div className="bg-(--color-primary)/5 p-10 rounded-3xl border-l-4 border-(--color-roti)">
               {rightHeading && (
                 <p className="text-2xl font-bold text-(--color-primary) mb-6">
                   {rightHeading}

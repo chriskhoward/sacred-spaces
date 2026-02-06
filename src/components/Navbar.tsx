@@ -7,7 +7,12 @@ export default async function Navbar() {
     "slug": slug.current
   }`;
 
-  const dynamicPages = await client.fetch(query) || [];
+  let dynamicPages: { title?: string; slug?: string }[] = [];
+  try {
+    dynamicPages = (await client.fetch(query)) || [];
+  } catch (err) {
+    console.error('[Navbar] Sanity fetch failed:', err);
+  }
 
   return <NavbarClient dynamicPages={dynamicPages} />;
 }

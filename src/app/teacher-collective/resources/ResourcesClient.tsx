@@ -66,7 +66,7 @@ export default function ResourcesClient({ groupedResources, userTier }: Resource
                 <div
                   key={item._id}
                   onClick={() => handleResourceClick(item)}
-                  className="bg-white p-8 rounded-[20px_0_20px_0] shadow-md hover:shadow-xl transition-all border border-transparent hover:border-(--color-roti) group cursor-pointer"
+                  className="bg-white p-8 rounded-3xl shadow-md hover:shadow-xl transition-all border border-transparent hover:border-(--color-roti) group cursor-pointer"
                 >
                   <div className="flex justify-between items-start mb-4">
                     <span className="bg-(--color-gallery) text-(--color-primary) px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide">
@@ -129,13 +129,13 @@ export default function ResourcesClient({ groupedResources, userTier }: Resource
               <div className="flex gap-4">
                 <button
                   onClick={closeModal}
-                  className="flex-1 px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-lg font-bold hover:bg-gray-50 transition-colors"
+                  className="flex-1 px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-full font-bold hover:bg-gray-50 transition-colors"
                 >
                   Maybe Later
                 </button>
                 <a
                   href="/apply"
-                  className="flex-1 px-6 py-3 bg-(--color-roti) text-white rounded-lg font-bold hover:bg-(--color-primary) transition-colors text-center"
+                  className="flex-1 px-6 py-3 bg-(--color-roti) text-white rounded-full font-bold hover:bg-(--color-primary) transition-colors text-center"
                 >
                   Upgrade Now
                 </a>

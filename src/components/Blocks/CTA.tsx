@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import FilloutSliderButton from '@/components/FilloutSliderButton';
 
 interface CTABlockProps {
   title?: string;
@@ -13,6 +14,8 @@ export default function CTABlock({
   buttonText = "Join the Collective",
   buttonLink = "/sign-up"
 }: CTABlockProps) {
+  const useFillout = /join the collective/i.test(buttonText);
+
   return (
     <section className="py-24 bg-(--color-primary) relative overflow-hidden">
       <div className="absolute inset-0 bg-[url('/assets/images/banner_section_background.jpg')] bg-cover bg-center opacity-10"></div>
@@ -21,12 +24,16 @@ export default function CTABlock({
         <p className="text-xl text-white/80 mb-12 max-w-2xl mx-auto leading-relaxed">
           {description}
         </p>
-        <Link 
-          href={buttonLink}
-          className="inline-block px-12 py-5 bg-(--color-roti) text-white rounded-full font-bold text-lg hover:bg-white hover:text-(--color-primary) transition-all shadow-2xl"
-        >
-          {buttonText}
-        </Link>
+        {useFillout ? (
+          <FilloutSliderButton buttonText={buttonText} variant="cta" className="inline-flex justify-center" />
+        ) : (
+          <Link 
+            href={buttonLink}
+            className="inline-block px-6 py-3 bg-(--color-roti) text-white rounded-full font-bold text-sm hover:bg-white hover:text-(--color-primary) transition-all shadow-2xl"
+          >
+            {buttonText}
+          </Link>
+        )}
       </div>
     </section>
   );

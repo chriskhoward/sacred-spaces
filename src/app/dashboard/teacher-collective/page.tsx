@@ -70,7 +70,7 @@ export default async function TeacherCollectiveDashboard() {
                 </p>
                 <Link 
                   href="/dashboard/directory-profile"
-                  className="inline-block px-6 py-3 bg-(--color-roti) text-white rounded-lg font-bold hover:opacity-90 transition-opacity"
+                  className="inline-block px-6 py-3 bg-(--color-roti) text-white rounded-full font-bold hover:opacity-90 transition-opacity"
                 >
                   Complete Profile →
                 </Link>

@@ -83,7 +83,7 @@ export default async function HomePageContent() {
                 </ul>
               </div>
 
-              <div className="bg-(--color-primary)/5 p-10 rounded-[3rem_0_3rem_0] border-l-4 border-(--color-roti)">
+              <div className="bg-(--color-primary)/5 p-10 rounded-3xl border-l-4 border-(--color-roti)">
                 <p className="text-2xl font-bold text-(--color-primary) mb-6">
                   We are here to tell a different story.
                 </p>
@@ -139,7 +139,7 @@ export default async function HomePageContent() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
             {/* Teachers Collective */}
-            <div className="bg-white p-10 rounded-[3rem_0_3rem_0] shadow-[0_10px_40px_rgba(0,0,0,0.08)] flex flex-col h-full border-2 border-transparent hover:border-(--color-sidecar) transition-all">
+            <div className="bg-white p-10 rounded-3xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] flex flex-col h-full border-2 border-transparent hover:border-(--color-sidecar) transition-all">
               <h3 className="text-2xl font-bold text-(--color-primary) mb-2">Flow in Faith Teachers Collective</h3>
               <p className="text-(--color-roti) uppercase tracking-wider font-bold mb-6 text-sm">Where Calling Meets Community</p>
 
@@ -165,7 +165,7 @@ export default async function HomePageContent() {
             </div>
 
             {/* Sanctuary */}
-            <div className="bg-white p-10 rounded-[3rem_0_3rem_0] shadow-[0_10px_40px_rgba(0,0,0,0.08)] flex flex-col h-full border-2 border-transparent hover:border-(--color-sidecar) transition-all">
+            <div className="bg-white p-10 rounded-3xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] flex flex-col h-full border-2 border-transparent hover:border-(--color-sidecar) transition-all">
               <h3 className="text-2xl font-bold text-(--color-primary) mb-2">Flow in Faith Sanctuary</h3>
               <p className="text-(--color-roti) uppercase tracking-wider font-bold mb-6 text-sm">Where Wellness Meets Worship</p>
 

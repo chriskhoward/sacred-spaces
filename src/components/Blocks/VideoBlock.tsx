@@ -32,7 +32,7 @@ export default function VideoBlock({
             {title}
           </h2>
         )}
-        <div className="relative aspect-video rounded-[3rem_0_3rem_0] overflow-hidden shadow-2xl border-8 border-white">
+        <div className="relative aspect-video rounded-3xl overflow-hidden shadow-2xl border-8 border-white">
           <iframe
             src={embedUrl}
             title={title || "Video Player"}

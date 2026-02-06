@@ -49,7 +49,7 @@ export default function SpaceCardsBlock({
           {cards.map((card, index) => (
             <div
               key={index}
-              className="bg-white p-10 rounded-[3rem_0_3rem_0] shadow-[0_10px_40px_rgba(0,0,0,0.08)] flex flex-col h-full border-2 border-transparent hover:border-(--color-sidecar) transition-all"
+              className="bg-white p-10 rounded-3xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] flex flex-col h-full border-2 border-transparent hover:border-(--color-sidecar) transition-all"
             >
               {card.title && (
                 <h3 className="text-2xl font-bold text-(--color-primary) mb-2">

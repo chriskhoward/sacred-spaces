@@ -79,13 +79,13 @@ export default function LiveClassesCards({ classes, userTier, userId }: LiveClas
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link
                   href="/apply"
-                  className="px-6 py-3 bg-(--color-roti) text-white font-bold rounded-lg hover:opacity-90 transition-opacity text-center"
+                  className="px-6 py-3 bg-(--color-roti) text-white font-bold rounded-full hover:opacity-90 transition-opacity text-center"
                 >
                   Upgrade Now
                 </Link>
                 <button
                   onClick={() => setLockedClass(null)}
-                  className="px-6 py-3 border-2 border-gray-300 text-gray-600 font-bold rounded-lg hover:bg-gray-50 transition-colors"
+                  className="px-6 py-3 border-2 border-gray-300 text-gray-600 font-bold rounded-full hover:bg-gray-50 transition-colors"
                 >
                   Maybe Later
                 </button>
@@ -156,14 +156,14 @@ export default function LiveClassesCards({ classes, userTier, userId }: LiveClas
                     href={getGoogleCalendarUrl(call)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-6 py-2 bg-(--color-sidecar) text-(--color-bronzetone) font-bold rounded-lg text-sm hover:bg-(--color-roti) hover:text-white transition-colors"
+                    className="px-6 py-2 bg-(--color-sidecar) text-(--color-bronzetone) font-bold rounded-full text-sm hover:bg-(--color-roti) hover:text-white transition-colors"
                   >
                     + Add to Calendar
                   </a>
                   {locked ? (
                     <button
                       onClick={() => setLockedClass(call)}
-                      className="px-6 py-2 bg-gray-300 text-gray-600 font-bold rounded-lg text-sm hover:bg-gray-400 hover:text-white transition-colors"
+                      className="px-6 py-2 bg-gray-300 text-gray-600 font-bold rounded-full text-sm hover:bg-gray-400 hover:text-white transition-colors"
                     >
                       🔒 Upgrade to Join
                     </button>
@@ -172,14 +172,14 @@ export default function LiveClassesCards({ classes, userTier, userId }: LiveClas
                       href={call.zoomLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-6 py-2 bg-(--color-primary) text-white font-bold rounded-lg text-sm hover:bg-(--color-roti) transition-colors"
+                      className="px-6 py-2 bg-(--color-primary) text-white font-bold rounded-full text-sm hover:bg-(--color-roti) transition-colors"
                     >
                       Join via Zoom
                     </a>
                   ) : !userId ? (
                     <Link
                       href="/sign-in"
-                      className="px-6 py-2 bg-(--color-primary) text-white font-bold rounded-lg text-sm hover:bg-(--color-roti) transition-colors"
+                      className="px-6 py-2 bg-(--color-primary) text-white font-bold rounded-full text-sm hover:bg-(--color-roti) transition-colors"
                     >
                       Sign in to Join
                     </Link>

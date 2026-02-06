@@ -37,7 +37,7 @@ export default function BenefitsBlock({
             <p className="text-xl text-gray-600 mb-12 leading-relaxed">
               {description}
             </p>
-            <Link href="/sign-up" className="btn btn-primary px-10 py-5">{buttonText}</Link>
+            <Link href="/sign-up" className="btn btn-primary">{buttonText}</Link>
           </div>
           <div className="lg:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-6">
             {items.map((benefit, idx) => (

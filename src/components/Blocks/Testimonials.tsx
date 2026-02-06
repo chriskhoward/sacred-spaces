@@ -36,7 +36,7 @@ export default function TestimonialsBlock({
         )}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           {items.map((item, idx) => (
-            <div key={idx} className="bg-white p-12 rounded-[5rem_0_5rem_0] shadow-xl relative mt-8">
+            <div key={idx} className="bg-white p-12 rounded-3xl shadow-xl relative mt-8">
               <div className="absolute -top-10 left-12 w-20 h-20 rounded-full overflow-hidden border-4 border-white shadow-lg">
                 <Image 
                   src={item.image?.asset ? urlForImage(item.image).url() : "/assets/images/team/placeholder.png"} 

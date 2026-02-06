@@ -83,7 +83,7 @@ export default async function LiveClassesPage() {
           </p>
           <Link
             href="/teacher-collective"
-            className="inline-block px-10 py-4 bg-(--color-roti) text-white font-bold rounded-lg text-lg hover:opacity-90 transition-opacity shadow-lg"
+            className="inline-block px-6 py-3 bg-(--color-roti) text-white font-bold rounded-full text-sm hover:opacity-90 transition-opacity shadow-lg"
           >
             Learn About the Teacher Collective
           </Link>

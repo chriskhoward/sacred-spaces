@@ -85,7 +85,7 @@ export default async function TeachingResourcesPage() {
           <p className="text-gray-600 max-w-2xl mx-auto mb-10 text-lg">
             We believe in collective wisdom. If you have a sequence, playlist, or guide that has blessed your teaching, share it with the community.
           </p>
-          <a href="mailto:collective@flowinfaith.com" className="btn btn-primary px-10 py-4">
+          <a href="mailto:collective@flowinfaith.com" className="btn btn-primary">
             Submit a Resource
           </a>
         </div>

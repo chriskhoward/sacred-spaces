@@ -53,7 +53,7 @@ export default function PathChooserBlock({
                   <Link
                     key={index}
                     href={button.link}
-                    className={`inline-block px-10 py-5 rounded-full font-bold text-lg transition-all shadow-xl hover:scale-105 transform ${
+                    className={`inline-block px-6 py-3 rounded-full font-bold text-sm transition-all shadow-xl hover:scale-105 transform ${
                       button.style === 'secondary'
                         ? 'bg-(--color-martinique) text-white hover:bg-(--color-primary)'
                         : 'bg-(--color-primary) text-white hover:bg-(--color-roti)'

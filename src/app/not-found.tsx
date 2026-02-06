@@ -15,7 +15,7 @@ export default function NotFound() {
               404
             </h1>
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="bg-white rounded-[3rem_0_3rem_0] p-8 shadow-2xl">
+              <div className="bg-white rounded-3xl p-8 shadow-2xl">
                 <span className="text-6xl">✨</span>
               </div>
             </div>
@@ -38,13 +38,13 @@ export default function NotFound() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/"
-                className="btn btn-primary px-8 py-4 text-lg inline-flex items-center justify-center gap-2"
+                className="btn btn-primary inline-flex items-center justify-center gap-2"
               >
                 <span>←</span> Return Home
               </Link>
               <Link
                 href="/directory"
-                className="px-8 py-4 border-2 border-(--color-primary) text-(--color-primary) rounded-[2rem_0_2rem_0] font-bold hover:bg-(--color-primary) hover:text-white transition-all text-center text-lg"
+                className="px-6 py-3 border-2 border-(--color-primary) text-(--color-primary) rounded-full font-bold text-sm hover:bg-(--color-primary) hover:text-white transition-all text-center"
               >
                 Find a Teacher
               </Link>

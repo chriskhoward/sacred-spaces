@@ -36,7 +36,7 @@ export default function FounderBioBlock({
             </h5>
           )}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div className="relative h-[500px] lg:h-[600px] rounded-[5rem_0_5rem_0] overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.2)]">
+            <div className="relative h-[500px] lg:h-[600px] rounded-3xl overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.2)]">
               <Image
                 src={imageUrl}
                 alt={name || 'Founder'}
@@ -68,7 +68,7 @@ export default function FounderBioBlock({
               {buttonText && buttonLink && (
                 <Link
                   href={buttonLink}
-                  className="inline-block px-10 py-5 bg-(--color-primary) text-white rounded-full font-bold text-lg hover:bg-(--color-roti) transition-all shadow-xl"
+                  className="inline-block px-6 py-3 bg-(--color-primary) text-white rounded-full font-bold text-sm hover:bg-(--color-roti) transition-all shadow-xl"
                 >
                   {buttonText}
                 </Link>

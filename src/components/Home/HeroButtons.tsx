@@ -2,6 +2,7 @@
 
 import { useUser } from '@clerk/nextjs';
 import Link from 'next/link';
+import FilloutSliderButton from '@/components/FilloutSliderButton';
 
 interface HeroButtonsProps {
   primaryText?: string;
@@ -19,28 +20,23 @@ export default function HeroButtons({
   const { isSignedIn } = useUser();
 
   return (
-    <div className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start">
+    <div className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start items-center sm:items-stretch">
       {isSignedIn ? (
         <Link
           href="/dashboard"
-          className="btn btn-primary px-10 py-5 text-lg shadow-xl hover:shadow-(--color-roti)/30 transition-all"
+          className="btn btn-primary shadow-xl hover:shadow-(--color-roti)/30 transition-all"
         >
           Go to Dashboard
         </Link>
       ) : (
-        <Link
-          href={primaryUrl}
-          className="btn btn-primary px-10 py-5 text-lg shadow-xl hover:shadow-(--color-roti)/30 transition-all bg-(--color-roti) border-(--color-roti) hover:bg-white hover:text-(--color-roti)"
-        >
-          {primaryText}
-        </Link>
+        <FilloutSliderButton buttonText={primaryText} variant="hero" className="inline-flex" />
       )}
 
 
 
       <Link
         href={secondaryUrl}
-        className={`px-10 py-5 border-2 border-white/30 text-white rounded-[2rem_0_2rem_0] font-bold hover:bg-white hover:text-(--color-primary) transition-all text-center text-lg ${isSignedIn ? 'block' : 'hidden sm:block'}`}
+        className={`px-6 py-3 border-2 border-white/30 text-white rounded-full font-bold text-sm hover:bg-white hover:text-(--color-primary) transition-all text-center ${isSignedIn ? 'block' : 'hidden sm:block'}`}
       >
         {secondaryText}
       </Link>

@@ -17,7 +17,7 @@ export default function FooterLinks() {
         {isSignedIn ? (
           <Link
             href="/dashboard"
-            className="inline-block px-6 py-2 bg-(--color-roti) text-(--color-primary) rounded-full font-bold hover:bg-white transition-colors"
+            className="inline-block px-6 py-3 bg-(--color-roti) text-(--color-primary) rounded-full font-bold text-sm hover:bg-white transition-colors text-center"
           >
             Dashboard
           </Link>
@@ -25,13 +25,13 @@ export default function FooterLinks() {
           <>
             <Link
               href="/sign-in"
-              className="inline-block px-6 py-2 border-2 border-white text-white rounded-full font-bold hover:bg-white hover:text-(--color-primary) transition-colors text-center"
+              className="inline-block px-6 py-3 border-2 border-white text-white rounded-full font-bold text-sm hover:bg-white hover:text-(--color-primary) transition-colors text-center"
             >
               Member Login
             </Link>
             <Link
               href="/apply"
-              className="inline-block px-6 py-2 bg-(--color-roti) text-(--color-primary) rounded-full font-bold hover:bg-white transition-colors text-center"
+              className="inline-block px-6 py-3 bg-(--color-roti) text-(--color-primary) rounded-full font-bold text-sm hover:bg-white transition-colors text-center"
             >
               Join Now
             </Link>

@@ -43,7 +43,7 @@ export default async function DashboardPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white p-10 rounded-[30px_0_30px_0] shadow-xl hover:-translate-y-2 transition-all group">
+            <div className="bg-white p-10 rounded-3xl shadow-xl hover:-translate-y-2 transition-all group">
               <h3 className="text-(--color-primary) text-3xl mb-6 font-bold">My Account</h3>
               <div className="space-y-3 text-gray-600 mb-8">
                 <p><span className="font-bold">Email:</span> {user.emailAddresses[0]?.emailAddress}</p>
@@ -53,7 +53,7 @@ export default async function DashboardPage() {
               <Link href="/user-profile" className="text-(--color-roti) font-bold hover:underline transition-all">Manage Account →</Link>
             </div>
 
-            <div className="bg-white p-10 rounded-[30px_0_30px_0] shadow-xl hover:-translate-y-2 transition-all">
+            <div className="bg-white p-10 rounded-3xl shadow-xl hover:-translate-y-2 transition-all">
               <h3 className="text-(--color-primary) text-3xl mb-6 font-bold">Quick Access</h3>
               <ul className="space-y-4">
                 {isTeacher ? (
@@ -72,12 +72,12 @@ export default async function DashboardPage() {
               </ul>
             </div>
 
-            <div className="bg-(--color-martinique) p-10 rounded-[30px_0_30px_0] shadow-xl text-white">
+            <div className="bg-(--color-martinique) p-10 rounded-3xl shadow-xl text-white">
               <h3 className="text-white text-3xl mb-6 font-bold">Community</h3>
               <p className="text-white/80 mb-10 text-lg leading-relaxed">
                 Connect with other {isTeacher ? 'Christ-Centered Yoga Teachers of Color' : 'practitioners'} and grow in your faith-led journey.
               </p>
-              <Link href="/community" className="btn btn-primary w-full text-center py-4 rounded-[15px_0_15px_0] font-bold">Enter Forum</Link>
+              <Link href="/community" className="btn btn-primary w-full text-center font-bold">Enter Forum</Link>
             </div>
           </div>
         </div>

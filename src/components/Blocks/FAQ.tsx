@@ -40,7 +40,7 @@ export default function FAQBlock({
             {items.map((item, index) => (
               <div
                 key={index}
-                className="bg-white rounded-[2rem_0_2rem_0] shadow-[0_10px_30px_rgba(0,0,0,0.08)] border-2 border-transparent hover:border-(--color-sidecar) overflow-hidden transition-all hover:shadow-[0_15px_40px_rgba(0,0,0,0.12)]"
+                className="bg-white rounded-3xl shadow-[0_10px_30px_rgba(0,0,0,0.08)] border-2 border-transparent hover:border-(--color-sidecar) overflow-hidden transition-all hover:shadow-[0_15px_40px_rgba(0,0,0,0.12)]"
               >
                 <button
                   onClick={() => toggleItem(index)}

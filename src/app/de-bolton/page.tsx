@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import FilloutSliderButton from '@/components/FilloutSliderButton';
 
 export default function DeBoltonPage() {
   return (
@@ -48,7 +49,7 @@ export default function DeBoltonPage() {
       <section className="py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <div className="bg-white p-12 md:p-16 rounded-[4rem_0_4rem_0] shadow-[0_20px_60px_rgba(0,0,0,0.1)] border-2 border-(--color-sidecar)">
+            <div className="bg-white p-12 md:p-16 rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.1)] border-2 border-(--color-sidecar)">
               <h2 className="text-4xl font-bold text-(--color-primary) mb-8">About De</h2>
               
               <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
@@ -77,22 +78,22 @@ export default function DeBoltonPage() {
               <div className="mt-12 pt-12 border-t-2 border-(--color-gallery)">
                 <h3 className="text-2xl font-bold text-(--color-primary) mb-6">Credentials & Training</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="bg-(--color-gallery) p-6 rounded-[2rem_0_2rem_0]">
+                  <div className="bg-(--color-gallery) p-6 rounded-3xl">
                     <div className="text-3xl mb-3">🧘</div>
                     <h4 className="font-bold text-(--color-primary) mb-2">200-Hour Yoga Certification</h4>
                     <p className="text-gray-600 text-sm">Intensive foundational training</p>
                   </div>
-                  <div className="bg-(--color-gallery) p-6 rounded-[2rem_0_2rem_0]">
+                  <div className="bg-(--color-gallery) p-6 rounded-3xl">
                     <div className="text-3xl mb-3">🌟</div>
                     <h4 className="font-bold text-(--color-primary) mb-2">500-Hour Ashtanga Training</h4>
                     <p className="text-gray-600 text-sm">Advanced practice and teaching</p>
                   </div>
-                  <div className="bg-(--color-gallery) p-6 rounded-[2rem_0_2rem_0]">
+                  <div className="bg-(--color-gallery) p-6 rounded-3xl">
                     <div className="text-3xl mb-3">💚</div>
                     <h4 className="font-bold text-(--color-primary) mb-2">100-Hour Trauma-Informed Certification</h4>
                     <p className="text-gray-600 text-sm">Safe, supportive healing spaces</p>
                   </div>
-                  <div className="bg-(--color-gallery) p-6 rounded-[2rem_0_2rem_0]">
+                  <div className="bg-(--color-gallery) p-6 rounded-3xl">
                     <div className="text-3xl mb-3">💪</div>
                     <h4 className="font-bold text-(--color-primary) mb-2">Mat Pilates Certification</h4>
                     <p className="text-gray-600 text-sm">Strength and alignment training</p>
@@ -103,7 +104,7 @@ export default function DeBoltonPage() {
               {/* Teaching Philosophy */}
               <div className="mt-12 pt-12 border-t-2 border-(--color-gallery)">
                 <h3 className="text-2xl font-bold text-(--color-primary) mb-6">Teaching Approach</h3>
-                <div className="bg-(--color-sidecar) p-8 rounded-[2rem_0_2rem_0]">
+                <div className="bg-(--color-sidecar) p-8 rounded-3xl">
                   <p className="text-lg text-(--color-bronzetone) leading-relaxed italic">
                     &ldquo;De creates safe, empowering spaces for all levels. Her teaching is rooted in mindfulness, compassion, and transformation, inviting you to build resilience, self-awareness, and inner peace. Whether you&apos;re beginning or deepening your practice, De will challenge you, support you, and inspire you to rise.&rdquo;
                   </p>
@@ -124,16 +125,15 @@ export default function DeBoltonPage() {
             <p className="text-xl text-gray-700 mb-10 leading-relaxed">
               Join the Flow in Faith Teachers Collective and connect with De and the community.
             </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Link 
-                href="/sign-up"
-                className="inline-block px-12 py-6 bg-(--color-primary) text-white rounded-full font-bold text-xl hover:bg-(--color-roti) transition-all shadow-2xl hover:scale-105 transform"
-              >
-                Join the Collective
-              </Link>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+              <FilloutSliderButton
+                buttonText="Join the Collective"
+                variant="cta"
+                className="inline-flex"
+              />
               <Link 
                 href="/"
-                className="inline-block px-12 py-6 border-2 border-(--color-primary) text-(--color-primary) rounded-full font-bold text-xl hover:bg-(--color-primary) hover:text-white transition-all"
+                className="inline-block px-6 py-3 border-2 border-(--color-primary) text-(--color-primary) rounded-full font-bold text-sm hover:bg-(--color-primary) hover:text-white transition-all"
               >
                 Back to Home
               </Link>

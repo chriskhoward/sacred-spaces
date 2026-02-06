@@ -45,7 +45,7 @@ export default function ChecklistBlock({
             <div className="mt-8 text-center">
               <Link
                 href={buttonLink}
-                className="inline-block px-10 py-5 bg-(--color-primary) text-white rounded-full font-bold text-lg hover:bg-(--color-roti) transition-all shadow-xl"
+                className="inline-block px-6 py-3 bg-(--color-primary) text-white rounded-full font-bold text-sm hover:bg-(--color-roti) transition-all shadow-xl"
               >
                 {buttonText}
               </Link>

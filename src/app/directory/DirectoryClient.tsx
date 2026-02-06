@@ -70,7 +70,7 @@ export default function DirectoryClient({ teachers }: DirectoryClientProps) {
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 pb-20">
             {filteredTeachers.map(teacher => (
-              <div key={teacher.id} className="bg-white rounded-[2rem_0_2rem_0] overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:-translate-y-2 flex flex-col group">
+              <div key={teacher.id} className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:-translate-y-2 flex flex-col group">
                 <div className="h-[350px] relative overflow-hidden bg-(--color-gallery)">
                   <Image 
                     src={teacher.image || '/assets/images/placeholder_teacher.png'} 
@@ -97,7 +97,7 @@ export default function DirectoryClient({ teachers }: DirectoryClientProps) {
                     </div>
                   )}
                   <p className="text-gray-700 leading-relaxed mb-8 grow">{(teacher.bio || '').substring(0, 120)}{(teacher.bio || '').length > 120 ? '...' : ''}</p>
-                  <Link href={`/teachers/${teacher.id}`} className="w-full py-4 bg-(--color-primary) text-white text-center rounded-[1rem_0_1rem_0] font-bold text-lg hover:bg-(--color-roti) transition-all">
+                  <Link href={`/teachers/${teacher.id}`} className="w-full py-3 bg-(--color-primary) text-white text-center rounded-full font-bold text-sm hover:bg-(--color-roti) transition-all">
                     View Profile
                   </Link>
                 </div>

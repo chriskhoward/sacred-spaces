@@ -63,9 +63,9 @@
 }
 
 @layer components {
-  /* Base Button Styles */
+  /* Base Button Styles - round (pill) shape, same size as nav button */
   .btn {
-    @apply inline-flex items-center justify-center px-8 py-4 rounded-[2rem_0_2rem_0] font-bold transition-all duration-300;
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-full font-bold text-sm transition-all duration-300;
   }
 
   .btn-primary {
@@ -90,7 +90,7 @@ details > summary::marker {
   content: '';
 }
 
-/* It's Time to.. section: gold button with dark text to match screenshot */
+/* Fillout + all CTAs: same size as nav button (px-6 py-3 text-sm) */
 .fillout-cta-its-time a,
 .fillout-cta-its-time button,
 .fillout-cta-its-time button[class*="fillout-embed-popup-button"] {
@@ -98,10 +98,10 @@ details > summary::marker {
   background: #c7a254 !important;
   color: #413356 !important;
   border: none !important;
-  border-radius: 0.5rem !important;
-  padding: 0.875rem 1.75rem !important;
+  border-radius: 9999px !important;
+  padding: 0.75rem 1.5rem !important; /* py-3 px-6 - nav size */
   font-weight: 700 !important;
-  font-size: 1rem !important;
+  font-size: 0.875rem !important; /* text-sm */
   cursor: pointer !important;
   transition: opacity 0.2s ease !important;
 }
@@ -111,14 +111,16 @@ button[class*="fillout-embed-popup-button"] {
   background: #c7a254 !important;
   color: #413356 !important;
   border: none !important;
+  border-radius: 9999px !important;
+  padding: 0.75rem 1.5rem !important;
   font-weight: 700 !important;
+  font-size: 0.875rem !important;
 }
 .fillout-cta-its-time a:hover,
 .fillout-cta-its-time button:hover {
   opacity: 0.95 !important;
 }
 
-/* Final CTA "So, what do you say?" section: gold button */
 .fillout-cta-final a,
 .fillout-cta-final button,
 .fillout-cta-final button[class*="fillout-embed-popup-button"] {
@@ -126,10 +128,10 @@ button[class*="fillout-embed-popup-button"] {
   background: #c7a254 !important;
   color: #413356 !important;
   border: none !important;
-  border-radius: 0.5rem !important;
-  padding: 0.875rem 2rem !important;
+  border-radius: 9999px !important;
+  padding: 0.75rem 1.5rem !important;
   font-weight: 700 !important;
-  font-size: 1.125rem !important;
+  font-size: 0.875rem !important;
   cursor: pointer !important;
   display: inline-block !important;
   visibility: visible !important;
@@ -140,7 +142,7 @@ button[class*="fillout-embed-popup-button"] {
   opacity: 0.9 !important;
 }
 
-/* Bottom line section: gold outline button */
+/* Bottom section: same size as pair */
 .fillout-cta-bottom a,
 .fillout-cta-bottom button,
 .fillout-cta-bottom button[class*="fillout-embed-popup-button"] {
@@ -148,10 +150,10 @@ button[class*="fillout-embed-popup-button"] {
   background: #c7a254 !important;
   color: #413356 !important;
   border: 2px solid #c7a254 !important;
-  border-radius: 0.5rem !important;
-  padding: 0.75rem 2rem !important;
+  border-radius: 9999px !important;
+  padding: 0.75rem 1.5rem !important;
   font-weight: 700 !important;
-  font-size: 1rem !important;
+  font-size: 0.875rem !important;
   cursor: pointer !important;
   display: inline-block !important;
 }
@@ -160,7 +162,7 @@ button[class*="fillout-embed-popup-button"] {
   opacity: 0.9 !important;
 }
 
-/* Bottom line section: gold button */
+/* Bottom line: same size as pair */
 .fillout-cta-bottom-line a,
 .fillout-cta-bottom-line button,
 .fillout-cta-bottom-line button[class*="fillout-embed-popup-button"] {
@@ -168,10 +170,10 @@ button[class*="fillout-embed-popup-button"] {
   background: #c7a254 !important;
   color: #413356 !important;
   border: none !important;
-  border-radius: 0.5rem !important;
-  padding: 0.875rem 2rem !important;
+  border-radius: 9999px !important;
+  padding: 0.75rem 1.5rem !important;
   font-weight: 700 !important;
-  font-size: 1rem !important;
+  font-size: 0.875rem !important;
   cursor: pointer !important;
   display: inline-block !important;
   visibility: visible !important;

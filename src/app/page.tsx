@@ -27,8 +27,12 @@ const homeQuery = `*[_type == "home"][0]{
 }`;
 
 export default async function Home() {
-  // Try to fetch homepage content from Sanity
-  const homeData = await client.fetch(homeQuery);
+  let homeData: { _id?: string; _type?: string; content?: unknown[] } | null = null;
+  try {
+    homeData = await client.fetch(homeQuery);
+  } catch (err) {
+    console.error('[Home] Sanity fetch failed, using fallback content:', err);
+  }
 
   // If we have Sanity content, use BlockRenderer
   // Otherwise, fall back to the hardcoded HomePageContent

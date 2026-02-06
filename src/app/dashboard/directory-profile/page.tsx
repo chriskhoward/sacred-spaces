@@ -50,7 +50,7 @@ export default async function DirectoryProfilePage() {
             </Link>
           </div>
 
-          <div className="bg-white p-12 rounded-[3rem_0_3rem_0] shadow-xl border border-gray-100">
+          <div className="bg-white p-12 rounded-3xl shadow-xl border border-gray-100">
             {/* Profile Photo Section */}
             <div className="flex flex-col md:flex-row items-center gap-8 mb-12 p-8 bg-(--color-gallery)/30 rounded-2xl border border-dashed border-(--color-primary)/20">
               <div className="relative w-32 h-32">
@@ -254,7 +254,7 @@ export default async function DirectoryProfilePage() {
                 </Link>
                 <button
                   type="submit"
-                  className="bg-(--color-roti) text-white px-10 py-4 rounded-[15px_0_15px_0] font-bold text-lg hover:bg-(--color-primary) transition-all shadow-lg hover:shadow-xl hover:-translate-y-1 block"
+                  className="bg-(--color-roti) text-white px-6 py-3 rounded-full font-bold text-sm hover:bg-(--color-primary) transition-all shadow-lg hover:shadow-xl hover:-translate-y-1 block"
                 >
                   Save & Update Profile
                 </button>

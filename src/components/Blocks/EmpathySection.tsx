@@ -42,7 +42,7 @@ export default function EmpathySectionBlock({
             <div className="mt-12 text-center">
               <Link
                 href={buttonLink}
-                className={`inline-block px-10 py-5 rounded-full font-bold text-lg transition-all shadow-xl ${
+                className={`inline-block px-6 py-3 rounded-full font-bold text-sm transition-all shadow-xl ${
                   isDark
                     ? 'bg-(--color-roti) text-white hover:bg-white hover:text-(--color-primary)'
                     : 'bg-(--color-primary) text-white hover:bg-(--color-roti)'

@@ -81,7 +81,7 @@ export default function TeamBlock({
               })}
             </div>
           </div>
-          <div className="lg:w-2/3 bg-(--color-sidecar)/30 p-12 lg:p-20 rounded-[4rem_0_4rem_0]">
+          <div className="lg:w-2/3 bg-(--color-sidecar)/30 p-12 lg:p-20 rounded-3xl">
             <h3 className="text-3xl font-bold text-(--color-primary) mb-12">Our Journey...</h3>
             <div className="prose prose-xl text-(--color-bronzetone) space-y-10 leading-relaxed italic">
               <p>
