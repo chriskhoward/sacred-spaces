@@ -37,13 +37,14 @@ export default async function Home() {
   // If we have Sanity content, use BlockRenderer
   // Otherwise, fall back to the hardcoded HomePageContent
   const hasSanityContent = homeData?.content && homeData.content.length > 0;
+  const blocks = hasSanityContent ? (homeData!.content as { _type: string; _key: string; [key: string]: any }[]) : [];
 
   return (
     <main className="min-h-screen bg-white">
       <Navbar />
-      {hasSanityContent ? (
+      {hasSanityContent && homeData ? (
         <BlockRenderer
-          blocks={homeData.content}
+          blocks={blocks}
           documentId={homeData._id}
           documentType={homeData._type}
         />

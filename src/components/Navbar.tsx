@@ -7,12 +7,15 @@ export default async function Navbar() {
     "slug": slug.current
   }`;
 
-  let dynamicPages: { title?: string; slug?: string }[] = [];
+  let raw: { title?: string; slug?: string }[] = [];
   try {
-    dynamicPages = (await client.fetch(query)) || [];
+    raw = (await client.fetch(query)) || [];
   } catch (err) {
     console.error('[Navbar] Sanity fetch failed:', err);
   }
+  const dynamicPages: { title: string; slug: string }[] = raw.filter(
+    (p): p is { title: string; slug: string } => Boolean(p.title && p.slug)
+  );
 
   return <NavbarClient dynamicPages={dynamicPages} />;
 }
