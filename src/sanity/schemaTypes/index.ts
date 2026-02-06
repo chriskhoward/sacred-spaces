@@ -6,6 +6,7 @@ import { resourceCategoryType } from './resourceCategory'
 import { liveClassType } from './liveClass'
 import { homeType } from './home'
 import { aboutType } from './about'
+import { alignmentSubmissionType } from './alignmentSubmission'
 import { allowedUserType } from './allowedUser'
 import { pageType } from './page'
 import { teacherType } from './teacher'
@@ -72,6 +73,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     spaceCardsBlock,
     pathChooserBlock,
     closingStatementBlock,
+    alignmentSubmissionType,
     allowedUserType,
     teacherType
   ],

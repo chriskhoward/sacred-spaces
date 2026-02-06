@@ -28,6 +28,12 @@ export const allowedUserType = defineType({
             description: 'Has this user already signed up and claimed their access?',
             initialValue: false,
         }),
+        defineField({
+            name: 'alignmentSubmissionId',
+            title: 'Alignment Submission',
+            type: 'string',
+            description: 'Sanity _id of alignment form submission (matched by email)',
+        }),
     ],
     preview: {
         select: {

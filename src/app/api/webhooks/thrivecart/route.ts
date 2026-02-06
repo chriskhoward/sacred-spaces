@@ -120,19 +120,27 @@ export async function POST(req: NextRequest) {
 
     // 3. Create/Update 'allowedUser' in Sanity
     // This serves as the "whitelist" for users who sign up LATER.
+    // Link to alignment form submission if they submitted the Apply form first.
 
-    // Check for existing allowedUser
-    const existingAllowed = await writeClient.fetch(
+    const existingAllowed = await writeClient.fetch<{ _id: string; redeemed?: boolean } | null>(
       `*[_type == "allowedUser" && email == $email][0]`,
       { email: customerEmail }
     );
 
+    const alignmentSubmission = await writeClient.fetch<{ _id: string } | null>(
+      `*[_type == "alignmentSubmission" && email == $email][0]{ _id }`,
+      { email: customerEmail }
+    );
+
+    const allowedUserPatch: Record<string, unknown> = {
+      plan: productName,
+      orderId: orderId,
+      redeemed: existingAllowed?.redeemed || userUpgraded,
+      ...(alignmentSubmission && { alignmentSubmissionId: alignmentSubmission._id }),
+    };
+
     if (existingAllowed) {
-      await writeClient.patch(existingAllowed._id).set({
-        plan: productName,
-        orderId: orderId,
-        redeemed: existingAllowed.redeemed || userUpgraded, // Mark redeemed if we just upgraded them
-      }).commit();
+      await writeClient.patch(existingAllowed._id).set(allowedUserPatch).commit();
       console.log(`[Thrivecart] Updated allowedUser for ${customerEmail}`);
     } else {
       await writeClient.create({
@@ -140,7 +148,8 @@ export async function POST(req: NextRequest) {
         email: customerEmail,
         plan: productName,
         orderId: orderId,
-        redeemed: userUpgraded, // Mark true if we already handled it via Clerk
+        redeemed: userUpgraded,
+        ...(alignmentSubmission && { alignmentSubmissionId: alignmentSubmission._id }),
       });
       console.log(`[Thrivecart] Created allowedUser for ${customerEmail}`);
     }

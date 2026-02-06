@@ -472,6 +472,25 @@ These are configured in Vercel (Settings → Environment Variables):
 |---------|-------------|
 | **Thrivecart** | `https://www.flowinfaith.com/api/webhooks/thrivecart` |
 | **Clerk** | `https://www.flowinfaith.com/api/webhooks/clerk` |
+| **Fillout (Alignment Form)** | `https://www.flowinfaith.com/api/webhooks/fillout` |
+
+### Alignment Form (Fillout) – Streamlined flow
+
+**→ Full step-by-step instructions: [docs/FILLOUT_ALIGNMENT_FORM_SETUP.md](docs/FILLOUT_ALIGNMENT_FORM_SETUP.md)**
+
+Alignment form submissions are stored in Sanity and linked to Thrivecart purchases by email so you have one record per person (form answers + payment).
+
+**1. In Fillout (form Integrate → Webhook):**
+- **Webhook URL:** `https://www.flowinfaith.com/api/webhooks/fillout`
+- **Body:** Map your form fields into the request body. You must include at least one field that contains the submitter’s **email** (e.g. map your “Email” question to a key named `email`). Optionally map **name** to a key named `name`. All other mapped fields are stored in Sanity under “Form Responses”.
+
+**2. Redirect after submit (recommended):**
+- In Fillout, set “Redirect after submit” to: `https://www.flowinfaith.com/join`  
+  so users go straight to checkout after completing the Alignment Form.
+
+**3. In Sanity:**
+- **Alignment Form Submission** – each submission is stored here (email, name, submitted at, and full responses).
+- When the same email later purchases via Thrivecart, the **Allowed User** record is linked to that alignment submission (field “Alignment Submission”).
 
 ### Sanity Content Types
 
@@ -482,6 +501,7 @@ These are configured in Vercel (Settings → Environment Variables):
 | `resource` | Teaching materials | Teacher Resources |
 | `page` | Website pages | Pages |
 | `allowedUser` | Teacher whitelist | Allowed User |
+| `alignmentSubmission` | Alignment form answers (from Fillout) | Alignment Form Submission |
 
 ### User Metadata Structure (Clerk)
 
