@@ -42,6 +42,22 @@ export default async function RootLayout({
       publishableKey={publishableKey}
       afterSignInUrl="/dashboard"
       afterSignUpUrl="/onboarding"
+      appearance={{
+        elements: {
+          formButtonPrimary: 'bg-(--color-roti) hover:bg-(--color-primary) text-white',
+        },
+      }}
+      localization={{
+        locale: 'en-US',
+        localization: {
+          enUS: {
+            formFieldLabel__organizationName: 'Name',
+            formFieldInputPlaceholder__organizationName: 'Organization name',
+            formFieldLabel__organizationLogo: 'Headshot',
+            formFieldInputPlaceholder__organizationLogo: 'Upload headshot',
+          },
+        },
+      }}
     >
       <html lang="en" data-scroll-behavior="smooth">
         <body className={`${dmSans.variable} antialiased`}>

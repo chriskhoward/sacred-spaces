@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { updateDirectoryProfile } from './actions';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import SpecialtiesSelect from '@/components/SpecialtiesSelect';
 
 export default async function DirectoryProfilePage() {
   const user = await currentUser();
@@ -63,7 +64,7 @@ export default async function DirectoryProfilePage() {
               <div className="flex-1 text-center md:text-left">
                 <h3 className="text-lg font-bold text-(--color-primary) mb-2">Profile Photo</h3>
                 <p className="text-gray-600 mb-4 text-sm">
-                  Your profile photo is managed via your main account settings. This is the image that will appear on your directory card.
+                  Your profile photo is managed via your main account settings. Make sure to upload your photo manually in account settings to ensure it appears correctly in the directory (not synced from Google).
                 </p>
                 <Link href="/user-profile" className="inline-block px-6 py-2 bg-white border border-gray-300 rounded-full font-bold text-sm hover:border-(--color-roti) hover:text-(--color-roti) transition-colors">
                   Change Photo in Settings
@@ -136,16 +137,12 @@ export default async function DirectoryProfilePage() {
                 <div className="grid grid-cols-1 gap-8">
                   <div>
                     <label htmlFor="specialties" className="block text-gray-700 font-bold mb-3">Specialties</label>
-                    <input
-                      type="text"
-                      id="specialties"
+                    <SpecialtiesSelect
                       name="specialties"
-                      defaultValue={profile.specialties?.join(', ') || ''}
-                      placeholder="e.g. Vinyasa, Trauma-Informed, Meditation, Restorative"
-                      className="w-full p-4 bg-gray-50 border-2 border-transparent focus:bg-white focus:border-(--color-roti) rounded-xl outline-none transition-all placeholder:text-gray-400"
+                      defaultValue={profile.specialties || []}
                       required
                     />
-                    <p className="text-sm text-gray-500 mt-2">Separate with commas</p>
+                    <p className="text-sm text-gray-500 mt-2">Hold Ctrl/Cmd to select multiple</p>
                   </div>
                   <div>
                     <label htmlFor="certifications" className="block text-gray-700 font-bold mb-3">Certifications</label>
@@ -169,7 +166,83 @@ export default async function DirectoryProfilePage() {
                       defaultValue={profile.website || ''}
                       placeholder="https://yourwebsite.com"
                       className="w-full p-4 bg-gray-50 border-2 border-transparent focus:bg-white focus:border-(--color-roti) rounded-xl outline-none transition-all placeholder:text-gray-400"
-                      required
+                    />
+                    <p className="text-sm text-gray-500 mt-2">Include https:// (not required to submit)</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Social Media */}
+              <div>
+                <h3 className="text-2xl font-bold text-(--color-primary) mb-6 flex items-center gap-3">
+                  <span className="w-8 h-8 rounded-full bg-(--color-sidecar) flex items-center justify-center text-sm text-(--color-bronzetone)">4</span>
+                  Social Media <span className="text-sm font-normal text-gray-500">(Optional)</span>
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="instagram" className="block text-gray-700 font-bold mb-3">Instagram</label>
+                    <input
+                      type="text"
+                      id="instagram"
+                      name="instagram"
+                      defaultValue={profile.socialMedia?.instagram || ''}
+                      placeholder="@yourhandle or https://instagram.com/yourhandle"
+                      className="w-full p-4 bg-gray-50 border-2 border-transparent focus:bg-white focus:border-(--color-roti) rounded-xl outline-none transition-all placeholder:text-gray-400"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="facebook" className="block text-gray-700 font-bold mb-3">Facebook</label>
+                    <input
+                      type="text"
+                      id="facebook"
+                      name="facebook"
+                      defaultValue={profile.socialMedia?.facebook || ''}
+                      placeholder="https://facebook.com/yourpage"
+                      className="w-full p-4 bg-gray-50 border-2 border-transparent focus:bg-white focus:border-(--color-roti) rounded-xl outline-none transition-all placeholder:text-gray-400"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="twitter" className="block text-gray-700 font-bold mb-3">Twitter/X</label>
+                    <input
+                      type="text"
+                      id="twitter"
+                      name="twitter"
+                      defaultValue={profile.socialMedia?.twitter || ''}
+                      placeholder="@yourhandle or https://twitter.com/yourhandle"
+                      className="w-full p-4 bg-gray-50 border-2 border-transparent focus:bg-white focus:border-(--color-roti) rounded-xl outline-none transition-all placeholder:text-gray-400"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="tiktok" className="block text-gray-700 font-bold mb-3">TikTok</label>
+                    <input
+                      type="text"
+                      id="tiktok"
+                      name="tiktok"
+                      defaultValue={profile.socialMedia?.tiktok || ''}
+                      placeholder="@yourhandle or https://tiktok.com/@yourhandle"
+                      className="w-full p-4 bg-gray-50 border-2 border-transparent focus:bg-white focus:border-(--color-roti) rounded-xl outline-none transition-all placeholder:text-gray-400"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="youtube" className="block text-gray-700 font-bold mb-3">YouTube</label>
+                    <input
+                      type="text"
+                      id="youtube"
+                      name="youtube"
+                      defaultValue={profile.socialMedia?.youtube || ''}
+                      placeholder="https://youtube.com/@yourchannel"
+                      className="w-full p-4 bg-gray-50 border-2 border-transparent focus:bg-white focus:border-(--color-roti) rounded-xl outline-none transition-all placeholder:text-gray-400"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="linkedin" className="block text-gray-700 font-bold mb-3">LinkedIn</label>
+                    <input
+                      type="text"
+                      id="linkedin"
+                      name="linkedin"
+                      defaultValue={profile.socialMedia?.linkedin || ''}
+                      placeholder="https://linkedin.com/in/yourprofile"
+                      className="w-full p-4 bg-gray-50 border-2 border-transparent focus:bg-white focus:border-(--color-roti) rounded-xl outline-none transition-all placeholder:text-gray-400"
                     />
                   </div>
                 </div>

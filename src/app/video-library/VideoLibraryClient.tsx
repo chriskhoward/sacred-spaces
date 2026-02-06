@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import Image from 'next/image';
 import { urlForImage } from '@/sanity/lib/image';
 
@@ -15,6 +15,7 @@ interface Video {
   description: string;
   thumbnail: any;
   videoUrl?: string;
+  isFeatured?: boolean;
 }
 
 interface Category {
@@ -26,6 +27,8 @@ interface Category {
 interface VideoLibraryClientProps {
   initialVideos: Video[];
   categories: Category[];
+  /** Video to show in the "New Release" hero. Set in Sanity via "Feature as New Release" on a video. */
+  featuredVideo?: Video | null;
 }
 
 // Helper to convert video URLs to embeddable format
@@ -61,18 +64,13 @@ function isDirectVideo(url: string): boolean {
 function getVideoThumbnail(url: string): string | null {
   if (!url) return null;
 
-  // YouTube - get high quality thumbnail
   const youtubeMatch = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]+)/);
   if (youtubeMatch) {
-    // maxresdefault is highest quality, falls back to hqdefault if not available
     return `https://img.youtube.com/vi/${youtubeMatch[1]}/maxresdefault.jpg`;
   }
 
-  // Vimeo - requires API call, but we can use a placeholder approach
-  // For Vimeo, we'll return null and let the component handle it differently
   const vimeoMatch = url.match(/(?:vimeo\.com\/)(\d+)/);
   if (vimeoMatch) {
-    // Vimeo thumbnails require an API call, so we'll use a different approach
     return `https://vumbnail.com/${vimeoMatch[1]}.jpg`;
   }
 
@@ -81,12 +79,10 @@ function getVideoThumbnail(url: string): string | null {
 
 // Get the best available thumbnail
 function getThumbnailUrl(video: { thumbnail?: any; videoUrl?: string }): string {
-  // First priority: uploaded thumbnail in Sanity
   if (video.thumbnail) {
     return urlForImage(video.thumbnail).url();
   }
 
-  // Second priority: auto-generated from video URL
   if (video.videoUrl) {
     const autoThumbnail = getVideoThumbnail(video.videoUrl);
     if (autoThumbnail) {
@@ -94,22 +90,88 @@ function getThumbnailUrl(video: { thumbnail?: any; videoUrl?: string }): string 
     }
   }
 
-  // Fallback: placeholder image
   return '/assets/images/placeholder_teacher.png';
 }
 
-export default function VideoLibraryClient({ initialVideos, categories }: VideoLibraryClientProps) {
+export default function VideoLibraryClient({ initialVideos, categories, featuredVideo: featuredVideoProp }: VideoLibraryClientProps) {
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedDuration, setSelectedDuration] = useState('All');
+  const [selectedTeacher, setSelectedTeacher] = useState('All');
+  const [selectedLevel, setSelectedLevel] = useState('All');
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
 
-  // Build category list with "All" at the front
-  const categoryOptions = ['All', ...categories.map(c => c.title)];
+  // Strip invisible Unicode (zero-width, BOM) so "All Levels" and "All\u200B Levels" match
+  const stripInvisible = (s: string) => (s ?? '').replace(/[\u200B-\u200D\u2060\uFEFF]/g, '');
 
-  const filteredVideos = selectedCategory === 'All'
-    ? initialVideos
-    : initialVideos.filter(v => v.category === selectedCategory);
+  // Normalize for dedupe: strip invisible, trim, collapse Unicode whitespace, lowercase
+  const normalizeKey = (s: string) =>
+    stripInvisible(s)
+      .trim()
+      .replace(/\s+/gu, ' ')
+      .toLowerCase();
 
-  const featuredVideo = initialVideos[0]; // Picking the first as featured
+  // Helper: unique options by normalized key; clean display value and dedupe by Set
+  const uniqueOptions = (values: (string | undefined | null)[], sort = true) => {
+    const byKey = new Map<string, string>();
+    for (const raw of values) {
+      const cleaned = stripInvisible((raw ?? '').trim()).replace(/\s+/gu, ' ').trim();
+      if (!cleaned) continue;
+      const key = cleaned.toLowerCase();
+      if (byKey.has(key)) continue;
+      byKey.set(key, cleaned);
+    }
+    const arr = Array.from(byKey.values());
+    const deduped = [...new Set(arr)];
+    return sort ? deduped.sort((a, b) => a.localeCompare(b)) : deduped;
+  };
+
+  // Build category list with "All" at the front (dedupe by normalized key + display string)
+  const categoryOptions = useMemo(
+    () => ['All', ...uniqueOptions(categories.map(c => c.title).filter(Boolean), false)],
+    [categories]
+  );
+
+  // Extract unique teachers (dedupe by key + display string)
+  const teacherOptions = useMemo(
+    () => ['All', ...uniqueOptions(initialVideos.map(v => v.instructor).filter(Boolean))],
+    [initialVideos]
+  );
+
+  // Level options: fixed list from schema so each level appears exactly once
+  const levelOptions = ['All', 'Beginner', 'Intermediate', 'Advanced', 'All Levels'];
+
+  // Duration buckets
+  const durationOptions = ['All', 'Under 15 min', '15-30 min', '30-60 min', '60+ min'];
+
+  // Parse duration to minutes
+  function parseDurationMinutes(dur: string | undefined): number {
+    if (!dur) return 0;
+    const match = dur.match(/(\d+)/);
+    return match ? parseInt(match[1]) : 0;
+  }
+
+  function matchesDurationFilter(dur: string | undefined): boolean {
+    if (selectedDuration === 'All') return true;
+    const mins = parseDurationMinutes(dur);
+    switch (selectedDuration) {
+      case 'Under 15 min': return mins > 0 && mins < 15;
+      case '15-30 min': return mins >= 15 && mins <= 30;
+      case '30-60 min': return mins > 30 && mins <= 60;
+      case '60+ min': return mins > 60;
+      default: return true;
+    }
+  }
+
+  const filteredVideos = initialVideos.filter(v => {
+    if (selectedCategory !== 'All' && normalizeKey(v.category ?? '') !== normalizeKey(selectedCategory)) return false;
+    if (selectedTeacher !== 'All' && normalizeKey(v.instructor ?? '') !== normalizeKey(selectedTeacher)) return false;
+    if (selectedLevel !== 'All' && normalizeKey(v.level ?? '') !== normalizeKey(selectedLevel)) return false;
+    if (!matchesDurationFilter(v.duration)) return false;
+    return true;
+  });
+
+  // Use explicitly passed featured video, or fall back to first in list
+  const featuredVideo = featuredVideoProp ?? initialVideos[0] ?? null;
 
   const openVideo = (video: Video) => {
     if (video.videoUrl) {
@@ -166,10 +228,13 @@ export default function VideoLibraryClient({ initialVideos, categories }: VideoL
               )}
             </div>
 
-            {/* Video info */}
+            {/* Video info - full description */}
             <div className="mt-4 text-white">
-              <h2 className="text-2xl font-bold">{selectedVideo.title}</h2>
-              <p className="text-gray-400 mt-1">with {selectedVideo.instructor} • {selectedVideo.duration} • {selectedVideo.level}</p>
+              <h2 className="text-2xl font-bold text-white">{selectedVideo.title}</h2>
+              <p className="text-gray-400 mt-1">with {selectedVideo.instructor} · {selectedVideo.duration} · {selectedVideo.level}</p>
+              {selectedVideo.description && (
+                <p className="text-gray-300 mt-4 leading-relaxed">{selectedVideo.description}</p>
+              )}
             </div>
           </div>
         </div>
@@ -182,7 +247,7 @@ export default function VideoLibraryClient({ initialVideos, categories }: VideoL
             <div className="flex flex-col lg:flex-row gap-12 items-center">
                 <div className="lg:w-1/2">
                     <span className="text-(--color-roti) font-bold uppercase tracking-widest mb-4 block">New Release</span>
-                    <h1 className="text-4xl lg:text-6xl font-bold mb-6 leading-tight">{featuredVideo.title}</h1>
+                    <h1 className="text-4xl lg:text-6xl font-bold mb-6 leading-tight text-white">{featuredVideo.title}</h1>
                     <p className="text-xl text-(--color-sidecar) mb-8 leading-relaxed max-w-xl">
                     {featuredVideo.description}
                     </p>
@@ -226,16 +291,70 @@ export default function VideoLibraryClient({ initialVideos, categories }: VideoL
         <div className="container mx-auto px-4">
 
           {/* Filters */}
-          <div className="flex flex-wrap gap-4 mb-12 justify-center">
-            {categoryOptions.map(cat => (
-              <button
-                key={cat}
-                onClick={() => setSelectedCategory(cat)}
-                className={`px-8 py-3 rounded-full font-bold transition-all ${selectedCategory === cat ? 'bg-(--color-primary) text-white shadow-lg' : 'bg-white text-gray-600 hover:bg-gray-100 hover:text-(--color-primary)'}`}
+          <div className="mb-12">
+            {/* Category Filter */}
+            <div className="flex flex-wrap gap-3 mb-6 justify-center">
+              {categoryOptions.map(cat => (
+                <button
+                  key={cat}
+                  onClick={() => setSelectedCategory(cat)}
+                  className={`px-6 py-2.5 rounded-full font-bold transition-all text-sm ${selectedCategory === cat ? 'bg-(--color-primary) text-white shadow-lg' : 'bg-white text-gray-600 hover:bg-gray-100 hover:text-(--color-primary)'}`}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+
+            {/* Additional Filters Row */}
+            <div className="flex flex-wrap gap-4 justify-center">
+              {/* Duration Filter */}
+              <select
+                value={selectedDuration}
+                onChange={(e) => setSelectedDuration(e.target.value)}
+                className="px-4 py-2.5 rounded-lg border border-gray-300 bg-white text-gray-700 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-(--color-roti) focus:border-transparent"
               >
-                {cat}
-              </button>
-            ))}
+                {durationOptions.map(opt => (
+                  <option key={opt} value={opt}>{opt === 'All' ? 'All Durations' : opt}</option>
+                ))}
+              </select>
+
+              {/* Teacher Filter */}
+              <select
+                value={selectedTeacher}
+                onChange={(e) => setSelectedTeacher(e.target.value)}
+                className="px-4 py-2.5 rounded-lg border border-gray-300 bg-white text-gray-700 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-(--color-roti) focus:border-transparent"
+              >
+                {teacherOptions.map((opt, i) => (
+                  <option key={`teacher-${i}-${opt}`} value={opt}>{opt === 'All' ? 'All Teachers' : opt}</option>
+                ))}
+              </select>
+
+              {/* Level Filter */}
+              <select
+                value={selectedLevel}
+                onChange={(e) => setSelectedLevel(e.target.value)}
+                className="px-4 py-2.5 rounded-lg border border-gray-300 bg-white text-gray-700 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-(--color-roti) focus:border-transparent"
+              >
+                {levelOptions.map((opt, i) => (
+                  <option key={`level-${i}-${opt}`} value={opt}>{opt === 'All' ? 'All Levels' : opt}</option>
+                ))}
+              </select>
+
+              {/* Clear All Filters */}
+              {(selectedCategory !== 'All' || selectedDuration !== 'All' || selectedTeacher !== 'All' || selectedLevel !== 'All') && (
+                <button
+                  onClick={() => {
+                    setSelectedCategory('All');
+                    setSelectedDuration('All');
+                    setSelectedTeacher('All');
+                    setSelectedLevel('All');
+                  }}
+                  className="px-4 py-2.5 text-sm font-bold text-(--color-roti) hover:text-(--color-primary) transition-colors underline"
+                >
+                  Clear Filters
+                </button>
+              )}
+            </div>
           </div>
 
           {/* Video Grid */}
@@ -275,7 +394,7 @@ export default function VideoLibraryClient({ initialVideos, categories }: VideoL
                    )}
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-bold text-(--color-primary) mb-2 line-clamp-1">{video.title}</h3>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-1">{video.title}</h3>
                   <p className="text-gray-500 text-sm mb-4">with {video.instructor}</p>
                   <p className="text-gray-600 text-sm leading-relaxed line-clamp-2 mb-6">
                     {video.description}
@@ -291,7 +410,7 @@ export default function VideoLibraryClient({ initialVideos, categories }: VideoL
 
           {filteredVideos.length === 0 && (
              <div className="text-center py-20 text-gray-500">
-               No videos found in this category.
+               No videos found matching your filters.
              </div>
           )}
 

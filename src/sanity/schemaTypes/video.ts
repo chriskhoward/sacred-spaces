@@ -62,6 +62,13 @@ export const videoType = defineType({
         type: 'url',
     }),
     defineField({
+        name: 'isFeatured',
+        title: 'Feature as “New Release”',
+        type: 'boolean',
+        description: 'When checked, this video appears in the hero “New Release” section at the top of the Video Library. Only one video should be featured at a time.',
+        initialValue: false,
+    }),
+    defineField({
         name: 'targetAudience',
         title: 'Target Audience',
         type: 'string',

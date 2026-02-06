@@ -2,12 +2,15 @@ import { client } from '@/sanity/lib/client';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { currentUser } from '@clerk/nextjs/server';
+import Image from 'next/image';
+import ResourcesClient from './ResourcesClient';
 
 export const dynamic = 'force-dynamic';
 
 export default async function TeachingResourcesPage() {
   const user = await currentUser();
   const membershipType = user?.publicMetadata?.membershipType as string || 'practitioner';
+  const tier = user?.publicMetadata?.tier as string || 'free';
 
   // Fetch categories ordered by display order
   const categoriesQuery = `*[_type == "resourceCategory"] | order(order asc) {
@@ -23,7 +26,10 @@ export default async function TeachingResourcesPage() {
     "category": category->title,
     "categorySlug": category->slug.current,
     description,
-    isLocked
+    linkUrl,
+    isLocked,
+    author,
+    "image": image.asset->url
   }`;
 
   const [categories, resources] = await Promise.all([
@@ -44,56 +50,32 @@ export default async function TeachingResourcesPage() {
       <Navbar />
       
       <section className="pt-[160px] pb-16 bg-(--color-primary) text-white">
-        <div className="container mx-auto px-4 text-center">
-            <span className="text-(--color-roti) font-bold uppercase tracking-widest mb-4 block">Teacher&apos;s Collective</span>
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col items-center text-center">
+            <div className="mb-6">
+              <Image
+                src="/assets/images/tc_logo.png"
+                alt="Flow in Faith Teachers Collective Logo"
+                width={120}
+                height={120}
+                className="w-24 h-24 object-contain"
+              />
+            </div>
+            <span className="text-(--color-roti) font-bold uppercase tracking-widest mb-4 block">Teaching Resources</span>
             <h1 className="text-5xl font-bold mb-6">Teaching Resources</h1>
             <p className="text-xl text-(--color-sidecar) max-w-2xl mx-auto">
               Curated tools to help you deepen your practice, grow your business, and lead with confidence.
             </p>
+          </div>
         </div>
       </section>
 
       <section className="py-24">
         <div className="container mx-auto px-4">
-          <div className="grid gap-16">
-            {groupedResources.length === 0 ? (
-                <div className="text-center py-12 text-gray-500">
-                    No resources found. Check back later!
-                </div>
-            ) : (
-                groupedResources.map((section: { category: string; items: any[] }, idx: number) => (
-                <div key={idx}>
-                    <h2 className="text-3xl font-bold text-(--color-primary) mb-8 flex items-center gap-4">
-                    <span className="w-8 h-8 rounded-full bg-(--color-roti) block"></span>
-                    {section.category}
-                    </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {section.items.map((item: any) => (
-                        <div key={item._id} className="bg-white p-8 rounded-[20px_0_20px_0] shadow-md hover:shadow-xl transition-all border border-transparent hover:border-(--color-roti) group cursor-pointer">
-                        <div className="flex justify-between items-start mb-4">
-                            <span className="bg-(--color-gallery) text-(--color-primary) px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide">
-                            Resource
-                            </span>
-                            {item.isLocked && (
-                                <span className="text-gray-400 text-lg">🔒</span>
-                            )}
-                        </div>
-                        <h3 className="text-xl font-bold text-(--color-primary) mb-3 group-hover:text-(--color-roti) transition-colors">
-                            {item.title}
-                        </h3>
-                        <p className="text-gray-600 mb-6 text-sm leading-relaxed">
-                            {item.description}
-                        </p>
-                        <button className="text-(--color-primary) font-bold text-sm uppercase tracking-wider hover:underline">
-                            Access Resource →
-                        </button>
-                        </div>
-                    ))}
-                    </div>
-                </div>
-                ))
-            )}
-          </div>
+          <ResourcesClient 
+            groupedResources={groupedResources} 
+            userTier={tier}
+          />
         </div>
       </section>
 

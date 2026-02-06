@@ -16,7 +16,7 @@ export default function NotFound() {
             </h1>
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="bg-white rounded-[3rem_0_3rem_0] p-8 shadow-2xl">
-                <span className="text-6xl">🙏</span>
+                <span className="text-6xl">✨</span>
               </div>
             </div>
           </div>

@@ -56,8 +56,8 @@ export default async function VideoLibraryPage() {
     "slug": slug.current
   }`;
 
-  // Filter videos based on audience tag and expand category reference
-  const videosQuery = `*[_type == "video" && (targetAudience == "all" || targetAudience == "${membershipType}")] {
+  // Filter videos by audience; order so featured video is first, then by newest
+  const videosQuery = `*[_type == "video" && (targetAudience == "all" || targetAudience == "${membershipType}")] | order(isFeatured desc, _createdAt desc) {
     _id,
     title,
     instructor,
@@ -67,7 +67,8 @@ export default async function VideoLibraryPage() {
     level,
     description,
     thumbnail,
-    videoUrl
+    videoUrl,
+    isFeatured
   }`;
 
   const [categories, videos] = await Promise.all([
@@ -75,10 +76,13 @@ export default async function VideoLibraryPage() {
     client.fetch(videosQuery),
   ]);
 
+  // Featured video: first one marked featured in Sanity, or fallback to first in list
+  const featuredVideo = videos.find((v: { isFeatured?: boolean }) => v.isFeatured) || videos[0] || null;
+
   return (
     <main className="bg-(--color-gallery) min-h-screen">
       <Navbar />
-      <VideoLibraryClient initialVideos={videos} categories={categories} />
+      <VideoLibraryClient initialVideos={videos} categories={categories} featuredVideo={featuredVideo} />
       <Footer />
     </main>
   );

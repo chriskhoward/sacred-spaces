@@ -80,6 +80,13 @@ export const liveClassType = defineType({
         hidden: ({ parent }) => !parent?.isRecurring,
     }),
     defineField({
+        name: 'isLocked',
+        title: 'Premium Member Only?',
+        type: 'boolean',
+        description: 'If enabled, only Core and Pro tier members can access the Zoom link',
+        initialValue: false,
+    }),
+    defineField({
         name: 'targetAudience',
         title: 'Target Audience',
         type: 'string',

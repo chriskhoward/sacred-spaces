@@ -19,6 +19,11 @@ export default async function DashboardPage() {
 
   const isTeacher = membershipType === 'teacher';
 
+  // Redirect teachers to Teacher Collective Dashboard
+  if (isTeacher) {
+    redirect('/dashboard/teacher-collective');
+  }
+
   return (
     <main className="bg-(--color-gallery) min-h-screen">
       <Navbar />
@@ -27,10 +32,10 @@ export default async function DashboardPage() {
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="text-center mb-16">
             <span className="text-(--color-roti) font-bold uppercase tracking-wider mb-4 block">
-              {isTeacher ? 'Teacher Dashboard' : 'Practitioner Portal'}
+              {isTeacher ? 'Teacher Dashboard' : 'Sanctuary Dashboard'}
             </span>
             <h1 className="text-(--color-primary) text-6xl mb-6 font-bold">
-              Welcome, {user.firstName || 'Friend'}! 🙏
+              Welcome, {user.firstName || 'Friend'}!
             </h1>
             <p className="text-(--color-text) text-xl max-w-2xl mx-auto">
               You&apos;re now part of the Flow in Faith community. Explore your personalized {isTeacher ? 'teaching resources' : 'practice area'} below.
@@ -53,15 +58,15 @@ export default async function DashboardPage() {
               <ul className="space-y-4">
                 {isTeacher ? (
                   <>
-                    <li><Link href="/dashboard/directory-profile" className="text-xl text-gray-700 hover:text-(--color-roti) transition-colors flex items-center gap-3"><span>🔍</span> Manage Directory Profile</Link></li>
-                    <li><Link href="/teacher-collective/resources" className="text-xl text-gray-700 hover:text-(--color-roti) transition-colors flex items-center gap-3"><span>📚</span> Teaching Resources</Link></li>
-                    <li><Link href="/teacher-collective/calls" className="text-xl text-gray-700 hover:text-(--color-roti) transition-colors flex items-center gap-3"><span>📞</span> Community Calls</Link></li>
+                    <li><Link href="/dashboard/directory-profile" className="text-xl text-gray-700 hover:text-(--color-roti) transition-colors">Manage Directory Profile</Link></li>
+                    <li><Link href="/teacher-collective/resources" className="text-xl text-gray-700 hover:text-(--color-roti) transition-colors">Teaching Resources</Link></li>
+                    <li><Link href="/teacher-collective/calls" className="text-xl text-gray-700 hover:text-(--color-roti) transition-colors">Live Classes & Workshops</Link></li>
                   </>
                 ) : (
                   <>
-                    <li><Link href="/video-library" className="text-xl text-gray-700 hover:text-(--color-roti) transition-colors flex items-center gap-3"><span>🎬</span> On-Demand Library</Link></li>
-                    <li><Link href="/live-classes" className="text-xl text-gray-700 hover:text-(--color-roti) transition-colors flex items-center gap-3"><span>📅</span> Class Schedule</Link></li>
-                    <li><Link href="/directory" className="text-xl text-gray-700 hover:text-(--color-roti) transition-colors flex items-center gap-3"><span>🤝</span> Find a Teacher</Link></li>
+                    <li><Link href="/video-library" className="text-xl text-gray-700 hover:text-(--color-roti) transition-colors">On-Demand Library</Link></li>
+                    <li><Link href="/live-classes" className="text-xl text-gray-700 hover:text-(--color-roti) transition-colors">Class Schedule</Link></li>
+                    <li><Link href="/directory" className="text-xl text-gray-700 hover:text-(--color-roti) transition-colors">Teacher Directory</Link></li>
                   </>
                 )}
               </ul>

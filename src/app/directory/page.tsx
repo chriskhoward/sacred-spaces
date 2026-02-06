@@ -5,6 +5,7 @@ import DirectoryClient from './DirectoryClient';
 import { Teacher } from '@/data/teachers';
 import { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export const metadata: Metadata = {
   title: "Find a Teacher | Flow in Faith Directory",
@@ -67,13 +68,14 @@ export default async function DirectoryPage() {
       return {
         id: user.id,
         name: profile.name || `${user.firstName || ''} ${user.lastName || ''}`.trim() || 'Teacher',
-        location: profile.location || 'Online',
+        location: profile.location || '',
         specialties: Array.isArray(profile.specialties) ? profile.specialties : [],
         certifications: Array.isArray(profile.certifications) ? profile.certifications : [],
         bio: profile.bio || 'Member of the Flow in Faith Teacher Collective.',
         image: user.imageUrl,
         email: user.emailAddresses[0]?.emailAddress,
         website: profile.website,
+        socialMedia: profile.socialMedia || {},
       };
     });
 
@@ -83,8 +85,17 @@ export default async function DirectoryPage() {
 
       <header className="bg-(--color-primary) pt-[200px] pb-24 text-center">
         <div className="container mx-auto px-4">
+          <div className="flex justify-center mb-6">
+            <Image
+              src="/assets/images/tc_logo.png"
+              alt="Flow in Faith Teachers Collective Logo"
+              width={120}
+              height={120}
+              className="w-24 h-24 object-contain"
+            />
+          </div>
           <h1 className="text-5xl lg:text-7xl font-bold mb-6 text-white leading-tight">Teacher Directory</h1>
-          <p className="text-xl text-(--color-sidecar) opacity-90">Find a Christ-centered yoga teacher near you or online.</p>
+          <p className="text-xl text-(--color-sidecar) opacity-90">Find a Christ-centered yoga teacher near you.</p>
         </div>
       </header>
 

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Teacher } from '@/data/teachers';
+import { Teacher, SPECIALTIES_LIST } from '@/data/teachers';
 
 interface DirectoryClientProps {
   teachers: Teacher[];
@@ -13,11 +13,10 @@ export default function DirectoryClient({ teachers }: DirectoryClientProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSpecialty, setSelectedSpecialty] = useState('All');
 
-  // Collect all unique specialties from all teachers
-  const allSpecialties = ['All', ...Array.from(new Set(teachers.flatMap(t => t.specialties || []))).sort()];
+  // Use the predefined specialties list so the dropdown always has all options
+  const allSpecialties = ['All', ...SPECIALTIES_LIST];
 
   const filteredTeachers = teachers.filter(teacher => {
-    // Safety checks for optional fields just in case
     const name = teacher.name || '';
     const location = teacher.location || '';
     const specialties = teacher.specialties || [];
@@ -82,18 +81,22 @@ export default function DirectoryClient({ teachers }: DirectoryClientProps) {
                 </div>
                 <div className="p-8 grow flex flex-col">
                   <h3 className="text-3xl font-bold mb-2 text-(--color-primary)">{teacher.name}</h3>
-                  <p className="text-gray-500 mb-6 font-medium">📍 {teacher.location}</p>
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {teacher.specialties?.slice(0, 3).map(s => (
-                      <span key={s} className="bg-(--color-sidecar) text-(--color-bronzetone) px-4 py-1.5 rounded-full text-sm font-semibold whitespace-nowrap">
-                        {s}
-                      </span>
-                    ))}
-                    {(teacher.specialties?.length || 0) > 3 && (
+                  {teacher.location && (
+                    <p className="text-gray-500 mb-4 font-medium">📍 {teacher.location}</p>
+                  )}
+                  {teacher.specialties && teacher.specialties.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {teacher.specialties.slice(0, 3).map(s => (
+                        <span key={s} className="bg-(--color-sidecar) text-(--color-bronzetone) px-4 py-1.5 rounded-full text-sm font-semibold whitespace-nowrap">
+                          {s}
+                        </span>
+                      ))}
+                      {teacher.specialties.length > 3 && (
                         <span className="bg-gray-100 text-gray-500 px-4 py-1.5 rounded-full text-sm font-semibold whitespace-nowrap">+{teacher.specialties.length - 3} more</span>
-                    )}
-                  </div>
-                  <p className="text-gray-700 leading-relaxed mb-8 grow">{(teacher.bio || '').substring(0, 120)}...</p>
+                      )}
+                    </div>
+                  )}
+                  <p className="text-gray-700 leading-relaxed mb-8 grow">{(teacher.bio || '').substring(0, 120)}{(teacher.bio || '').length > 120 ? '...' : ''}</p>
                   <Link href={`/teachers/${teacher.id}`} className="w-full py-4 bg-(--color-primary) text-white text-center rounded-[1rem_0_1rem_0] font-bold text-lg hover:bg-(--color-roti) transition-all">
                     View Profile
                   </Link>

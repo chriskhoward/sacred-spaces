@@ -29,16 +29,16 @@ export default function NavbarClient({ dynamicPages }: NavbarClientProps) {
 
   // Navigation links for teachers
   const teacherLinks = [
-    { label: 'Resources', href: '/teacher-collective/resources' },
-    { label: 'Community Calls', href: '/teacher-collective/calls' },
-    { label: 'Directory', href: '/directory' },
+    { label: 'Live Classes', href: '/teacher-collective/calls' },
+    { label: 'On-Demand Library', href: '/video-library' },
+    { label: 'Teacher Directory', href: '/directory' },
   ];
 
   // Navigation links for practitioners
   const practitionerLinks = [
-    { label: 'Video Library', href: '/video-library' },
     { label: 'Live Classes', href: '/live-classes' },
-    { label: 'Find a Teacher', href: '/directory' },
+    { label: 'On-Demand Library', href: '/video-library' },
+    { label: 'Teacher Directory', href: '/directory' },
   ];
 
   // Get the appropriate links based on membership
