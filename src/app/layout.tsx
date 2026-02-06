@@ -47,17 +47,20 @@ export default async function RootLayout({
           formButtonPrimary: 'bg-(--color-roti) hover:bg-(--color-primary) text-white',
         },
       }}
-      localization={{
-        locale: 'en-US',
-        localization: {
-          enUS: {
-            formFieldLabel__organizationName: 'Name',
-            formFieldInputPlaceholder__organizationName: 'Organization name',
-            formFieldLabel__organizationLogo: 'Headshot',
-            formFieldInputPlaceholder__organizationLogo: 'Upload headshot',
+      localization={
+        {
+          locale: 'en-US',
+          localization: {
+            enUS: {
+              formFieldLabel__organizationName: 'Name',
+              formFieldInputPlaceholder__organizationName: 'Organization name',
+              formFieldLabel__organizationLogo: 'Headshot',
+              formFieldInputPlaceholder__organizationLogo: 'Upload headshot',
+            },
           },
-        },
-      }}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } as any
+      }
     >
       <html lang="en" data-scroll-behavior="smooth">
         <body className={`${dmSans.variable} antialiased`}>

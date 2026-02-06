@@ -120,8 +120,8 @@ export async function updateDirectoryProfile(formData: FormData) {
         .set(patchData)
         .commit();
     } else {
-      // When creating, include _type
-      const createData: Record<string, any> = {
+      // When creating, include _type (typed so Sanity create() accepts it)
+      const createData: { _type: string; [key: string]: unknown } = {
         _type: 'teacher',
         clerkId: userId,
         name,

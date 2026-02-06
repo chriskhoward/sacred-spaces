@@ -25,11 +25,9 @@ export const alignmentSubmissionType = defineType({
     defineField({
       name: 'responses',
       title: 'Form Responses',
-      type: 'object',
-      description: 'Raw form answers from Fillout (field id or name → value)',
-      options: {
-        collapsed: false,
-      },
+      type: 'text',
+      description: 'Raw form answers from Fillout (JSON)',
+      rows: 8,
     }),
   ],
   preview: {

@@ -61,12 +61,13 @@ export async function POST(req: NextRequest) {
       { email }
     );
 
+    const responsesJson = JSON.stringify(payload, null, 2);
     const doc = {
       _type: 'alignmentSubmission' as const,
       email,
       ...(name && { name }),
       submittedAt: new Date().toISOString(),
-      responses: payload,
+      responses: responsesJson,
     };
 
     if (existing) {
@@ -75,7 +76,7 @@ export async function POST(req: NextRequest) {
         .set({
           name: name ?? undefined,
           submittedAt: doc.submittedAt,
-          responses: payload,
+          responses: responsesJson,
         })
         .commit();
     } else {
