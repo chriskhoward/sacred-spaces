@@ -9,7 +9,6 @@ export const dynamic = 'force-dynamic';
 
 export default async function TeachingResourcesPage() {
   const user = await currentUser();
-  const membershipType = user?.publicMetadata?.membershipType as string || 'practitioner';
   const tier = user?.publicMetadata?.tier as string || 'free';
 
   // Fetch categories ordered by display order
@@ -19,8 +18,8 @@ export default async function TeachingResourcesPage() {
     "slug": slug.current
   }`;
 
-  // Fetch resources with expanded category reference
-  const resourcesQuery = `*[_type == "resource" && (targetAudience == "all" || targetAudience == "${membershipType}")] {
+  // Fetch ALL resources (no targetAudience filter) so every resource shows; client can filter/badge by audience
+  const resourcesQuery = `*[_type == "resource"] | order(_createdAt desc) {
     _id,
     title,
     "category": category->title,
@@ -29,6 +28,7 @@ export default async function TeachingResourcesPage() {
     linkUrl,
     isLocked,
     author,
+    targetAudience,
     "image": image.asset->url
   }`;
 
@@ -37,13 +37,21 @@ export default async function TeachingResourcesPage() {
     client.fetch(resourcesQuery),
   ]);
 
-  // Group resources by category, maintaining category order from Sanity
-  const groupedResources = categories
-    .filter((cat: any) => resources.some((r: any) => r.category === cat.title))
-    .map((cat: any) => ({
+  // Group resources by category (only include sections that have at least one resource)
+  const categoryTitles = new Set(categories.map((c: { title: string }) => c.title));
+  const groupedByCategory = categories
+    .map((cat: { title: string }) => ({
       category: cat.title,
-      items: resources.filter((r: any) => r.category === cat.title)
-    }));
+      items: resources.filter((r: { category?: string | null }) => r.category === cat.title),
+    }))
+    .filter((g: { items: unknown[] }) => g.items.length > 0);
+  const uncategorized = resources.filter(
+    (r: { category?: string | null }) => !r.category || !categoryTitles.has(r.category)
+  );
+  const groupedResources =
+    uncategorized.length > 0
+      ? [...groupedByCategory, { category: 'Other', items: uncategorized }]
+      : groupedByCategory;
 
   return (
     <main className="bg-(--color-gallery) min-h-screen">

@@ -8,9 +8,28 @@ import { writeClient } from '@/sanity/lib/write';
 
 export const dynamic = 'force-dynamic';
 
+const EMAIL_REGEX = /[^\s@]+@[^\s@]+\.[^\s@]+/;
+
+/** True if string looks like an email (allows relaxed patterns Fillout might send) */
+function looksLikeEmail(s: string): boolean {
+  const t = s.trim();
+  return t.length > 0 && t.includes('@') && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(t);
+}
+
+/** Extract email from string (full match or first email-like substring) */
+function extractEmailFromString(s: string): string | null {
+  const t = s.trim();
+  if (!t || !t.includes('@')) return null;
+  if (looksLikeEmail(t)) return t;
+  const match = t.match(EMAIL_REGEX);
+  return match ? match[0].trim() : null;
+}
+
 /** Recursively find a string that looks like an email in objects/arrays */
 function findEmailInValue(val: unknown): string | null {
-  if (typeof val === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val.trim())) return val.trim();
+  if (typeof val === 'string') {
+    return extractEmailFromString(val);
+  }
   if (Array.isArray(val)) {
     for (const item of val) {
       const found = findEmailInValue(item);
@@ -27,7 +46,7 @@ function findEmailInValue(val: unknown): string | null {
 }
 
 function getEmail(payload: Record<string, unknown>): string | null {
-  // Common keys (exact match, case variations, and Fillout-style labels)
+  // Common keys – use recursive extraction so Fillout's nested/object values work
   const keys = [
     'email', 'Email', 'customer_email', 'Email Address', 'email_address',
     'emailAddress', 'EmailAddress', 'your email', 'Your Email', 'Your email',
@@ -35,13 +54,22 @@ function getEmail(payload: Record<string, unknown>): string | null {
   ];
   for (const key of keys) {
     const v = payload[key];
-    if (typeof v === 'string' && v.includes('@')) return v.trim();
+    if (v === undefined) continue;
+    const found = findEmailInValue(v);
+    if (found) return found;
+  }
+  // Any key containing "email" (e.g. Fillout question IDs)
+  for (const [key, v] of Object.entries(payload)) {
+    if (key.toLowerCase().includes('email') && v !== undefined) {
+      const found = findEmailInValue(v);
+      if (found) return found;
+    }
   }
   // Check every top-level value (in case key is question ID or custom label)
   for (const v of Object.values(payload)) {
-    if (typeof v === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim())) return v.trim();
+    const found = findEmailInValue(v);
+    if (found) return found;
   }
-  // Recursively search (nested body, e.g. { data: { email: "..." } })
   return findEmailInValue(payload);
 }
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 
 interface Resource {
   _id: string;
@@ -10,6 +10,7 @@ interface Resource {
   isLocked?: boolean;
   author?: string;
   image?: string;
+  targetAudience?: string;
 }
 
 interface GroupedResource {
@@ -25,6 +26,17 @@ interface ResourcesClientProps {
 export default function ResourcesClient({ groupedResources, userTier }: ResourcesClientProps) {
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
   const [selectedResource, setSelectedResource] = useState<Resource | null>(null);
+  const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
+
+  const categoryOptions = useMemo(() => {
+    const list = groupedResources.map((g) => g.category).filter(Boolean);
+    return list;
+  }, [groupedResources]);
+
+  const filteredGroups = useMemo(() => {
+    if (!categoryFilter) return groupedResources;
+    return groupedResources.filter((g) => g.category === categoryFilter);
+  }, [groupedResources, categoryFilter]);
 
   const handleResourceClick = (resource: Resource) => {
     // Check if resource is locked and user is on free tier
@@ -54,8 +66,38 @@ export default function ResourcesClient({ groupedResources, userTier }: Resource
 
   return (
     <>
+      {categoryOptions.length > 1 && (
+        <div className="flex flex-wrap gap-2 mb-10">
+          <button
+            type="button"
+            onClick={() => setCategoryFilter(null)}
+            className={`px-6 py-2.5 rounded-full font-bold text-sm transition-all ${
+              categoryFilter === null
+                ? 'bg-(--color-primary) text-white shadow-lg'
+                : 'bg-white text-gray-600 border-2 border-gray-200 hover:border-(--color-roti) hover:text-(--color-primary)'
+            }`}
+          >
+            All
+          </button>
+          {categoryOptions.map((cat) => (
+            <button
+              key={cat}
+              type="button"
+              onClick={() => setCategoryFilter(cat)}
+              className={`px-6 py-2.5 rounded-full font-bold text-sm transition-all ${
+                categoryFilter === cat
+                  ? 'bg-(--color-primary) text-white shadow-lg'
+                  : 'bg-white text-gray-600 border-2 border-gray-200 hover:border-(--color-roti) hover:text-(--color-primary)'
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+      )}
+
       <div className="grid gap-16">
-        {groupedResources.map((section: GroupedResource, idx: number) => (
+        {filteredGroups.map((section: GroupedResource, idx: number) => (
           <div key={idx}>
             <h2 className="text-3xl font-bold text-(--color-primary) mb-8 flex items-center gap-4">
               <span className="w-8 h-8 rounded-full bg-(--color-roti) block"></span>
@@ -68,13 +110,20 @@ export default function ResourcesClient({ groupedResources, userTier }: Resource
                   onClick={() => handleResourceClick(item)}
                   className="bg-white p-8 rounded-3xl shadow-md hover:shadow-xl transition-all border border-transparent hover:border-(--color-roti) group cursor-pointer"
                 >
-                  <div className="flex justify-between items-start mb-4">
+                  <div className="flex flex-wrap justify-between items-start gap-2 mb-4">
                     <span className="bg-(--color-gallery) text-(--color-primary) px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide">
                       Resource
                     </span>
-                    {item.isLocked && (
-                      <span className="text-gray-400 text-lg">🔒</span>
-                    )}
+                    <div className="flex items-center gap-2">
+                      {item.targetAudience && item.targetAudience !== 'all' && (
+                        <span className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">
+                          {item.targetAudience === 'teacher' ? 'Teachers' : 'Practitioners'}
+                        </span>
+                      )}
+                        {item.isLocked && (
+                        <span className="text-gray-400 text-lg">🔒</span>
+                      )}
+                    </div>
                   </div>
                   <h3 className="text-xl font-bold text-(--color-primary) mb-3 group-hover:text-(--color-roti) transition-colors">
                     {item.title}

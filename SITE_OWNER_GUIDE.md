@@ -245,25 +245,40 @@ Members can toggle between:
 
 Resources are teaching materials for the Teacher Collective (PDFs, guides, masterclasses, etc.)
 
+### Before Adding a Resource: Create a Category
+
+Resources must belong to a **Resource Category**. If you don’t have one yet:
+
+1. In Sanity Studio, open **"Resource Category"** in the left sidebar (under Content).
+2. Click **+** to create a category, e.g. "Guides", "Masterclasses", "Business & Growth".
+3. Fill **Category Name** and **Slug**, set **Display Order** (e.g. 0), then **Publish**.
+
 ### Adding a New Resource
 
 1. **Go to Sanity Studio**: https://www.flowinfaith.com/studio
-2. **Click "Teacher Resources"** in the left sidebar
+2. **Click "Teacher Resources"** in the left sidebar (under Content).
 3. **Click the + button** to create new
 4. **Fill in the fields**:
 
 | Field | Description | Required |
 |-------|-------------|----------|
 | **Resource Title** | Name of the resource | ✅ Yes |
-| **Category** | Masterclass, Business & Growth, Class Sequencing, or Theology | No |
+| **Category** | Pick an existing Resource Category (create one first if needed) | ✅ Yes |
 | **Description** | What this resource covers | No |
 | **Author/Host** | Who created it | No |
 | **Cover Image** | Upload a thumbnail | No |
 | **Link to Resource** | URL to the PDF, video, or page | No |
-| **Premium Member Only?** | Toggle for premium content (future use) | No |
-| **Target Audience** | Usually "Teacher Only" | ✅ Yes |
+| **Premium Member Only?** | Toggle for premium-only content | No |
+| **Target Audience** | Who can see it: **Everyone** (all visitors), **Teacher Only**, or **Practitioner Only** | ✅ Yes |
 
 5. **Click "Publish"**
+
+### Resource doesn’t show on the site?
+
+- **Target Audience**: If you chose "Teacher Only", the resource appears only for logged-in teachers. Choose **"Everyone"** to show it to all visitors (good for testing).
+- **Category**: The resource must have a **Category** set to an existing Resource Category. If the category is missing or unpublished, the resource may appear under **"Other"** or not at all until the category exists.
+- **Publish**: Make sure you clicked **Publish** (not just Save). Unpublished drafts don’t appear on the live site.
+- **Studio vs site**: You’re editing at **/studio**; the public list is at **/teacher-collective/resources**. View the site while logged in as a teacher (or set Target Audience to "Everyone") to confirm.
 
 ---
 
