@@ -95,7 +95,7 @@ So users go straight from the Alignment Form to the Join/checkout page:
 | Problem | What to check |
 |--------|----------------|
 | No document in Sanity after submit | Webhook URL correct? Body includes a field the site can read as email (key `email` or a value that looks like an email)? Check Fillout’s webhook logs for errors. |
-| 400 “Missing email” | The body key must be `email` (lowercase) or the value in another mapped field must be a valid email address. |
+| 400 “Missing email” | In the webhook Body, add a row with key `email` (lowercase) and map its value to your form's email question. The 400 response includes a hint listing the keys we received—use that to add the correct mapping. |
 | User not redirected to /join | Redirect URL is set in Fillout’s redirect/confirmation settings and the form is published. |
 
 ---

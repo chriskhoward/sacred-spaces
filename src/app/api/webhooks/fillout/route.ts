@@ -8,17 +8,41 @@ import { writeClient } from '@/sanity/lib/write';
 
 export const dynamic = 'force-dynamic';
 
-function getEmail(payload: Record<string, unknown>): string | null {
-  const keys = ['email', 'Email', 'customer_email', 'Email Address', 'email_address'];
-  for (const key of keys) {
-    const v = payload[key];
-    if (typeof v === 'string' && v.includes('@')) return v;
+/** Recursively find a string that looks like an email in objects/arrays */
+function findEmailInValue(val: unknown): string | null {
+  if (typeof val === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val.trim())) return val.trim();
+  if (Array.isArray(val)) {
+    for (const item of val) {
+      const found = findEmailInValue(item);
+      if (found) return found;
+    }
   }
-  // Check nested or any string that looks like email
-  for (const v of Object.values(payload)) {
-    if (typeof v === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return v;
+  if (val && typeof val === 'object' && !Array.isArray(val)) {
+    for (const v of Object.values(val)) {
+      const found = findEmailInValue(v);
+      if (found) return found;
+    }
   }
   return null;
+}
+
+function getEmail(payload: Record<string, unknown>): string | null {
+  // Common keys (exact match, case variations, and Fillout-style labels)
+  const keys = [
+    'email', 'Email', 'customer_email', 'Email Address', 'email_address',
+    'emailAddress', 'EmailAddress', 'your email', 'Your Email', 'Your email',
+    'E-mail', 'e-mail', 'work email', 'Work Email', 'contact email'
+  ];
+  for (const key of keys) {
+    const v = payload[key];
+    if (typeof v === 'string' && v.includes('@')) return v.trim();
+  }
+  // Check every top-level value (in case key is question ID or custom label)
+  for (const v of Object.values(payload)) {
+    if (typeof v === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim())) return v.trim();
+  }
+  // Recursively search (nested body, e.g. { data: { email: "..." } })
+  return findEmailInValue(payload);
 }
 
 function getName(payload: Record<string, unknown>): string | undefined {
@@ -48,8 +72,12 @@ export async function POST(req: NextRequest) {
 
     const email = getEmail(payload);
     if (!email) {
+      const receivedKeys = Object.keys(payload).slice(0, 20);
       return NextResponse.json(
-        { error: 'Missing email in submission. Map an email field in Fillout webhook body.' },
+        {
+          error: 'Missing email in submission. Map an email field in Fillout webhook body.',
+          hint: 'In Fillout: Integrate → Webhook → Body, add a key "email" and map it to your form\'s email question. Received top-level keys: ' + (receivedKeys.length ? receivedKeys.join(', ') : '(none)'),
+        },
         { status: 400 }
       );
     }
