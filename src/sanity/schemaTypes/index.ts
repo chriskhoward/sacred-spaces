@@ -10,6 +10,8 @@ import { alignmentSubmissionType } from './alignmentSubmission'
 import { allowedUserType } from './allowedUser'
 import { pageType } from './page'
 import { teacherType } from './teacher'
+import { teacherOnboardingCategoryType } from './teacherOnboardingCategory'
+import { teacherOnboardingItemType } from './teacherOnboardingItem'
 import {
   heroBlock,
   brandBlock,
@@ -75,6 +77,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     closingStatementBlock,
     alignmentSubmissionType,
     allowedUserType,
-    teacherType
+    teacherType,
+    teacherOnboardingCategoryType,
+    teacherOnboardingItemType
   ],
 }

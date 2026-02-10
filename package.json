@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "seed:onboarding": "npx tsx scripts/seed-onboarding.ts"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.36.5",
