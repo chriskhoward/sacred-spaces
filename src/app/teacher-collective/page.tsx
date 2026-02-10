@@ -548,39 +548,32 @@ export default function TeacherCollectivePage() {
       <section className="py-20 bg-(--color-gallery)">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl lg:text-4xl font-black text-black mb-3 text-center">FAQs</h2>
-            <p className="text-base text-gray-600 mb-10 text-center">Still have questions? I understand. Let&apos;s chat!</p>
+            <p className="text-base text-gray-600 mb-3 text-center">Still have questions? I understand. Let&apos;s chat!</p>
+            <h2 className="text-3xl lg:text-4xl font-black text-black mb-10 text-center">FAQs</h2>
 
             <div className="space-y-4">
-              <details className="group">
-                <summary className="flex items-center justify-between bg-(--color-primary) text-white px-6 py-4 rounded-sm cursor-pointer border-l-4 border-(--color-roti) list-none">
-                  <span className="font-medium text-base">How much does a subscription cost?</span>
-                  <svg className="w-5 h-5 flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
-                </summary>
-                <div className="bg-white px-6 py-5 text-gray-700 leading-relaxed">
-                  Get started for free with a 7-day trial! After the trial, select one of our pricing plans that suits your needs.
-                </div>
-              </details>
-
-              <details className="group">
-                <summary className="flex items-center justify-between bg-(--color-primary) text-white px-6 py-4 rounded-sm cursor-pointer border-l-4 border-(--color-roti) list-none">
-                  <span className="font-medium text-base">Where can I read your latest articles?</span>
-                  <svg className="w-5 h-5 flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
-                </summary>
-                <div className="bg-white px-6 py-5 text-gray-700 leading-relaxed">
-                  All of the latest and older articles can be found on our blog. Additionally, subscribe to our newsletter to be the first one to get our latest reads.
-                </div>
-              </details>
-
-              <details className="group">
-                <summary className="flex items-center justify-between bg-(--color-primary) text-white px-6 py-4 rounded-sm cursor-pointer border-l-4 border-(--color-roti) list-none">
-                  <span className="font-medium text-base">How often do you send out your newsletter?</span>
-                  <svg className="w-5 h-5 flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
-                </summary>
-                <div className="bg-white px-6 py-5 text-gray-700 leading-relaxed">
-                  We send our newsletter weekly. If you would like to update the frequency of the emails you get please update your preferences at the bottom of one of our newsletters.
-                </div>
-              </details>
+              {[
+                { q: 'Who is the Flow in Faith Teachers Collective for?', a: 'The Flow in Faith Teachers Collective is for yoga teachers of color who identify as Christian and are seeking a culturally aware, faith-affirming community where they can grow, teach, and be poured into as whole people. It\'s especially supportive for those navigating the tension between the yoga world, the church world, and their own desire to teach authentically without overextending, overexplaining, or shrinking.' },
+                { q: 'Do I have to be a Christian to join?', a: 'No, you do not have to identify as Christian to join the Collective. However, our conversations, offerings, and gatherings are rooted in Christ-centered principles, language and practice. Participation in this space requires respect for that foundation and the faith-centered nature of the community.' },
+                { q: 'Who is this membership NOT for?', a: 'The Flow in Faith Teachers Collective may not be aligned if you are not interested in community, collaboration, or engaging faith and yoga together with intention. It may also not be the right fit if you are looking for a purely secular yoga business group or a space that centers dominant cultural perspectives rather than lived experience.' },
+                { q: 'How can I support if I am not a Person of Color?', a: 'We deeply appreciate your desire to support this work. You can support by amplifying Flow in Faith, sharing our offerings, attending public events, hiring teachers from our directory, and honoring the importance of culturally specific spaces created for and led by teachers of color. You can also sponsor a membership for a teacher by emailing collective@flowinfaith.com' },
+                { q: 'What does the Flow in Faith Teachers Collective program offer?', a: 'The Flow in Faith Teachers Collective offers a private community space, monthly community check-ins, teacher directory placement, and quarterly masterclasses focused on spiritually aligned and culturally grounded growth. Premium members also receive opportunities for visibility, promotion, paid teaching, and contribution to the on-demand library.' },
+                { q: 'What kind of support can I expect as a member?', a: 'As a member, you can expect relational, spiritual, and professional support rooted in community rather than hierarchy. Support shows up through shared dialogue, facilitated gatherings, collaborative opportunities, and access to aligned resources and leadership.' },
+                { q: 'Are the LIVE Q&A Sessions Recorded?', a: 'Yes, live gatherings such as community check-ins and masterclasses are recorded whenever possible and made available inside the membership space. This allows you to revisit conversations or catch up if you\'re unable to attend live.' },
+                { q: 'Is there a commitment period for the membership?', a: 'There is no long-term contract or required commitment period. You are free to cancel your membership at any time, and we trust you to stay as long as the Collective serves you well.' },
+                { q: 'What sets your membership program apart from others?', a: 'Flow in Faith Teachers Collective is the only space intentionally created for Christian Yoga Teachers of Color where faith, culture, and calling are honored together without compromise. Our difference lies in culturally grounded community, spiritually aligned growth, and leadership rooted in lived experience.' },
+                { q: 'How do I access the resources and materials included in the membership?', a: 'Once you join, you\'ll receive access to our private online platform where all community spaces, resources, recordings, and announcements live. Everything is designed to be easy to access from any device, so you can engage in a way that fits your life.' },
+              ].map((faq, idx) => (
+                <details key={idx} className="group">
+                  <summary className="flex items-center justify-between bg-(--color-primary) text-white px-6 py-4 rounded-sm cursor-pointer border-l-4 border-(--color-roti) list-none">
+                    <span className="font-medium text-base">{faq.q}</span>
+                    <svg className="w-5 h-5 flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                  </summary>
+                  <div className="bg-white px-6 py-5 text-gray-700 leading-relaxed">
+                    {faq.a}
+                  </div>
+                </details>
+              ))}
             </div>
           </div>
         </div>
