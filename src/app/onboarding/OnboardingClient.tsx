@@ -1,28 +1,89 @@
 'use client';
 
 import SpecialtiesSelect from '@/components/SpecialtiesSelect';
+import { SPECIALTIES_LIST } from '@/data/teachers';
 
 type CompleteTeacherOnboarding = (formData: FormData) => Promise<void>;
+
+interface AlignmentPrefill {
+  name?: string;
+  location?: string;
+  yogaFormats?: string[];
+  whyJoin?: string;
+}
 
 interface OnboardingClientProps {
   userFirstName: string;
   userLastName: string;
+  prefill?: AlignmentPrefill;
   completeTeacherOnboarding: CompleteTeacherOnboarding;
+}
+
+/**
+ * Match Fillout yoga-format answers to SPECIALTIES_LIST values.
+ * Uses case-insensitive substring matching so "vinyasa flow" matches "Vinyasa",
+ * "power" matches "Power Yoga", etc.
+ */
+function matchSpecialties(yogaFormats: string[]): string[] {
+  if (!yogaFormats || yogaFormats.length === 0) return [];
+
+  const matched: string[] = [];
+
+  for (const format of yogaFormats) {
+    const lower = format.toLowerCase().trim();
+    if (!lower) continue;
+
+    for (const specialty of SPECIALTIES_LIST) {
+      const specLower = specialty.toLowerCase();
+
+      // Exact match
+      if (lower === specLower) {
+        if (!matched.includes(specialty)) matched.push(specialty);
+        continue;
+      }
+
+      // Either side contains the other (e.g. "vinyasa flow" contains "vinyasa")
+      if (lower.includes(specLower) || specLower.includes(lower)) {
+        if (!matched.includes(specialty)) matched.push(specialty);
+      }
+    }
+  }
+
+  return matched;
 }
 
 export default function OnboardingClient({
   userFirstName,
   userLastName,
+  prefill = {},
   completeTeacherOnboarding,
 }: OnboardingClientProps) {
-  const defaultName = [userFirstName, userLastName].filter(Boolean).join(' ').trim() || '';
+  // Prefer alignment form name, fall back to Clerk name
+  const defaultName = prefill.name
+    || [userFirstName, userLastName].filter(Boolean).join(' ').trim()
+    || '';
+
+  const defaultLocation = prefill.location || '';
+  const defaultBio = prefill.whyJoin || '';
+  const defaultSpecialties = matchSpecialties(prefill.yogaFormats || []);
+
+  const hasPrefill = !!(prefill.location || prefill.whyJoin || (prefill.yogaFormats && prefill.yogaFormats.length > 0));
 
   return (
     <div className="bg-white p-12 rounded-3xl shadow-xl">
       <h2 className="text-3xl font-bold text-(--color-primary) mb-6">Complete Your Directory Profile</h2>
-      <p className="text-gray-600 mb-8">
+      <p className="text-gray-600 mb-4">
         To appear in the Teacher Directory, please provide the following information:
       </p>
+
+      {hasPrefill && (
+        <div className="bg-(--color-sidecar)/30 border border-(--color-roti)/30 rounded-xl p-4 mb-8">
+          <p className="text-sm text-(--color-bronzetone) font-medium">
+            We&apos;ve pre-filled some fields from your alignment form. Feel free to review and edit anything before submitting.
+          </p>
+        </div>
+      )}
+
       <form action={completeTeacherOnboarding} className="space-y-6">
         <div>
           <label htmlFor="name" className="block text-gray-700 font-bold mb-2">Display Name *</label>
@@ -41,6 +102,7 @@ export default function OnboardingClient({
             type="text"
             id="location"
             name="location"
+            defaultValue={defaultLocation}
             placeholder="e.g. Houston, TX"
             className="w-full p-4 bg-gray-50 border-2 border-transparent focus:bg-white focus:border-(--color-roti) rounded-xl outline-none transition-all"
             required
@@ -52,6 +114,7 @@ export default function OnboardingClient({
             id="bio"
             name="bio"
             rows={4}
+            defaultValue={defaultBio}
             placeholder="Share your journey, teaching philosophy, and what students can expect..."
             className="w-full p-4 bg-gray-50 border-2 border-transparent focus:bg-white focus:border-(--color-roti) rounded-xl outline-none transition-all"
             required
@@ -73,6 +136,7 @@ export default function OnboardingClient({
           <label htmlFor="specialties" className="block text-gray-700 font-bold mb-2">Specialties *</label>
           <SpecialtiesSelect
             name="specialties"
+            defaultValue={defaultSpecialties}
             required
           />
           <p className="text-sm text-gray-500 mt-2">Hold Ctrl/Cmd to select multiple</p>

@@ -74,12 +74,89 @@ function getEmail(payload: Record<string, unknown>): string | null {
 }
 
 function getName(payload: Record<string, unknown>): string | undefined {
-  const keys = ['name', 'Name', 'full_name', 'fullName', 'First Name', 'first_name'];
+  const keys = ['name', 'Name', 'full_name', 'fullName', 'Full Name', 'First Name', 'first_name'];
   for (const key of keys) {
     const v = payload[key];
     if (typeof v === 'string' && v.trim()) return v.trim();
   }
   return undefined;
+}
+
+/** Extract a single string value by trying multiple key patterns */
+function getStringField(payload: Record<string, unknown>, patterns: string[]): string | undefined {
+  // Try exact key matches first
+  for (const key of patterns) {
+    const v = payload[key];
+    if (typeof v === 'string' && v.trim()) return v.trim();
+  }
+  // Try case-insensitive partial key matches
+  const lowerPatterns = patterns.map(p => p.toLowerCase());
+  for (const [key, v] of Object.entries(payload)) {
+    const lk = key.toLowerCase();
+    if (typeof v === 'string' && v.trim() && lowerPatterns.some(p => lk.includes(p))) {
+      return v.trim();
+    }
+  }
+  return undefined;
+}
+
+/** Extract an array value (handles comma-separated strings, arrays, and Fillout's nested objects) */
+function getArrayField(payload: Record<string, unknown>, patterns: string[]): string[] | undefined {
+  // Try exact key matches first
+  for (const key of patterns) {
+    const v = payload[key];
+    if (v !== undefined) return normalizeToArray(v);
+  }
+  // Try case-insensitive partial key matches
+  const lowerPatterns = patterns.map(p => p.toLowerCase());
+  for (const [key, v] of Object.entries(payload)) {
+    const lk = key.toLowerCase();
+    if (v !== undefined && lowerPatterns.some(p => lk.includes(p))) {
+      return normalizeToArray(v);
+    }
+  }
+  return undefined;
+}
+
+/** Convert various value types into a string array */
+function normalizeToArray(val: unknown): string[] {
+  if (Array.isArray(val)) {
+    return val
+      .map(item => (typeof item === 'string' ? item.trim() : typeof item === 'object' && item !== null ? JSON.stringify(item) : String(item).trim()))
+      .filter(Boolean);
+  }
+  if (typeof val === 'string') {
+    return val.split(',').map(s => s.trim()).filter(Boolean);
+  }
+  return [];
+}
+
+function getLocation(payload: Record<string, unknown>): string | undefined {
+  return getStringField(payload, [
+    'location', 'Location', 'Location (City, State, Country)',
+    'city', 'City', 'city_state', 'address',
+  ]);
+}
+
+function getYogaFormats(payload: Record<string, unknown>): string[] | undefined {
+  return getArrayField(payload, [
+    'yoga_formats', 'yogaFormats', 'What Yoga formats do you teach?',
+    'What Yoga formats do you teach', 'yoga formats', 'formats',
+  ]);
+}
+
+function getTeachingExperience(payload: Record<string, unknown>): string | undefined {
+  return getStringField(payload, [
+    'teaching_experience', 'teachingExperience', 'How long have you been teaching yoga?',
+    'How long have you been teaching yoga', 'experience', 'teaching experience',
+  ]);
+}
+
+function getWhyJoin(payload: Record<string, unknown>): string | undefined {
+  return getStringField(payload, [
+    'why_join', 'whyJoin', 'What drew you to join the Flow in Faith Teachers Collective?',
+    'What drew you to join', 'what drew you', 'why join', 'motivation',
+  ]);
 }
 
 export async function POST(req: NextRequest) {
@@ -111,6 +188,10 @@ export async function POST(req: NextRequest) {
     }
 
     const name = getName(payload);
+    const location = getLocation(payload);
+    const yogaFormats = getYogaFormats(payload);
+    const teachingExperience = getTeachingExperience(payload);
+    const whyJoin = getWhyJoin(payload);
 
     const existing = await writeClient.fetch<{ _id: string } | null>(
       `*[_type == "alignmentSubmission" && email == $email][0]{ _id }`,
@@ -118,25 +199,30 @@ export async function POST(req: NextRequest) {
     );
 
     const responsesJson = JSON.stringify(payload, null, 2);
-    const doc = {
-      _type: 'alignmentSubmission' as const,
-      email,
-      ...(name && { name }),
-      submittedAt: new Date().toISOString(),
+    const now = new Date().toISOString();
+
+    // Build the fields object (shared between create and patch)
+    const fields: Record<string, unknown> = {
+      submittedAt: now,
       responses: responsesJson,
     };
+    if (name) fields.name = name;
+    if (location) fields.location = location;
+    if (yogaFormats && yogaFormats.length > 0) fields.yogaFormats = yogaFormats;
+    if (teachingExperience) fields.teachingExperience = teachingExperience;
+    if (whyJoin) fields.whyJoin = whyJoin;
 
     if (existing) {
       await writeClient
         .patch(existing._id)
-        .set({
-          name: name ?? undefined,
-          submittedAt: doc.submittedAt,
-          responses: responsesJson,
-        })
+        .set(fields)
         .commit();
     } else {
-      await writeClient.create(doc);
+      await writeClient.create({
+        _type: 'alignmentSubmission' as const,
+        email,
+        ...fields,
+      });
     }
 
     return NextResponse.json({ success: true });

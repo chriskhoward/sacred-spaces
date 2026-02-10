@@ -4,6 +4,19 @@ import { completeTeacherOnboarding } from './actions';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import OnboardingClient from './OnboardingClient';
+import { client } from '@/sanity/lib/client';
+
+/** Shape of pre-fill data passed to the onboarding form */
+export interface AlignmentPrefill {
+  name?: string;
+  location?: string;
+  yogaFormats?: string[];
+  whyJoin?: string;
+}
+
+const ALIGNMENT_QUERY = `*[_type == "alignmentSubmission" && email == $email] | order(submittedAt desc) [0]{
+  name, location, yogaFormats, whyJoin
+}`;
 
 export default async function OnboardingPage() {
   const user = await currentUser();
@@ -15,6 +28,25 @@ export default async function OnboardingPage() {
   // If already onboarded, redirect to dashboard
   if (user.publicMetadata.onboardingComplete) {
     redirect('/dashboard');
+  }
+
+  // Fetch alignment form data to pre-fill the profile
+  const userEmail = user.emailAddresses[0]?.emailAddress;
+  let prefill: AlignmentPrefill = {};
+
+  if (userEmail) {
+    try {
+      const submission = await client.fetch<AlignmentPrefill | null>(
+        ALIGNMENT_QUERY,
+        { email: userEmail }
+      );
+      if (submission) {
+        prefill = submission;
+      }
+    } catch (err) {
+      // Non-critical – form will just be empty if fetch fails
+      console.error('[Onboarding] Failed to fetch alignment data:', err);
+    }
   }
 
   return (
@@ -33,6 +65,7 @@ export default async function OnboardingPage() {
           <OnboardingClient
             userFirstName={user.firstName ?? ''}
             userLastName={user.lastName ?? ''}
+            prefill={prefill}
             completeTeacherOnboarding={completeTeacherOnboarding}
           />
         </div>
