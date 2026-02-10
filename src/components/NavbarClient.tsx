@@ -23,26 +23,14 @@ export default function NavbarClient({ dynamicPages }: NavbarClientProps) {
 
   // Get membership type from user metadata
   const membershipType = user?.publicMetadata?.membershipType as string | undefined;
-  const isTeacher = membershipType === 'teacher';
-  const isPractitioner = membershipType === 'practitioner';
-  const isMember = isTeacher || isPractitioner;
+  const isMember = membershipType === 'teacher' || membershipType === 'practitioner';
 
-  // Navigation links for teachers
-  const teacherLinks = [
+  // Navigation links for members
+  const memberLinks = isMember ? [
     { label: 'Live Classes', href: '/teacher-collective/calls' },
     { label: 'On-Demand Library', href: '/video-library' },
     { label: 'Teacher Directory', href: '/directory' },
-  ];
-
-  // Navigation links for practitioners
-  const practitionerLinks = [
-    { label: 'Live Classes', href: '/live-classes' },
-    { label: 'On-Demand Library', href: '/video-library' },
-    { label: 'Teacher Directory', href: '/directory' },
-  ];
-
-  // Get the appropriate links based on membership
-  const memberLinks = isTeacher ? teacherLinks : isPractitioner ? practitionerLinks : [];
+  ] : [];
 
   return (
     <>

@@ -1,6 +1,7 @@
 /**
  * Core vs Pro tier helpers (single source of truth).
- * ThriveCart product IDs: Core = 31, Pro = 34.
+ * Clerk Billing manages subscription state — plans are configured
+ * in the Clerk Dashboard with slugs 'core' and 'pro'.
  */
 
 export type MembershipTier = 'free' | 'core' | 'pro' | 'professional';
@@ -21,23 +22,4 @@ export function isProTier(tier: string | undefined): boolean {
   if (!tier) return false;
   const t = tier.toLowerCase();
   return t === 'pro' || t === 'professional';
-}
-
-/**
- * Map ThriveCart product or plan name to Clerk tier.
- * Default unknown/legacy to 'pro' so no one loses access.
- */
-export function tierFromThriveCartProduct(
-  productName: string,
-  productId?: string | number
-): 'core' | 'pro' {
-  const name = (productName || '').toLowerCase();
-  if (productId != null) {
-    const id = String(productId);
-    if (id === '31') return 'core';
-    if (id === '34') return 'pro';
-  }
-  if (name.includes('pro')) return 'pro';
-  if (name.includes('core')) return 'core';
-  return 'pro';
 }

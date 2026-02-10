@@ -1,22 +1,15 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import ThrivecartEmbed from '@/components/ThrivecartEmbed';
 import Image from 'next/image';
 import { Metadata } from 'next';
+import { PricingTable } from '@clerk/nextjs';
 
 export const metadata: Metadata = {
   title: "Join the Collective | Membership",
   description: "Secure your spot in the Flow in Faith Teachers Collective. Choose the membership plan that supports your spiritual and professional growth.",
 };
 
-type JoinPageProps = {
-  searchParams: Promise<{ plan?: string }>;
-};
-
-export default async function JoinPage({ searchParams }: JoinPageProps) {
-  const { plan } = await searchParams;
-  const planNorm = plan?.toLowerCase() === 'core' ? 'core' : 'pro';
-
+export default async function JoinPage() {
   return (
     <main className="bg-white min-h-screen">
       <Navbar />
@@ -24,10 +17,10 @@ export default async function JoinPage({ searchParams }: JoinPageProps) {
       <section className="pt-[160px] pb-24">
         <div className="container mx-auto px-4">
 
-          {/* Top Image Placeholder - Same as Alignment Form */}
+          {/* Top Image */}
           <div className="max-w-6xl mx-auto mb-12">
             <div className="relative w-full h-64 bg-gray-100 rounded-[30px] overflow-hidden">
-              <Image src="/assets/images/alignment_header.jpg" fill className="object-cover" alt="Checkout Header" />
+              <Image src="/assets/images/alignment_header.jpg" fill className="object-cover" alt="Join the Teachers Collective" />
             </div>
           </div>
 
@@ -44,10 +37,10 @@ export default async function JoinPage({ searchParams }: JoinPageProps) {
               </div>
             </div>
 
-            {/* Right Column: Embedded Sales Cart - Core (31) or Pro (34) by ?plan= */}
+            {/* Right Column: Clerk Pricing Table */}
             <div className="bg-white rounded-[20px] shadow-2xl p-4 lg:p-8 border border-gray-100 sticky top-24">
-              <h2 className="text-2xl font-bold text-(--color-primary) mb-6 text-center">Secure Checkout</h2>
-              <ThrivecartEmbed plan={planNorm} />
+              <h2 className="text-2xl font-bold text-(--color-primary) mb-6 text-center">Choose Your Plan</h2>
+              <PricingTable />
             </div>
 
           </div>

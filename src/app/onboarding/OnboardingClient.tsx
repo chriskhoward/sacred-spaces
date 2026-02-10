@@ -1,38 +1,28 @@
 'use client';
 
-import { useState } from 'react';
 import SpecialtiesSelect from '@/components/SpecialtiesSelect';
 
-type CompleteOnboarding = (formData: FormData) => Promise<void>;
 type CompleteTeacherOnboarding = (formData: FormData) => Promise<void>;
 
 interface OnboardingClientProps {
-  needsTeacherProfile: boolean;
   userFirstName: string;
   userLastName: string;
-  completeOnboarding: CompleteOnboarding;
   completeTeacherOnboarding: CompleteTeacherOnboarding;
 }
 
-function TeacherDirectoryForm({
-  defaultName,
+export default function OnboardingClient({
+  userFirstName,
+  userLastName,
   completeTeacherOnboarding,
-  showHeading = true,
-}: {
-  defaultName: string;
-  completeTeacherOnboarding: CompleteTeacherOnboarding;
-  showHeading?: boolean;
-}) {
+}: OnboardingClientProps) {
+  const defaultName = [userFirstName, userLastName].filter(Boolean).join(' ').trim() || '';
+
   return (
     <div className="bg-white p-12 rounded-3xl shadow-xl">
-      {showHeading && (
-        <>
-          <h2 className="text-3xl font-bold text-(--color-primary) mb-6">Complete Your Directory Profile</h2>
-          <p className="text-gray-600 mb-8">
-            To appear in the Teacher Directory, please provide the following information:
-          </p>
-        </>
-      )}
+      <h2 className="text-3xl font-bold text-(--color-primary) mb-6">Complete Your Directory Profile</h2>
+      <p className="text-gray-600 mb-8">
+        To appear in the Teacher Directory, please provide the following information:
+      </p>
       <form action={completeTeacherOnboarding} className="space-y-6">
         <div>
           <label htmlFor="name" className="block text-gray-700 font-bold mb-2">Display Name *</label>
@@ -169,77 +159,6 @@ function TeacherDirectoryForm({
           className="w-full bg-(--color-roti) text-white px-6 py-3 rounded-full font-bold text-sm hover:bg-(--color-primary) transition-all shadow-lg"
         >
           Complete Profile & Continue
-        </button>
-      </form>
-    </div>
-  );
-}
-
-export default function OnboardingClient({
-  needsTeacherProfile,
-  userFirstName,
-  userLastName,
-  completeOnboarding,
-  completeTeacherOnboarding,
-}: OnboardingClientProps) {
-  const [selectedPath, setSelectedPath] = useState<'teacher' | 'practitioner' | null>(null);
-
-  const defaultName = [userFirstName, userLastName].filter(Boolean).join(' ').trim() || '';
-
-  // Already chose Teacher in a previous session; show only the directory form
-  if (needsTeacherProfile) {
-    return (
-      <TeacherDirectoryForm
-        defaultName={defaultName}
-        completeTeacherOnboarding={completeTeacherOnboarding}
-        showHeading={true}
-      />
-    );
-  }
-
-  // User just selected Teacher on this page; show directory form, hide path cards
-  if (selectedPath === 'teacher') {
-    return (
-      <TeacherDirectoryForm
-        defaultName={defaultName}
-        completeTeacherOnboarding={completeTeacherOnboarding}
-        showHeading={true}
-      />
-    );
-  }
-
-  // Path choice: Practitioner submits form; Teacher sets state to show form
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-      <button
-        type="button"
-        onClick={() => setSelectedPath('teacher')}
-        className="bg-white p-10 rounded-3xl shadow-xl border-2 border-transparent hover:border-(--color-roti) transition-all text-left group"
-      >
-        <div className="text-5xl mb-6">🧘‍♀️</div>
-        <h3 className="text-2xl font-bold text-(--color-primary) mb-4">I am a Teacher</h3>
-        <p className="text-gray-600 mb-8">
-          I want to join the Teacher Collective, list myself in the directory, and access resources for Christ-Centered Yoga Teachers of Color.
-        </p>
-        <span className="inline-block px-6 py-2 bg-(--color-sidecar) text-(--color-bronzetone) font-bold rounded-full group-hover:bg-(--color-roti) group-hover:text-white transition-colors">
-          Select Teacher Path
-        </span>
-      </button>
-
-      <form action={completeOnboarding} className="contents">
-        <input type="hidden" name="membershipType" value="practitioner" />
-        <button
-          type="submit"
-          className="bg-white p-10 rounded-3xl shadow-xl border-2 border-transparent hover:border-(--color-roti) transition-all text-left group"
-        >
-          <div className="text-5xl mb-6">✨</div>
-          <h3 className="text-2xl font-bold text-(--color-primary) mb-4">I am a Practitioner</h3>
-          <p className="text-gray-600 mb-8">
-            I want to join the community, access the on-demand video library, and find Christ-centered yoga classes.
-          </p>
-          <span className="inline-block px-6 py-2 bg-(--color-sidecar) text-(--color-bronzetone) font-bold rounded-full group-hover:bg-(--color-roti) group-hover:text-white transition-colors">
-            Select Practitioner Path
-          </span>
         </button>
       </form>
     </div>

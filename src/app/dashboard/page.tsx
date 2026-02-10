@@ -32,7 +32,7 @@ export default async function DashboardPage() {
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="text-center mb-16">
             <span className="text-(--color-roti) font-bold uppercase tracking-wider mb-4 block">
-              {isTeacher ? 'Teacher Dashboard' : 'Sanctuary Dashboard'}
+              Dashboard
             </span>
             <h1 className="text-(--color-primary) text-6xl mb-6 font-bold">
               Welcome, {user.firstName || 'Friend'}!

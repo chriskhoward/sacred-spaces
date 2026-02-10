@@ -127,7 +127,6 @@ export async function completeTeacherOnboarding(formData: FormData) {
     await client.users.updateUserMetadata(userId, {
       publicMetadata: {
         membershipType: 'teacher',
-        tier: 'free',
         onboardingComplete: true,
         teacherProfile: teacherProfileData,
       },

@@ -51,7 +51,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="/community" className="text-white hover:text-(--color-roti) transition-colors text-sm">
-                  Sanctuary
+                  Community
                 </Link>
               </li>
               <li>

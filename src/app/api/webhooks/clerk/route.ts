@@ -1,9 +1,7 @@
 import { Webhook } from 'svix'
 import { headers } from 'next/headers'
 import { WebhookEvent } from '@clerk/nextjs/server'
-import { clerkClient } from '@clerk/nextjs/server'
 import { writeClient } from '@/sanity/lib/write'
-import { tierFromThriveCartProduct } from '@/lib/tier'
 
 export async function POST(req: Request) {
     const SIGNING_SECRET = process.env.CLERK_WEBHOOK_SECRET
@@ -18,7 +16,6 @@ export async function POST(req: Request) {
     const svix_timestamp = headerPayload.get('svix-timestamp')
     const svix_signature = headerPayload.get('svix-signature')
 
-    // If there are no headers, error out
     if (!svix_id || !svix_timestamp || !svix_signature) {
         return new Response('Error: Missing Svix headers', {
             status: 400,
@@ -46,55 +43,10 @@ export async function POST(req: Request) {
         })
     }
 
-    // Do something with payload
-    // For this guide, log payload to console
     const eventType = evt.type
     console.log(`Received webhook with type ${eventType}`)
-    console.log('Webhook body:', body)
 
-    if (eventType === 'user.created') {
-        const { id, email_addresses } = evt.data
-        const email = email_addresses[0]?.email_address
-
-        if (email) {
-            console.log(`[Clerk Webhook] Checking if user ${email} is allowed...`)
-
-            // Check Sanity for allowlist
-            const allowedUser = await writeClient.fetch(
-                `*[_type == "allowedUser" && email == $email][0]`,
-                { email }
-            )
-
-            if (allowedUser) {
-                console.log(`[Clerk Webhook] User ${email} IS allowed. Upgrading...`)
-
-                try {
-                    const client = await clerkClient()
-                    const planName = (allowedUser as { plan?: string }).plan || ''
-                    const tier = tierFromThriveCartProduct(planName)
-
-                    await client.users.updateUserMetadata(id, {
-                        publicMetadata: {
-                            membershipType: 'teacher',
-                            tier
-                        }
-                    })
-
-                    // Mark as redeemed in Sanity
-                    await writeClient.patch(allowedUser._id)
-                        .set({ redeemed: true })
-                        .commit()
-
-                    console.log(`[Clerk Webhook] Successfully upgraded ${email}`)
-                } catch (error) {
-                    console.error(`[Clerk Webhook] Failed to upgrade user:`, error)
-                }
-            } else {
-                console.log(`[Clerk Webhook] User ${email} is NOT in the allowed list.`)
-            }
-        }
-    }
-
+    // Sync teacher profile to Sanity when user metadata is updated
     if (eventType === 'user.updated') {
         const { id, email_addresses, image_url, public_metadata, first_name, last_name } = evt.data
         const membershipType = public_metadata?.membershipType
@@ -104,7 +56,6 @@ export async function POST(req: Request) {
             console.log(`[Clerk Webhook] Syncing teacher profile for ${id} to Sanity...`)
 
             try {
-                // Find existing teacher by clerkId or create new
                 const existingTeacher = await writeClient.fetch(
                     `*[_type == "teacher" && clerkId == $id][0]`,
                     { id }
