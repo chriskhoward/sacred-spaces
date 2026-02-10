@@ -44,6 +44,14 @@ export default async function TeacherCollectiveDashboard() {
               >
                 Live Classes
               </Link>
+              <a
+                href="https://chat.whatsapp.com/IUiYAER2VWW0OnFPoZwLmZ?mode=gi_t"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-3 font-bold text-gray-700 hover:text-(--color-roti) border-b-2 border-transparent hover:border-(--color-roti) transition-colors"
+              >
+                Community
+              </a>
               <Link 
                 href="/video-library" 
                 className="px-6 py-3 font-bold text-gray-700 hover:text-(--color-roti) border-b-2 border-transparent hover:border-(--color-roti) transition-colors"
@@ -98,6 +106,18 @@ export default async function TeacherCollectiveDashboard() {
                 <h3 className="text-2xl font-bold text-(--color-primary) mb-2">Live Classes & Workshops</h3>
                 <p className="text-gray-600">View upcoming live sessions and workshops with fellow teachers.</p>
               </Link>
+
+              {/* Community Card */}
+              <a
+                href="https://chat.whatsapp.com/IUiYAER2VWW0OnFPoZwLmZ?mode=gi_t"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 block"
+              >
+                <h3 className="text-2xl font-bold text-(--color-primary) mb-2">Community</h3>
+                <p className="text-gray-600 mb-3">Creating community guidelines.</p>
+                <span className="text-(--color-roti) font-bold text-sm">Join WhatsApp Group →</span>
+              </a>
 
               {/* On-Demand Library Card */}
               <Link 
