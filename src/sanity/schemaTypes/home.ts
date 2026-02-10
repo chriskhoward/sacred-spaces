@@ -17,6 +17,7 @@ export const homeType = defineType({
       title: 'Page Content',
       type: 'array',
       of: [
+        { type: 'homeHeroBlock' },
         { type: 'heroBlock' },
         { type: 'brandBlock' },
         { type: 'pillarsBlock' },

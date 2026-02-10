@@ -15,6 +15,7 @@ import { teacherOnboardingItemType } from './teacherOnboardingItem'
 import { teacherCollectiveFaqsType } from './teacherCollectiveFaqs'
 import {
   heroBlock,
+  homeHeroBlock,
   brandBlock,
   pillarsBlock,
   benefitsBlock,
@@ -52,6 +53,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     aboutType,
     pageType,
     heroBlock,
+    homeHeroBlock,
     brandBlock,
     pillarsBlock,
     benefitsBlock,

@@ -2,8 +2,9 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import HomePageContent from '@/components/Home/HomePageContent';
 import BlockRenderer from '@/components/Blocks/BlockRenderer';
-import { client } from '@/sanity/lib/client';
+import { getClient } from '@/sanity/lib/client';
 import { Metadata } from 'next';
+import { draftMode } from 'next/headers';
 
 export const metadata: Metadata = {
   openGraph: {
@@ -14,7 +15,6 @@ export const metadata: Metadata = {
   }
 };
 
-// Query to fetch homepage content from Sanity
 const homeQuery = `*[_type == "home"][0]{
   _id,
   _type,
@@ -27,6 +27,8 @@ const homeQuery = `*[_type == "home"][0]{
 }`;
 
 export default async function Home() {
+  const { isEnabled } = await draftMode();
+  const client = getClient(isEnabled);
   let homeData: { _id?: string; _type?: string; content?: unknown[] } | null = null;
   try {
     homeData = await client.fetch(homeQuery);
@@ -34,12 +36,20 @@ export default async function Home() {
     console.error('[Home] Sanity fetch failed, using fallback content:', err);
   }
 
-  // We are currently using the hardcoded HomePageContent for the redesign to match the requested design perfectly.
-  // Sanity integration for BlockRenderer is available but secondary for now.
+  const hasContent = Array.isArray(homeData?.content) && homeData.content.length > 0;
+
   return (
     <main className="min-h-screen bg-white">
       <Navbar />
-      <HomePageContent />
+      {hasContent ? (
+        <BlockRenderer
+          blocks={homeData!.content as Array<{ _type: string; _key: string; [key: string]: unknown }>}
+          documentId={homeData!._id}
+          documentType={homeData!._type}
+        />
+      ) : (
+        <HomePageContent />
+      )}
       <Footer />
     </main>
   );

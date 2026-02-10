@@ -1,4 +1,5 @@
 import HeroBlock from './Hero';
+import HomeHeroBlock from './HomeHero';
 import PillarsBlock from './Pillars';
 import BenefitsBlock from './Benefits';
 import BrandBlock from './Brand';
@@ -67,6 +68,8 @@ export default function BlockRenderer({ blocks, documentId, documentType }: Bloc
         );
 
         switch (_type) {
+          case 'homeHeroBlock':
+            return wrapWithSanity(<HomeHeroBlock {...blockProps} />);
           case 'heroBlock':
             return wrapWithSanity(<HeroBlock {...blockProps} />);
           case 'pillarsBlock':

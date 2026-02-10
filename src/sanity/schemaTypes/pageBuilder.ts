@@ -34,6 +34,23 @@ export const heroBlock = defineType({
   ]
 })
 
+// Home Hero Block - White hero with logo and Fillout CTA (homepage only)
+export const homeHeroBlock = defineType({
+  name: 'homeHeroBlock',
+  title: 'Home Hero',
+  type: 'object',
+  fields: [
+    defineField({ name: 'title', title: 'Title', type: 'string' }),
+    defineField({ name: 'subtitle', title: 'Subtitle', type: 'text' }),
+    defineField({
+      name: 'primaryButtonText',
+      title: 'Primary Button Text',
+      type: 'string',
+      initialValue: 'Join the Teachers Collective',
+    }),
+  ],
+})
+
 // Brand/Quote Block
 export const brandBlock = defineType({
   name: 'brandBlock',
@@ -333,6 +350,7 @@ export const featureGridBlock = defineType({
           defineField({ name: 'title', title: 'Title', type: 'string' }),
           defineField({ name: 'description', title: 'Description', type: 'text' }),
           defineField({ name: 'icon', title: 'Icon (Emoji)', type: 'string' }),
+          defineField({ name: 'image', title: 'Image (optional)', type: 'image', options: { hotspot: true } }),
         ]
       }]
     }),
@@ -344,6 +362,7 @@ export const featureGridBlock = defineType({
         list: [
           { title: 'Light (White background)', value: 'light' },
           { title: 'Cream (Gallery background)', value: 'cream' },
+          { title: 'Dark (Primary background, cards white)', value: 'dark' },
         ],
         layout: 'radio'
       },

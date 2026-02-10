@@ -1,0 +1,48 @@
+'use client';
+
+import Image from 'next/image';
+import FilloutSliderButton from '@/components/FilloutSliderButton';
+
+const sectionPad = 'pt-32 md:pt-40 lg:pt-44 pb-14 md:pb-20 px-6 sm:px-8';
+const containerWide = 'max-w-6xl mx-auto';
+
+interface HomeHeroBlockProps {
+  title?: string;
+  subtitle?: string;
+  primaryButtonText?: string;
+}
+
+export default function HomeHeroBlock({
+  title = 'A Christ-centered wellness ecosystem rooted in embodiment, rest, and community.',
+  subtitle = "Here, faith is embodied. Here, rest is sacred. Here, you don't have to choose between your calling, your culture, and your wholeness.",
+  primaryButtonText = 'Join the Teachers Collective',
+}: HomeHeroBlockProps) {
+  return (
+    <section className={`bg-white ${sectionPad} ${containerWide}`}>
+      <div className="flex flex-col md:flex-row items-center gap-10 lg:gap-16">
+        <div className="md:w-[55%] text-left">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#413356] mb-6 leading-[1.15] tracking-tight">
+            {title}
+          </h1>
+          <p className="text-lg md:text-xl text-gray-700 leading-relaxed max-w-xl font-medium mb-8">
+            {subtitle}
+          </p>
+          <FilloutSliderButton buttonText={primaryButtonText} variant="hero" className="inline-block" />
+        </div>
+        <div className="md:w-[45%] flex justify-center">
+          <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-[360px] lg:h-[360px]">
+            <div className="absolute inset-0 bg-[#C7A254]/5 rounded-full flex items-center justify-center border-4 border-[#C7A254]/10">
+              <Image
+                src="/images/homepage/logo-gold.png"
+                alt="Flow in Faith Logo"
+                fill
+                className="object-contain p-6"
+                priority
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
