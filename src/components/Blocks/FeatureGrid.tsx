@@ -58,7 +58,7 @@ export default function FeatureGridBlock({
         <div className={`grid ${colClass} gap-8 md:gap-10`}>
           {items.map((item, index) => (
             <div key={index} className={cardClass}>
-              {item.image?.asset && (
+              {item.image?.asset ? (
                 <div className={imageWrapperClass || undefined}>
                   <div className="relative w-full aspect-square max-w-[220px] mx-auto rounded-lg overflow-hidden border-4 border-white shadow-md flex-shrink-0">
                     <Image
@@ -69,7 +69,7 @@ export default function FeatureGridBlock({
                     />
                   </div>
                 </div>
-              )}
+              ) : null}
               <div className={cardBodyClass || 'p-8'}>
                 {!item.image?.asset && item.icon && (
                   <div className="w-14 h-14 bg-(--color-sidecar) text-2xl flex items-center justify-center rounded-2xl mb-6">
