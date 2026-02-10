@@ -1,6 +1,12 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Image from 'next/image';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Community | Flow in Faith',
+  description: 'Connect, share, and grow with fellow members in our private WhatsApp community.',
+};
 
 export default function CommunityPage() {
   return (

@@ -6,6 +6,12 @@ import Link from 'next/link';
 import { currentUser } from '@clerk/nextjs/server';
 import { LiveClass, generateRecurringInstances } from '@/sanity/lib/live-classes';
 import LiveClassesCards from './LiveClassesCards';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Live Classes | Flow in Faith',
+  description: 'Join live Christ-centered yoga and wellness classes. View the schedule and sign up for upcoming sessions.',
+};
 
 export const dynamic = 'force-dynamic';
 

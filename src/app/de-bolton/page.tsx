@@ -3,6 +3,12 @@ import Image from 'next/image';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import FilloutSliderButton from '@/components/FilloutSliderButton';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'De Bolton | Flow in Faith',
+  description: 'Meet De Bolton, Founder and Visionary of Flow in Faith. Christ-centered yoga and wellness for Teachers of Color.',
+};
 
 export default function DeBoltonPage() {
   return (

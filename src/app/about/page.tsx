@@ -2,6 +2,12 @@ import { client } from '@/sanity/lib/client';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import BlockRenderer from '@/components/Blocks/BlockRenderer';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'About | Flow in Faith',
+  description: 'A space built by Christ-Centered Yoga Teachers of Color, for Christ-Centered Yoga Teachers of Color. Meet the team and our story.',
+};
 
 export const dynamic = 'force-dynamic';
 

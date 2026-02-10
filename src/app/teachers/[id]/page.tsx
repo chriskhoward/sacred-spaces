@@ -5,43 +5,54 @@ import { clerkClient } from '@clerk/nextjs/server';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { teachers, Teacher } from '@/data/teachers';
+import type { Metadata } from 'next';
 
 interface PageProps {
   params: Promise<{ id: string }>;
 }
 
+async function getTeacher(id: string): Promise<Teacher | null> {
+  let teacher: Teacher | undefined = teachers.find(t => t.id === id);
+  if (teacher) return teacher;
+  try {
+    const client = await clerkClient();
+    const user = await client.users.getUser(id);
+    if (user && user.publicMetadata?.membershipType === 'teacher') {
+      const profile: any = user.publicMetadata.teacherProfile || {};
+      return {
+        id: user.id,
+        name: profile.name || `${user.firstName} ${user.lastName}`.trim(),
+        location: profile.location || '',
+        specialties: Array.isArray(profile.specialties) ? profile.specialties : [],
+        certifications: Array.isArray(profile.certifications) ? profile.certifications : [],
+        bio: profile.bio || 'Member of the Flow in Faith Teacher Collective.',
+        image: user.imageUrl,
+        email: user.emailAddresses[0]?.emailAddress,
+        website: profile.website,
+        socialMedia: profile.socialMedia || {},
+      };
+    }
+  } catch {
+    // User not found or error
+  }
+  return null;
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { id } = await params;
+  const teacher = await getTeacher(id);
+  if (!teacher) return { title: 'Teacher Not Found | Flow in Faith' };
+  const description = teacher.bio?.slice(0, 160) || `Christ-centered yoga teacher ${teacher.name} in the Flow in Faith directory.`;
+  return {
+    title: `${teacher.name} | Flow in Faith Directory`,
+    description,
+  };
+}
+
 export default async function TeacherProfile({ params }: PageProps) {
   const { id } = await params;
 
-  // Try to find in static data first
-  let teacher: Teacher | undefined = teachers.find(t => t.id === id);
-
-  // If not found, try to fetch from Clerk
-  if (!teacher) {
-    try {
-      const client = await clerkClient();
-      const user = await client.users.getUser(id);
-
-      // Ensure the user is actually a teacher
-      if (user && user.publicMetadata?.membershipType === 'teacher') {
-        const profile: any = user.publicMetadata.teacherProfile || {};
-        teacher = {
-          id: user.id,
-          name: profile.name || `${user.firstName} ${user.lastName}`.trim(),
-          location: profile.location || '',
-          specialties: Array.isArray(profile.specialties) ? profile.specialties : [],
-          certifications: Array.isArray(profile.certifications) ? profile.certifications : [],
-          bio: profile.bio || 'Member of the Flow in Faith Teacher Collective.',
-          image: user.imageUrl,
-          email: user.emailAddresses[0]?.emailAddress,
-          website: profile.website,
-          socialMedia: profile.socialMedia || {},
-        };
-      }
-    } catch (error) {
-      // User not found or error fetching
-    }
-  }
+  const teacher = await getTeacher(id);
 
   if (!teacher) {
     notFound();

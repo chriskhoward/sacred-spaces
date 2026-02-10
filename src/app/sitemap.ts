@@ -1,11 +1,10 @@
-
 import { MetadataRoute } from 'next'
 import { client } from '@/sanity/lib/client'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-    const baseUrl = 'https://flowinfaith.com'
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://flowinfaith.com'
 
-    // 1. Static Routes
+    // 1. Public static routes only (no auth, dashboard, onboarding, studio, component-guide)
     const staticRoutes = [
         '',
         '/about',
@@ -17,22 +16,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         '/teacher-collective/resources',
         '/live-classes',
         '/video-library',
-        '/sanctuary',
         '/community',
         '/de-bolton',
         '/queen-robertson',
-        // Auth & onboarding
-        '/sign-in',
-        '/sign-up',
-        '/onboarding',
-        // Logged-in dashboards & profile
-        '/dashboard',
-        '/dashboard/directory-profile',
-        '/dashboard/teacher-collective',
-        '/user-profile',
-        // Misc utility pages
-        '/component-guide',
-        '/studio',
     ].map((route) => ({
         url: `${baseUrl}${route}`,
         lastModified: new Date(),

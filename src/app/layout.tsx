@@ -13,7 +13,10 @@ const dmSans = DM_Sans({
 
 
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://flowinfaith.com';
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "Flow in Faith - Christ-Centered Yoga",
   description: "A membership community for Christ-Centered Yoga Teachers of Color and practitioners.",
   icons: {
@@ -23,6 +26,17 @@ export const metadata: Metadata = {
     apple: [
       { url: '/apple-icon.png', type: 'image/png' },
     ],
+  },
+  openGraph: {
+    title: "Flow in Faith - Christ-Centered Yoga",
+    description: "A membership community for Christ-Centered Yoga Teachers of Color and practitioners.",
+    siteName: "Flow in Faith",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Flow in Faith - Christ-Centered Yoga",
+    description: "A membership community for Christ-Centered Yoga Teachers of Color and practitioners.",
   },
 };
 

@@ -5,6 +5,12 @@ import VideoLibraryClient from './VideoLibraryClient';
 import { currentUser } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Video Library | Flow in Faith',
+  description: 'Access our on-demand library of Christ-centered yoga and wellness videos. Members only.',
+};
 
 export const dynamic = 'force-dynamic';
 
