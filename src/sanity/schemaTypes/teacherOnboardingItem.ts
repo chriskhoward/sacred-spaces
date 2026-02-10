@@ -83,7 +83,8 @@ export const teacherOnboardingItemType = defineType({
   preview: {
     select: { title: 'title', itemType: 'itemType', order: 'order', categoryTitle: 'category.title' },
     prepare({ title, itemType, order, categoryTitle }) {
-      const typeLabel = { video: 'Video', pdf: 'PDF', link: 'Link' }[itemType] || itemType
+      const typeLabels: Record<string, string> = { video: 'Video', pdf: 'PDF', link: 'Link' }
+      const typeLabel = (itemType && typeLabels[itemType]) || itemType || 'Link'
       const categoryPart = categoryTitle ? ` · ${categoryTitle}` : ''
       return {
         title: title || 'Untitled',
