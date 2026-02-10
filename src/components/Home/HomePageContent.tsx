@@ -247,11 +247,6 @@ export default function HomePageContent() {
             </Link>
           </div>
         </div>
-        <div className="flex flex-wrap justify-center gap-4 mt-12">
-          <div className="[&>div]:w-full [&_a]:w-full [&_button]:w-full [&_a]:rounded-full [&_button]:rounded-full [&_a]:justify-center [&_button]:justify-center">
-            <FilloutSliderButton buttonText="Join the Teachers Collective" variant="cta" className="min-w-[200px]" />
-          </div>
-        </div>
       </section>
     </div>
   );
