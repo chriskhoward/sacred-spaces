@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "seed:onboarding": "npx tsx scripts/seed-onboarding.ts",
-    "seed:tc-faqs": "npx tsx scripts/seed-teacher-collective-faqs.ts"
+    "seed:tc-faqs": "npx tsx scripts/seed-teacher-collective-faqs.ts",
+    "fix-keys": "npx tsx scripts/add-missing-keys.ts"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.36.5",

@@ -16,6 +16,35 @@ const client = createClient({
 
 const data = JSON.parse(fs.readFileSync('./migration_data.json', 'utf8'));
 
+/** Ensure every array item (object) has _key so Studio can edit lists. */
+function addMissingKeysToValue(value, keyPrefix = 'k') {
+  if (Array.isArray(value)) {
+    return value.map((item, index) => {
+      if (item !== null && typeof item === 'object' && !Array.isArray(item)) {
+        const obj = { ...item };
+        if (typeof obj._key !== 'string' || !obj._key) {
+          obj._key = `${keyPrefix}-${index}-${Math.random().toString(36).slice(2, 11)}`;
+        }
+        for (const k of Object.keys(obj)) {
+          if (k === '_key' || k === '_type' || k === '_ref') continue;
+          obj[k] = addMissingKeysToValue(obj[k], `${keyPrefix}-${index}`);
+        }
+        return obj;
+      }
+      return item;
+    });
+  }
+  if (value !== null && typeof value === 'object' && !Array.isArray(value)) {
+    const obj = value;
+    const out = {};
+    for (const k of Object.keys(obj)) {
+      out[k] = addMissingKeysToValue(obj[k], keyPrefix);
+    }
+    return out;
+  }
+  return value;
+}
+
 async function uploadImage(localPath) {
   if (!fs.existsSync(localPath)) {
     console.warn(`⚠️ Warning: Image not found at ${localPath}`);
@@ -76,16 +105,18 @@ async function migrate() {
   console.log('🚀 Starting deep migration with image uploads...');
 
   try {
-    // Process Home content
+    // Process Home content (processBlocks + add _key to all array items for Studio)
     console.log('🏠 Processing Home page content...');
-    data.home.content = await processBlocks(data.home.content);
-    await client.createOrReplace(data.home);
+    let homeContent = await processBlocks(data.home.content);
+    homeContent = addMissingKeysToValue(homeContent, 'block');
+    await client.createOrReplace({ ...data.home, content: homeContent });
     console.log('✅ Home page migrated with images.');
 
-    // Process About content
+    // Process About content (processBlocks + add _key to all array items for Studio)
     console.log('🌿 Processing About page content...');
-    data.about.content = await processBlocks(data.about.content);
-    await client.createOrReplace(data.about);
+    let aboutContent = await processBlocks(data.about.content);
+    aboutContent = addMissingKeysToValue(aboutContent, 'block');
+    await client.createOrReplace({ ...data.about, content: aboutContent });
     console.log('✅ About page migrated with images.');
 
     console.log('🎉 Migration complete! Your Sanity Studio is now fully populated with images and content.');
