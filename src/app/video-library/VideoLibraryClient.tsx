@@ -240,9 +240,28 @@ export default function VideoLibraryClient({ initialVideos, categories, featured
         </div>
       )}
 
-      {/* Hero / Featured Section */}
+      {/* Hero: directory-style when no featured video, or featured video block */}
+      {!featuredVideo && (
+        <header className="bg-(--color-primary) pt-[200px] pb-24 text-center">
+          <div className="container mx-auto px-4">
+            <div className="flex justify-center mb-6">
+              <Image
+                src="/assets/images/tc_logo.png"
+                alt="Flow in Faith Teachers Collective Logo"
+                width={120}
+                height={120}
+                className="w-24 h-24 object-contain"
+              />
+            </div>
+            <h1 className="text-5xl lg:text-7xl font-bold mb-6 text-white leading-tight">On-Demand Library</h1>
+            <p className="text-xl text-(--color-sidecar) opacity-90">
+              Browse classes, workshops, and teachings on your schedule.
+            </p>
+          </div>
+        </header>
+      )}
       {featuredVideo && (
-        <section className="pt-[160px] pb-16 bg-(--color-primary) text-white">
+        <section className="pt-[200px] pb-24 bg-(--color-primary) text-white">
             <div className="container mx-auto px-4">
             <div className="flex flex-col lg:flex-row gap-12 items-center">
                 <div className="lg:w-1/2">

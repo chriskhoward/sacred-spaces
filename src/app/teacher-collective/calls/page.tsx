@@ -44,26 +44,23 @@ export default async function LiveClassesWorkshopsPage() {
     <main className="bg-(--color-gallery) min-h-screen">
       <Navbar />
 
-      <section className="pt-[160px] pb-16 bg-(--color-martinique) text-white">
+      <header className="bg-(--color-primary) pt-[200px] pb-24 text-center">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col items-center text-center">
-            <div className="mb-6">
-              <Image
-                src="/assets/images/tc_logo.png"
-                alt="Flow in Faith Teachers Collective Logo"
-                width={120}
-                height={120}
-                className="w-24 h-24 object-contain"
-              />
-            </div>
-            <span className="text-(--color-roti) font-bold uppercase tracking-widest mb-4 block">Live Classes & Workshops</span>
-            <h1 className="text-5xl font-bold mb-6">Live Classes & Workshops</h1>
-            <p className="text-xl text-(--color-sidecar) max-w-2xl mx-auto">
-              Join live sessions led by experienced teachers. Classes, workshops, and gatherings designed to support your growth.
-            </p>
+          <div className="flex justify-center mb-6">
+            <Image
+              src="/assets/images/tc_logo.png"
+              alt="Flow in Faith Teachers Collective Logo"
+              width={120}
+              height={120}
+              className="w-24 h-24 object-contain"
+            />
           </div>
+          <h1 className="text-5xl lg:text-7xl font-bold mb-6 text-white leading-tight">Live Classes & Workshops</h1>
+          <p className="text-xl text-(--color-sidecar) opacity-90">
+            Join live sessions led by experienced teachers. Classes, workshops, and gatherings designed to support your growth.
+          </p>
         </div>
-      </section>
+      </header>
 
       <section className="py-16">
         <div className="container mx-auto px-4 max-w-5xl">

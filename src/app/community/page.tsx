@@ -7,24 +7,23 @@ export default function CommunityPage() {
     <main className="bg-(--color-gallery) min-h-screen">
       <Navbar />
       
-      <section className="pt-[160px] pb-16 bg-(--color-primary) text-white">
-        <div className="container mx-auto px-4 text-center">
+      <header className="bg-(--color-primary) pt-[200px] pb-24 text-center">
+        <div className="container mx-auto px-4">
           <div className="flex justify-center mb-6">
             <Image
               src="/assets/images/tc_logo.png"
-              alt="Flow in Faith Logo"
+              alt="Flow in Faith Teachers Collective Logo"
               width={120}
               height={120}
               className="w-24 h-24 object-contain"
             />
           </div>
-          <span className="text-(--color-roti) font-bold uppercase tracking-widest mb-4 block">Private Community</span>
-          <h1 className="text-5xl font-bold mb-6">Community Forum</h1>
-          <p className="text-xl text-(--color-sidecar) max-w-2xl mx-auto">
+          <h1 className="text-5xl lg:text-7xl font-bold mb-6 text-white leading-tight">Community Forum</h1>
+          <p className="text-xl text-(--color-sidecar) opacity-90">
             Connect, share, and grow with fellow members in our private WhatsApp community.
           </p>
         </div>
-      </section>
+      </header>
 
       {/* Join the Community */}
       <section className="py-16">
