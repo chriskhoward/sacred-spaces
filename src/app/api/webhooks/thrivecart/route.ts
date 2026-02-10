@@ -67,7 +67,11 @@ export async function POST(req: NextRequest) {
         orderId = formData.get('order_id') as string || '';
         productName = (formData.get('product_name') as string) || 'Unknown Product';
         const pid = formData.get('product_id');
-        productId = pid != null ? (typeof pid === 'string' && /^\d+$/.test(pid) ? parseInt(pid, 10) : pid) : undefined;
+        if (pid != null && typeof pid === 'string') {
+          productId = /^\d+$/.test(pid) ? parseInt(pid, 10) : pid;
+        } else {
+          productId = undefined;
+        }
 
         // Check if this is a verification ping (no meaningful data)
         if (!customerEmail && !eventSecret && !orderId) {
