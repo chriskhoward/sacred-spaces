@@ -23,7 +23,7 @@ export default function FeatureGridBlock({
 }: FeatureGridBlockProps) {
   const bgClass = style === 'cream' ? 'bg-(--color-gallery)' : style === 'dark' ? 'bg-[#413356]' : 'bg-white';
   const hasImages = items.some((i) => i.image?.asset);
-  const colClass = items.length === 3 && hasImages
+  const colClass = (style === 'dark' && items.length === 3) || (items.length === 3 && hasImages)
     ? 'grid-cols-1 md:grid-cols-3'
     : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4';
   const headingColor = style === 'dark' ? 'text-[#C7A254]' : 'text-(--color-primary)';
@@ -38,11 +38,40 @@ export default function FeatureGridBlock({
   const cardBodyClass = style === 'dark' ? 'p-6 md:p-7 flex-grow' : '';
   const imageWrapperClass = style === 'dark' ? 'p-4 md:p-5 flex justify-center bg-white' : '';
 
+  const isDarkGrid = style === 'dark';
+  const gridWrapperClass = isDarkGrid ? `max-w-6xl mx-auto grid ${colClass} gap-8 md:gap-10` : containerClass;
+
+  const cardElements = items.map((item, index) => (
+          <div key={index} className={cardClass}>
+            {item.image?.asset ? (
+              <div className={imageWrapperClass || undefined}>
+                <div className="relative w-full aspect-square max-w-[220px] mx-auto rounded-lg overflow-hidden border-4 border-white shadow-md flex-shrink-0">
+                  <Image
+                    src={urlForImage(item.image).url()}
+                    alt={item.title || ''}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              </div>
+            ) : null}
+            <div className={cardBodyClass || 'p-8'}>
+              {!item.image?.asset && item.icon && (
+                <div className="w-14 h-14 bg-(--color-sidecar) text-2xl flex items-center justify-center rounded-2xl mb-6">
+                  {item.icon}
+                </div>
+              )}
+              <h3 className={itemTitleClass}>{item.title}</h3>
+              <p className="text-gray-800 text-base leading-relaxed flex-grow">{item.description}</p>
+            </div>
+          </div>
+        ));
+
   return (
     <section className={`${sectionPadding} ${bgClass}`}>
-      <div className={containerClass}>
+      <div className={gridWrapperClass}>
         {(heading || subheading) && (
-          <div className="text-center mb-16">
+          <div className={`text-center mb-16 ${isDarkGrid ? 'col-span-full' : ''}`}>
             {heading && (
               <h2 className={`text-4xl lg:text-5xl font-bold ${headingColor} mb-4`}>
                 {heading}
@@ -55,33 +84,11 @@ export default function FeatureGridBlock({
             )}
           </div>
         )}
-        <div className={`grid ${colClass} gap-8 md:gap-10`}>
-          {items.map((item, index) => (
-            <div key={index} className={cardClass}>
-              {item.image?.asset ? (
-                <div className={imageWrapperClass || undefined}>
-                  <div className="relative w-full aspect-square max-w-[220px] mx-auto rounded-lg overflow-hidden border-4 border-white shadow-md flex-shrink-0">
-                    <Image
-                      src={urlForImage(item.image).url()}
-                      alt={item.title || ''}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                </div>
-              ) : null}
-              <div className={cardBodyClass || 'p-8'}>
-                {!item.image?.asset && item.icon && (
-                  <div className="w-14 h-14 bg-(--color-sidecar) text-2xl flex items-center justify-center rounded-2xl mb-6">
-                    {item.icon}
-                  </div>
-                )}
-                <h3 className={itemTitleClass}>{item.title}</h3>
-                <p className="text-gray-800 text-base leading-relaxed flex-grow">{item.description}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+        {isDarkGrid ? cardElements : (
+          <div className={`grid ${colClass} gap-8 md:gap-10`}>
+            {cardElements}
+          </div>
+        )}
       </div>
     </section>
   );

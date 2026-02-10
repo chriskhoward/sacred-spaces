@@ -27,7 +27,7 @@ export default function HighlightTextBlock({
   }
   if (variant === 'bannerTwoLineGold') {
     return (
-      <section className={`bg-[#413356] ${sectionPad}`}>
+      <section className="bg-[#413356] pt-14 md:pt-20 pb-6 px-6 sm:px-8">
         <div className={containerWide}>
           {statements[0] && (
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#C7A254] text-center mb-4">
