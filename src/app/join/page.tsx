@@ -9,7 +9,14 @@ export const metadata: Metadata = {
   description: "Secure your spot in the Flow in Faith Teachers Collective. Choose the membership plan that supports your spiritual and professional growth.",
 };
 
-export default function JoinPage() {
+type JoinPageProps = {
+  searchParams: Promise<{ plan?: string }>;
+};
+
+export default async function JoinPage({ searchParams }: JoinPageProps) {
+  const { plan } = await searchParams;
+  const planNorm = plan?.toLowerCase() === 'core' ? 'core' : 'pro';
+
   return (
     <main className="bg-white min-h-screen">
       <Navbar />
@@ -37,10 +44,10 @@ export default function JoinPage() {
               </div>
             </div>
 
-            {/* Right Column: Embedded Sales Cart */}
+            {/* Right Column: Embedded Sales Cart - Core (31) or Pro (34) by ?plan= */}
             <div className="bg-white rounded-[20px] shadow-2xl p-4 lg:p-8 border border-gray-100 sticky top-24">
               <h2 className="text-2xl font-bold text-(--color-primary) mb-6 text-center">Secure Checkout</h2>
-              <ThrivecartEmbed />
+              <ThrivecartEmbed plan={planNorm} />
             </div>
 
           </div>

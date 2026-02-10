@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import { isPaidTier } from '@/lib/tier';
 
 interface Resource {
   _id: string;
@@ -39,8 +40,7 @@ export default function ResourcesClient({ groupedResources, userTier }: Resource
   }, [groupedResources, categoryFilter]);
 
   const handleResourceClick = (resource: Resource) => {
-    // Check if resource is locked and user is on free tier
-    if (resource.isLocked && userTier === 'free') {
+    if (resource.isLocked && !isPaidTier(userTier)) {
       setSelectedResource(resource);
       setShowUpgradeModal(true);
     } else if (resource.linkUrl) {

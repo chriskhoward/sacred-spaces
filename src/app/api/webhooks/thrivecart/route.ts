@@ -1,11 +1,12 @@
 // Thrivecart Webhook Handler
 // 1. Validates webhook secret
-// 2. Checks if user exists in Clerk -> if so, upgrades them to Teacher
+// 2. Checks if user exists in Clerk -> if so, upgrades them to Teacher (tier = core/pro from product)
 // 3. Creates/Updates 'allowedUser' document in Sanity for future signups
 
 import { NextRequest, NextResponse } from 'next/server';
 import { writeClient } from '@/sanity/lib/write';
 import { clerkClient } from '@clerk/nextjs/server';
+import { tierFromThriveCartProduct } from '@/lib/tier';
 
 export const dynamic = 'force-dynamic';
 
@@ -35,6 +36,7 @@ export async function POST(req: NextRequest) {
     let customerEmail = '';
     let orderId = '';
     let productName = '';
+    let productId: string | number | undefined;
     let isEmptyOrTestPing = false;
 
     const contentType = req.headers.get('content-type') || '';
@@ -55,6 +57,7 @@ export async function POST(req: NextRequest) {
             customerEmail = json.customer?.email || '';
             orderId = json.order_id || '';
             productName = json.product_name || 'Unknown Product';
+            productId = json.product_id;
           }
         }
       } else {
@@ -63,6 +66,8 @@ export async function POST(req: NextRequest) {
         customerEmail = formData.get('customer[email]') as string || '';
         orderId = formData.get('order_id') as string || '';
         productName = (formData.get('product_name') as string) || 'Unknown Product';
+        const pid = formData.get('product_id');
+        productId = pid != null ? (typeof pid === 'string' && /^\d+$/.test(pid) ? parseInt(pid, 10) : pid) : undefined;
 
         // Check if this is a verification ping (no meaningful data)
         if (!customerEmail && !eventSecret && !orderId) {
@@ -103,14 +108,14 @@ export async function POST(req: NextRequest) {
 
       if (userList.data.length > 0) {
         const user = userList.data[0];
-        // Upgrade user to teacher immediately
+        const tier = tierFromThriveCartProduct(productName, productId);
         await client.users.updateUserMetadata(user.id, {
           publicMetadata: {
             membershipType: 'teacher',
-            tier: 'professional', // or whatever the plan maps to
+            tier,
           },
         });
-        console.log(`[Thrivecart] Upgraded existing user ${user.id} (${customerEmail}) to teacher`);
+        console.log(`[Thrivecart] Upgraded existing user ${user.id} (${customerEmail}) to teacher, tier=${tier}`);
         userUpgraded = true;
       }
     } catch (clerkError) {

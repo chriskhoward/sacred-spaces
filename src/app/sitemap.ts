@@ -21,6 +21,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         '/community',
         '/de-bolton',
         '/queen-robertson',
+        // Auth & onboarding
+        '/sign-in',
+        '/sign-up',
+        '/onboarding',
+        // Logged-in dashboards & profile
+        '/dashboard',
+        '/dashboard/directory-profile',
+        '/dashboard/teacher-collective',
+        '/user-profile',
+        // Misc utility pages
+        '/component-guide',
+        '/studio',
     ].map((route) => ({
         url: `${baseUrl}${route}`,
         lastModified: new Date(),

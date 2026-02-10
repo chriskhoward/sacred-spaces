@@ -18,6 +18,9 @@ export default async function TeacherCollectiveDashboard() {
 
   const profile = (user.publicMetadata.teacherProfile as any) || {};
   const hasProfile = profile.name && profile.location && profile.bio;
+  const tier = (user.publicMetadata.tier as string) || 'professional';
+  const isPro = tier === 'pro' || tier === 'professional';
+  const tierLabel = isPro ? 'Pro' : tier === 'core' ? 'Core' : 'Pro';
 
   return (
     <main className="bg-(--color-gallery) min-h-screen">
@@ -129,7 +132,10 @@ export default async function TeacherCollectiveDashboard() {
                 className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
               >
                 <h3 className="text-2xl font-bold text-(--color-primary) mb-2">Account Settings</h3>
-                <p className="text-gray-600">Manage your account settings, profile photo, and preferences.</p>
+                <p className="text-gray-600 mb-3">Manage your account settings, profile photo, and preferences.</p>
+                <span className="inline-block px-3 py-1 rounded-full text-sm font-bold bg-(--color-roti)/15 text-(--color-roti) border border-(--color-roti)/40">
+                  {tierLabel} Member
+                </span>
               </Link>
             </div>
           </div>

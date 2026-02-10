@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import Script from 'next/script';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -380,9 +381,10 @@ export default function TeacherCollectivePage() {
                     </li>
                   </ul>
                 </div>
-                <div className="bg-(--color-roti) text-white p-6 text-center rounded-b-2xl">
+                <div className="bg-(--color-roti) text-white p-6 text-center rounded-b-2xl space-y-3">
                   <p className="font-bold text-lg">$47/monthly</p>
                   <p className="font-bold text-lg">$470/annually</p>
+                  <Link href="/join?plan=core" className="inline-block mt-2 px-6 py-2.5 bg-white text-(--color-roti) font-bold rounded-full hover:opacity-90 transition-opacity">Join Core</Link>
                 </div>
               </div>
 
@@ -413,9 +415,10 @@ export default function TeacherCollectivePage() {
                     ))}
                   </ul>
                 </div>
-                <div className="bg-(--color-roti) text-white p-6 text-center rounded-b-2xl">
+                <div className="bg-(--color-roti) text-white p-6 text-center rounded-b-2xl space-y-3">
                   <p className="font-bold text-lg">$67/monthly</p>
                   <p className="font-bold text-lg">$670/annually</p>
+                  <Link href="/join?plan=pro" className="inline-block mt-2 px-6 py-2.5 bg-white text-(--color-roti) font-bold rounded-full hover:opacity-90 transition-opacity">Join Pro</Link>
                 </div>
               </div>
             </div>

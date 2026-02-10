@@ -3,7 +3,9 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { currentUser } from '@clerk/nextjs/server';
 import Image from 'next/image';
+import Link from 'next/link';
 import ResourcesClient from './ResourcesClient';
+import { isProTier } from '@/lib/tier';
 
 export const dynamic = 'force-dynamic';
 
@@ -90,12 +92,28 @@ export default async function TeachingResourcesPage() {
       <section className="py-24 bg-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold text-(--color-primary) mb-6">Have a resource to share?</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto mb-10 text-lg">
-            We believe in collective wisdom. If you have a sequence, playlist, or guide that has blessed your teaching, share it with the community.
-          </p>
-          <a href="mailto:collective@flowinfaith.com" className="btn btn-primary">
-            Submit a Resource
-          </a>
+          {isProTier(tier) ? (
+            <>
+              <p className="text-gray-600 max-w-2xl mx-auto mb-10 text-lg">
+                We believe in collective wisdom. If you have a sequence, playlist, or guide that has blessed your teaching, share it with the community.
+              </p>
+              <a href="mailto:collective@flowinfaith.com" className="btn btn-primary">
+                Submit a Resource
+              </a>
+            </>
+          ) : (
+            <>
+              <p className="text-gray-600 max-w-2xl mx-auto mb-6 text-lg">
+                Contribution to the on-demand library is a Pro benefit.
+              </p>
+              <p className="text-gray-600 max-w-2xl mx-auto mb-10">
+                Upgrade to Pro to submit resources and access Promotion of Offerings and Paid Teaching Opportunities.
+              </p>
+              <Link href="/join?plan=pro" className="btn btn-primary">
+                Upgrade to Pro
+              </Link>
+            </>
+          )}
         </div>
       </section>
 

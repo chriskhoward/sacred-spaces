@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { isPaidTier } from '@/lib/tier';
 
 interface LiveClassCard {
   _id: string;
@@ -56,7 +57,7 @@ export default function LiveClassesCards({ classes, userTier }: LiveClassesCards
     );
   }
 
-  const isLockedForUser = (call: LiveClassCard) => call.isLocked && userTier === 'free';
+  const isLockedForUser = (call: LiveClassCard) => call.isLocked && !isPaidTier(userTier);
 
   return (
     <>

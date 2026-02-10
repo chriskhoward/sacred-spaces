@@ -3,6 +3,7 @@ import { headers } from 'next/headers'
 import { WebhookEvent } from '@clerk/nextjs/server'
 import { clerkClient } from '@clerk/nextjs/server'
 import { writeClient } from '@/sanity/lib/write'
+import { tierFromThriveCartProduct } from '@/lib/tier'
 
 export async function POST(req: Request) {
     const SIGNING_SECRET = process.env.CLERK_WEBHOOK_SECRET
@@ -69,11 +70,13 @@ export async function POST(req: Request) {
 
                 try {
                     const client = await clerkClient()
+                    const planName = (allowedUser as { plan?: string }).plan || ''
+                    const tier = tierFromThriveCartProduct(planName)
 
                     await client.users.updateUserMetadata(id, {
                         publicMetadata: {
                             membershipType: 'teacher',
-                            tier: 'professional' // Default to professional for now, or use allowedUser.plan to map
+                            tier
                         }
                     })
 
