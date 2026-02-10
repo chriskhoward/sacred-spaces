@@ -54,9 +54,25 @@ export default defineConfig({
             // Regular types: Pages
             S.documentTypeListItem('page').title('Dynamic Pages'),
             S.divider(),
+            // Start here (Teacher onboarding)
+            S.listItem()
+              .title('Start here (Teacher onboarding)')
+              .id('start-here')
+              .child(
+                S.list()
+                  .title('Start here')
+                  .items([
+                    S.documentTypeListItem('teacherOnboardingCategory').title('Onboarding categories'),
+                    S.documentTypeListItem('teacherOnboardingItem').title('Onboarding items (videos, PDFs, links)'),
+                  ])
+              ),
+            S.divider(),
             // Regular types
             ...S.documentTypeListItems().filter(
-              (listItem) => !singletonTypes.has(listItem.getId() || '') && listItem.getId() !== 'page'
+              (listItem) => {
+                const id = listItem.getId() || ''
+                return !singletonTypes.has(id) && id !== 'page' && id !== 'teacherOnboardingCategory' && id !== 'teacherOnboardingItem'
+              }
             ),
           ]),
     }),

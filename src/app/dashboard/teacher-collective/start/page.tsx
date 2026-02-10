@@ -169,64 +169,80 @@ export default async function TeacherCollectiveStartPage() {
                     )}
                     <ul className="space-y-6">
                       {categoryItems.map((item) => (
-                        <li key={item._id} className="bg-white rounded-xl shadow-lg p-6 md:p-8">
-                          <h3 className="text-xl font-bold text-(--color-primary) mb-2">{item.title}</h3>
-                          {item.description && (
-                            <p className="text-gray-600 mb-4">{item.description}</p>
-                          )}
-                          {item.itemType === 'video' && item.url && (
-                            <div className="mt-4">
-                              {getYouTubeEmbedUrl(item.url) ? (
-                                <div className="aspect-video w-full max-w-2xl rounded-lg overflow-hidden bg-black">
-                                  <iframe
-                                    src={getYouTubeEmbedUrl(item.url)!}
-                                    title={item.title}
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowFullScreen
-                                    className="w-full h-full"
-                                  />
-                                </div>
-                              ) : getVimeoEmbedUrl(item.url) ? (
-                                <div className="aspect-video w-full max-w-2xl rounded-lg overflow-hidden bg-black">
-                                  <iframe
-                                    src={getVimeoEmbedUrl(item.url)!}
-                                    title={item.title}
-                                    allow="fullscreen; picture-in-picture"
-                                    allowFullScreen
-                                    className="w-full h-full"
-                                  />
-                                </div>
-                              ) : (
+                        <li key={item._id}>
+                          {item.itemType === 'video' && item.url ? (
+                            /* Video card: media on top, content below */
+                            <article className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-shadow">
+                              <div className="relative border-b border-gray-100">
+                                <span className="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-md bg-(--color-primary) text-white text-xs font-bold uppercase tracking-wide">
+                                  Video
+                                </span>
+                                {getYouTubeEmbedUrl(item.url) ? (
+                                  <div className="aspect-video w-full overflow-hidden bg-black">
+                                    <iframe
+                                      src={getYouTubeEmbedUrl(item.url)!}
+                                      title={item.title}
+                                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                      allowFullScreen
+                                      className="w-full h-full"
+                                    />
+                                  </div>
+                                ) : getVimeoEmbedUrl(item.url) ? (
+                                  <div className="aspect-video w-full overflow-hidden bg-black">
+                                    <iframe
+                                      src={getVimeoEmbedUrl(item.url)!}
+                                      title={item.title}
+                                      allow="fullscreen; picture-in-picture"
+                                      allowFullScreen
+                                      className="w-full h-full"
+                                    />
+                                  </div>
+                                ) : (
+                                  <a
+                                    href={item.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="aspect-video w-full flex items-center justify-center bg-(--color-primary)/10 text-(--color-primary) font-bold hover:bg-(--color-primary)/20 transition-colors"
+                                  >
+                                    Watch video →
+                                  </a>
+                                )}
+                              </div>
+                              <div className="p-6 md:p-8">
+                                <h3 className="text-xl font-bold text-(--color-primary) mb-2">{item.title}</h3>
+                                {item.description && (
+                                  <p className="text-gray-600">{item.description}</p>
+                                )}
+                              </div>
+                            </article>
+                          ) : (
+                            /* PDF / Link: standard list card */
+                            <div className="bg-white rounded-xl shadow-lg p-6 md:p-8">
+                              <h3 className="text-xl font-bold text-(--color-primary) mb-2">{item.title}</h3>
+                              {item.description && (
+                                <p className="text-gray-600 mb-4">{item.description}</p>
+                              )}
+                              {item.itemType === 'pdf' && (item.pdfFileUrl || item.pdfUrl) && (
+                                <a
+                                  href={item.pdfFileUrl || item.pdfUrl || '#'}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center gap-2 mt-4 px-4 py-2 bg-(--color-roti)/10 text-(--color-primary) rounded-lg font-bold hover:bg-(--color-roti)/20 transition-colors"
+                                >
+                                  Open PDF →
+                                </a>
+                              )}
+                              {item.itemType === 'link' && item.url && (
                                 <a
                                   href={item.url}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="inline-flex items-center gap-2 text-(--color-roti) font-bold hover:underline"
+                                  className="inline-flex items-center gap-2 mt-4 px-4 py-2 bg-(--color-primary)/10 text-(--color-primary) rounded-lg font-bold hover:bg-(--color-primary)/20 transition-colors"
                                 >
-                                  Watch video →
+                                  Open link →
                                 </a>
                               )}
                             </div>
-                          )}
-                          {item.itemType === 'pdf' && (item.pdfFileUrl || item.pdfUrl) && (
-                            <a
-                              href={item.pdfFileUrl || item.pdfUrl || '#'}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-flex items-center gap-2 mt-4 px-4 py-2 bg-(--color-roti)/10 text-(--color-primary) rounded-lg font-bold hover:bg-(--color-roti)/20 transition-colors"
-                            >
-                              Open PDF →
-                            </a>
-                          )}
-                          {item.itemType === 'link' && item.url && (
-                            <a
-                              href={item.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-flex items-center gap-2 mt-4 px-4 py-2 bg-(--color-primary)/10 text-(--color-primary) rounded-lg font-bold hover:bg-(--color-primary)/20 transition-colors"
-                            >
-                              Open link →
-                            </a>
                           )}
                         </li>
                       ))}
