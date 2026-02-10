@@ -14,7 +14,7 @@ import { apiVersion, dataset, projectId } from './src/sanity/env'
 import { schema } from './src/sanity/schemaTypes'
 
 const singletonActions = new Set(['publish', 'discardChanges', 'restore'])
-const singletonTypes = new Set(['home', 'about'])
+const singletonTypes = new Set(['home', 'about', 'teacherCollectiveFaqs'])
 
 export default defineConfig({
   basePath: '/studio',
@@ -50,6 +50,11 @@ export default defineConfig({
               .title('About Page')
               .id('about')
               .child(S.document().schemaType('about').documentId('about')),
+            // Singleton: Teacher Collective FAQs
+            S.listItem()
+              .title('Teacher Collective FAQs')
+              .id('teacherCollectiveFaqs')
+              .child(S.document().schemaType('teacherCollectiveFaqs').documentId('teacherCollectiveFaqs')),
             S.divider(),
             // Regular types: Pages
             S.documentTypeListItem('page').title('Dynamic Pages'),
@@ -71,7 +76,7 @@ export default defineConfig({
             ...S.documentTypeListItems().filter(
               (listItem) => {
                 const id = listItem.getId() || ''
-                return !singletonTypes.has(id) && id !== 'page' && id !== 'teacherOnboardingCategory' && id !== 'teacherOnboardingItem'
+                return !singletonTypes.has(id) && id !== 'page' && id !== 'teacherOnboardingCategory' && id !== 'teacherOnboardingItem' && id !== 'teacherCollectiveFaqs'
               }
             ),
           ]),

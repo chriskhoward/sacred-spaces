@@ -5,15 +5,49 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Metadata } from 'next';
 import { Dancing_Script } from 'next/font/google';
+import { client } from '@/sanity/lib/client';
 
 const dancingScript = Dancing_Script({ subsets: ['latin'], variable: '--font-script', display: 'swap' });
+
+const TC_FAQS_QUERY = `coalesce(
+  *[_type == "teacherCollectiveFaqs" && _id == "teacherCollectiveFaqs"][0],
+  *[_type == "teacherCollectiveFaqs"][0]
+){
+  intro,
+  heading,
+  items[] { question, answer }
+}`;
+
+const DEFAULT_FAQS = {
+  intro: "Still have questions? I understand. Let's chat!",
+  heading: 'FAQs',
+  items: [
+    { question: 'Who is the Flow in Faith Teachers Collective for?', answer: "The Flow in Faith Teachers Collective is for yoga teachers of color who identify as Christian and are seeking a culturally aware, faith-affirming community where they can grow, teach, and be poured into as whole people. It's especially supportive for those navigating the tension between the yoga world, the church world, and their own desire to teach authentically without overextending, overexplaining, or shrinking." },
+    { question: 'Do I have to be a Christian to join?', answer: 'No, you do not have to identify as Christian to join the Collective. However, our conversations, offerings, and gatherings are rooted in Christ-centered principles, language and practice. Participation in this space requires respect for that foundation and the faith-centered nature of the community.' },
+    { question: 'Who is this membership NOT for?', answer: 'The Flow in Faith Teachers Collective may not be aligned if you are not interested in community, collaboration, or engaging faith and yoga together with intention. It may also not be the right fit if you are looking for a purely secular yoga business group or a space that centers dominant cultural perspectives rather than lived experience.' },
+    { question: 'How can I support if I am not a Person of Color?', answer: 'We deeply appreciate your desire to support this work. You can support by amplifying Flow in Faith, sharing our offerings, attending public events, hiring teachers from our directory, and honoring the importance of culturally specific spaces created for and led by teachers of color. You can also sponsor a membership for a teacher by emailing collective@flowinfaith.com' },
+    { question: 'What does the Flow in Faith Teachers Collective program offer?', answer: 'The Flow in Faith Teachers Collective offers a private community space, monthly community check-ins, teacher directory placement, and quarterly masterclasses focused on spiritually aligned and culturally grounded growth. Premium members also receive opportunities for visibility, promotion, paid teaching, and contribution to the on-demand library.' },
+    { question: 'What kind of support can I expect as a member?', answer: 'As a member, you can expect relational, spiritual, and professional support rooted in community rather than hierarchy. Support shows up through shared dialogue, facilitated gatherings, collaborative opportunities, and access to aligned resources and leadership.' },
+    { question: 'Are the LIVE Q&A Sessions Recorded?', answer: "Yes, live gatherings such as community check-ins and masterclasses are recorded whenever possible and made available inside the membership space. This allows you to revisit conversations or catch up if you're unable to attend live." },
+    { question: 'Is there a commitment period for the membership?', answer: 'There is no long-term contract or required commitment period. You are free to cancel your membership at any time, and we trust you to stay as long as the Collective serves you well.' },
+    { question: 'What sets your membership program apart from others?', answer: 'Flow in Faith Teachers Collective is the only space intentionally created for Christian Yoga Teachers of Color where faith, culture, and calling are honored together without compromise. Our difference lies in culturally grounded community, spiritually aligned growth, and leadership rooted in lived experience.' },
+    { question: 'How do I access the resources and materials included in the membership?', answer: "Once you join, you'll receive access to our private online platform where all community spaces, resources, recordings, and announcements live. Everything is designed to be easy to access from any device, so you can engage in a way that fits your life." },
+  ],
+};
 
 export const metadata: Metadata = {
   title: "Teachers Collective | Flow in Faith",
   description: "A community-centered home for Yoga Teachers of Color who identify as Christian. Find support, professional development, and spiritually grounded connection.",
 };
 
-export default function TeacherCollectivePage() {
+export default async function TeacherCollectivePage() {
+  let faqs: { intro?: string; heading?: string; items?: { question?: string; answer?: string }[] } = DEFAULT_FAQS;
+  try {
+    const data = await client.fetch<typeof faqs>(TC_FAQS_QUERY);
+    if (data?.items?.length) faqs = data;
+  } catch {
+    // use DEFAULT_FAQS
+  }
   return (
     <main className="bg-white">
       <Navbar />
@@ -544,33 +578,22 @@ export default function TeacherCollectivePage() {
         </div>
       </section>
 
-      {/* FAQ Section */}
+      {/* FAQ Section - from Sanity (teacherCollectiveFaqs) */}
       <section className="py-20 bg-(--color-gallery)">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
-            <p className="text-base text-gray-600 mb-3 text-center">Still have questions? I understand. Let&apos;s chat!</p>
-            <h2 className="text-3xl lg:text-4xl font-black text-black mb-10 text-center">FAQs</h2>
+            {faqs.intro && <p className="text-base text-gray-600 mb-3 text-center">{faqs.intro}</p>}
+            <h2 className="text-3xl lg:text-4xl font-black text-black mb-10 text-center">{faqs.heading || 'FAQs'}</h2>
 
             <div className="space-y-4">
-              {[
-                { q: 'Who is the Flow in Faith Teachers Collective for?', a: 'The Flow in Faith Teachers Collective is for yoga teachers of color who identify as Christian and are seeking a culturally aware, faith-affirming community where they can grow, teach, and be poured into as whole people. It\'s especially supportive for those navigating the tension between the yoga world, the church world, and their own desire to teach authentically without overextending, overexplaining, or shrinking.' },
-                { q: 'Do I have to be a Christian to join?', a: 'No, you do not have to identify as Christian to join the Collective. However, our conversations, offerings, and gatherings are rooted in Christ-centered principles, language and practice. Participation in this space requires respect for that foundation and the faith-centered nature of the community.' },
-                { q: 'Who is this membership NOT for?', a: 'The Flow in Faith Teachers Collective may not be aligned if you are not interested in community, collaboration, or engaging faith and yoga together with intention. It may also not be the right fit if you are looking for a purely secular yoga business group or a space that centers dominant cultural perspectives rather than lived experience.' },
-                { q: 'How can I support if I am not a Person of Color?', a: 'We deeply appreciate your desire to support this work. You can support by amplifying Flow in Faith, sharing our offerings, attending public events, hiring teachers from our directory, and honoring the importance of culturally specific spaces created for and led by teachers of color. You can also sponsor a membership for a teacher by emailing collective@flowinfaith.com' },
-                { q: 'What does the Flow in Faith Teachers Collective program offer?', a: 'The Flow in Faith Teachers Collective offers a private community space, monthly community check-ins, teacher directory placement, and quarterly masterclasses focused on spiritually aligned and culturally grounded growth. Premium members also receive opportunities for visibility, promotion, paid teaching, and contribution to the on-demand library.' },
-                { q: 'What kind of support can I expect as a member?', a: 'As a member, you can expect relational, spiritual, and professional support rooted in community rather than hierarchy. Support shows up through shared dialogue, facilitated gatherings, collaborative opportunities, and access to aligned resources and leadership.' },
-                { q: 'Are the LIVE Q&A Sessions Recorded?', a: 'Yes, live gatherings such as community check-ins and masterclasses are recorded whenever possible and made available inside the membership space. This allows you to revisit conversations or catch up if you\'re unable to attend live.' },
-                { q: 'Is there a commitment period for the membership?', a: 'There is no long-term contract or required commitment period. You are free to cancel your membership at any time, and we trust you to stay as long as the Collective serves you well.' },
-                { q: 'What sets your membership program apart from others?', a: 'Flow in Faith Teachers Collective is the only space intentionally created for Christian Yoga Teachers of Color where faith, culture, and calling are honored together without compromise. Our difference lies in culturally grounded community, spiritually aligned growth, and leadership rooted in lived experience.' },
-                { q: 'How do I access the resources and materials included in the membership?', a: 'Once you join, you\'ll receive access to our private online platform where all community spaces, resources, recordings, and announcements live. Everything is designed to be easy to access from any device, so you can engage in a way that fits your life.' },
-              ].map((faq, idx) => (
+              {(faqs.items || []).map((faq, idx) => (
                 <details key={idx} className="group">
                   <summary className="flex items-center justify-between bg-(--color-primary) text-white px-6 py-4 rounded-sm cursor-pointer border-l-4 border-(--color-roti) list-none">
-                    <span className="font-medium text-base">{faq.q}</span>
+                    <span className="font-medium text-base">{faq.question}</span>
                     <svg className="w-5 h-5 flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
                   </summary>
                   <div className="bg-white px-6 py-5 text-gray-700 leading-relaxed">
-                    {faq.a}
+                    {faq.answer}
                   </div>
                 </details>
               ))}

@@ -12,6 +12,7 @@ import { pageType } from './page'
 import { teacherType } from './teacher'
 import { teacherOnboardingCategoryType } from './teacherOnboardingCategory'
 import { teacherOnboardingItemType } from './teacherOnboardingItem'
+import { teacherCollectiveFaqsType } from './teacherCollectiveFaqs'
 import {
   heroBlock,
   brandBlock,
@@ -79,6 +80,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     allowedUserType,
     teacherType,
     teacherOnboardingCategoryType,
-    teacherOnboardingItemType
+    teacherOnboardingItemType,
+    teacherCollectiveFaqsType
   ],
 }
