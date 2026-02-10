@@ -6,15 +6,17 @@ interface CTABlockProps {
   description?: string;
   buttonText?: string;
   buttonLink?: string;
+  useFillout?: boolean;
 }
 
 export default function CTABlock({
   title = "Ready to Begin Your Journey?",
   description = "Join a community that honors your practice, your faith, and your culture.",
   buttonText = "Join the Collective",
-  buttonLink = "/sign-up"
+  buttonLink = "/sign-up",
+  useFillout: useFilloutProp,
 }: CTABlockProps) {
-  const useFillout = /join the collective/i.test(buttonText);
+  const useFillout = useFilloutProp ?? /join the collective/i.test(buttonText ?? '');
 
   return (
     <section className="py-24 bg-(--color-primary) relative overflow-hidden">

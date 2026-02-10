@@ -43,6 +43,7 @@ const homepageContent = [
     _key: 'sacred-banner',
     statements: ['Rest is sacred. The body is holy. Healing belongs in faith.'],
     style: 'dark',
+    variant: 'bannerCentered',
   },
   {
     _type: 'proseSectionBlock',
@@ -51,7 +52,8 @@ const homepageContent = [
       'Too many of us have inherited stories that frame wellness as selfish, the body as suspicious, and spiritual devotion as something that requires disconnection from culture, emotion, or lived experience.',
       'For many—especially People of Color—this has meant navigating faith spaces that ignore the body, and wellness spaces that ask us to leave parts of ourselves behind.',
     ],
-    style: 'light',
+    style: 'boxed',
+    alignment: 'left',
   },
   {
     _type: 'highlightTextBlock',
@@ -61,6 +63,7 @@ const homepageContent = [
       'We exist to offer...',
     ],
     style: 'dark',
+    variant: 'bannerTwoLineGold',
   },
   {
     _type: 'featureGridBlock',
@@ -106,43 +109,31 @@ const homepageContent = [
           },
         ],
       },
-      {
-        _type: 'block',
-        _key: 'b2',
-        style: 'normal',
-        markDefs: [],
-        children: [
-          {
-            _type: 'span',
-            _key: 's2',
-            text: 'Slow down without guilt • Practice faith in embodied, liberating ways • Be seen and supported in your fullness • Grow in community instead of isolation',
-            marks: [],
-          },
-        ],
-      },
+    ],
+    listItems: [
+      'Slow down without guilt',
+      'Practice faith in embodied, liberating ways',
+      'Be seen and supported in your fullness',
+      'Grow in community instead of isolation',
     ],
     imagePosition: 'left',
-  },
-  {
-    _type: 'textCtaBlock',
-    _key: 'mission-cta',
-    heading: '',
-    body: '',
-    buttonText: 'Teachers Collective',
-    buttonLink: '/teacher-collective',
-    style: 'light',
+    variant: 'mission',
+    ctaText: 'Teachers Collective',
+    useFillout: true,
   },
   {
     _type: 'highlightTextBlock',
     _key: 'belonging-banner',
     statements: ['This is a place to belong & become. This is Flow in Faith.'],
     style: 'dark',
+    variant: 'bannerWhite',
   },
   {
     _type: 'imageBlock',
     _key: 'community-card-logo',
     caption: 'Flow in Faith Logo',
     fullWidth: false,
+    variant: 'logo',
   },
   {
     _type: 'proseSectionBlock',
@@ -151,13 +142,7 @@ const homepageContent = [
     paragraphs: [
       'This is a space created so teachers could grow, collaborate, and be affirmed in the fullness of their identity, their faith, and their culture — without shrinking or separating pieces of themselves to belong.',
     ],
-    style: 'cream',
-  },
-  {
-    _type: 'ctaBlock',
-    _key: 'community-cta',
-    title: '',
-    description: '',
+    style: 'card',
     buttonText: 'Learn more about the Teachers Collective',
     buttonLink: '/teacher-collective',
   },
@@ -169,21 +154,21 @@ const homepageContent = [
       'by community, and by breath.',
     ],
     style: 'dark',
+    variant: 'bannerGoldLarge',
   },
   {
-    _type: 'pathChooserBlock',
+    _type: 'mediaTextBlock',
     _key: 'whether-you-are',
-    heading: 'Whether you are:',
-    intro: '',
-    options: [
+    title: 'Whether you are:',
+    listItems: [
       'A teacher seeking community, visibility, and spiritual grounding',
       'A seeker longing for rest, healing, and embodied faith',
       'Or someone still discerning where you belong',
     ],
-    closingText: '',
-    buttons: [
-      { _key: 'btn-join', text: 'Join the Teachers Collective', link: '/teacher-collective', style: 'primary' },
-    ],
+    imagePosition: 'left',
+    variant: 'whether',
+    ctaText: 'Join the Teachers Collective',
+    ctaLink: '/teacher-collective',
   },
 ];
 

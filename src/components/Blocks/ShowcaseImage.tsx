@@ -5,14 +5,33 @@ interface ShowcaseImageProps {
   image?: any;
   caption?: string;
   fullWidth?: boolean;
+  variant?: 'default' | 'logo';
 }
 
 export default function ShowcaseImage({
   image,
   caption,
-  fullWidth = true
+  fullWidth = true,
+  variant = 'default',
 }: ShowcaseImageProps) {
-  const imageUrl = image?.asset ? urlForImage(image).url() : '/assets/images/about-group.jpg';
+  const imageUrl = image?.asset ? urlForImage(image).url() : variant === 'logo' ? '/images/homepage/logo-gold.png' : '/assets/images/about-group.jpg';
+
+  if (variant === 'logo') {
+    return (
+      <section className="pt-14 md:pt-20 pb-4 px-6 sm:px-8 bg-gray-50">
+        <div className="max-w-6xl mx-auto flex justify-center">
+          <div className="relative w-52 h-52 md:w-64 md:h-64 flex-shrink-0">
+            <Image
+              src={imageUrl}
+              alt={caption || 'Logo'}
+              fill
+              className="object-contain"
+            />
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className={fullWidth ? "py-0" : "py-24 container mx-auto px-4"}>

@@ -89,6 +89,22 @@ The homepage at `/` currently uses hardcoded `HomePageContent`, not Sanity block
 
 ---
 
+## 6b. Planning for future pages and shared components
+
+**Rule:** Any page or **shared component** that fetches Sanity content you want to preview in Presentation should use the draft-aware client: `const { isEnabled } = await draftMode(); const client = getClient(isEnabled);` and then `client.fetch(...)`.
+
+**What’s already connected:** Home, About, dynamic `[slug]` pages, **Navbar**.
+
+**Navbar behavior (and how to plan similar cases):**
+- **From Sanity:** Only “which pages show in nav” (pages with `showInNav == true`). The Navbar server component fetches that list with `getClient(isEnabled)`, so in Presentation you see draft nav items (e.g. a new page not yet published).
+- **Visibility that’s not from Sanity:** Which links appear per page, “member only” links (Live Classes, On-Demand Library, Teacher Directory), and Member Login vs Dashboard are driven by **app/auth and route logic** in `NavbarClient` (e.g. `isMember` from Clerk). So:
+  - **Draft-aware fetch** = correct Sanity data (including drafts) in the preview.
+  - **What actually shows** (all users vs logged-in, which links on which pages) stays in your components and can be extended later (e.g. a “members only” or “hide on mobile” flag in Sanity if you add it).
+
+**For other pages:** Apply the same pattern: in the **server** component or layout that does the Sanity fetch, use `getClient((await draftMode()).isEnabled)`. Keep visibility and auth rules in your UI (client components or server logic) as you do today. Pages that still use the default `client` and could be switched next: Teacher Collective (FAQs), Video Library, Live Classes, Teacher Collective Resources, Teacher Collective Calls.
+
+---
+
 ## 7. Verify
 
 1. Set the env vars and restart the Next app.
@@ -105,7 +121,7 @@ If the iframe shows 404 or doesn’t enable draft mode, check that `SANITY_PREVI
 
 - [ ] Set `SANITY_API_READ_TOKEN` and `SANITY_PREVIEW_SECRET` in Vercel and `.env.local`.
 - [x] Add a draft-aware client or fetch helper (token + `previewDrafts` + `useCdn: false` + `stega: true` when draft mode is on).
-- [x] Use that helper in `src/app/about/page.tsx` and `src/app/[slug]/page.tsx` for Sanity queries.
+- [x] Use that helper in `src/app/about/page.tsx`, `src/app/[slug]/page.tsx`, and `src/components/Navbar.tsx` for Sanity queries.
 - [ ] (Optional) Set `previewUrl.initial` / `allowOrigins` if you use a different origin for Studio or preview.
 - [ ] (Optional) Render Sanity `home` content on `/` and use the draft-aware fetch there to get homepage overlays.
 - [ ] Test in Presentation: open a location, confirm draft content and overlays.

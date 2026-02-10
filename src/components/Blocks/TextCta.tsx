@@ -1,10 +1,14 @@
+'use client';
+
 import Link from 'next/link';
+import FilloutSliderButton from '@/components/FilloutSliderButton';
 
 interface TextCtaBlockProps {
   heading?: string;
   body?: string;
   buttonText?: string;
   buttonLink?: string;
+  useFillout?: boolean;
   style?: 'light' | 'dark' | 'cream';
   size?: 'normal' | 'large';
 }
@@ -14,6 +18,7 @@ export default function TextCtaBlock({
   body,
   buttonText,
   buttonLink,
+  useFillout = false,
   style = 'light',
   size = 'normal'
 }: TextCtaBlockProps) {
@@ -48,17 +53,21 @@ export default function TextCtaBlock({
               {body}
             </p>
           )}
-          {buttonText && buttonLink && (
-            <Link
-              href={buttonLink}
-              className={`inline-block px-6 py-3 rounded-full font-bold text-sm transition-all shadow-xl ${
-                style === 'dark'
-                  ? 'bg-(--color-roti) text-white hover:bg-white hover:text-(--color-primary)'
-                  : 'bg-(--color-primary) text-white hover:bg-(--color-roti)'
-              }`}
-            >
-              {buttonText}
-            </Link>
+          {buttonText && (
+            useFillout ? (
+              <FilloutSliderButton buttonText={buttonText} variant="cta" className="inline-flex justify-center" />
+            ) : buttonLink ? (
+              <Link
+                href={buttonLink}
+                className={`inline-block px-6 py-3 rounded-full font-bold text-sm transition-all shadow-xl ${
+                  style === 'dark'
+                    ? 'bg-(--color-roti) text-white hover:bg-white hover:text-(--color-primary)'
+                    : 'bg-(--color-primary) text-white hover:bg-(--color-roti)'
+                }`}
+              >
+                {buttonText}
+              </Link>
+            ) : null
           )}
         </div>
       </div>

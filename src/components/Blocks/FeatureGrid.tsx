@@ -29,9 +29,18 @@ export default function FeatureGridBlock({
   const headingColor = style === 'dark' ? 'text-[#C7A254]' : 'text-(--color-primary)';
   const subheadingColor = style === 'dark' ? 'text-white' : 'text-gray-600';
 
+  const sectionPadding = style === 'dark' ? 'pb-14 md:pb-20 pt-6 px-6 sm:px-8' : 'py-20 lg:py-28';
+  const containerClass = style === 'dark' ? 'max-w-6xl mx-auto' : 'container mx-auto px-4';
+  const itemTitleClass = style === 'dark' ? 'text-[#C7A254] text-xl md:text-2xl font-bold mb-4' : 'text-xl font-bold text-(--color-primary) mb-4';
+  const cardClass = style === 'dark'
+    ? 'bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col text-left'
+    : 'bg-white p-8 rounded-3xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] border border-gray-100 hover:shadow-[0_20px_60px_rgba(0,0,0,0.12)] transition-all hover:-translate-y-1 flex flex-col';
+  const cardBodyClass = style === 'dark' ? 'p-6 md:p-7 flex-grow' : '';
+  const imageWrapperClass = style === 'dark' ? 'p-4 md:p-5 flex justify-center bg-white' : '';
+
   return (
-    <section className={`py-20 lg:py-28 ${bgClass}`}>
-      <div className="container mx-auto px-4">
+    <section className={`${sectionPadding} ${bgClass}`}>
+      <div className={containerClass}>
         {(heading || subheading) && (
           <div className="text-center mb-16">
             {heading && (
@@ -46,32 +55,30 @@ export default function FeatureGridBlock({
             )}
           </div>
         )}
-        <div className={`grid ${colClass} gap-8`}>
+        <div className={`grid ${colClass} gap-8 md:gap-10`}>
           {items.map((item, index) => (
-            <div
-              key={index}
-              className="bg-white p-8 rounded-3xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] border border-gray-100 hover:shadow-[0_20px_60px_rgba(0,0,0,0.12)] transition-all hover:-translate-y-1 flex flex-col"
-            >
-              {item.image?.asset ? (
-                <div className="relative w-full aspect-square max-w-[220px] mx-auto rounded-lg overflow-hidden border-4 border-white shadow-md mb-6 flex-shrink-0">
-                  <Image
-                    src={urlForImage(item.image).url()}
-                    alt={item.title || ''}
-                    fill
-                    className="object-cover"
-                  />
+            <div key={index} className={cardClass}>
+              {item.image?.asset && (
+                <div className={imageWrapperClass || undefined}>
+                  <div className="relative w-full aspect-square max-w-[220px] mx-auto rounded-lg overflow-hidden border-4 border-white shadow-md flex-shrink-0">
+                    <Image
+                      src={urlForImage(item.image).url()}
+                      alt={item.title || ''}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
                 </div>
-              ) : item.icon ? (
-                <div className="w-14 h-14 bg-(--color-sidecar) text-2xl flex items-center justify-center rounded-2xl mb-6">
-                  {item.icon}
-                </div>
-              ) : null}
-              <h3 className="text-xl font-bold text-(--color-primary) mb-4">
-                {item.title}
-              </h3>
-              <p className="text-gray-600 leading-relaxed text-sm flex-grow">
-                {item.description}
-              </p>
+              )}
+              <div className={cardBodyClass || 'p-8'}>
+                {!item.image?.asset && item.icon && (
+                  <div className="w-14 h-14 bg-(--color-sidecar) text-2xl flex items-center justify-center rounded-2xl mb-6">
+                    {item.icon}
+                  </div>
+                )}
+                <h3 className={itemTitleClass}>{item.title}</h3>
+                <p className="text-gray-800 text-base leading-relaxed flex-grow">{item.description}</p>
+              </div>
             </div>
           ))}
         </div>

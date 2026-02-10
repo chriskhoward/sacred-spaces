@@ -34,7 +34,7 @@ export const heroBlock = defineType({
   ]
 })
 
-// Home Hero Block - White hero with logo and Fillout CTA (homepage only)
+// Home Hero Block - White hero with logo and CTA (homepage only)
 export const homeHeroBlock = defineType({
   name: 'homeHeroBlock',
   title: 'Home Hero',
@@ -47,6 +47,21 @@ export const homeHeroBlock = defineType({
       title: 'Primary Button Text',
       type: 'string',
       initialValue: 'Join the Teachers Collective',
+    }),
+    defineField({
+      name: 'primaryButtonLink',
+      title: 'Primary Button Link',
+      type: 'string',
+      description: 'Leave empty to use Fillout slider. Set a URL (e.g. /teacher-collective) to use a regular link.',
+    }),
+    defineField({ name: 'secondaryButtonText', title: 'Secondary Button Text', type: 'string' }),
+    defineField({ name: 'secondaryButtonLink', title: 'Secondary Button Link', type: 'string' }),
+    defineField({
+      name: 'logoImage',
+      title: 'Logo / Hero Image',
+      type: 'image',
+      options: { hotspot: true },
+      description: 'Optional. Replaces the default gold logo on the right.',
     }),
   ],
 })
@@ -126,6 +141,13 @@ export const mediaTextBlock = defineType({
       type: 'array', 
       of: [{ type: 'block' }] 
     }),
+    defineField({
+      name: 'listItems',
+      title: 'List Items',
+      type: 'array',
+      of: [{ type: 'string' }],
+      description: 'Optional bullet list below body',
+    }),
     defineField({ name: 'image', title: 'Image', type: 'image', options: { hotspot: true } }),
     defineField({ 
       name: 'imagePosition', 
@@ -139,6 +161,29 @@ export const mediaTextBlock = defineType({
         layout: 'radio'
       },
       initialValue: 'left'
+    }),
+    defineField({
+      name: 'variant',
+      title: 'Layout Variant',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Default', value: 'default' },
+          { title: 'Mission (4:5 image, gold subheading)', value: 'mission' },
+          { title: 'Whether you are (image + list + CTA)', value: 'whether' },
+        ],
+        layout: 'radio'
+      },
+      initialValue: 'default'
+    }),
+    defineField({ name: 'ctaText', title: 'Button Text', type: 'string' }),
+    defineField({ name: 'ctaLink', title: 'Button Link', type: 'string' }),
+    defineField({
+      name: 'useFillout',
+      title: 'Use Fillout (form) instead of link',
+      type: 'boolean',
+      initialValue: false,
+      description: 'When on, button opens Fillout slider instead of navigating',
     }),
   ]
 })
@@ -156,6 +201,19 @@ export const imageBlock = defineType({
       title: 'Full Width', 
       type: 'boolean',
       initialValue: true 
+    }),
+    defineField({
+      name: 'variant',
+      title: 'Display Variant',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Default (full width or boxed)', value: 'default' },
+          { title: 'Logo/Card (centered, fixed size for community card)', value: 'logo' },
+        ],
+        layout: 'radio'
+      },
+      initialValue: 'default'
     }),
   ]
 })
@@ -244,7 +302,8 @@ export const ctaBlock = defineType({
     defineField({ name: 'title', title: 'Title', type: 'string' }),
     defineField({ name: 'description', title: 'Description', type: 'text' }),
     defineField({ name: 'buttonText', title: 'Button Text', type: 'string' }),
-    defineField({ name: 'buttonLink', title: 'Button Link', type: 'string', description: 'Internal (e.g. /sign-up) or External URL' }),
+    defineField({ name: 'buttonLink', title: 'Button Link', type: 'string', description: 'Internal (e.g. /sign-up) or External URL. Leave empty to use Fillout when useFillout is on.' }),
+    defineField({ name: 'useFillout', title: 'Use Fillout (form) instead of link', type: 'boolean', initialValue: false }),
   ]
 })
 
@@ -302,7 +361,7 @@ export const empathySectionBlock = defineType({
   ]
 })
 
-// Highlight Text Block - For large emphasized statements
+// Highlight Text Block - For large emphasized statements / homepage banners
 export const highlightTextBlock = defineType({
   name: 'highlightTextBlock',
   title: 'Highlight Text Section',
@@ -328,6 +387,23 @@ export const highlightTextBlock = defineType({
         layout: 'radio'
       },
       initialValue: 'light'
+    }),
+    defineField({
+      name: 'variant',
+      title: 'Homepage Banner Variant',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Default (use style above)', value: 'default' },
+          { title: 'Banner centered (purple, white text)', value: 'bannerCentered' },
+          { title: 'Two lines: gold + white (purple bg)', value: 'bannerTwoLineGold' },
+          { title: 'Banner white text (belonging)', value: 'bannerWhite' },
+          { title: 'Banner gold large (held by God)', value: 'bannerGoldLarge' },
+        ],
+        layout: 'radio'
+      },
+      initialValue: 'default',
+      description: 'Use for homepage-style sections: exact fonts and backgrounds'
     }),
   ]
 })
@@ -426,7 +502,13 @@ export const textCtaBlock = defineType({
     defineField({ name: 'heading', title: 'Heading', type: 'string' }),
     defineField({ name: 'body', title: 'Body Text', type: 'text' }),
     defineField({ name: 'buttonText', title: 'Button Text', type: 'string' }),
-    defineField({ name: 'buttonLink', title: 'Button Link', type: 'string' }),
+    defineField({ name: 'buttonLink', title: 'Button Link', type: 'string', description: 'Leave empty if using Fillout' }),
+    defineField({
+      name: 'useFillout',
+      title: 'Use Fillout (form) instead of link',
+      type: 'boolean',
+      initialValue: false,
+    }),
     defineField({
       name: 'style',
       title: 'Section Style',
@@ -526,11 +608,28 @@ export const proseSectionBlock = defineType({
         list: [
           { title: 'Light (White background)', value: 'light' },
           { title: 'Cream (Gallery background)', value: 'cream' },
+          { title: 'Boxed (gold border, text left)', value: 'boxed' },
+          { title: 'Card (gray-50, white inner card)', value: 'card' },
         ],
         layout: 'radio'
       },
       initialValue: 'cream'
     }),
+    defineField({
+      name: 'alignment',
+      title: 'Text Alignment',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Center', value: 'center' },
+          { title: 'Left', value: 'left' },
+        ],
+        layout: 'radio'
+      },
+      initialValue: 'center'
+    }),
+    defineField({ name: 'buttonText', title: 'Button Text (for card style)', type: 'string' }),
+    defineField({ name: 'buttonLink', title: 'Button Link', type: 'string' }),
   ]
 })
 

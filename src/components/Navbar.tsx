@@ -1,7 +1,10 @@
-import { client } from '@/sanity/lib/client';
+import { getClient } from '@/sanity/lib/client';
 import NavbarClient from './NavbarClient';
+import { draftMode } from 'next/headers';
 
 export default async function Navbar() {
+  const { isEnabled } = await draftMode();
+  const client = getClient(isEnabled);
   const query = `*[_type == "page" && showInNav == true] {
     title,
     "slug": slug.current
