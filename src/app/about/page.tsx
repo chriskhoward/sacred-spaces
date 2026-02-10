@@ -1,8 +1,9 @@
-import { client } from '@/sanity/lib/client';
+import { getClient } from '@/sanity/lib/client';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import BlockRenderer from '@/components/Blocks/BlockRenderer';
 import { Metadata } from 'next';
+import { draftMode } from 'next/headers';
 
 export const metadata: Metadata = {
   title: 'About | Flow in Faith',
@@ -12,6 +13,8 @@ export const metadata: Metadata = {
 export const dynamic = 'force-dynamic';
 
 export default async function AboutPage() {
+  const { isEnabled } = await draftMode();
+  const client = getClient(isEnabled);
   const query = `*[_type == "about"][0] {
     content
   }`;

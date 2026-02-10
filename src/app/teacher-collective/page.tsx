@@ -262,7 +262,7 @@ export default async function TeacherCollectivePage() {
                   <Image src="/assets/P3WuMgPVZVr3eZ2SvkCVrEnYHe71HnA6TlnFH1R3.webp" alt="Teacher Directory" fill className="object-contain" />
                 </div>
                 <h3 className="font-bold text-(--color-primary) mb-3 text-center">
-                  Teacher Directory Placement (Value: $)
+                  Teacher Directory Placement (Value: $297/yr.)
                 </h3>
                 <p className="text-gray-700 text-sm leading-relaxed text-center">
                   Visibility through our publicly accessible directory so students, churches, and organizations can find and hire Christ-Centered Yoga Teachers of Color worldwide.
@@ -274,7 +274,7 @@ export default async function TeacherCollectivePage() {
                   <Image src="/assets/Monthly Community Check-Ins (Value- $).webp" alt="Monthly Check-ins" fill className="object-contain" />
                 </div>
                 <h3 className="font-bold text-(--color-primary) mb-3 text-center">
-                  Monthly Community Check-Ins (Value: $)
+                  Monthly Community Check-Ins (Value: $480/yr.)
                 </h3>
                 <p className="text-gray-700 text-sm leading-relaxed text-center">
                   Virtual gatherings for connection, reflection, networking, and shared growth — facilitated with intention and care.
@@ -286,7 +286,7 @@ export default async function TeacherCollectivePage() {
                   <Image src="/assets/Private Community Space (Value- $).webp" alt="Private Community" fill className="object-contain" />
                 </div>
                 <h3 className="font-bold text-(--color-primary) mb-3 text-center">
-                  Private Community Space (Value: $)
+                  Private Community Space (Value: $360/yr.)
                 </h3>
                 <p className="text-gray-700 text-sm leading-relaxed text-center">
                   A private online community space where we connect daily, ask questions, share wins, swap resources, and collaborate — without having to explain or defend our identity.
@@ -298,7 +298,7 @@ export default async function TeacherCollectivePage() {
                   <Image src="/assets/Quarterly Workshops & Masterclasses (Value- $).webp" alt="Quarterly Workshops" fill className="object-contain" />
                 </div>
                 <h3 className="font-bold text-(--color-primary) mb-3 text-center">
-                  Quarterly Workshops & Masterclasses (Value: $)
+                  Quarterly Workshops & Masterclasses (Value: $600/yr.)
                 </h3>
                 <p className="text-gray-700 text-sm leading-relaxed text-center">
                   Spiritually aligned and culturally grounded workshops led by experienced teachers and industry leaders on business growth, theology, yoga integration, trauma-informed teaching, and more.
@@ -325,7 +325,7 @@ export default async function TeacherCollectivePage() {
                 <p className="text-gray-600 leading-normal text-base mb-4">
                   Your classes, workshops, retreats, or courses shared through Flow in Faith social channels and newsletters.
                 </p>
-                <p className="text-gray-500 text-xs">(Value: $)</p>
+                <p className="text-gray-500 text-xs">(Value: $600/yr.)</p>
               </div>
               <div className="bg-white rounded-xl p-5">
                 <h4 className="text-xl font-bold text-(--color-roti) mb-3 text-center uppercase tracking-wide leading-tight">
@@ -334,7 +334,7 @@ export default async function TeacherCollectivePage() {
                 <p className="text-gray-600 leading-normal text-base mb-4">
                   Opportunities to teach Christ-Centered yoga classes or workshops inside the Flow in Faith Sanctuary Membership.
                 </p>
-                <p className="text-gray-500 text-xs">(Value: $)</p>
+                <p className="text-gray-500 text-xs">(Value: $1,200/yr.)</p>
               </div>
               <div className="bg-white rounded-xl p-5">
                 <h4 className="text-xl font-bold text-(--color-roti) mb-3 text-center uppercase tracking-wide leading-tight">
@@ -343,7 +343,7 @@ export default async function TeacherCollectivePage() {
                 <p className="text-gray-600 leading-normal text-base mb-4">
                   Share your Christ-Centered recorded classes, meditations, or resources to reach students globally.
                 </p>
-                <p className="text-gray-500 text-xs">(Value: $)</p>
+                <p className="text-gray-500 text-xs">(Value: $500/yr.)</p>
               </div>
             </div>
 
