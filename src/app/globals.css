@@ -71,6 +71,14 @@
   .btn-primary {
     @apply bg-(--color-sidecar) text-(--color-bronzetone) hover:bg-(--color-roti) hover:text-white hover:-translate-y-1 active:translate-y-0 transition-all;
   }
+
+  .gold-border-box {
+    @apply border-2 border-[#C7A254] rounded-lg p-8 md:p-12 bg-white max-w-4xl mx-auto text-center;
+  }
+
+  .banner-text {
+    @apply text-white text-3xl md:text-5xl font-bold text-center leading-tight;
+  }
 }
 
 .container {
@@ -90,96 +98,47 @@ details > summary::marker {
   content: '';
 }
 
-/* Fillout + all CTAs: same size as nav button (px-6 py-3 text-sm) */
+/* Fillout slide-out trigger: match site CTAs (gold bg, white text, rounded-full, py-4 px-6) */
 .fillout-cta-its-time a,
 .fillout-cta-its-time button,
-.fillout-cta-its-time button[class*="fillout-embed-popup-button"] {
-  background-color: #c7a254 !important;
-  background: #c7a254 !important;
-  color: #413356 !important;
-  border: none !important;
-  border-radius: 9999px !important;
-  padding: 0.75rem 1.5rem !important; /* py-3 px-6 - nav size */
-  font-weight: 700 !important;
-  font-size: 0.875rem !important; /* text-sm */
-  cursor: pointer !important;
-  transition: opacity 0.2s ease !important;
-}
-/* Override Fillout inline styles on their popup button */
-button[class*="fillout-embed-popup-button"] {
-  background-color: #c7a254 !important;
-  background: #c7a254 !important;
-  color: #413356 !important;
-  border: none !important;
-  border-radius: 9999px !important;
-  padding: 0.75rem 1.5rem !important;
-  font-weight: 700 !important;
-  font-size: 0.875rem !important;
-}
-.fillout-cta-its-time a:hover,
-.fillout-cta-its-time button:hover {
-  opacity: 0.95 !important;
-}
-
+.fillout-cta-its-time [class*="fillout-embed-popup-button"],
 .fillout-cta-final a,
 .fillout-cta-final button,
-.fillout-cta-final button[class*="fillout-embed-popup-button"] {
-  background-color: #c7a254 !important;
-  background: #c7a254 !important;
-  color: #413356 !important;
-  border: none !important;
-  border-radius: 9999px !important;
-  padding: 0.75rem 1.5rem !important;
-  font-weight: 700 !important;
-  font-size: 0.875rem !important;
-  cursor: pointer !important;
-  display: inline-block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-}
-.fillout-cta-final a:hover,
-.fillout-cta-final button:hover {
-  opacity: 0.9 !important;
-}
-
-/* Bottom section: same size as pair */
+.fillout-cta-final [class*="fillout-embed-popup-button"],
 .fillout-cta-bottom a,
 .fillout-cta-bottom button,
-.fillout-cta-bottom button[class*="fillout-embed-popup-button"] {
-  background-color: #c7a254 !important;
-  background: #c7a254 !important;
-  color: #413356 !important;
-  border: 2px solid #c7a254 !important;
-  border-radius: 9999px !important;
-  padding: 0.75rem 1.5rem !important;
-  font-weight: 700 !important;
-  font-size: 0.875rem !important;
-  cursor: pointer !important;
-  display: inline-block !important;
-}
-.fillout-cta-bottom a:hover,
-.fillout-cta-bottom button:hover {
-  opacity: 0.9 !important;
-}
-
-/* Bottom line: same size as pair */
+.fillout-cta-bottom [class*="fillout-embed-popup-button"],
 .fillout-cta-bottom-line a,
 .fillout-cta-bottom-line button,
-.fillout-cta-bottom-line button[class*="fillout-embed-popup-button"] {
+.fillout-cta-bottom-line [class*="fillout-embed-popup-button"],
+[data-fillout-embed-type="slider"] a,
+[data-fillout-embed-type="slider"] button,
+[data-fillout-embed-type="slider"] [class*="fillout-embed-popup-button"] {
   background-color: #c7a254 !important;
   background: #c7a254 !important;
-  color: #413356 !important;
+  color: #fff !important;
   border: none !important;
   border-radius: 9999px !important;
-  padding: 0.75rem 1.5rem !important;
+  padding: 1rem 1.5rem !important; /* py-4 px-6 */
   font-weight: 700 !important;
-  font-size: 0.875rem !important;
+  font-size: 1rem !important; /* text-base */
   cursor: pointer !important;
-  display: inline-block !important;
+  transition: opacity 0.2s ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
   visibility: visible !important;
   opacity: 1 !important;
 }
+[data-fillout-embed-type="slider"] a:hover,
+[data-fillout-embed-type="slider"] button:hover,
+.fillout-cta-its-time a:hover,
+.fillout-cta-its-time button:hover,
+.fillout-cta-final a:hover,
+.fillout-cta-final button:hover,
+.fillout-cta-bottom a:hover,
+.fillout-cta-bottom button:hover,
 .fillout-cta-bottom-line a:hover,
 .fillout-cta-bottom-line button:hover {
-  opacity: 0.9 !important;
+  opacity: 0.95 !important;
 }

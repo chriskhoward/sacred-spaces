@@ -1,575 +1,258 @@
 import Image from 'next/image';
-import Script from 'next/script';
+import Link from 'next/link';
+import FilloutSliderButton from '@/components/FilloutSliderButton';
+
+/** Section padding and max-width to match MailerPage rhythm */
+const sectionPad = 'py-14 md:py-20 px-6 sm:px-8';
+const containerNarrow = 'max-w-4xl mx-auto';
+const containerWide = 'max-w-6xl mx-auto';
 
 export default function HomePageContent() {
   return (
-    <>
-      {/* Email-style centered layout matching target page */}
-      <div className="bg-white">
-        <div className="max-w-[1200px] mx-auto px-4 py-24 md:py-32">
-          {/* Hero Section - Two Columns */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16">
-            {/* Left Column - Text */}
-            <div className="text-left">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#413356] mb-8 leading-tight">
-                Your path to belonging, visibility, and spiritually grounded growth.
-              </h1>
-              <p className="text-lg md:text-xl text-gray-700 leading-relaxed mb-8">
-                Step into a faith-affirming, culturally grounded community designed to support Christ-Centered Yoga Teachers of Color in growing confidently, connecting deeply, and leading boldly in their calling.
-              </p>
-
-              {/* Hero CTA */}
-              <div className="text-left">
-                <div
-                  data-fillout-id="e4pZwnuAkYus"
-                  data-fillout-embed-type="slider"
-                  data-fillout-button-text="Join the Teachers Collective"
-                  data-fillout-button-color="#C7A254"
-                  data-fillout-button-size="large"
-                  data-fillout-slider-direction="right"
-                  data-fillout-inherit-parameters=""
-                  data-fillout-popup-size="medium"
+    <div className="bg-white">
+      {/* 1. Hero Section - extra top padding to clear nav */}
+      <section className={`pt-32 md:pt-40 lg:pt-44 pb-14 md:pb-20 px-6 sm:px-8 ${containerWide}`}>
+        <div className="flex flex-col md:flex-row items-center gap-10 lg:gap-16">
+          <div className="md:w-[55%] text-left">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#413356] mb-6 leading-[1.15] tracking-tight">
+              A Christ-centered wellness ecosystem rooted in embodiment, rest, and community.
+            </h1>
+            <p className="text-lg md:text-xl text-gray-700 leading-relaxed max-w-xl font-medium mb-8">
+              Here, faith is embodied. Here, rest is sacred. Here, you don’t have to choose between your calling, your culture, and your wholeness.
+            </p>
+            <FilloutSliderButton buttonText="Join the Teachers Collective" variant="hero" className="inline-block" />
+          </div>
+          <div className="md:w-[45%] flex justify-center">
+            <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-[360px] lg:h-[360px]">
+              <div className="absolute inset-0 bg-[#C7A254]/5 rounded-full flex items-center justify-center border-4 border-[#C7A254]/10">
+                <Image
+                  src="/images/homepage/logo-gold.png"
+                  alt="Flow in Faith Logo"
+                  fill
+                  className="object-contain p-6"
+                  priority
                 />
               </div>
             </div>
-
-            {/* Right Column - Image */}
-            <div>
-              <Image
-                src="/images/homepage/hero-image.jpg"
-                alt="Flow in Faith Community"
-                width={640}
-                height={400}
-                className="w-full h-auto rounded-lg shadow-xl"
-              />
-            </div>
           </div>
         </div>
+      </section>
 
-        {/* Imagine Section - Full Width Purple Background */}
-        <div className="bg-[#413356] py-20">
-          <div className="max-w-[1200px] mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-12 text-center">
-              Imagine what it would feel like to…
-            </h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Card 1 */}
-              <div className="bg-white p-6 rounded-lg shadow-lg">
-                <div className="mb-6 h-64 relative">
-                  <Image
-                    src="/images/homepage/feature-1.png"
-                    alt="Teach with confidence"
-                    fill
-                    className="object-cover rounded"
-                  />
-                </div>
-                <p className="text-gray-800 text-lg">
-                  Teach with confidence, knowing your faith and practice are not in conflict.
-                </p>
-              </div>
-
-              {/* Card 2 */}
-              <div className="bg-white p-6 rounded-lg shadow-lg">
-                <div className="mb-6 h-64 relative">
-                  <Image
-                    src="/images/homepage/feature-2.png"
-                    alt="Be surrounded by teachers"
-                    fill
-                    className="object-cover rounded"
-                  />
-                </div>
-                <p className="text-gray-800 text-lg">
-                  Be surrounded by teachers who understand the nuance of your journey.
-                </p>
-              </div>
-
-              {/* Card 3 */}
-              <div className="bg-white p-6 rounded-lg shadow-lg">
-                <div className="mb-6 h-64 relative">
-                  <Image
-                    src="/images/homepage/feature-3.png"
-                    alt="Access opportunities"
-                    fill
-                    className="object-cover rounded"
-                  />
-                </div>
-                <p className="text-gray-800 text-lg">
-                  Have access to opportunities that support both your spiritual and professional growth.
-                </p>
-              </div>
-            </div>
-          </div>
+      {/* 2. Sacred Banner */}
+      <section className="bg-[#413356] py-14 md:py-20 px-6 sm:px-8 overflow-hidden">
+        <div className={containerNarrow}>
+          <h2 className="text-white text-2xl md:text-4xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-bold text-center leading-tight lg:whitespace-nowrap">
+            Rest is sacred. The body is holy. Healing belongs in faith.
+          </h2>
         </div>
+      </section>
 
-        {/* Rest of content in narrower container */}
-        <div className="max-w-[640px] mx-auto px-4 py-16">
-
-          {/* Listen Section */}
-          <div className="mb-16 text-center">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
-              Listen, I see you…
-            </h2>
-            <div className="space-y-4 text-base md:text-lg text-gray-700">
+      {/* 3. Inherited Stories */}
+      <section className={sectionPad}>
+        <div className={containerNarrow}>
+          <div className="border-2 border-[#C7A254] rounded-2xl p-8 md:p-12 bg-white shadow-sm">
+            <div className="space-y-6 text-base md:text-lg text-gray-800 leading-relaxed text-left">
               <p>
-                You've been carrying your calling largely on your own. Holding space for students, navigating faith and embodiment. Often, feeling stretched thin as you pour out more than you're being poured into.
+                Too many of us have inherited stories that frame wellness as selfish, the body as suspicious, and spiritual devotion as something that requires disconnection from culture, emotion, or lived experience.
               </p>
               <p>
-                AND even though you've done the trainings, attended the workshops, and connected with people along the way, there's still a quiet loneliness. Few understand the reality of being a Christ-centered Yoga Teacher of Color navigating multiple worlds.
+                For many—especially <span className="text-[#C7A254] font-extrabold px-1">People of Color</span>—this has meant navigating faith spaces that ignore the body, and wellness spaces that ask us to leave parts of ourselves behind.
               </p>
             </div>
           </div>
-
-          {/* Feature Images */}
-          <div className="mb-8">
-            <Image
-              src="/images/homepage/feature-1.png"
-              alt="Feature 1"
-              width={500}
-              height={300}
-              className="w-full h-auto mb-4"
-            />
-            <Image
-              src="/images/homepage/feature-2.png"
-              alt="Feature 2"
-              width={500}
-              height={300}
-              className="w-full h-auto mb-4"
-            />
-            <Image
-              src="/images/homepage/feature-3.png"
-              alt="Feature 3"
-              width={500}
-              height={300}
-              className="w-full h-auto mb-4"
-            />
-          </div>
-
-          {/* Community Image */}
-          <div className="mb-8">
-            <Image
-              src="/images/homepage/community-image.jpg"
-              alt="Community"
-              width={439}
-              height={300}
-              className="w-full h-auto"
-            />
-          </div>
-
-          {/* It's Time Section */}
-          <div className="mb-8 text-center">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
-              It's time to take up space without apology, and step into community.
-            </h2>
-
-            {/* Fillout CTA Button */}
-            <div className="mb-8">
-              <div
-                data-fillout-id="e4pZwnuAkYus"
-                data-fillout-embed-type="slider"
-                data-fillout-button-text="Join the Teachers Collective"
-                data-fillout-button-color="#C7A254"
-                data-fillout-button-size="large"
-                data-fillout-slider-direction="right"
-                data-fillout-inherit-parameters=""
-                data-fillout-popup-size="medium"
-              />
-              <Script src="https://server.fillout.com/embed/v1/" strategy="lazyOnload" />
-            </div>
-          </div>
-
-          {/* You Don't Have To Section */}
-          <div className="mb-8">
-            <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-4">
-              You don't have to…
-            </h3>
-            <p className="text-base md:text-lg text-gray-700 mb-3">
-              Keep navigating this work without support, piecing things together on your own, and carrying questions in silence.
-            </p>
-            <p className="text-base md:text-lg text-gray-700 mb-6">
-              Silence parts of yourself to belong. Your language, theology, and cultural expression are welcome.
-            </p>
-          </div>
-
-          {/* Your Calling Deserves Section */}
-          <div className="mb-8 text-center">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8">
-              Your calling deserves to be held, affirmed, and supported in community.
-            </h2>
-          </div>
-
-          {/* Benefits Header Image */}
-          <div className="mb-8">
-            <Image
-              src="/images/homepage/benefits-header.png"
-              alt="Premium Opportunities"
-              width={1110}
-              height={200}
-              className="w-full h-auto"
-            />
-          </div>
-
-          {/* Benefit Icon */}
-          <div className="mb-8">
-            <Image
-              src="/images/homepage/benefit-icon-1.png"
-              alt="Benefit"
-              width={419}
-              height={200}
-              className="w-full h-auto"
-            />
-          </div>
-
-          {/* Are You Ready Section */}
-          <div className="mb-8 text-center">
-            <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-6">
-              Are you ready to step into the Collective?
-            </h3>
-
-            {/* Fillout CTA Button */}
-            <div className="mb-8">
-              <div
-                data-fillout-id="e4pZwnuAkYus"
-                data-fillout-embed-type="slider"
-                data-fillout-button-text="Yes! Enroll me now!"
-                data-fillout-button-color="#C7A254"
-                data-fillout-button-size="large"
-                data-fillout-slider-direction="right"
-                data-fillout-inherit-parameters=""
-                data-fillout-popup-size="medium"
-              />
-            </div>
-          </div>
-
-          {/* As a Member Section */}
-          <div className="mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-              As a member of Flow in Faith Teachers Collective
-            </h2>
-            <p className="text-lg text-gray-700 mb-6">you'll have access to:</p>
-
-            <div className="space-y-6 mb-8">
-              <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Teacher Directory Placement (Value: $)</h3>
-                <p className="text-gray-700">
-                  Visibility through our publicly accessible directory so students, churches, and organizations can find and hire Christ-Centered Yoga Teachers of Color worldwide.
-                </p>
-              </div>
-
-              <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Monthly Community Check-Ins (Value: $)</h3>
-                <p className="text-gray-700">
-                  Virtual gatherings for connection, reflection, networking, and shared growth — facilitated with intention and care.
-                </p>
-              </div>
-
-              <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Private Community Space (Value: $)</h3>
-                <p className="text-gray-700">
-                  A private online community space where we connect daily, ask questions, share wins, swap resources, and collaborate — without having to explain or defend our identity.
-                </p>
-              </div>
-
-              <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Quarterly Workshops & Masterclasses (Value: $)</h3>
-                <p className="text-gray-700">
-                  Spiritually aligned and culturally grounded workshops led by experienced teachers and industry leaders on business growth, theology, yoga integration, trauma-informed teaching, and more.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Premium Opportunities Header */}
-          <div className="mb-8">
-            <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-6">
-              PLUS THESE PREMIUM OPPORTUNITIES:
-            </h3>
-
-            <div className="space-y-6 mb-8">
-              <div>
-                <h4 className="text-lg font-bold text-gray-900 mb-2">PROMOTION OF YOUR OFFERINGS</h4>
-                <p className="text-gray-700 mb-2">
-                  Your classes, workshops, retreats, or courses shared through Flow in Faith social channels and newsletters.
-                </p>
-                <p className="text-gray-700">(Value: $)</p>
-              </div>
-
-              <div>
-                <h4 className="text-lg font-bold text-gray-900 mb-2">PAID TEACHING OPPORTUNITIES</h4>
-                <p className="text-gray-700 mb-2">
-                  Opportunities to teach Christ-Centered yoga classes or workshops inside the Flow in Faith Sanctuary Membership.
-                </p>
-                <p className="text-gray-700">(Value: $)</p>
-              </div>
-
-              <div>
-                <h4 className="text-lg font-bold text-gray-900 mb-2">CONTRIBUTION TO THE ON-DEMAND LIBRARY</h4>
-                <p className="text-gray-700 mb-2">
-                  Share your Christ-Centered recorded classes, meditations, or resources to reach students globally.
-                </p>
-                <p className="text-gray-700">(Value: $)</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Are You Ready to Connect */}
-          <div className="mb-8 text-center">
-            <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-6">
-              Are you ready to connect?
-            </h3>
-
-            {/* Fillout CTA Button */}
-            <div className="mb-8">
-              <div
-                data-fillout-id="e4pZwnuAkYus"
-                data-fillout-embed-type="slider"
-                data-fillout-button-text="Yes! This is exactly what I need!"
-                data-fillout-button-color="#C7A254"
-                data-fillout-button-size="large"
-                data-fillout-slider-direction="right"
-                data-fillout-inherit-parameters=""
-                data-fillout-popup-size="medium"
-              />
-            </div>
-          </div>
-
-          {/* Membership Options */}
-          <div className="mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-              Membership Options
-            </h2>
-            <p className="text-lg text-gray-700 mb-6">
-              Choose the path that best supports your journey.
-            </p>
-
-            <div className="space-y-6 mb-8">
-              <Image
-                src="/images/homepage/pricing-option-1.png"
-                alt="Membership Option 1"
-                width={1649}
-                height={400}
-                className="w-full h-auto"
-              />
-              <Image
-                src="/images/homepage/pricing-option-2.png"
-                alt="Membership Option 2"
-                width={1649}
-                height={400}
-                className="w-full h-auto"
-              />
-              <Image
-                src="/images/homepage/pricing-option-3.png"
-                alt="Membership Option 3"
-                width={1649}
-                height={400}
-                className="w-full h-auto"
-              />
-            </div>
-          </div>
-
-          {/* CTA Buttons */}
-          <div className="mb-8 text-center space-y-4">
-            <Image
-              src="/images/homepage/cta-button.png"
-              alt="Join Now"
-              width={623}
-              height={100}
-              className="mx-auto cursor-pointer"
-            />
-          </div>
-
-          {/* It's Time To Section */}
-          <div className="mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
-              It's Time to..
-            </h2>
-            <p className="text-base md:text-lg text-gray-700 mb-3">
-              Teach from a place of spiritual integrity without over-explaining or shrinking parts of yourself.
-            </p>
-            <p className="text-base md:text-lg text-gray-700 mb-3">
-              Be seen, supported, and affirmed inside a community that actually understands your lived experience.
-            </p>
-            <p className="text-base md:text-lg text-gray-700 mb-6">
-              Grow professionally through aligned opportunities for visibility, collaboration, and leadership that honor your values.
-            </p>
-          </div>
-
-          {/* Join CTA */}
-          <div className="mb-8 text-center">
-            <div
-              data-fillout-id="e4pZwnuAkYus"
-              data-fillout-embed-type="slider"
-              data-fillout-button-text="Join the Teachers Collective"
-              data-fillout-button-color="#C7A254"
-              data-fillout-button-size="large"
-              data-fillout-slider-direction="right"
-              data-fillout-inherit-parameters=""
-              data-fillout-popup-size="medium"
-            />
-          </div>
-
-          {/* Meet the Visionaries */}
-          <div className="mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-              MEET THE VISIONARIES
-            </h2>
-            <p className="text-base md:text-lg text-gray-700 mb-6">
-              Led by Queen and De, the Flow in Faith Teachers Collective was created from lived experience, prayerful discernment, and a deep belief that Christ-Centered Yoga Teachers of Color were never meant to walk this calling alone.
-            </p>
-          </div>
-
-          {/* Team Photo */}
-          <div className="mb-8">
-            <Image
-              src="/images/homepage/team-photo.jpg"
-              alt="Queen and De"
-              width={1110}
-              height={600}
-              className="w-full h-auto"
-            />
-          </div>
-
-          {/* Founder Profiles */}
-          <div className="mb-8 space-y-8">
-            {/* Queen */}
-            <div className="text-center">
-              <Image
-                src="/images/homepage/founder-queen.png"
-                alt="Queen Robertson"
-                width={350}
-                height={350}
-                className="mx-auto mb-4"
-              />
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Queen Robertson</h3>
-              <p className="text-lg text-gray-600 mb-4">Founder/Visionary</p>
-              <div className="text-gray-700 space-y-3">
-                <p>
-                  Queen is a yoga teacher and space holder who invites presence, reflection, and embodiment through intentional movement and breath.
-                </p>
-                <p>
-                  With 200-hour yoga training and a practice rooted in mindfulness, rest, and nervous system care, she creates grounding spaces where students can slow down, reconnect, and move without urgency.
-                </p>
-                <p>
-                  Her teaching emphasizes balance, compassion, and honoring the body's wisdom.
-                </p>
-                <p>
-                  Whether you're arriving for the first time or returning to yourself, Queen offers a practice that is steady, affirming, and deeply human.
-                </p>
-              </div>
-            </div>
-
-            {/* De */}
-            <div className="text-center">
-              <Image
-                src="/images/homepage/founder-de.png"
-                alt="De Bolton"
-                width={350}
-                height={350}
-                className="mx-auto mb-4"
-              />
-              <h3 className="text-xl font-bold text-gray-900 mb-2">De Bolton</h3>
-              <p className="text-lg text-gray-600 mb-4">Founder/Visionary</p>
-              <div className="text-gray-700 space-y-3">
-                <p>
-                  De is a movement leader who makes every minute on the mat matter. A dedicated yoga and Pilates instructor, she blends breath, strength, grace, and embodied presence to help move what's unseen and unheard in the body.
-                </p>
-                <p>
-                  With 200-hour yoga training, 500-hour Ashtanga, and 100-hour trauma-informed certification, plus Mat Pilates, De creates safe, empowering spaces for all levels.
-                </p>
-                <p>
-                  Her teaching is rooted in mindfulness, compassion, and transformation, inviting you to build resilience, self-awareness, and inner peace.
-                </p>
-                <p>
-                  Whether you're beginning or deepening your practice, De will challenge you, support you, and inspire you to rise.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* So What Do You Say */}
-          <div className="mb-8 text-center">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
-              So, what do you say?
-            </h2>
-            <p className="text-lg md:text-xl text-gray-700 mb-8">
-              Are you ready to grow in a space where your faith, culture, and practice are fully welcome?
-            </p>
-          </div>
-
-          {/* FAQs */}
-          <div className="mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
-              FAQs
-            </h2>
-
-            <div className="space-y-6">
-              <div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">How much does a subscription cost?</h3>
-                <p className="text-gray-700">
-                  Membership pricing details are available when you apply. We offer flexible options to support your journey.
-                </p>
-              </div>
-
-              <div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">Where can I read your latest articles?</h3>
-                <p className="text-gray-700">
-                  Our latest articles and resources are shared with members in our private community space and through our newsletter.
-                </p>
-              </div>
-
-              <div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">How often do you send out your newsletter?</h3>
-                <p className="text-gray-700">
-                  We send regular updates to keep you connected with community news, opportunities, and inspiration.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Final CTA */}
-          <div className="mb-8 text-center">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
-              Let's walk this path together.
-            </h2>
-
-            <div className="mb-8">
-              <div
-                data-fillout-id="e4pZwnuAkYus"
-                data-fillout-embed-type="slider"
-                data-fillout-button-text="Join the Teachers Collective"
-                data-fillout-button-color="#C7A254"
-                data-fillout-button-size="large"
-                data-fillout-slider-direction="right"
-                data-fillout-inherit-parameters=""
-                data-fillout-popup-size="medium"
-              />
-            </div>
-          </div>
-
-          {/* Footer Logo */}
-          <div className="text-center py-8">
-            <Image
-              src="/images/homepage/footer-logo.png"
-              alt="Flow in Faith"
-              width={438}
-              height={300}
-              className="mx-auto"
-            />
-          </div>
-
-          {/* Final Logo */}
-          <div className="text-center pb-8">
-            <Image
-              src="/images/homepage/logo.png"
-              alt="Flow in Faith"
-              width={103}
-              height={103}
-              className="mx-auto"
-            />
-          </div>
-
         </div>
-      </div>
-    </>
+      </section>
+
+      {/* 4. Different Story + We exist to offer - heading gold, subheading white */}
+      <section className="bg-[#413356] py-14 md:py-20 px-6 sm:px-8">
+        <div className={containerWide}>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#C7A254] text-center mb-4">
+            Flow in Faith is here to tell a different story
+          </h2>
+          <p className="text-white text-lg md:text-xl lg:text-2xl text-center">We exist to offer...</p>
+        </div>
+      </section>
+
+      {/* 5. Feature Grid - white cards with framed images, gold titles, dark text */}
+      <section className="bg-[#413356] pb-14 md:pb-20 pt-6 px-6 sm:px-8">
+        <div className={`${containerWide} grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10`}>
+          {/* Feature 1 */}
+          <div className="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col text-left">
+            <div className="p-4 md:p-5 flex justify-center bg-white">
+              <div className="relative w-full aspect-square max-w-[220px] rounded-lg overflow-hidden border-4 border-white shadow-md">
+                <Image
+                  src="/images/homepage/feature-1.webp"
+                  alt="Liberating, Christ-centered embodiment"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            </div>
+            <div className="p-6 md:p-7 flex-grow">
+              <h3 className="text-[#C7A254] text-xl md:text-2xl font-bold mb-4">Liberating, Christ-centered embodiment</h3>
+              <p className="text-gray-800 text-base leading-relaxed">
+                Faith-aligned practices that support rest, healing, and nervous system regulation—without fear, shame, or spiritual conflict.
+              </p>
+            </div>
+          </div>
+          {/* Feature 2 */}
+          <div className="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col text-left">
+            <div className="p-4 md:p-5 flex justify-center bg-white">
+              <div className="relative w-full aspect-square max-w-[220px] rounded-lg overflow-hidden border-4 border-white shadow-md">
+                <Image
+                  src="/images/homepage/feature-2.webp"
+                  alt="Faith that honors the whole person"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            </div>
+            <div className="p-6 md:p-7 flex-grow">
+              <h3 className="text-[#C7A254] text-xl md:text-2xl font-bold mb-4">Faith that honors the whole person</h3>
+              <p className="text-gray-800 text-base leading-relaxed">
+                A faith that welcomes questions, emotions, and embodiment—grounded in Christ and rooted in wholeness.
+              </p>
+            </div>
+          </div>
+          {/* Feature 3 */}
+          <div className="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col text-left">
+            <div className="p-4 md:p-5 flex justify-center bg-white">
+              <div className="relative w-full aspect-square max-w-[220px] rounded-lg overflow-hidden border-4 border-white shadow-md">
+                <Image
+                  src="/images/homepage/feature-3.webp"
+                  alt="Community that reflects lived experience"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            </div>
+            <div className="p-6 md:p-7 flex-grow">
+              <h3 className="text-[#C7A254] text-xl md:text-2xl font-bold mb-4">Community that reflects lived experience</h3>
+              <p className="text-gray-800 text-base leading-relaxed">
+                A culturally grounded community where identity, faith, and lived experience are honored without explanation or erasure.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. Mission: belong & become + two communities CTAs - match reference layout */}
+      <section className={`${sectionPad} ${containerWide}`}>
+        <div className="flex flex-col lg:flex-row items-stretch gap-12 lg:gap-16">
+          <div className="lg:w-1/2 min-h-[320px]">
+            <div className="relative w-full aspect-[4/5] max-h-[500px] rounded-2xl overflow-hidden shadow-lg">
+              <Image
+                src="/images/homepage/community-image.png"
+                alt="Person resting outdoors in nature"
+                fill
+                className="object-cover"
+              />
+            </div>
+          </div>
+          <div className="lg:w-1/2 flex flex-col justify-center">
+            <p className="text-gray-800 text-base md:text-lg leading-relaxed mb-6">
+              Rooted in embodied Christian practice and centered on the lived experiences of People of Color, Flow in Faith offers a spiritual home where the body is honored as sacred, rest is reclaimed as devotion, and community becomes a pathway to healing, leadership, and renewal.
+            </p>
+            <p className="text-[#C7A254] font-bold text-lg md:text-xl mb-4">
+              Through the Teachers Collective, we create room to:
+            </p>
+            <ul className="list-disc list-outside space-y-2 mb-8 text-gray-800 text-base md:text-lg leading-relaxed pl-5">
+              {['Slow down without guilt', 'Practice faith in embodied, liberating ways', 'Be seen and supported in your fullness', 'Grow in community instead of isolation'].map((item, idx) => (
+                <li key={idx}>{item}</li>
+              ))}
+            </ul>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex-1 max-w-md [&>div]:w-full [&_a]:w-full [&_button]:w-full [&_a]:rounded-full [&_button]:rounded-full [&_a]:justify-center [&_button]:justify-center">
+                <FilloutSliderButton buttonText="Teachers Collective" className="w-full" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 7. Belonging Banner */}
+      <section className="bg-[#413356] py-14 md:py-20 px-6 sm:px-8 text-center">
+        <div className={containerNarrow}>
+          <h2 className="text-white text-2xl md:text-[35px] lg:text-4xl font-bold text-center leading-tight">
+            This is a place to belong & become. This is Flow in Faith.
+          </h2>
+        </div>
+      </section>
+
+      {/* 8. Community Card - Teachers Collective (logo, heading, paragraph, button) */}
+      <section className={`${sectionPad} bg-gray-50`}>
+        <div className={containerWide}>
+          <div className="flex justify-center">
+            <div className="bg-white rounded-2xl p-8 md:p-10 shadow-md border border-gray-200 flex flex-col items-center text-center max-w-2xl w-full">
+              <div className="relative w-52 h-52 md:w-64 md:h-64 flex-shrink-0 mb-6">
+                <Image
+                  src="/images/homepage/logo-gold.png"
+                  alt="Flow in Faith Logo"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <h3 className="text-lg md:text-xl font-bold text-gray-800 mb-4 leading-snug">
+                The Flow in Faith Teachers Collective is a community-centered home created exclusively for Yoga Teachers of Color who love Jesus.
+              </h3>
+              <p className="text-base text-gray-700 leading-relaxed mb-8 flex-grow">
+                This is a space created so teachers could grow, collaborate, and be affirmed in the fullness of their identity, their faith, and their culture — without shrinking or separating pieces of themselves to belong.
+              </p>
+              <Link href="/teacher-collective" className="w-full py-4 bg-[#C7A254] text-white rounded-full font-bold text-base hover:opacity-95 transition-opacity shadow-md text-center">
+                Learn more about the Teachers Collective
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 8b. Held by God banner (gold text, purple bg) */}
+      <section className="bg-[#413356] py-14 md:py-20 px-6 sm:px-8 text-center">
+        <div className={containerNarrow}>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl text-[#C7A254] font-bold leading-[1.2]">
+            This is a space to be held by God,<br />
+            by community, and by breath.
+          </h2>
+        </div>
+      </section>
+
+      {/* 9. Whether you are - image left, text right, two CTAs below */}
+      <section className={`${sectionPad} max-w-6xl mx-auto bg-white`}>
+        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+          <div className="w-full lg:w-1/2">
+            <div className="relative aspect-square rounded-2xl overflow-hidden shadow-xl">
+              <Image
+                src="/images/homepage/whether-you-are.png"
+                alt="Person in prayer gesture with laptop in a cozy space"
+                fill
+                className="object-cover"
+              />
+            </div>
+          </div>
+          <div className="w-full lg:w-1/2 flex flex-col justify-center text-left">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#C7A254] mb-6">Whether you are:</h2>
+            <ul className="space-y-4 mb-8">
+              {[
+                'A teacher seeking community, visibility, and spiritual grounding',
+                'A seeker longing for rest, healing, and embodied faith',
+                'Or someone still discerning where you belong'
+              ].map((label, idx) => (
+                <li key={idx} className="text-base md:text-lg text-gray-800 leading-snug">
+                  {label}
+                </li>
+              ))}
+            </ul>
+            <Link href="/teacher-collective" className="inline-block w-full sm:w-auto min-w-[200px] py-4 px-6 bg-[#C7A254] text-white rounded-full font-bold text-base text-center hover:opacity-95 transition-opacity shadow-md">
+              Join the Teachers Collective
+            </Link>
+          </div>
+        </div>
+        <div className="flex flex-wrap justify-center gap-4 mt-12">
+          <div className="[&>div]:w-full [&_a]:w-full [&_button]:w-full [&_a]:rounded-full [&_button]:rounded-full [&_a]:justify-center [&_button]:justify-center">
+            <FilloutSliderButton buttonText="Join the Teachers Collective" variant="cta" className="min-w-[200px]" />
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }

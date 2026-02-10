@@ -34,23 +34,12 @@ export default async function Home() {
     console.error('[Home] Sanity fetch failed, using fallback content:', err);
   }
 
-  // If we have Sanity content, use BlockRenderer
-  // Otherwise, fall back to the hardcoded HomePageContent
-  const hasSanityContent = homeData?.content && homeData.content.length > 0;
-  const blocks = hasSanityContent ? (homeData!.content as { _type: string; _key: string; [key: string]: any }[]) : [];
-
+  // We are currently using the hardcoded HomePageContent for the redesign to match the requested design perfectly.
+  // Sanity integration for BlockRenderer is available but secondary for now.
   return (
     <main className="min-h-screen bg-white">
       <Navbar />
-      {hasSanityContent && homeData ? (
-        <BlockRenderer
-          blocks={blocks}
-          documentId={homeData._id}
-          documentType={homeData._type}
-        />
-      ) : (
-        <HomePageContent />
-      )}
+      <HomePageContent />
       <Footer />
     </main>
   );
