@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { urlForImage } from '@/sanity/lib/image';
 
 interface Video {
@@ -16,6 +17,8 @@ interface Video {
   thumbnail: any;
   videoUrl?: string;
   isFeatured?: boolean;
+  isLocked?: boolean;
+  targetAudience?: string;
 }
 
 interface Category {
@@ -29,6 +32,8 @@ interface VideoLibraryClientProps {
   categories: Category[];
   /** Video to show in the "New Release" hero. Set in Sanity via "Feature as New Release" on a video. */
   featuredVideo?: Video | null;
+  userTier?: string;
+  membershipType?: string;
 }
 
 // Helper to convert video URLs to embeddable format
@@ -99,6 +104,8 @@ export default function VideoLibraryClient({ initialVideos, categories, featured
   const [selectedTeacher, setSelectedTeacher] = useState('All');
   const [selectedLevel, setSelectedLevel] = useState('All');
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
+  const [lockedVideo, setLockedVideo] = useState<Video | null>(null);
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
 
   // Strip invisible Unicode (zero-width, BOM) so "All Levels" and "All\u200B Levels" match
   const stripInvisible = (s: string) => (s ?? '').replace(/[\u200B-\u200D\u2060\uFEFF]/g, '');
@@ -174,9 +181,19 @@ export default function VideoLibraryClient({ initialVideos, categories, featured
   const featuredVideo = featuredVideoProp ?? initialVideos[0] ?? null;
 
   const openVideo = (video: Video) => {
+    if (video.isLocked) {
+      setLockedVideo(video);
+      setShowUpgradeModal(true);
+      return;
+    }
     if (video.videoUrl) {
       setSelectedVideo(video);
     }
+  };
+
+  const closeUpgradeModal = () => {
+    setShowUpgradeModal(false);
+    setLockedVideo(null);
   };
 
   const closeVideo = () => {
@@ -240,6 +257,65 @@ export default function VideoLibraryClient({ initialVideos, categories, featured
         </div>
       )}
 
+      {/* Upgrade Modal */}
+      {showUpgradeModal && lockedVideo && (
+        <div
+          className="fixed inset-0 z-[70] flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
+          onClick={closeUpgradeModal}
+        >
+          <div
+            className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl relative overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Design Element */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-(--color-sidecar) opacity-20 rounded-bl-full -mr-16 -mt-16"></div>
+
+            <div className="text-center mb-8 relative">
+              <div className="inline-flex items-center justify-center w-20 h-20 bg-(--color-gallery) rounded-full mb-4">
+                <span className="text-4xl">💎</span>
+              </div>
+              <h3 className="text-3xl font-bold text-(--color-primary) mb-3">
+                Unlock Premium
+              </h3>
+              <p className="text-gray-600 leading-relaxed">
+                This session, <span className="font-bold text-(--color-primary)">&ldquo;{lockedVideo.title}&rdquo;</span>, is exclusive to our
+                <span className="text-(--color-roti) font-bold ml-1">Pro members</span>.
+              </p>
+            </div>
+
+            <div className="bg-(--color-gallery) p-6 rounded-2xl mb-8 border border-gray-100">
+              <h4 className="font-bold text-(--color-primary) mb-4 text-sm uppercase tracking-widest">Pro Member Benefits:</h4>
+              <ul className="space-y-3 text-left">
+                <li className="flex items-center gap-3 text-gray-700 text-sm">
+                  <span className="text-(--color-roti)">✓</span> Full Access to the On-Demand Library
+                </li>
+                <li className="flex items-center gap-3 text-gray-700 text-sm">
+                  <span className="text-(--color-roti)">✓</span> Paid Teaching Opportunities
+                </li>
+                <li className="flex items-center gap-3 text-gray-700 text-sm">
+                  <span className="text-(--color-roti)">✓</span> Visibility via Promotion of Your Offerings
+                </li>
+              </ul>
+            </div>
+
+            <div className="space-y-4">
+              <Link
+                href="/join"
+                className="block w-full px-8 py-4 bg-(--color-roti) text-white rounded-full font-bold hover:bg-(--color-primary) transition-all text-center shadow-lg hover:shadow-xl hover:scale-[1.02]"
+              >
+                Upgrade to Pro Now
+              </Link>
+              <button
+                onClick={closeUpgradeModal}
+                className="block w-full px-8 py-3 text-gray-500 font-bold hover:text-gray-700 transition-colors text-sm"
+              >
+                Maybe Later
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Hero: directory-style when no featured video, or featured video block */}
       {!featuredVideo && (
         <header className="bg-(--color-primary) pt-[200px] pb-24 text-center">
@@ -262,46 +338,50 @@ export default function VideoLibraryClient({ initialVideos, categories, featured
       )}
       {featuredVideo && (
         <section className="pt-[200px] pb-24 bg-(--color-primary) text-white">
-            <div className="container mx-auto px-4">
+          <div className="container mx-auto px-4">
             <div className="flex flex-col lg:flex-row gap-12 items-center">
-                <div className="lg:w-1/2">
-                    <span className="text-(--color-roti) font-bold uppercase tracking-widest mb-4 block">New Release</span>
-                    <h1 className="text-4xl lg:text-6xl font-bold mb-6 leading-tight text-white">{featuredVideo.title}</h1>
-                    <p className="text-xl text-(--color-sidecar) mb-8 leading-relaxed max-w-xl">
-                    {featuredVideo.description}
-                    </p>
-                    <div className="flex items-center gap-4 text-sm font-bold uppercase tracking-wider mb-8">
-                    <span className="bg-white/10 px-4 py-2 rounded-full">{featuredVideo.category}</span>
-                    <span className="bg-white/10 px-4 py-2 rounded-full">{featuredVideo.duration}</span>
-                    <span className="text-(--color-roti)">with {featuredVideo.instructor}</span>
-                    </div>
-                    <button
-                      onClick={() => openVideo(featuredVideo)}
-                      className="btn btn-primary flex items-center gap-3"
-                    >
-                    <span className="text-2xl">▶</span> Watch Now
-                    </button>
+              <div className="lg:w-1/2">
+                <span className="text-(--color-roti) font-bold uppercase tracking-widest mb-4 block">New Release</span>
+                <h1 className="text-4xl lg:text-6xl font-bold mb-6 leading-tight text-white">{featuredVideo.title}</h1>
+                <p className="text-xl text-(--color-sidecar) mb-8 leading-relaxed max-w-xl">
+                  {featuredVideo.description}
+                </p>
+                <div className="flex items-center gap-4 text-sm font-bold uppercase tracking-wider mb-8">
+                  <span className="bg-white/10 px-4 py-2 rounded-full">{featuredVideo.category}</span>
+                  <span className="bg-white/10 px-4 py-2 rounded-full">{featuredVideo.duration}</span>
+                  <span className="text-(--color-roti)">with {featuredVideo.instructor}</span>
                 </div>
-                <div className="lg:w-1/2 w-full">
+                <button
+                  onClick={() => openVideo(featuredVideo)}
+                  className="btn btn-primary flex items-center gap-3"
+                >
+                  {featuredVideo.isLocked ? (
+                    <><span className="text-2xl">🔒</span> Upgrade to Watch</>
+                  ) : (
+                    <><span className="text-2xl">▶</span> Watch Now</>
+                  )}
+                </button>
+              </div>
+              <div className="lg:w-1/2 w-full">
                 <div
                   onClick={() => openVideo(featuredVideo)}
                   className="relative aspect-video bg-black/20 rounded-3xl overflow-hidden shadow-2xl border border-white/10 group cursor-pointer hover:border-(--color-roti) transition-all"
                 >
-                    <Image
+                  <Image
                     src={getThumbnailUrl(featuredVideo)}
                     alt={featuredVideo.title}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/10 transition-colors">
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/10 transition-colors">
                     <div className="w-20 h-20 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center pl-1 group-hover:scale-110 transition-transform">
-                        <span className="text-white text-3xl">▶</span>
+                      <span className="text-white text-3xl">▶</span>
                     </div>
-                    </div>
+                  </div>
                 </div>
-                </div>
+              </div>
             </div>
-            </div>
+          </div>
         </section>
       )}
 
@@ -386,31 +466,44 @@ export default function VideoLibraryClient({ initialVideos, categories, featured
               >
                 <div className="relative aspect-video bg-gray-200">
                   <Image
-                     src={getThumbnailUrl(video)}
-                     alt={video.title}
-                     fill
-                     className="object-cover"
-                   />
-                   <div className="absolute top-4 left-4">
-                     <span className="bg-(--color-primary)/80 backdrop-blur-sm text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide">
-                       {video.category}
-                     </span>
-                   </div>
-                   <div className="absolute bottom-4 right-4">
-                     <span className="bg-black/60 backdrop-blur-sm text-white px-3 py-1 rounded-md text-xs font-bold">
-                       {video.duration}
-                     </span>
-                   </div>
-                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20">
-                     <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center pl-1 shadow-xl transform scale-50 group-hover:scale-100 transition-transform duration-300">
+                    src={getThumbnailUrl(video)}
+                    alt={video.title}
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="absolute top-4 left-4">
+                    <span className="bg-(--color-primary)/80 backdrop-blur-sm text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide">
+                      {video.category}
+                    </span>
+                  </div>
+                  <div className="absolute bottom-4 right-4">
+                    <span className="bg-black/60 backdrop-blur-sm text-white px-3 py-1 rounded-md text-xs font-bold">
+                      {video.duration}
+                    </span>
+                  </div>
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20">
+                    <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center pl-1 shadow-xl transform scale-50 group-hover:scale-100 transition-transform duration-300">
+                      {video.isLocked ? (
+                        <span className="text-(--color-primary) text-2xl font-bold">🔒</span>
+                      ) : (
                         <span className="text-(--color-primary) text-2xl">▶</span>
-                     </div>
-                   </div>
-                   {!video.videoUrl && (
-                     <div className="absolute inset-0 flex items-center justify-center bg-black/50">
-                       <span className="text-white text-sm font-bold bg-black/50 px-3 py-1 rounded">Coming Soon</span>
-                     </div>
-                   )}
+                      )}
+                    </div>
+                  </div>
+                  {video.isLocked && (
+                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                      <div className="bg-white/90 backdrop-blur-md px-4 py-2 rounded-full shadow-lg border border-white/20 scale-90 group-hover:scale-100 transition-transform">
+                        <span className="text-(--color-primary) text-xs font-bold uppercase tracking-widest flex items-center gap-2">
+                          <span className="text-sm">🔒</span> Premium
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                  {!video.videoUrl && !video.isLocked && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/50">
+                      <span className="text-white text-sm font-bold bg-black/50 px-3 py-1 rounded">Coming Soon</span>
+                    </div>
+                  )}
                 </div>
                 <div className="p-6">
                   <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-1">{video.title}</h3>
@@ -419,8 +512,8 @@ export default function VideoLibraryClient({ initialVideos, categories, featured
                     {video.description}
                   </p>
                   <div className="flex justify-between items-center text-xs font-bold uppercase tracking-wider text-gray-400">
-                     <span>{video.level}</span>
-                     <span className="text-(--color-roti)">{video.videoUrl ? 'Watch' : 'Coming Soon'}</span>
+                    <span>{video.level}</span>
+                    <span className="text-(--color-roti)">{video.videoUrl ? 'Watch' : 'Coming Soon'}</span>
                   </div>
                 </div>
               </div>
@@ -428,9 +521,9 @@ export default function VideoLibraryClient({ initialVideos, categories, featured
           </div>
 
           {filteredVideos.length === 0 && (
-             <div className="text-center py-20 text-gray-500">
-               No videos found matching your filters.
-             </div>
+            <div className="text-center py-20 text-gray-500">
+              No videos found matching your filters.
+            </div>
           )}
 
         </div>

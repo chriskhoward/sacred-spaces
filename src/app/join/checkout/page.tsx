@@ -15,9 +15,9 @@ import Link from 'next/link';
  * dedicated landing pages (/join/core, /join/pro).
  */
 
-const planSlugMap: Record<string, string> = {
-    'core': 'flow-in-faith-teachers-collective-core',
-    'pro': 'flow-in-faith-teachers-collective-pro',
+const planIdMap: Record<string, string> = {
+    'core': 'cplan_39RVE1cg83vWrMv6WezIPHDjaF4',
+    'pro': 'cplan_39RVTnsvjEGQc6psl785lwUyjho',
 };
 
 export default function CheckoutBridgePage() {
@@ -39,7 +39,7 @@ export default function CheckoutBridgePage() {
         }
 
         // Invalid or missing plan
-        if (!planParam || !planSlugMap[planParam]) {
+        if (!planParam || !planIdMap[planParam]) {
             setError(`Unknown plan: "${planParam}". Please select a valid plan.`);
             setAttempted(true);
             return;
@@ -51,7 +51,7 @@ export default function CheckoutBridgePage() {
 
             // Use Clerk's internal checkout opener which handles plan lookup and payment UI
             (clerk as any).__internal_openCheckout({
-                planId: planSlugMap[planParam],
+                planId: planIdMap[planParam],
                 planPeriod: 'month',
                 newSubscriptionRedirectUrl: '/api/onboarding/pay-success',
             });

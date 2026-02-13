@@ -57,7 +57,7 @@ export default async function RootLayout({
   return (
     <ClerkProvider
       publishableKey={publishableKey}
-      afterSignInUrl="/dashboard"
+      signInFallbackRedirectUrl="/dashboard"
       signUpFallbackRedirectUrl="/join"
       appearance={{
         elements: {

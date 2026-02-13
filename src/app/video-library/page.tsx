@@ -54,6 +54,13 @@ export default async function VideoLibraryPage() {
   }
 
   const membershipType = user?.publicMetadata?.membershipType as string || 'practitioner';
+  const tier = user?.publicMetadata?.tier as string || 'free';
+
+  // Determine search filters based on membership collective
+  // Teachers see 'all' + 'teacher_core' + 'teacher_pro'
+  // Practitioners see 'all' + 'practitioner_core' + 'practitioner_pro'
+  const collective = membershipType === 'teacher' ? 'teacher' : 'practitioner';
+  const allowedAudiences = ['all', `${collective}_core`, `${collective}_pro`];
 
   // Fetch categories ordered by display order
   const categoriesQuery = `*[_type == "videoCategory"] | order(order asc) {
@@ -62,8 +69,8 @@ export default async function VideoLibraryPage() {
     "slug": slug.current
   }`;
 
-  // Filter videos by audience; order so featured video is first, then by newest
-  const videosQuery = `*[_type == "video" && (targetAudience == "all" || targetAudience == "${membershipType}")] | order(isFeatured desc, _createdAt desc) {
+  // Filter videos by collective; fetch Pro content for Core users so they can be enticed to upgrade
+  const videosQuery = `*[_type == "video" && targetAudience in $allowedAudiences] | order(isFeatured desc, _createdAt desc) {
     _id,
     title,
     instructor,
@@ -74,13 +81,20 @@ export default async function VideoLibraryPage() {
     description,
     thumbnail,
     videoUrl,
-    isFeatured
+    isFeatured,
+    targetAudience
   }`;
 
-  const [categories, videos] = await Promise.all([
+  const [categories, allVideos] = await Promise.all([
     client.fetch(categoriesQuery),
-    client.fetch(videosQuery),
+    client.fetch(videosQuery, { allowedAudiences }),
   ]);
+
+  // Mark videos as locked if they are 'pro' but the user is not 'pro'
+  const videos = allVideos.map((v: any) => ({
+    ...v,
+    isLocked: v.targetAudience.endsWith('_pro') && tier.toLowerCase() !== 'pro'
+  }));
 
   // Featured video: first one marked featured in Sanity, or fallback to first in list
   const featuredVideo = videos.find((v: { isFeatured?: boolean }) => v.isFeatured) || videos[0] || null;
@@ -88,7 +102,13 @@ export default async function VideoLibraryPage() {
   return (
     <main className="bg-(--color-gallery) min-h-screen">
       <Navbar />
-      <VideoLibraryClient initialVideos={videos} categories={categories} featuredVideo={featuredVideo} />
+      <VideoLibraryClient
+        initialVideos={videos}
+        categories={categories}
+        featuredVideo={featuredVideo}
+        userTier={tier}
+        membershipType={membershipType}
+      />
       <Footer />
     </main>
   );

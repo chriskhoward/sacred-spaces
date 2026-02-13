@@ -31,3 +31,15 @@ export function isCoreTier(tier: UserTier | null | undefined): boolean {
     if (!tier) return false;
     return tier.toLowerCase() === 'core';
 }
+/**
+ * Returns the specific membership segment ID for the user (e.g., 'teacher_pro').
+ */
+export function getUserMembershipSegment(membershipType: string | null | undefined, tier: string | null | undefined): string {
+    const type = membershipType?.toLowerCase() || 'practitioner';
+    const level = tier?.toLowerCase() || 'free';
+
+    // Map 'free' to 'core' for internal logic if they have a membershipType but no tier yet (edge case)
+    const normalizedLevel = level === 'pro' ? 'pro' : 'core';
+
+    return `${type}_${normalizedLevel}`;
+}
