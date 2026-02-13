@@ -3,6 +3,7 @@ import { videoType } from './video'
 import { videoCategoryType } from './videoCategory'
 import { resourceType } from './resource'
 import { resourceCategoryType } from './resourceCategory'
+import { liveClassCategoryType } from './liveClassCategory'
 import { liveClassType } from './liveClass'
 import { homeType } from './home'
 import { aboutType } from './about'
@@ -49,6 +50,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     resourceType,
     resourceCategoryType,
     liveClassType,
+    liveClassCategoryType,
     homeType,
     aboutType,
     pageType,

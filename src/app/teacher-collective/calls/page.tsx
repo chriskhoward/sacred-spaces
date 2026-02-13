@@ -16,13 +16,14 @@ export default async function LiveClassesWorkshopsPage() {
   const now = new Date().toISOString();
 
   // Query for classes targeted specifically at teachers or everyone
-  const query = `*[_type == "liveClass" && (targetAudience == "teacher" || targetAudience == "all") && dateTime >= "${now}"] | order(dateTime asc) {
+  const query = `*[_type == "liveClass" && (targetAudience in ["all", "teacher", "teacher_core", "teacher_pro"]) && dateTime >= "${now}"] | order(dateTime asc) {
     _id,
     title,
     instructor,
     dateTime,
     duration,
     type,
+    "category": category->title,
     description,
     zoomLink,
     isRecurring,

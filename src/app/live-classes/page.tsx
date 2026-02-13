@@ -7,6 +7,7 @@ import { currentUser } from '@clerk/nextjs/server';
 import { LiveClass, generateRecurringInstances } from '@/sanity/lib/live-classes';
 import LiveClassesCards from './LiveClassesCards';
 import { Metadata } from 'next';
+import { isProTier, isAdmin } from '@/lib/tier';
 
 export const metadata: Metadata = {
   title: 'Live Classes | Flow in Faith',
@@ -18,31 +19,45 @@ export const dynamic = 'force-dynamic';
 export default async function LiveClassesPage() {
   const user = await currentUser();
   const userId = user?.id || null;
+  const adminStatus = isAdmin(userId);
   const membershipType = (user?.publicMetadata?.membershipType as string) || 'practitioner';
   const tier = (user?.publicMetadata?.tier as string) || 'free';
 
   const now = new Date().toISOString();
 
-  const query = `*[_type == "liveClass" && (targetAudience == "all" || targetAudience == "${membershipType}") && dateTime >= "${now}"] | order(dateTime asc) {
+  // Determine search filters based on membership collective
+  const collective = membershipType === 'teacher' ? 'teacher' : 'practitioner';
+  const allowedAudiences = ['all', collective, `${collective}_core`, `${collective}_pro`];
+
+  const query = `*[_type == "liveClass" && targetAudience in $allowedAudiences && dateTime >= "${now}"] | order(dateTime asc) {
     _id,
     title,
     instructor,
     dateTime,
     duration,
     type,
+    "category": category->title,
     description,
     zoomLink,
     isRecurring,
     recurrencePattern,
     recurrenceEndDate,
-    isLocked
+    isLocked,
+    targetAudience
   }`;
 
-  const rawClasses: LiveClass[] = await client.fetch(query);
+  const rawClasses: LiveClass[] = await client.fetch(query, { allowedAudiences });
 
   const allClasses = rawClasses.flatMap(generateRecurringInstances);
 
-  const upcomingClasses = allClasses
+  // Mark classes as locked based on Admin bypass and Pro status
+  const processedClasses = allClasses.map(cls => ({
+    ...cls,
+    // Lock if NOT admin AND (manual lock OR audience is Pro while user is not Pro)
+    isLocked: adminStatus ? false : (cls.isLocked || (cls.targetAudience?.endsWith('_pro') && tier.toLowerCase() !== 'pro'))
+  }));
+
+  const upcomingClasses = processedClasses
     .filter(cls => new Date(cls.dateTime) >= new Date())
     .sort((a, b) => new Date(a.dateTime).getTime() - new Date(b.dateTime).getTime())
     .slice(0, 15);

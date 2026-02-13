@@ -44,6 +44,12 @@ export const liveClassType = defineType({
             }
         }),
         defineField({
+            name: 'category',
+            title: 'Category',
+            type: 'reference',
+            to: [{ type: 'liveClassCategory' }],
+        }),
+        defineField({
             name: 'description',
             title: 'Description',
             type: 'text',
