@@ -2,7 +2,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Image from 'next/image';
 import { Metadata } from 'next';
-import { ResilientPricingTable } from './ResilientPricingTable';
+import { PricingCards } from './PricingCards';
 
 export const metadata: Metadata = {
   title: "Join the Collective | Membership",
@@ -44,7 +44,7 @@ export default async function JoinPage() {
                 <p className="text-gray-600 mb-8">Select a membership plan to continue your journey.</p>
               </div>
 
-              <ResilientPricingTable />
+              <PricingCards />
             </div>
 
           </div>
