@@ -53,44 +53,6 @@ export default async function CheckoutRedirectPage({
 
         // Log the full plan structure for debugging
         console.log('Found plan:', JSON.stringify(targetPlan, null, 2));
-
-        // Get the first price ID - check multiple possible locations
-        let priceId;
-
-        // Try accessing prices array
-        if ((targetPlan as any).prices && Array.isArray((targetPlan as any).prices) && (targetPlan as any).prices.length > 0) {
-            priceId = (targetPlan as any).prices[0]?.id;
-        }
-        // Try accessing monthlyPriceId directly
-        else if ((targetPlan as any).monthlyPriceId) {
-            priceId = (targetPlan as any).monthlyPriceId;
-        }
-        // Try accessing priceId directly
-        else if ((targetPlan as any).priceId) {
-            priceId = (targetPlan as any).priceId;
-        }
-
-        console.log('Extracted price ID:', priceId);
-
-        if (!priceId) {
-            console.error('No price found for plan:', targetPlan);
-            return (
-                <div className="min-h-screen flex items-center justify-center p-4">
-                    <div className="text-center max-w-md">
-                        <h1 className="text-2xl font-bold text-red-600 mb-4">Price Configuration Error</h1>
-                        <p className="text-gray-600 mb-6">
-                            The "{plan}" plan exists but doesn't have a valid price configured.
-                            Please check your Clerk Billing settings.
-                        </p>
-                        <Link href="/join" className="px-6 py-2 bg-black text-white rounded-full">
-                            Back to Pricing
-                        </Link>
-                    </div>
-                </div>
-            );
-        }
-
-        // Log plan ID
         console.log('Using plan ID:', (targetPlan as any).id);
 
         // Create checkout session using plan ID directly
