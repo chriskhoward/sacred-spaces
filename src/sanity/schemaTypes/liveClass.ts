@@ -97,7 +97,8 @@ export const liveClassType = defineType({
         defineField({
             name: 'targetAudience',
             title: 'Target Audience',
-            type: 'string',
+            type: 'array',
+            of: [{ type: 'string' }],
             options: {
                 list: [
                     { title: 'Everyone', value: 'all' },
@@ -107,8 +108,8 @@ export const liveClassType = defineType({
                     { title: 'Sanctuary Collective - Pro', value: 'practitioner_pro' },
                 ],
             },
-            initialValue: 'all',
-            validation: (Rule) => Rule.required(),
+            initialValue: ['all'],
+            validation: (Rule) => Rule.required().min(1),
         }),
     ],
     preview: {

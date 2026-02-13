@@ -18,7 +18,7 @@ interface Video {
   videoUrl?: string;
   isFeatured?: boolean;
   isLocked?: boolean;
-  targetAudience?: string;
+  targetAudience?: string[];
 }
 
 interface Category {

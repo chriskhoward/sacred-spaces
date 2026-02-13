@@ -51,7 +51,8 @@ export const resourceType = defineType({
     defineField({
       name: 'targetAudience',
       title: 'Target Audience',
-      type: 'string',
+      type: 'array',
+      of: [{ type: 'string' }],
       options: {
         list: [
           { title: 'Everyone', value: 'all' },
@@ -61,8 +62,8 @@ export const resourceType = defineType({
           { title: 'Sanctuary Collective - Pro', value: 'practitioner_pro' },
         ],
       },
-      initialValue: 'teacher',
-      validation: (Rule) => Rule.required(),
+      initialValue: ['all'],
+      validation: (Rule) => Rule.required().min(1),
     }),
   ],
 })

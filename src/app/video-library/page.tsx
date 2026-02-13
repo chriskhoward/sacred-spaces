@@ -72,7 +72,7 @@ export default async function VideoLibraryPage() {
   }`;
 
   // Filter videos by collective; fetch Pro content for Core users so they can be enticed to upgrade
-  const videosQuery = `*[_type == "video" && targetAudience in $allowedAudiences] | order(isFeatured desc, _createdAt desc) {
+  const videosQuery = `*[_type == "video" && (targetAudience == "all" || count(targetAudience[@ in $allowedAudiences]) > 0)] | order(isFeatured desc, _createdAt desc) {
     _id,
     title,
     instructor,
@@ -96,8 +96,8 @@ export default async function VideoLibraryPage() {
   // Mark videos as locked if they are 'pro' but the user is not 'pro'
   const videos = allVideos.map((v: any) => ({
     ...v,
-    // Lock if (Admin bypass) is false AND (manual lock OR audience is Pro while user is not Pro)
-    isLocked: adminStatus ? false : (v.isLocked || (v.targetAudience?.endsWith('_pro') && tier.toLowerCase() !== 'pro'))
+    // Lock if (Admin bypass) is false AND (manual lock OR any audience is Pro while user is not Pro)
+    isLocked: adminStatus ? false : (v.isLocked || (Array.isArray(v.targetAudience) && v.targetAudience.some((a: string) => a.endsWith('_pro')) && tier.toLowerCase() !== 'pro'))
   }));
 
   // Featured video: first one marked featured in Sanity, or fallback to first in list

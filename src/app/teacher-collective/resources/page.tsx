@@ -28,7 +28,7 @@ export default async function TeachingResourcesPage() {
   }`;
 
   // Fetch resources for relevant audiences
-  const resourcesQuery = `*[_type == "resource" && targetAudience in $allowedAudiences] | order(_createdAt desc) {
+  const resourcesQuery = `*[_type == "resource" && (targetAudience == "all" || count(targetAudience[@ in $allowedAudiences]) > 0)] | order(_createdAt desc) {
     _id,
     title,
     "category": category->title,
@@ -49,8 +49,8 @@ export default async function TeachingResourcesPage() {
   // Mark resources as locked based on Admin bypass and Pro status
   const resources = allResources.map((r: any) => ({
     ...r,
-    // Lock if NOT admin AND (manual lock OR audience is Pro while user is not Pro)
-    isLocked: adminStatus ? false : (r.isLocked || (r.targetAudience?.endsWith('_pro') && tier.toLowerCase() !== 'pro'))
+    // Lock if NOT admin AND (manual lock OR any audience is Pro while user is not Pro)
+    isLocked: adminStatus ? false : (r.isLocked || (Array.isArray(r.targetAudience) && r.targetAudience.some((a: string) => a.endsWith('_pro')) && tier.toLowerCase() !== 'pro'))
   }));
 
   // Group resources by category (only include sections that have at least one resource)

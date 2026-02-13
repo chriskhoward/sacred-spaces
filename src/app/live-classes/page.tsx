@@ -30,7 +30,7 @@ export default async function LiveClassesPage() {
   const collective = isTeacherUser ? 'teacher' : 'practitioner';
   const allowedAudiences = ['all', collective, `${collective}_core`, `${collective}_pro`];
 
-  const query = `*[_type == "liveClass" && targetAudience in $allowedAudiences && dateTime >= "${now}"] | order(dateTime asc) {
+  const query = `*[_type == "liveClass" && (targetAudience == "all" || count(targetAudience[@ in $allowedAudiences]) > 0) && dateTime >= "${now}"] | order(dateTime asc) {
     _id,
     title,
     instructor,
@@ -54,8 +54,8 @@ export default async function LiveClassesPage() {
   // Mark classes as locked based on Admin bypass and Pro status
   const processedClasses = allClasses.map(cls => ({
     ...cls,
-    // Lock if NOT admin AND (manual lock OR audience is Pro while user is not Pro)
-    isLocked: adminStatus ? false : (cls.isLocked || (cls.targetAudience?.endsWith('_pro') && tier.toLowerCase() !== 'pro'))
+    // Lock if NOT admin AND (manual lock OR any audience is Pro while user is not Pro)
+    isLocked: adminStatus ? false : (cls.isLocked || (Array.isArray(cls.targetAudience) && cls.targetAudience.some((a: string) => a.endsWith('_pro')) && tier.toLowerCase() !== 'pro'))
   }));
 
   const upcomingClasses = processedClasses

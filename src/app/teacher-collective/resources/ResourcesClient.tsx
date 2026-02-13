@@ -12,7 +12,7 @@ interface Resource {
   isLocked?: boolean;
   author?: string;
   image?: string;
-  targetAudience?: string;
+  targetAudience?: string[];
 }
 
 interface GroupedResource {
@@ -114,9 +114,9 @@ export default function ResourcesClient({ groupedResources, userTier }: Resource
                       Resource
                     </span>
                     <div className="flex items-center gap-2">
-                      {item.targetAudience && item.targetAudience !== 'all' && (
+                      {item.targetAudience && !item.targetAudience.includes('all') && (
                         <span className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">
-                          {item.targetAudience === 'teacher' ? 'Teachers' : 'Practitioners'}
+                          {item.targetAudience.map(a => a.startsWith('teacher') ? 'Teachers' : 'Practitioners').filter((v, i, a) => a.indexOf(v) === i).join(' & ')}
                         </span>
                       )}
                       {item.isLocked && (
