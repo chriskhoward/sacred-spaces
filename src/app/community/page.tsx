@@ -25,6 +25,7 @@ export default function CommunityPage() {
               className="w-24 h-24 object-contain"
             />
           </div>
+          <span className="inline-block py-2 px-6 rounded-full bg-white/10 text-(--color-roti) font-bold tracking-[3px] text-sm mb-6 border border-white/20 uppercase">Community Forum</span>
           <h1 className="text-5xl lg:text-7xl font-bold mb-6 text-white leading-tight">Community Forum</h1>
           <p className="text-xl text-(--color-sidecar) opacity-90">
             Connect, share, and grow with fellow members in our private WhatsApp community.

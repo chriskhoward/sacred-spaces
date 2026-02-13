@@ -79,7 +79,7 @@ export default async function LiveClassesPage() {
                 className="w-24 h-24 object-contain"
               />
             </div>
-            <span className="text-(--color-roti) font-bold uppercase tracking-widest mb-4 block">Live Classes & Workshops</span>
+            <span className="inline-block py-2 px-6 rounded-full bg-white/10 text-(--color-roti) font-bold tracking-[3px] text-sm mb-6 border border-white/20 uppercase">Live Classes & Workshops</span>
             <h1 className="text-5xl font-bold mb-6">Live Classes & Workshops</h1>
             <p className="text-xl text-(--color-sidecar) max-w-2xl mx-auto">
               Gather with us in real-time. Move, breathe, and pray in community.

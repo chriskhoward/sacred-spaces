@@ -6,6 +6,7 @@ import { updateDirectoryProfile } from './actions';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import SpecialtiesSelect from '@/components/SpecialtiesSelect';
+import { isTeacher } from '@/lib/tier';
 
 export default async function DirectoryProfilePage() {
   const user = await currentUser();
@@ -14,8 +15,10 @@ export default async function DirectoryProfilePage() {
     redirect('/sign-in');
   }
 
+  const membershipType = user.publicMetadata.membershipType as string;
+
   // Ensure only teachers can access this
-  if (user.publicMetadata.membershipType !== 'teacher') {
+  if (!isTeacher(user.id, membershipType)) {
     redirect('/dashboard');
   }
 

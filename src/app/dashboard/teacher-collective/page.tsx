@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { isTeacher } from '@/lib/tier';
 
 export default async function TeacherCollectiveDashboard() {
   const user = await currentUser();
@@ -11,8 +12,10 @@ export default async function TeacherCollectiveDashboard() {
     redirect('/sign-in');
   }
 
+  const membershipType = user.publicMetadata.membershipType as string;
+
   // Ensure only teachers can access this
-  if (user.publicMetadata.membershipType !== 'teacher') {
+  if (!isTeacher(user.id, membershipType)) {
     redirect('/dashboard');
   }
 
@@ -27,6 +30,7 @@ export default async function TeacherCollectiveDashboard() {
       <section className="pt-[160px] pb-8 bg-white border-b border-gray-200">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
+            <span className="inline-block py-2 px-6 rounded-full bg-(--color-roti)/10 text-(--color-roti) font-bold tracking-[3px] text-sm mb-6 border border-(--color-roti)/20 uppercase">Teachers Collective</span>
             <h1 className="text-4xl font-bold text-(--color-primary)">Teacher Collective Dashboard</h1>
           </div>
         </div>
@@ -42,7 +46,7 @@ export default async function TeacherCollectiveDashboard() {
                 <p className="text-gray-700 mb-4">
                   To appear in the Teacher Directory, please complete your profile with your bio, location, specialties, and certifications.
                 </p>
-                <Link 
+                <Link
                   href="/dashboard/directory-profile"
                   className="inline-block px-6 py-3 bg-(--color-roti) text-white rounded-full font-bold hover:opacity-90 transition-opacity"
                 >
@@ -53,7 +57,7 @@ export default async function TeacherCollectiveDashboard() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {/* Start here Card */}
-              <Link 
+              <Link
                 href="/dashboard/teacher-collective/start"
                 className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
               >
@@ -62,7 +66,7 @@ export default async function TeacherCollectiveDashboard() {
               </Link>
 
               {/* Community Card */}
-              <Link 
+              <Link
                 href="/community"
                 className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
               >
@@ -72,7 +76,7 @@ export default async function TeacherCollectiveDashboard() {
               </Link>
 
               {/* Live Classes Card */}
-              <Link 
+              <Link
                 href="/teacher-collective/calls"
                 className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
               >
@@ -81,7 +85,7 @@ export default async function TeacherCollectiveDashboard() {
               </Link>
 
               {/* On-Demand Library Card */}
-              <Link 
+              <Link
                 href="/video-library"
                 className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
               >
@@ -90,7 +94,7 @@ export default async function TeacherCollectiveDashboard() {
               </Link>
 
               {/* Edit Teacher Profile Card */}
-              <Link 
+              <Link
                 href="/dashboard/directory-profile"
                 className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
               >
@@ -99,7 +103,7 @@ export default async function TeacherCollectiveDashboard() {
               </Link>
 
               {/* Teacher Directory Card */}
-              <Link 
+              <Link
                 href="/directory"
                 className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
               >
@@ -108,7 +112,7 @@ export default async function TeacherCollectiveDashboard() {
               </Link>
 
               {/* Teaching Resources Card */}
-              <Link 
+              <Link
                 href="/teacher-collective/resources"
                 className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
               >

@@ -84,6 +84,7 @@ export default async function TeachingResourcesPage() {
               className="w-24 h-24 object-contain"
             />
           </div>
+          <span className="inline-block py-2 px-6 rounded-full bg-white/10 text-(--color-roti) font-bold tracking-[3px] text-sm mb-6 border border-white/20 uppercase">Teaching Resources</span>
           <h1 className="text-5xl lg:text-7xl font-bold mb-6 text-white leading-tight">Teaching Resources</h1>
           <p className="text-xl text-(--color-sidecar) opacity-90">
             Curated tools to help you deepen your practice, grow your business, and lead with confidence.

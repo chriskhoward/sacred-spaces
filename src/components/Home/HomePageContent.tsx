@@ -14,6 +14,7 @@ export default function HomePageContent() {
       <section className={`pt-32 md:pt-40 lg:pt-44 pb-14 md:pb-20 px-6 sm:px-8 ${containerWide}`}>
         <div className="flex flex-col md:flex-row items-center gap-10 lg:gap-16">
           <div className="md:w-[55%] text-left">
+            <span className="inline-block py-2 px-6 rounded-full bg-(--color-roti)/10 text-(--color-roti) font-bold tracking-[3px] text-sm mb-6 border border-(--color-roti)/20 uppercase tracking-[3px]">The Teachers Collective</span>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#413356] mb-6 leading-[1.15] tracking-tight">
               A Christ-centered wellness ecosystem rooted in embodiment, rest, and community.
             </h1>

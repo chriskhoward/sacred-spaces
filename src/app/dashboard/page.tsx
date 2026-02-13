@@ -32,7 +32,7 @@ export default async function DashboardPage() {
       <section className="pt-[160px] pb-24 min-h-[80vh]">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="text-center mb-16">
-            <span className="text-(--color-roti) font-bold uppercase tracking-wider mb-4 block">
+            <span className="inline-block py-2 px-6 rounded-full bg-(--color-roti)/10 text-(--color-roti) font-bold tracking-[3px] text-sm mb-6 border border-(--color-roti)/20 uppercase">
               Dashboard
             </span>
             <h1 className="text-(--color-primary) text-6xl mb-6 font-bold">
