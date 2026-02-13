@@ -76,6 +76,7 @@ export default async function CheckoutRedirectPage({
 
     } catch (error: any) {
         console.error('Checkout error:', error);
+        console.error('Error details:', JSON.stringify(error, null, 2));
 
         // If billing is disabled (likely local dev), show a helpful message instead of crashing
         if (error?.clerkError && error?.status === 403) {
@@ -100,9 +101,19 @@ export default async function CheckoutRedirectPage({
 
         return (
             <div className="min-h-screen flex items-center justify-center p-4">
-                <div className="text-center">
+                <div className="text-center max-w-lg">
                     <h1 className="text-2xl font-bold text-red-600 mb-4">Redirection Error</h1>
                     <p className="text-gray-600 mb-6">Something went wrong while preparing your secure checkout.</p>
+                    <div className="bg-gray-100 p-4 rounded-lg text-left mb-6">
+                        <p className="text-xs font-mono text-gray-700">
+                            Error: {error?.message || 'Unknown error'}
+                        </p>
+                        {error?.code && (
+                            <p className="text-xs font-mono text-gray-700 mt-2">
+                                Code: {error.code}
+                            </p>
+                        )}
+                    </div>
                     <Link href="/join" className="text-blue-600 underline">Try again</Link>
                 </div>
             </div>
