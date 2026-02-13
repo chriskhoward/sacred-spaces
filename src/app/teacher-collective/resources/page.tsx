@@ -5,7 +5,7 @@ import { currentUser } from '@clerk/nextjs/server';
 import Image from 'next/image';
 import Link from 'next/link';
 import ResourcesClient from './ResourcesClient';
-import { isProTier, isAdmin } from '../../../lib/tier';
+import { isProTier, isAdmin, isTeacher } from '../../../lib/tier';
 
 export const dynamic = 'force-dynamic';
 
@@ -16,7 +16,8 @@ export default async function TeachingResourcesPage() {
   const adminStatus = isAdmin(user?.id);
 
   // Determine search filters based on membership collective
-  const collective = membershipType === 'teacher' ? 'teacher' : 'practitioner';
+  const isTeacherUser = isTeacher(user?.id, membershipType);
+  const collective = isTeacherUser ? 'teacher' : 'practitioner';
   const allowedAudiences = ['all', `${collective}_core`, `${collective}_pro`];
 
   // Fetch categories ordered by display order

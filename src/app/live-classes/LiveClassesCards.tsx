@@ -11,6 +11,7 @@ interface LiveClassCard {
   dateTime: string;
   duration?: string;
   type?: string;
+  category?: string;
   description?: string;
   zoomLink?: string;
   isLocked?: boolean;
@@ -133,9 +134,9 @@ export default function LiveClassesCards({ classes, userTier, userId }: LiveClas
                         </span>
                       )}
                     </h3>
-                    {call.type && (
+                    {(call.category || call.type) && (
                       <span className="inline-block bg-(--color-gallery) text-(--color-primary) px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide mb-2">
-                        {call.type}
+                        {call.category || call.type}
                       </span>
                     )}
                   </div>

@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import { isTeacher } from '@/lib/tier'
 
 export default async function DashboardPage() {
   const user = await currentUser()
@@ -17,10 +18,10 @@ export default async function DashboardPage() {
     redirect('/onboarding');
   }
 
-  const isTeacher = membershipType === 'teacher';
+  const isTeacherUser = isTeacher(user.id, membershipType);
 
   // Redirect teachers to Teacher Collective Dashboard
-  if (isTeacher) {
+  if (isTeacherUser) {
     redirect('/dashboard/teacher-collective');
   }
 
@@ -38,7 +39,7 @@ export default async function DashboardPage() {
               Welcome, {user.firstName || 'Friend'}!
             </h1>
             <p className="text-(--color-text) text-xl max-w-2xl mx-auto">
-              You&apos;re now part of the Flow in Faith community. Explore your personalized {isTeacher ? 'teaching resources' : 'practice area'} below.
+              You&apos;re now part of the Flow in Faith community. Explore your personalized {isTeacherUser ? 'teaching resources' : 'practice area'} below.
             </p>
           </div>
 
@@ -56,7 +57,7 @@ export default async function DashboardPage() {
             <div className="bg-white p-10 rounded-3xl shadow-xl hover:-translate-y-2 transition-all">
               <h3 className="text-(--color-primary) text-3xl mb-6 font-bold">Quick Access</h3>
               <ul className="space-y-4">
-                {isTeacher ? (
+                {isTeacherUser ? (
                   <>
                     <li><Link href="/dashboard/directory-profile" className="text-xl text-gray-700 hover:text-(--color-roti) transition-colors">Manage Directory Profile</Link></li>
                     <li><Link href="/teacher-collective/resources" className="text-xl text-gray-700 hover:text-(--color-roti) transition-colors">Teaching Resources</Link></li>
@@ -75,7 +76,7 @@ export default async function DashboardPage() {
             <div className="bg-(--color-martinique) p-10 rounded-3xl shadow-xl text-white">
               <h3 className="text-white text-3xl mb-6 font-bold">Community</h3>
               <p className="text-white/80 mb-10 text-lg leading-relaxed">
-                Connect with other {isTeacher ? 'Christ-Centered Yoga Teachers of Color' : 'practitioners'} and grow in your faith-led journey.
+                Connect with other {isTeacherUser ? 'Christ-Centered Yoga Teachers of Color' : 'practitioners'} and grow in your faith-led journey.
               </p>
               <Link href="/community" className="btn btn-primary w-full text-center font-bold">Enter Forum</Link>
             </div>

@@ -5,6 +5,7 @@ export interface LiveClass {
     dateTime: string;
     duration: string;
     type: string;
+    category?: string;
     description: string;
     zoomLink?: string;
     isRecurring?: boolean;

@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/nextjs";
 import { useState } from "react";
+import { isMember } from "@/lib/tier";
 
 interface NavbarClientProps {
   dynamicPages: Array<{ title: string; slug: string }>;
@@ -23,10 +24,10 @@ export default function NavbarClient({ dynamicPages }: NavbarClientProps) {
 
   // Get membership type from user metadata
   const membershipType = user?.publicMetadata?.membershipType as string | undefined;
-  const isMember = membershipType === 'teacher' || membershipType === 'practitioner';
+  const isMemberUser = isMember(user?.id, membershipType);
 
   // Navigation links for members
-  const memberLinks = isMember ? [
+  const memberLinks = isMemberUser ? [
     { label: 'Live Classes', href: '/teacher-collective/calls' },
     { label: 'On-Demand Library', href: '/video-library' },
     { label: 'Teacher Directory', href: '/directory' },
@@ -112,7 +113,7 @@ export default function NavbarClient({ dynamicPages }: NavbarClientProps) {
                 </li>
               ))}
               {/* Member-specific links */}
-              {isMember && memberLinks.map((link) => (
+              {isMemberUser && memberLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}

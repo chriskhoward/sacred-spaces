@@ -41,6 +41,22 @@ export function isAdmin(userId: string | null | undefined): boolean {
 }
 
 /**
+ * Checks if a user is an admin or specifically has teacher membership.
+ */
+export function isTeacher(userId: string | null | undefined, membershipType: string | null | undefined): boolean {
+    if (isAdmin(userId)) return true;
+    return membershipType?.toLowerCase() === 'teacher';
+}
+
+/**
+ * Checks if a user is an admin or has any valid membership (teacher or practitioner).
+ */
+export function isMember(userId: string | null | undefined, membershipType: string | null | undefined): boolean {
+    if (isAdmin(userId)) return true;
+    return ['teacher', 'practitioner'].includes(membershipType?.toLowerCase() || '');
+}
+
+/**
  * Returns the specific membership segment ID for the user (e.g., 'teacher_pro').
  */
 export function getUserMembershipSegment(membershipType: string | null | undefined, tier: string | null | undefined): string {

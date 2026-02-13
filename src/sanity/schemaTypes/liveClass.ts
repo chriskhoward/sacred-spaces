@@ -30,8 +30,9 @@ export const liveClassType = defineType({
         }),
         defineField({
             name: 'type',
-            title: 'Class Type',
+            title: 'Class Type (Internal/Old)',
             type: 'string',
+            description: 'Used for older classes. New classes should use the Category field below.',
             options: {
                 list: [
                     { title: 'Vinyasa', value: 'Vinyasa' },

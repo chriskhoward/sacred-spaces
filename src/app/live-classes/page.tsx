@@ -7,7 +7,7 @@ import { currentUser } from '@clerk/nextjs/server';
 import { LiveClass, generateRecurringInstances } from '@/sanity/lib/live-classes';
 import LiveClassesCards from './LiveClassesCards';
 import { Metadata } from 'next';
-import { isProTier, isAdmin } from '@/lib/tier';
+import { isProTier, isAdmin, isTeacher } from '@/lib/tier';
 
 export const metadata: Metadata = {
   title: 'Live Classes | Flow in Faith',
@@ -26,7 +26,8 @@ export default async function LiveClassesPage() {
   const now = new Date().toISOString();
 
   // Determine search filters based on membership collective
-  const collective = membershipType === 'teacher' ? 'teacher' : 'practitioner';
+  const isTeacherUser = isTeacher(userId, membershipType);
+  const collective = isTeacherUser ? 'teacher' : 'practitioner';
   const allowedAudiences = ['all', collective, `${collective}_core`, `${collective}_pro`];
 
   const query = `*[_type == "liveClass" && targetAudience in $allowedAudiences && dateTime >= "${now}"] | order(dateTime asc) {
