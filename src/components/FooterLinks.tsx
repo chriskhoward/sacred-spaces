@@ -24,7 +24,7 @@ export default function FooterLinks() {
         ) : (
           <>
             <Link
-              href="/sign-in"
+              href="/sign-up"
               className="inline-block px-6 py-3 border-2 border-white text-white rounded-full font-bold text-sm hover:bg-white hover:text-(--color-primary) transition-colors text-center"
             >
               Member Login
