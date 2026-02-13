@@ -15,8 +15,8 @@ export default async function LiveClassesWorkshopsPage() {
   const adminStatus = isAdmin(user?.id);
   const now = new Date().toISOString();
 
-  // Query for classes targeted specifically at teachers or everyone
-  const query = `*[_type == "liveClass" && (targetAudience in ["all", "teacher", "teacher_core", "teacher_pro"]) && dateTime >= "${now}"] | order(dateTime asc) {
+  const allowedAudiences = ["all", "teacher", "teacher_core", "teacher_pro"];
+  const query = `*[_type == "liveClass" && (targetAudience == "all" || count(targetAudience[@ in $allowedAudiences]) > 0) && dateTime >= "${now}"] | order(dateTime asc) {
     _id,
     title,
     instructor,
@@ -33,7 +33,7 @@ export default async function LiveClassesWorkshopsPage() {
     targetAudience
   }`;
 
-  const rawClasses: LiveClass[] = await client.fetch(query);
+  const rawClasses: LiveClass[] = await client.fetch(query, { allowedAudiences });
 
   // Expand recurring classes into individual instances
   const allClasses = rawClasses.flatMap(generateRecurringInstances);
@@ -41,8 +41,8 @@ export default async function LiveClassesWorkshopsPage() {
   // Mark classes as locked based on Admin bypass and Pro status
   const processedClasses = allClasses.map(cls => ({
     ...cls,
-    // Lock if NOT admin AND (manual lock OR audience is Pro while user is not Pro)
-    isLocked: adminStatus ? false : (cls.isLocked || (cls.targetAudience?.endsWith('_pro') && tier.toLowerCase() !== 'pro'))
+    // Lock if NOT admin AND (manual lock OR any audience is Pro while user is not Pro)
+    isLocked: adminStatus ? false : (cls.isLocked || (Array.isArray(cls.targetAudience) && cls.targetAudience.some((a: string) => a.endsWith('_pro')) && tier.toLowerCase() !== 'pro'))
   }));
 
   // Filter out any past instances and sort by date
