@@ -51,7 +51,7 @@ export default function NavbarClient({ dynamicPages }: NavbarClientProps) {
           <div className="hidden lg:flex items-center">
             <div className="flex items-center">
               <SignedOut>
-                <Link href="/sign-up" className="px-6 py-3 bg-(--color-roti) text-white rounded-full font-bold uppercase tracking-wide hover:opacity-90 transition-opacity text-sm whitespace-nowrap shadow-md">
+                <Link href="/sign-in" className="px-6 py-3 bg-(--color-roti) text-white rounded-full font-bold uppercase tracking-wide hover:opacity-90 transition-opacity text-sm whitespace-nowrap shadow-md">
                   Member Login
                 </Link>
               </SignedOut>
@@ -128,7 +128,7 @@ export default function NavbarClient({ dynamicPages }: NavbarClientProps) {
             <div className="mt-8 pt-8 border-t border-white/20">
               <SignedOut>
                 <Link
-                  href="/sign-up"
+                  href="/sign-in"
                   className="block w-full px-6 py-3 bg-(--color-roti) text-white rounded-full font-bold text-sm uppercase tracking-wide hover:opacity-90 transition-opacity text-center shadow-md"
                   onClick={closeMenu}
                 >

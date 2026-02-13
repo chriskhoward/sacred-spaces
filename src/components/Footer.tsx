@@ -27,7 +27,7 @@ export default function Footer() {
             </p>
             {!isSignedIn && (
               <Link
-                href="/sign-up"
+                href="/sign-in"
                 className="inline-block px-6 py-3 bg-(--color-roti) text-(--color-primary) rounded-full font-bold text-sm hover:opacity-90 transition-opacity text-center"
               >
                 Member Login
