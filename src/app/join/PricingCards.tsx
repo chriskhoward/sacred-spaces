@@ -47,7 +47,7 @@ export function PricingCards({ onPlanSelect }: PricingCardsProps) {
                 <div className="bg-(--color-roti) text-white p-6 text-center rounded-b-2xl">
                     <p className="font-bold text-lg mb-4">$47 / month</p>
                     <Link
-                        href={isSignedIn ? "/join" : "/sign-up?redirect_url=/join"}
+                        href={isSignedIn ? "/join/checkout?plan=core" : "/sign-up?redirect_url=/join/checkout?plan=core"}
                         className="inline-block w-full px-6 py-3 bg-white text-(--color-roti) font-bold rounded-full hover:bg-gray-50 transition-colors shadow-md"
                     >
                         {isSignedIn ? "Join Core" : "Join Core"}
@@ -85,7 +85,7 @@ export function PricingCards({ onPlanSelect }: PricingCardsProps) {
                 <div className="bg-(--color-roti) text-white p-6 text-center rounded-b-2xl">
                     <p className="font-bold text-lg mb-4">$67 / month</p>
                     <Link
-                        href={isSignedIn ? "/join" : "/sign-up?redirect_url=/join"}
+                        href={isSignedIn ? "/join/checkout?plan=pro" : "/sign-up?redirect_url=/join/checkout?plan=pro"}
                         className="inline-block w-full px-6 py-3 bg-white text-(--color-roti) font-bold rounded-full hover:bg-gray-50 transition-colors shadow-md"
                     >
                         {isSignedIn ? "Join Pro" : "Join Pro"}
