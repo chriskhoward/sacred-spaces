@@ -6,6 +6,7 @@ import { currentUser } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { Metadata } from 'next';
+import { isProTier, isAdmin } from '@/lib/tier';
 
 export const metadata: Metadata = {
   title: 'Video Library | Flow in Faith',
@@ -55,6 +56,7 @@ export default async function VideoLibraryPage() {
 
   const membershipType = user?.publicMetadata?.membershipType as string || 'practitioner';
   const tier = user?.publicMetadata?.tier as string || 'free';
+  const adminStatus = isAdmin(user?.id);
 
   // Determine search filters based on membership collective
   // Teachers see 'all' + 'teacher_core' + 'teacher_pro'
@@ -82,6 +84,7 @@ export default async function VideoLibraryPage() {
     thumbnail,
     videoUrl,
     isFeatured,
+    isLocked,
     targetAudience
   }`;
 
@@ -93,7 +96,8 @@ export default async function VideoLibraryPage() {
   // Mark videos as locked if they are 'pro' but the user is not 'pro'
   const videos = allVideos.map((v: any) => ({
     ...v,
-    isLocked: v.targetAudience.endsWith('_pro') && tier.toLowerCase() !== 'pro'
+    // Lock if (Admin bypass) is false AND (manual lock OR audience is Pro while user is not Pro)
+    isLocked: adminStatus ? false : (v.isLocked || (v.targetAudience?.endsWith('_pro') && tier.toLowerCase() !== 'pro'))
   }));
 
   // Featured video: first one marked featured in Sanity, or fallback to first in list

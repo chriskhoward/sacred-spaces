@@ -32,6 +32,15 @@ export function isCoreTier(tier: UserTier | null | undefined): boolean {
     return tier.toLowerCase() === 'core';
 }
 /**
+ * Checks if a user has admin rights.
+ * Specific Admin ID: user_398nliMV592Jf0YOcQWQYo1VwbC
+ */
+export function isAdmin(userId: string | null | undefined): boolean {
+    if (!userId) return false;
+    return userId === 'user_398nliMV592Jf0YOcQWQYo1VwbC';
+}
+
+/**
  * Returns the specific membership segment ID for the user (e.g., 'teacher_pro').
  */
 export function getUserMembershipSegment(membershipType: string | null | undefined, tier: string | null | undefined): string {

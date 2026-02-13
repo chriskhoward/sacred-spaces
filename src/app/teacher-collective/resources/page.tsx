@@ -5,7 +5,7 @@ import { currentUser } from '@clerk/nextjs/server';
 import Image from 'next/image';
 import Link from 'next/link';
 import ResourcesClient from './ResourcesClient';
-import { isProTier } from '../../../lib/tier';
+import { isProTier, isAdmin } from '../../../lib/tier';
 
 export const dynamic = 'force-dynamic';
 
@@ -13,6 +13,7 @@ export default async function TeachingResourcesPage() {
   const user = await currentUser();
   const membershipType = user?.publicMetadata?.membershipType as string || 'practitioner';
   const tier = user?.publicMetadata?.tier as string || 'free';
+  const adminStatus = isAdmin(user?.id);
 
   // Determine search filters based on membership collective
   const collective = membershipType === 'teacher' ? 'teacher' : 'practitioner';
@@ -44,11 +45,11 @@ export default async function TeachingResourcesPage() {
     client.fetch(resourcesQuery, { allowedAudiences }),
   ]);
 
-  // Mark resources as locked if they are 'pro' but the user is not 'pro'
+  // Mark resources as locked based on Admin bypass and Pro status
   const resources = allResources.map((r: any) => ({
     ...r,
-    // A resource is locked if it's explicitly marked as isLocked OR if it's a Pro resource and the user isn't Pro
-    isLocked: r.isLocked || (r.targetAudience?.endsWith('_pro') && tier.toLowerCase() !== 'pro')
+    // Lock if NOT admin AND (manual lock OR audience is Pro while user is not Pro)
+    isLocked: adminStatus ? false : (r.isLocked || (r.targetAudience?.endsWith('_pro') && tier.toLowerCase() !== 'pro'))
   }));
 
   // Group resources by category (only include sections that have at least one resource)

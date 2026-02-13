@@ -11,6 +11,7 @@ export interface LiveClass {
     recurrencePattern?: 'weekly' | 'biweekly' | 'monthly';
     recurrenceEndDate?: string;
     isLocked?: boolean;
+    targetAudience?: string;
 }
 
 /**

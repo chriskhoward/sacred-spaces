@@ -69,6 +69,13 @@ export const videoType = defineType({
             initialValue: false,
         }),
         defineField({
+            name: 'isLocked',
+            title: 'Premium Member Only?',
+            type: 'boolean',
+            description: 'If enabled, this video will be locked for non-Pro members.',
+            initialValue: false,
+        }),
+        defineField({
             name: 'targetAudience',
             title: 'Target Audience',
             type: 'string',

@@ -5,12 +5,14 @@ import { client } from '@/sanity/lib/client';
 import { LiveClass, generateRecurringInstances } from '@/sanity/lib/live-classes';
 import { currentUser } from '@clerk/nextjs/server';
 import LiveClassesCards from './LiveClassesCards';
+import { isAdmin } from '@/lib/tier';
 
 export const dynamic = 'force-dynamic';
 
 export default async function LiveClassesWorkshopsPage() {
   const user = await currentUser();
   const tier = (user?.publicMetadata?.tier as string) || 'free';
+  const adminStatus = isAdmin(user?.id);
   const now = new Date().toISOString();
 
   // Query for classes targeted specifically at teachers or everyone
@@ -26,7 +28,8 @@ export default async function LiveClassesWorkshopsPage() {
     isRecurring,
     recurrencePattern,
     recurrenceEndDate,
-    isLocked
+    isLocked,
+    targetAudience
   }`;
 
   const rawClasses: LiveClass[] = await client.fetch(query);
@@ -34,8 +37,15 @@ export default async function LiveClassesWorkshopsPage() {
   // Expand recurring classes into individual instances
   const allClasses = rawClasses.flatMap(generateRecurringInstances);
 
+  // Mark classes as locked based on Admin bypass and Pro status
+  const processedClasses = allClasses.map(cls => ({
+    ...cls,
+    // Lock if NOT admin AND (manual lock OR audience is Pro while user is not Pro)
+    isLocked: adminStatus ? false : (cls.isLocked || (cls.targetAudience?.endsWith('_pro') && tier.toLowerCase() !== 'pro'))
+  }));
+
   // Filter out any past instances and sort by date
-  const upcomingClasses = allClasses
+  const upcomingClasses = processedClasses
     .filter(cls => new Date(cls.dateTime) >= new Date())
     .sort((a, b) => new Date(a.dateTime).getTime() - new Date(b.dateTime).getTime())
     .slice(0, 10);
