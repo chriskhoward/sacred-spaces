@@ -1,6 +1,6 @@
 import { Webhook } from 'svix'
 import { headers } from 'next/headers'
-import { WebhookEvent } from '@clerk/nextjs/server'
+import { WebhookEvent, createClerkClient } from '@clerk/nextjs/server'
 import { writeClient } from '@/sanity/lib/write'
 
 export async function POST(req: Request) {
@@ -45,6 +45,11 @@ export async function POST(req: Request) {
 
     const eventType = evt.type
     console.log(`Received webhook with type ${eventType}`)
+
+    const clerkClient = await createClerkClient({ secretKey: process.env.CLERK_SECRET_KEY });
+
+    // Note: Auto-provisioning from Thrivecart/Sanity is disabled as billing is now 100% in Clerk.
+    // If you need to handle Clerk Billing events (e.g. subscription.created), add them here.
 
     // Sync teacher profile to Sanity when user metadata is updated
     if (eventType === 'user.updated') {

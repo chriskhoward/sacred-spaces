@@ -58,7 +58,7 @@ export default async function RootLayout({
     <ClerkProvider
       publishableKey={publishableKey}
       afterSignInUrl="/dashboard"
-      afterSignUpUrl="/onboarding"
+      afterSignUpUrl="/join"
       appearance={{
         elements: {
           formButtonPrimary: 'bg-(--color-roti) hover:bg-(--color-primary) text-white',
@@ -75,7 +75,7 @@ export default async function RootLayout({
               formFieldInputPlaceholder__organizationLogo: 'Upload headshot',
             },
           },
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } as any
       }
     >

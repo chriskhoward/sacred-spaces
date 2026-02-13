@@ -30,6 +30,11 @@ export default async function OnboardingPage() {
     redirect('/dashboard');
   }
 
+  // Ensure user is a teacher (paid member)
+  if (user.publicMetadata.membershipType !== 'teacher') {
+    redirect('/join');
+  }
+
   // Fetch alignment form data to pre-fill the profile
   const userEmail = user.emailAddresses[0]?.emailAddress;
   let prefill: AlignmentPrefill = {};
