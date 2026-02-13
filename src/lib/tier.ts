@@ -57,6 +57,14 @@ export function isMember(userId: string | null | undefined, membershipType: stri
 }
 
 /**
+ * Checks if a teacher has completed their onboarding profile.
+ */
+export function isTeacherOnboarded(user: any): boolean {
+    if (!user) return false;
+    return user.publicMetadata?.onboardingComplete === true;
+}
+
+/**
  * Returns the specific membership segment ID for the user (e.g., 'teacher_pro').
  */
 export function getUserMembershipSegment(membershipType: string | null | undefined, tier: string | null | undefined): string {

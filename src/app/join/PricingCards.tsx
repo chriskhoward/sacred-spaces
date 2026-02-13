@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { Dancing_Script } from 'next/font/google';
 import Link from 'next/link';
 import { useAuth } from '@clerk/nextjs';
@@ -12,10 +13,33 @@ interface PricingCardsProps {
 
 export function PricingCards({ onPlanSelect }: PricingCardsProps) {
     const { isSignedIn } = useAuth();
+    const [frequency, setFrequency] = React.useState<'month' | 'year'>('month');
+
+    const corePrice = frequency === 'month' ? 47 : 470.04;
+    const proPrice = frequency === 'month' ? 67 : 670.08;
 
     return (
         <div className={`${dancingScript.variable} space-y-8`}>
-
+            {/* Frequency Toggle */}
+            <div className="flex justify-center mb-8">
+                <div className="bg-gray-100 p-1 rounded-full flex items-center shadow-inner">
+                    <button
+                        onClick={() => setFrequency('month')}
+                        className={`px-6 py-2 rounded-full text-sm font-bold transition-all ${frequency === 'month' ? 'bg-white text-(--color-primary) shadow-sm' : 'text-gray-500 hover:text-gray-700'
+                            }`}
+                    >
+                        Monthly
+                    </button>
+                    <button
+                        onClick={() => setFrequency('year')}
+                        className={`px-6 py-2 rounded-full text-sm font-bold transition-all ${frequency === 'year' ? 'bg-white text-(--color-primary) shadow-sm' : 'text-gray-500 hover:text-gray-700'
+                            }`}
+                    >
+                        Yearly
+                        <span className="ml-1 text-[10px] bg-(--color-roti) text-white px-1.5 py-0.5 rounded-full uppercase tracking-tighter">Save 15%</span>
+                    </button>
+                </div>
+            </div>
 
             {/* TEACHERS COLLECTIVE Core */}
             <div className="bg-white rounded-2xl border-2 border-gray-100 shadow-lg overflow-hidden flex flex-col transition-all hover:scale-[1.02]">
@@ -45,9 +69,9 @@ export function PricingCards({ onPlanSelect }: PricingCardsProps) {
                     </ul>
                 </div>
                 <div className="bg-(--color-roti) text-white p-6 text-center rounded-b-2xl">
-                    <p className="font-bold text-lg mb-4">$47 / month</p>
+                    <p className="font-bold text-lg mb-4">${corePrice} / {frequency === 'month' ? 'month' : 'year'}</p>
                     <Link
-                        href={isSignedIn ? "/join/checkout?plan=core" : "https://accounts.flowinfaith.com/sign-up?redirect_url=https://www.flowinfaith.com/join/checkout?plan=core"}
+                        href={isSignedIn ? `/join/checkout?plan=core&frequency=${frequency}` : `https://accounts.flowinfaith.com/sign-up?redirect_url=https://www.flowinfaith.com/join/checkout?plan=core&frequency=${frequency}`}
                         className="inline-block w-full px-6 py-3 bg-white text-(--color-roti) font-bold rounded-full hover:bg-gray-50 transition-colors shadow-md"
                     >
                         {isSignedIn ? "Join Core" : "Join Core"}
@@ -83,9 +107,9 @@ export function PricingCards({ onPlanSelect }: PricingCardsProps) {
                     </ul>
                 </div>
                 <div className="bg-(--color-roti) text-white p-6 text-center rounded-b-2xl">
-                    <p className="font-bold text-lg mb-4">$67 / month</p>
+                    <p className="font-bold text-lg mb-4">${proPrice} / {frequency === 'month' ? 'month' : 'year'}</p>
                     <Link
-                        href={isSignedIn ? "/join/checkout?plan=pro" : "https://accounts.flowinfaith.com/sign-up?redirect_url=https://www.flowinfaith.com/join/checkout?plan=pro"}
+                        href={isSignedIn ? `/join/checkout?plan=pro&frequency=${frequency}` : `https://accounts.flowinfaith.com/sign-up?redirect_url=https://www.flowinfaith.com/join/checkout?plan=pro&frequency=${frequency}`}
                         className="inline-block w-full px-6 py-3 bg-white text-(--color-roti) font-bold rounded-full hover:bg-gray-50 transition-colors shadow-md"
                     >
                         {isSignedIn ? "Join Pro" : "Join Pro"}

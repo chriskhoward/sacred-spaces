@@ -81,6 +81,7 @@ export async function updateDirectoryProfile(formData: FormData) {
 
     await client.users.updateUserMetadata(userId, {
       publicMetadata: {
+        onboardingComplete: true,
         teacherProfile: teacherProfileData,
       },
     });
@@ -121,7 +122,7 @@ export async function updateDirectoryProfile(formData: FormData) {
         .commit();
     } else {
       // When creating, include _type (typed so Sanity create() accepts it)
-      const createData: { _type: string; [key: string]: unknown } = {
+      const createData: { _type: string;[key: string]: unknown } = {
         _type: 'teacher',
         clerkId: userId,
         name,

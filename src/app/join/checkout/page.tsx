@@ -28,13 +28,14 @@ export default function CheckoutBridgePage() {
     const [attempted, setAttempted] = useState(false);
 
     const planParam = searchParams.get('plan');
+    const freqParam = searchParams.get('frequency') || 'month';
 
     useEffect(() => {
         if (!authLoaded || attempted) return;
 
         // Not signed in — redirect to sign-up with return URL
         if (!isSignedIn) {
-            window.location.href = `/sign-up?redirect_url=/join/checkout?plan=${planParam}`;
+            window.location.href = `/sign-up?redirect_url=/join/checkout?plan=${planParam}&frequency=${freqParam}`;
             return;
         }
 
@@ -52,14 +53,14 @@ export default function CheckoutBridgePage() {
             // Use Clerk's internal checkout opener which handles plan lookup and payment UI
             (clerk as any).__internal_openCheckout({
                 planId: planIdMap[planParam],
-                planPeriod: 'month',
+                planPeriod: freqParam === 'year' ? 'year' : 'month',
                 newSubscriptionRedirectUrl: '/api/onboarding/pay-success',
             });
         } catch (err: any) {
             console.error('Failed to open checkout:', err);
             setError(err?.message || 'Failed to open checkout. Please try again.');
         }
-    }, [authLoaded, isSignedIn, clerk, planParam, attempted]);
+    }, [authLoaded, isSignedIn, clerk, planParam, freqParam, attempted]);
 
     // Error state
     if (error) {

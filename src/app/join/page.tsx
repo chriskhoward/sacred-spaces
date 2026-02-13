@@ -5,6 +5,7 @@ import { Metadata } from 'next';
 import { SignedIn, SignedOut } from '@clerk/nextjs';
 import { ResilientPricingTable } from './ResilientPricingTable';
 import { PricingCards } from './PricingCards';
+import { BenefitsImages } from './BenefitsImages';
 
 export const metadata: Metadata = {
   title: "Join the Collective | Membership",
@@ -28,15 +29,9 @@ export default async function JoinPage() {
 
           <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
 
-            {/* Left Column: Benefits Images Stacked */}
-            <div className="flex flex-col gap-8">
-              <div className="bg-(--color-gallery) p-8 rounded-[30px] text-center border-2 border-dashed border-gray-300 min-h-[300px] flex items-center justify-center relative overflow-hidden">
-                <Image src="/assets/images/core_benefits.png" fill className="object-contain p-4" alt="Core Benefits" />
-              </div>
-
-              <div className="bg-(--color-martinique) p-8 rounded-[30px] text-center border-2 border-dashed border-white/30 min-h-[300px] flex items-center justify-center relative overflow-hidden">
-                <Image src="/assets/images/pro_benefits.png" fill className="object-contain p-4" alt="Pro Benefits" />
-              </div>
+            {/* Left Column: Benefits Images Stacked (click to open lightbox) */}
+            <div>
+              <BenefitsImages />
             </div>
 
             {/* Right Column: Pricing Selection */}

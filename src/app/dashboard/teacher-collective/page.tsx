@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { isTeacher } from '@/lib/tier';
+import { isTeacher, isTeacherOnboarded } from '@/lib/tier';
 
 export default async function TeacherCollectiveDashboard() {
   const user = await currentUser();
@@ -19,8 +19,7 @@ export default async function TeacherCollectiveDashboard() {
     redirect('/dashboard');
   }
 
-  const profile = (user.publicMetadata.teacherProfile as any) || {};
-  const hasProfile = profile.name && profile.location && profile.bio;
+  const hasProfile = isTeacherOnboarded(user);
 
   return (
     <main className="bg-(--color-gallery) min-h-screen">

@@ -6,6 +6,7 @@ import { Teacher } from '@/data/teachers';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
+import { isTeacherOnboarded } from '@/lib/tier';
 
 export const metadata: Metadata = {
   title: "Find a Teacher | Flow in Faith Directory",
@@ -17,7 +18,7 @@ export const dynamic = 'force-dynamic';
 export default async function DirectoryPage() {
   const user = await currentUser();
 
-  // Require login to access directory
+  // 1. Require login to access directory
   if (!user) {
     return (
       <main className="bg-(--color-gallery) min-h-screen">
@@ -53,27 +54,73 @@ export default async function DirectoryPage() {
     );
   }
 
+  // 2. If user is a teacher, they must have completed onboarding to VIEW the directory
+  const membershipType = user.publicMetadata?.membershipType as string;
+  const isTeacher = membershipType === 'teacher';
+
+  if (isTeacher && !isTeacherOnboarded(user)) {
+    return (
+      <main className="bg-(--color-gallery) min-h-screen">
+        <Navbar />
+        <section className="pt-[200px] pb-24 text-center">
+          <div className="container mx-auto px-4">
+            <div className="max-w-2xl mx-auto bg-white rounded-3xl p-12 shadow-xl border-2 border-(--color-roti)">
+              <div className="flex justify-center mb-6">
+                <Image
+                  src="/assets/images/tc_logo.png"
+                  alt="Flow in Faith Teachers Collective Logo"
+                  width={80}
+                  height={80}
+                  className="w-20 h-20 object-contain brightness-0 opacity-20"
+                />
+              </div>
+              <h1 className="text-3xl font-bold text-(--color-primary) mb-6 leading-tight">
+                Complete Your Profile to Enter
+              </h1>
+              <p className="text-lg text-gray-600 mb-8">
+                To access the Teacher Directory and appear to practitioners, you must first complete your member profile.
+              </p>
+              <Link
+                href="/onboarding"
+                className="btn btn-primary px-8 py-4 text-lg"
+              >
+                Complete Onboarding →
+              </Link>
+              <p className="mt-6 text-sm text-gray-400 font-medium">
+                Takes about 2 minutes. Your story matters!
+              </p>
+            </div>
+          </div>
+        </section>
+        <Footer />
+      </main>
+    );
+  }
+
   const client = await clerkClient();
 
-  // Fetch users with membershipType 'teacher'
+  // 3. Fetch users and filter by membershipType 'teacher' AND onboardingComplete true
   const response = await client.users.getUserList({
     limit: 100,
   });
 
-  // Only show real teachers from Clerk who have completed their profile
+  // Only show real teachers from Clerk who have completed their profile onboarding
   const teachers: Teacher[] = response.data
-    .filter((user: any) => user.publicMetadata?.membershipType === 'teacher')
-    .map((user: any) => {
-      const profile = user.publicMetadata.teacherProfile || {};
+    .filter((u: any) =>
+      u.publicMetadata?.membershipType === 'teacher' &&
+      u.publicMetadata?.onboardingComplete === true
+    )
+    .map((u: any) => {
+      const profile = u.publicMetadata.teacherProfile || {};
       return {
-        id: user.id,
-        name: profile.name || `${user.firstName || ''} ${user.lastName || ''}`.trim() || 'Teacher',
+        id: u.id,
+        name: profile.name || `${u.firstName || ''} ${u.lastName || ''}`.trim() || 'Teacher',
         location: profile.location || '',
         specialties: Array.isArray(profile.specialties) ? profile.specialties : [],
         certifications: Array.isArray(profile.certifications) ? profile.certifications : [],
         bio: profile.bio || 'Member of the Flow in Faith Teacher Collective.',
-        image: user.imageUrl,
-        email: user.emailAddresses[0]?.emailAddress,
+        image: u.imageUrl,
+        email: u.emailAddresses[0]?.emailAddress,
         website: profile.website,
         socialMedia: profile.socialMedia || {},
       };
