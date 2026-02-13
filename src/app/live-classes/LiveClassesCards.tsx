@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { isPaidTier } from '@/lib/tier';
+import { isPaidTier } from '../../lib/tier';
 
 interface LiveClassCard {
   _id: string;
@@ -79,7 +79,7 @@ export default function LiveClassesCards({ classes, userTier, userId }: LiveClas
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link
-                  href="/apply"
+                  href="/join"
                   className="px-6 py-3 bg-(--color-roti) text-white font-bold rounded-full hover:opacity-90 transition-opacity text-center"
                 >
                   Upgrade Now

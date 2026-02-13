@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { isPaidTier } from '@/lib/tier';
+import Link from 'next/link';
+import { isPaidTier } from '../../../lib/tier';
 
 interface Resource {
   _id: string;
@@ -40,7 +41,7 @@ export default function ResourcesClient({ groupedResources, userTier }: Resource
   }, [groupedResources, categoryFilter]);
 
   const handleResourceClick = (resource: Resource) => {
-    if (resource.isLocked && !isPaidTier(userTier)) {
+    if (resource.isLocked) {
       setSelectedResource(resource);
       setShowUpgradeModal(true);
     } else if (resource.linkUrl) {
@@ -71,11 +72,10 @@ export default function ResourcesClient({ groupedResources, userTier }: Resource
           <button
             type="button"
             onClick={() => setCategoryFilter(null)}
-            className={`px-6 py-2.5 rounded-full font-bold text-sm transition-all ${
-              categoryFilter === null
-                ? 'bg-(--color-primary) text-white shadow-lg'
-                : 'bg-white text-gray-600 border-2 border-gray-200 hover:border-(--color-roti) hover:text-(--color-primary)'
-            }`}
+            className={`px-6 py-2.5 rounded-full font-bold text-sm transition-all ${categoryFilter === null
+              ? 'bg-(--color-primary) text-white shadow-lg'
+              : 'bg-white text-gray-600 border-2 border-gray-200 hover:border-(--color-roti) hover:text-(--color-primary)'
+              }`}
           >
             All
           </button>
@@ -84,11 +84,10 @@ export default function ResourcesClient({ groupedResources, userTier }: Resource
               key={cat}
               type="button"
               onClick={() => setCategoryFilter(cat)}
-              className={`px-6 py-2.5 rounded-full font-bold text-sm transition-all ${
-                categoryFilter === cat
-                  ? 'bg-(--color-primary) text-white shadow-lg'
-                  : 'bg-white text-gray-600 border-2 border-gray-200 hover:border-(--color-roti) hover:text-(--color-primary)'
-              }`}
+              className={`px-6 py-2.5 rounded-full font-bold text-sm transition-all ${categoryFilter === cat
+                ? 'bg-(--color-primary) text-white shadow-lg'
+                : 'bg-white text-gray-600 border-2 border-gray-200 hover:border-(--color-roti) hover:text-(--color-primary)'
+                }`}
             >
               {cat}
             </button>
@@ -120,7 +119,7 @@ export default function ResourcesClient({ groupedResources, userTier }: Resource
                           {item.targetAudience === 'teacher' ? 'Teachers' : 'Practitioners'}
                         </span>
                       )}
-                        {item.isLocked && (
+                      {item.isLocked && (
                         <span className="text-gray-400 text-lg">🔒</span>
                       )}
                     </div>
@@ -135,7 +134,7 @@ export default function ResourcesClient({ groupedResources, userTier }: Resource
                     {item.description}
                   </p>
                   <button className="text-(--color-primary) font-bold text-sm uppercase tracking-wider hover:underline">
-                    {item.isLocked && userTier === 'free' ? 'Upgrade to Access →' : 'Access Resource →'}
+                    {item.isLocked ? 'Upgrade to Access →' : 'Access Resource →'}
                   </button>
                 </div>
               ))}
@@ -163,7 +162,7 @@ export default function ResourcesClient({ groupedResources, userTier }: Resource
                 This resource is available to premium members only.
               </p>
             </div>
-            
+
             <div className="bg-(--color-gallery) p-4 rounded-lg mb-6">
               <p className="font-bold text-(--color-primary) mb-2">{selectedResource.title}</p>
               {selectedResource.description && (
@@ -182,12 +181,12 @@ export default function ResourcesClient({ groupedResources, userTier }: Resource
                 >
                   Maybe Later
                 </button>
-                <a
-                  href="/apply"
+                <Link
+                  href="/join"
                   className="flex-1 px-6 py-3 bg-(--color-roti) text-white rounded-full font-bold hover:bg-(--color-primary) transition-colors text-center"
                 >
                   Upgrade Now
-                </a>
+                </Link>
               </div>
             </div>
           </div>

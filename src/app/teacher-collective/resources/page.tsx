@@ -5,13 +5,18 @@ import { currentUser } from '@clerk/nextjs/server';
 import Image from 'next/image';
 import Link from 'next/link';
 import ResourcesClient from './ResourcesClient';
-import { isProTier } from '@/lib/tier';
+import { isProTier } from '../../../lib/tier';
 
 export const dynamic = 'force-dynamic';
 
 export default async function TeachingResourcesPage() {
   const user = await currentUser();
+  const membershipType = user?.publicMetadata?.membershipType as string || 'practitioner';
   const tier = user?.publicMetadata?.tier as string || 'free';
+
+  // Determine search filters based on membership collective
+  const collective = membershipType === 'teacher' ? 'teacher' : 'practitioner';
+  const allowedAudiences = ['all', `${collective}_core`, `${collective}_pro`];
 
   // Fetch categories ordered by display order
   const categoriesQuery = `*[_type == "resourceCategory"] | order(order asc) {
@@ -20,8 +25,8 @@ export default async function TeachingResourcesPage() {
     "slug": slug.current
   }`;
 
-  // Fetch ALL resources (no targetAudience filter) so every resource shows; client can filter/badge by audience
-  const resourcesQuery = `*[_type == "resource"] | order(_createdAt desc) {
+  // Fetch resources for relevant audiences
+  const resourcesQuery = `*[_type == "resource" && targetAudience in $allowedAudiences] | order(_createdAt desc) {
     _id,
     title,
     "category": category->title,
@@ -34,10 +39,17 @@ export default async function TeachingResourcesPage() {
     "image": image.asset->url
   }`;
 
-  const [categories, resources] = await Promise.all([
+  const [categories, allResources] = await Promise.all([
     client.fetch(categoriesQuery),
-    client.fetch(resourcesQuery),
+    client.fetch(resourcesQuery, { allowedAudiences }),
   ]);
+
+  // Mark resources as locked if they are 'pro' but the user is not 'pro'
+  const resources = allResources.map((r: any) => ({
+    ...r,
+    // A resource is locked if it's explicitly marked as isLocked OR if it's a Pro resource and the user isn't Pro
+    isLocked: r.isLocked || (r.targetAudience?.endsWith('_pro') && tier.toLowerCase() !== 'pro')
+  }));
 
   // Group resources by category (only include sections that have at least one resource)
   const categoryTitles = new Set(categories.map((c: { title: string }) => c.title));
@@ -58,7 +70,7 @@ export default async function TeachingResourcesPage() {
   return (
     <main className="bg-(--color-gallery) min-h-screen">
       <Navbar />
-      
+
       <header className="bg-(--color-primary) pt-[200px] pb-24 text-center">
         <div className="container mx-auto px-4">
           <div className="flex justify-center mb-6">
@@ -79,8 +91,8 @@ export default async function TeachingResourcesPage() {
 
       <section className="py-24">
         <div className="container mx-auto px-4">
-          <ResourcesClient 
-            groupedResources={groupedResources} 
+          <ResourcesClient
+            groupedResources={groupedResources}
             userTier={tier}
           />
         </div>

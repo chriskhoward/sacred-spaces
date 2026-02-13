@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { isPaidTier } from '@/lib/tier';
+import { isPaidTier } from '../../../lib/tier';
 
 interface LiveClassCard {
   _id: string;
@@ -23,14 +23,14 @@ interface LiveClassesCardsProps {
 
 function getGoogleCalendarUrl(call: LiveClassCard): string {
   const startDate = new Date(call.dateTime);
-  
+
   // Parse duration to minutes, default 60
   let durationMin = 60;
   if (call.duration) {
     const match = call.duration.match(/(\d+)/);
     if (match) durationMin = parseInt(match[1]);
   }
-  
+
   const endDate = new Date(startDate.getTime() + durationMin * 60 * 1000);
 
   const fmtDate = (date: Date) => date.toISOString().replace(/-|:|\.\d\d\d/g, "");
@@ -79,7 +79,7 @@ export default function LiveClassesCards({ classes, userTier }: LiveClassesCards
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link
-                  href="/apply"
+                  href="/join"
                   className="px-6 py-3 bg-(--color-roti) text-white font-bold rounded-full hover:opacity-90 transition-opacity text-center"
                 >
                   Upgrade Now
@@ -100,14 +100,14 @@ export default function LiveClassesCards({ classes, userTier }: LiveClassesCards
         {classes.map((call, idx) => {
           const callDate = new Date(call.dateTime);
           const locked = isLockedForUser(call);
-          
+
           // Format in user's local timezone
           const month = callDate.toLocaleString(undefined, { month: 'short' });
           const day = callDate.getDate();
-          const time = callDate.toLocaleString(undefined, { 
-            hour: 'numeric', 
-            minute: '2-digit', 
-            timeZoneName: 'short' 
+          const time = callDate.toLocaleString(undefined, {
+            hour: 'numeric',
+            minute: '2-digit',
+            timeZoneName: 'short'
           });
 
           return (
@@ -141,7 +141,7 @@ export default function LiveClassesCards({ classes, userTier }: LiveClassesCards
                     )}
                   </div>
                 </div>
-                
+
                 <p className="text-gray-500 mb-2 flex items-center gap-2 text-sm">
                   <span className="w-2 h-2 rounded-full bg-(--color-roti)"></span>
                   {call.instructor} {call.duration && `· ${call.duration}`}
