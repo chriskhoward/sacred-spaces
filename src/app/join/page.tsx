@@ -2,7 +2,9 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Image from 'next/image';
 import { Metadata } from 'next';
+import { SignedIn, SignedOut } from '@clerk/nextjs';
 import { ResilientPricingTable } from './ResilientPricingTable';
+import { PricingCards } from './PricingCards';
 
 export const metadata: Metadata = {
   title: "Join the Collective | Membership",
@@ -37,14 +39,19 @@ export default async function JoinPage() {
               </div>
             </div>
 
-            {/* Right Column: Clerk Pricing Table */}
+            {/* Right Column: Pricing Selection */}
             <div className="bg-white rounded-[20px] shadow-2xl p-4 lg:p-8 border border-gray-100 sticky top-24">
               <div className="text-center mb-10">
                 <h2 className="text-3xl font-bold text-(--color-primary) mb-4">Choose Your Path</h2>
                 <p className="text-gray-600 mb-8">Select a membership plan to continue your journey.</p>
               </div>
 
-              <ResilientPricingTable />
+              <SignedIn>
+                <ResilientPricingTable />
+              </SignedIn>
+              <SignedOut>
+                <PricingCards />
+              </SignedOut>
             </div>
 
           </div>

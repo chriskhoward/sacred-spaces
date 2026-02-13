@@ -34,7 +34,7 @@ export default function NavbarClient({ dynamicPages }: NavbarClientProps) {
 
   return (
     <>
-      <nav className="fixed w-full py-4 z-50 bg-(--color-primary)">
+      <nav className="fixed w-full py-4 z-40 bg-(--color-primary)">
         <div className="container mx-auto px-4 flex justify-between items-center h-20">
           <Link href="/" className="shrink-0 flex items-center" onClick={closeMenu}>
             <Image

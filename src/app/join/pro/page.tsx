@@ -36,7 +36,7 @@ export default function JoinProPage() {
                             <p className="text-4xl font-bold text-white mb-2">$67</p>
                             <p className="text-white/60 mb-8 uppercase tracking-widest text-sm">per month</p>
                             <Link
-                                href="/sign-up?redirect_url=/join/checkout?plan=pro"
+                                href="https://accounts.flowinfaith.com/sign-up?redirect_url=https://www.flowinfaith.com/join/checkout?plan=pro"
                                 className="inline-block w-full px-8 py-4 bg-(--color-roti) text-white font-bold rounded-full text-xl shadow-xl hover:scale-105 transition-transform"
                             >
                                 Join Pro Now
