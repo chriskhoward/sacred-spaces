@@ -45,7 +45,7 @@ export default async function CheckoutRedirectPage({
         }
 
         // Get the first price ID for this plan (usually monthly)
-        const priceId = targetPlan.prices[0]?.id;
+        const priceId = (targetPlan as any).prices[0]?.id;
 
         if (!priceId) {
             throw new Error('No price found for plan');
