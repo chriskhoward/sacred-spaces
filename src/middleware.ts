@@ -9,6 +9,7 @@ export default clerkMiddleware(async (auth, request) => {
     '/dashboard(.*)',
     '/onboarding(.*)',
     '/user-profile(.*)',
+    '/community(.*)',
   ])
 
   // Protect designated routes

@@ -29,6 +29,13 @@ export const pageType = defineType({
       initialValue: true,
     }),
     defineField({
+      name: 'isLocked',
+      title: 'Lock Page (Members Only)',
+      type: 'boolean',
+      description: 'If enabled, this page will only be accessible to logged-in users.',
+      initialValue: false,
+    }),
+    defineField({
       name: 'content',
       title: 'Page Content',
       type: 'array',
