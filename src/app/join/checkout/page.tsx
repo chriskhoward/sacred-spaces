@@ -90,11 +90,14 @@ export default async function CheckoutRedirectPage({
             );
         }
 
-        // Create checkout session
+        // Log plan ID
+        console.log('Using plan ID:', (targetPlan as any).id);
+
+        // Create checkout session using plan ID directly
         // @ts-ignore - v6 method
         const checkout = await clerk.billing.createCheckoutSession({
             clerkUserId: user.id,
-            priceId: priceId,
+            planId: (targetPlan as any).id,
             successUrl: `${process.env.NEXT_PUBLIC_APP_URL || 'https://flowinfaith.com'}/onboarding`,
             cancelUrl: `${process.env.NEXT_PUBLIC_APP_URL || 'https://flowinfaith.com'}/join`,
         });
