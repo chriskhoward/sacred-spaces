@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Script from 'next/script';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import FilloutSliderButton from '@/components/FilloutSliderButton';
 import { Metadata } from 'next';
 import { Dancing_Script } from 'next/font/google';
 import { client } from '@/sanity/lib/client';
@@ -100,7 +101,7 @@ export default async function TeacherCollectivePage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="bg-white rounded-lg overflow-hidden shadow-lg border-2 border-(--color-roti)">
                 <div className="aspect-[4/3] w-full relative">
-                  <Image src="/images/homepage/feature-1.png" alt="" fill className="object-cover" />
+                  <Image src="/images/homepage/feature-1.png" alt="" fill className="object-cover object-top" />
                 </div>
                 <div className="p-6">
                   <p className="text-gray-700 leading-relaxed">
@@ -110,7 +111,7 @@ export default async function TeacherCollectivePage() {
               </div>
               <div className="bg-white rounded-lg overflow-hidden shadow-lg border-2 border-(--color-roti)">
                 <div className="aspect-[4/3] w-full relative">
-                  <Image src="/images/homepage/feature-2.png" alt="" fill className="object-cover" />
+                  <Image src="/images/homepage/feature-2.png" alt="" fill className="object-cover object-top" />
                 </div>
                 <div className="p-6">
                   <p className="text-gray-700 leading-relaxed">
@@ -120,7 +121,7 @@ export default async function TeacherCollectivePage() {
               </div>
               <div className="bg-white rounded-lg overflow-hidden shadow-lg border-2 border-(--color-roti)">
                 <div className="aspect-[4/3] w-full relative">
-                  <Image src="/images/homepage/feature-3.png" alt="" fill className="object-cover" />
+                  <Image src="/images/homepage/feature-3.png" alt="" fill className="object-cover object-top" />
                 </div>
                 <div className="p-6">
                   <p className="text-gray-700 leading-relaxed">
@@ -418,7 +419,7 @@ export default async function TeacherCollectivePage() {
                 <div className="bg-(--color-roti) text-white p-6 text-center rounded-b-2xl space-y-3">
                   <p className="font-bold text-lg">$47/monthly</p>
                   <p className="font-bold text-lg">$470/annually</p>
-                  <Link href="/join?plan=core" className="inline-block mt-2 px-6 py-2.5 bg-white text-(--color-roti) font-bold rounded-full hover:opacity-90 transition-opacity">Join Core</Link>
+                  <FilloutSliderButton buttonText="Join Core" className="inline-block mt-2" />
                 </div>
               </div>
 
@@ -452,7 +453,7 @@ export default async function TeacherCollectivePage() {
                 <div className="bg-(--color-roti) text-white p-6 text-center rounded-b-2xl space-y-3">
                   <p className="font-bold text-lg">$67/monthly</p>
                   <p className="font-bold text-lg">$670/annually</p>
-                  <Link href="/join?plan=pro" className="inline-block mt-2 px-6 py-2.5 bg-white text-(--color-roti) font-bold rounded-full hover:opacity-90 transition-opacity">Join Pro</Link>
+                  <FilloutSliderButton buttonText="Join Pro" className="inline-block mt-2" />
                 </div>
               </div>
             </div>
@@ -468,9 +469,9 @@ export default async function TeacherCollectivePage() {
               It&apos;s Time to..
             </h2>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-12">
-              <div className="relative aspect-[4/5] w-full max-w-md mx-auto lg:mx-0 rounded-lg overflow-hidden">
+              <div className="relative aspect-video w-full max-w-md mx-auto lg:mx-0 rounded-lg overflow-hidden">
                 <Image
-                  src="/images/homepage/community-image.jpg"
+                  src="/assets/images/time%20to.jpg"
                   alt="Teacher in community"
                   fill
                   className="object-cover"
