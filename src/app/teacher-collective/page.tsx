@@ -59,6 +59,7 @@ export default async function TeacherCollectivePage() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
             <div className="text-center lg:text-left">
+              <span className="inline-block py-2 px-6 rounded-full bg-(--color-roti)/10 text-(--color-roti) font-bold tracking-[3px] text-sm mb-6 border border-(--color-roti)/20 uppercase tracking-[3px]">Teachers Collective</span>
               <h1 className="text-3xl md:text-4xl lg:text-[52px] font-bold text-(--color-primary) mb-6 leading-[1.25]">
                 Your path to belonging, visibility, and spiritually grounded growth.
               </h1>
@@ -101,7 +102,7 @@ export default async function TeacherCollectivePage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="bg-white rounded-lg overflow-hidden shadow-lg border-2 border-(--color-roti)">
                 <div className="aspect-[4/3] w-full relative">
-                  <Image src="/images/homepage/feature-1.png" alt="" fill className="object-cover object-top" />
+                  <Image src="/assets/images/1.webp" alt="" fill className="object-cover object-top" />
                 </div>
                 <div className="p-6">
                   <p className="text-gray-700 leading-relaxed">
@@ -111,7 +112,7 @@ export default async function TeacherCollectivePage() {
               </div>
               <div className="bg-white rounded-lg overflow-hidden shadow-lg border-2 border-(--color-roti)">
                 <div className="aspect-[4/3] w-full relative">
-                  <Image src="/images/homepage/feature-2.png" alt="" fill className="object-cover object-top" />
+                  <Image src="/assets/images/2.webp" alt="" fill className="object-cover object-top" />
                 </div>
                 <div className="p-6">
                   <p className="text-gray-700 leading-relaxed">
@@ -121,7 +122,7 @@ export default async function TeacherCollectivePage() {
               </div>
               <div className="bg-white rounded-lg overflow-hidden shadow-lg border-2 border-(--color-roti)">
                 <div className="aspect-[4/3] w-full relative">
-                  <Image src="/images/homepage/feature-3.png" alt="" fill className="object-cover object-top" />
+                  <Image src="/assets/images/3.webp" alt="" fill className="object-cover object-top" />
                 </div>
                 <div className="p-6">
                   <p className="text-gray-700 leading-relaxed">
@@ -241,11 +242,11 @@ export default async function TeacherCollectivePage() {
             {/* Logo and Collage Header */}
             <div className="mb-12">
               <div className="relative w-full max-w-4xl mx-auto">
-                <Image 
-                  src="/assets/images/tc_hero_banner.png" 
-                  alt="Flow in Faith Teachers Collective - Where Calling meets Community" 
-                  width={1200} 
-                  height={400} 
+                <Image
+                  src="/assets/images/tc_hero_banner.png"
+                  alt="Flow in Faith Teachers Collective - Where Calling meets Community"
+                  width={1200}
+                  height={400}
                   className="w-full h-auto"
                 />
               </div>
@@ -387,31 +388,31 @@ export default async function TeacherCollectivePage() {
                   </h3>
                   <ul className="mt-8 space-y-4">
                     <li className="flex items-start gap-3 text-gray-800">
-                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-(--color-primary) flex items-center justify-center text-white mt-0.5" aria-hidden><svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 5l3 3 7-7" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
+                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-(--color-primary) flex items-center justify-center text-white mt-0.5" aria-hidden><svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 5l3 3 7-7" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg></span>
                       Teacher Directory Placement
                     </li>
                     <li className="flex items-start gap-3 text-gray-800">
-                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-(--color-primary) flex items-center justify-center text-white mt-0.5" aria-hidden><svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 5l3 3 7-7" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
+                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-(--color-primary) flex items-center justify-center text-white mt-0.5" aria-hidden><svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 5l3 3 7-7" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg></span>
                       Monthly Community Check-Ins
                     </li>
                     <li className="flex items-start gap-3 text-gray-800">
-                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-(--color-primary) flex items-center justify-center text-white mt-0.5" aria-hidden><svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 5l3 3 7-7" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
+                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-(--color-primary) flex items-center justify-center text-white mt-0.5" aria-hidden><svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 5l3 3 7-7" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg></span>
                       Daily Community Space
                     </li>
                     <li className="flex items-start gap-3 text-gray-800">
-                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-(--color-primary) flex items-center justify-center text-white mt-0.5" aria-hidden><svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 5l3 3 7-7" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
+                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-(--color-primary) flex items-center justify-center text-white mt-0.5" aria-hidden><svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 5l3 3 7-7" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg></span>
                       Quarterly Masterclasses
                     </li>
                     <li className="flex items-start gap-3 text-gray-400">
-                      <span className="flex-shrink-0 w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center mt-0.5 text-gray-400" aria-hidden><svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 5l2.5 2.5L9 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
+                      <span className="flex-shrink-0 w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center mt-0.5 text-gray-400" aria-hidden><svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 5l2.5 2.5L9 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg></span>
                       Promotion of Offerings
                     </li>
                     <li className="flex items-start gap-3 text-gray-400">
-                      <span className="flex-shrink-0 w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center mt-0.5 text-gray-400" aria-hidden><svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 5l2.5 2.5L9 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
+                      <span className="flex-shrink-0 w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center mt-0.5 text-gray-400" aria-hidden><svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 5l2.5 2.5L9 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg></span>
                       Paid Teaching Opportunities
                     </li>
                     <li className="flex items-start gap-3 text-gray-400">
-                      <span className="flex-shrink-0 w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center mt-0.5 text-gray-400" aria-hidden><svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 5l2.5 2.5L9 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
+                      <span className="flex-shrink-0 w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center mt-0.5 text-gray-400" aria-hidden><svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 5l2.5 2.5L9 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg></span>
                       Contribution to On-Demand Library
                     </li>
                   </ul>
@@ -443,7 +444,7 @@ export default async function TeacherCollectivePage() {
                     ].map((feature) => (
                       <li key={feature} className="flex items-start gap-3 text-gray-800">
                         <span className="flex-shrink-0 w-6 h-6 rounded-full bg-(--color-primary) flex items-center justify-center text-white mt-0.5" aria-hidden>
-                          <svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 5l3 3 7-7" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                          <svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 5l3 3 7-7" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
                         </span>
                         {feature}
                       </li>
