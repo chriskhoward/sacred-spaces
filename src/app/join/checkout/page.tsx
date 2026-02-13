@@ -22,8 +22,15 @@ export default async function CheckoutRedirectPage({
         const planList = await clerk.billing.getPlanList();
 
         // Find the requested plan by name (case-insensitive)
+        // Map the short names to full Clerk plan names
+        const planNameMap: Record<string, string> = {
+            'core': 'Flow in Faith Teachers Collective Core',
+            'pro': 'Flow in Faith Teachers Collective Pro'
+        };
+
+        const fullPlanName = planNameMap[plan?.toLowerCase() || 'core'];
         const targetPlan = planList.data.find((p: any) =>
-            p.name.toLowerCase() === (plan || 'core').toLowerCase()
+            p.name === fullPlanName
         );
 
         if (!targetPlan) {

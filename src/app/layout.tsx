@@ -58,7 +58,7 @@ export default async function RootLayout({
     <ClerkProvider
       publishableKey={publishableKey}
       afterSignInUrl="/dashboard"
-      afterSignUpUrl="/join"
+      signUpFallbackRedirectUrl="/join"
       appearance={{
         elements: {
           formButtonPrimary: 'bg-(--color-roti) hover:bg-(--color-primary) text-white',
