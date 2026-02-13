@@ -53,7 +53,7 @@ export default function CheckoutBridgePage() {
             (clerk as any).__internal_openCheckout({
                 planId: planSlugMap[planParam],
                 planPeriod: 'month',
-                newSubscriptionRedirectUrl: '/onboarding',
+                newSubscriptionRedirectUrl: '/api/onboarding/pay-success',
             });
         } catch (err: any) {
             console.error('Failed to open checkout:', err);
