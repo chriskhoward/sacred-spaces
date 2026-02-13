@@ -420,7 +420,7 @@ export default async function TeacherCollectivePage() {
                 <div className="bg-(--color-roti) text-white p-6 text-center rounded-b-2xl space-y-3">
                   <p className="font-bold text-lg">$47/monthly</p>
                   <p className="font-bold text-lg">$470/annually</p>
-                  <FilloutSliderButton buttonText="Join Core" className="inline-block mt-2" />
+                  <FilloutSliderButton buttonText="Join Core" variant="dark" className="inline-block mt-2" />
                 </div>
               </div>
 
@@ -454,7 +454,7 @@ export default async function TeacherCollectivePage() {
                 <div className="bg-(--color-roti) text-white p-6 text-center rounded-b-2xl space-y-3">
                   <p className="font-bold text-lg">$67/monthly</p>
                   <p className="font-bold text-lg">$670/annually</p>
-                  <FilloutSliderButton buttonText="Join Pro" className="inline-block mt-2" />
+                  <FilloutSliderButton buttonText="Join Pro" variant="dark" className="inline-block mt-2" />
                 </div>
               </div>
             </div>

@@ -9,12 +9,18 @@
   --color-bronzetone: #553f0f;
 
   /* Semantic Color Mappings */
-  --color-primary: #413356; /* Martinique */
-  --color-secondary: #c7a254; /* Roti */
-  --color-accent: #553f0f; /* Bronzetone */
-  --color-light: #ececec; /* Gallery */
-  --color-soft: #f6edc8; /* Sidecar */
-  --color-text: #413356; /* Martinique for text */
+  --color-primary: #413356;
+  /* Martinique */
+  --color-secondary: #c7a254;
+  /* Roti */
+  --color-accent: #553f0f;
+  /* Bronzetone */
+  --color-light: #ececec;
+  /* Gallery */
+  --color-soft: #f6edc8;
+  /* Sidecar */
+  --color-text: #413356;
+  /* Martinique for text */
   --color-white: #ffffff;
 
   --font-body: var(--font-body);
@@ -63,6 +69,7 @@
 }
 
 @layer components {
+
   /* Base Button Styles - round (pill) shape, same size as nav button */
   .btn {
     @apply inline-flex items-center justify-center px-6 py-3 rounded-full font-bold text-sm transition-all duration-300;
@@ -91,10 +98,11 @@
 }
 
 /* FAQ accordion — hide default details marker */
-details > summary::-webkit-details-marker {
+details>summary::-webkit-details-marker {
   display: none;
 }
-details > summary::marker {
+
+details>summary::marker {
   content: '';
 }
 
@@ -108,8 +116,6 @@ details > summary::marker {
 .fillout-cta-bottom a,
 .fillout-cta-bottom button,
 .fillout-cta-bottom [class*="fillout-embed-popup-button"],
-.fillout-cta-bottom-line a,
-.fillout-cta-bottom-line button,
 .fillout-cta-bottom-line [class*="fillout-embed-popup-button"],
 [data-fillout-embed-type="slider"] a,
 [data-fillout-embed-type="slider"] button,
@@ -119,9 +125,11 @@ details > summary::marker {
   color: #fff !important;
   border: none !important;
   border-radius: 9999px !important;
-  padding: 1rem 1.5rem !important; /* py-4 px-6 */
+  padding: 1rem 1.5rem !important;
+  /* py-4 px-6 */
   font-weight: 700 !important;
-  font-size: 1rem !important; /* text-base */
+  font-size: 1rem !important;
+  /* text-base */
   cursor: pointer !important;
   transition: opacity 0.2s ease !important;
   display: inline-flex !important;
@@ -130,6 +138,28 @@ details > summary::marker {
   visibility: visible !important;
   opacity: 1 !important;
 }
+
+/* Dark variant override - same shared props but purple bg */
+.fillout-cta-dark a,
+.fillout-cta-dark button,
+.fillout-cta-dark [class*="fillout-embed-popup-button"] {
+  background-color: #413356 !important;
+  background: #413356 !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 9999px !important;
+  padding: 1rem 1.5rem !important;
+  font-weight: 700 !important;
+  font-size: 1rem !important;
+  cursor: pointer !important;
+  transition: opacity 0.2s ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
 [data-fillout-embed-type="slider"] a:hover,
 [data-fillout-embed-type="slider"] button:hover,
 .fillout-cta-its-time a:hover,
@@ -138,7 +168,8 @@ details > summary::marker {
 .fillout-cta-final button:hover,
 .fillout-cta-bottom a:hover,
 .fillout-cta-bottom button:hover,
-.fillout-cta-bottom-line a:hover,
-.fillout-cta-bottom-line button:hover {
+.fillout-cta-bottom-line button:hover,
+.fillout-cta-dark a:hover,
+.fillout-cta-dark button:hover {
   opacity: 0.95 !important;
 }

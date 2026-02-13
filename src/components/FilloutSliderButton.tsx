@@ -10,7 +10,7 @@ interface FilloutSliderButtonProps {
   /** Wrapper className for layout/styling */
   className?: string;
   /** Match existing Fillout CTA wrappers for global CSS overrides */
-  variant?: 'default' | 'hero' | 'cta';
+  variant?: 'default' | 'hero' | 'cta' | 'dark';
 }
 
 export default function FilloutSliderButton({
@@ -32,7 +32,11 @@ export default function FilloutSliderButton({
       ? 'fillout-cta-its-time'
       : variant === 'cta'
         ? 'fillout-cta-final'
-        : '';
+        : variant === 'dark'
+          ? 'fillout-cta-dark'
+          : '';
+
+  const buttonColor = variant === 'dark' ? '#413356' : '#C7A254';
 
   return (
     <div className={`${wrapperClass} ${className}`.trim()}>
@@ -40,7 +44,7 @@ export default function FilloutSliderButton({
         data-fillout-id={FILLOUT_FORM_ID}
         data-fillout-embed-type="slider"
         data-fillout-button-text={buttonText}
-        data-fillout-button-color="#C7A254"
+        data-fillout-button-color={buttonColor}
         data-fillout-button-size="large"
         data-fillout-slider-direction="right"
         data-fillout-inherit-parameters=""
