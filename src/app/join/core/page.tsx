@@ -33,7 +33,7 @@ export default function JoinCorePage() {
                             <p className="text-4xl font-bold text-(--color-primary) mb-2">$47</p>
                             <p className="text-gray-500 mb-8 uppercase tracking-widest text-sm">per month</p>
                             <Link
-                                href="/sign-up?redirect_url=/join/checkout?plan=core"
+                                href="/sign-up?redirect_url=/join"
                                 className="inline-block w-full px-8 py-4 bg-(--color-roti) text-white font-bold rounded-full text-xl shadow-xl hover:scale-105 transition-transform"
                             >
                                 Join Core Now
