@@ -58,16 +58,16 @@ export default async function CheckoutRedirectPage({
         let priceId;
 
         // Try accessing prices array
-        if (targetPlan.prices && Array.isArray(targetPlan.prices) && targetPlan.prices.length > 0) {
-            priceId = targetPlan.prices[0]?.id;
+        if ((targetPlan as any).prices && Array.isArray((targetPlan as any).prices) && (targetPlan as any).prices.length > 0) {
+            priceId = (targetPlan as any).prices[0]?.id;
         }
         // Try accessing monthlyPriceId directly
-        else if (targetPlan.monthlyPriceId) {
-            priceId = targetPlan.monthlyPriceId;
+        else if ((targetPlan as any).monthlyPriceId) {
+            priceId = (targetPlan as any).monthlyPriceId;
         }
         // Try accessing priceId directly
-        else if (targetPlan.priceId) {
-            priceId = targetPlan.priceId;
+        else if ((targetPlan as any).priceId) {
+            priceId = (targetPlan as any).priceId;
         }
 
         console.log('Extracted price ID:', priceId);
