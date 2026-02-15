@@ -13,6 +13,10 @@ export const metadata: Metadata = {
 };
 
 export default async function JoinPage() {
+  // Show only Founders plans (via PricingCards) until March 1, 2026
+  const now = new Date();
+  const isFoundersPeriod = now < new Date('2026-03-01T00:00:00');
+
   return (
     <main className="bg-white min-h-screen">
       <Navbar />
@@ -41,12 +45,20 @@ export default async function JoinPage() {
                 <p className="text-gray-600 mb-8">Select a membership plan to continue your journey.</p>
               </div>
 
-              <SignedIn>
-                <ResilientPricingTable />
-              </SignedIn>
-              <SignedOut>
+              {isFoundersPeriod ? (
+                /* Founders period: all users see PricingCards (routes to Founders checkout) */
                 <PricingCards />
-              </SignedOut>
+              ) : (
+                /* Regular period: signed-in users see Clerk PricingTable, guests see PricingCards */
+                <>
+                  <SignedIn>
+                    <ResilientPricingTable />
+                  </SignedIn>
+                  <SignedOut>
+                    <PricingCards />
+                  </SignedOut>
+                </>
+              )}
             </div>
 
           </div>
