@@ -15,8 +15,20 @@ export function PricingCards({ onPlanSelect }: PricingCardsProps) {
     const { isSignedIn } = useAuth();
     const [frequency, setFrequency] = React.useState<'month' | 'year'>('month');
 
-    const corePrice = frequency === 'month' ? 47 : 470.04;
-    const proPrice = frequency === 'month' ? 67 : 670.08;
+    // Date-based logic for Founders pricing (February 2026)
+    const now = new Date();
+    const isFoundersPeriod = now < new Date('2026-03-01T00:00:00');
+
+    // Prices
+    const corePrice = isFoundersPeriod
+        ? (frequency === 'month' ? 37 : 370)
+        : (frequency === 'month' ? 47 : 470.04);
+
+    const proPrice = isFoundersPeriod
+        ? (frequency === 'month' ? 57 : 570)
+        : (frequency === 'month' ? 67 : 670.08);
+
+    const planSuffix = isFoundersPeriod ? " (Founders)" : "";
 
     return (
         <div className={`${dancingScript.variable} space-y-8`}>
@@ -47,7 +59,7 @@ export function PricingCards({ onPlanSelect }: PricingCardsProps) {
                     <h3 className="text-(--color-primary) font-bold uppercase tracking-wide">
                         <span className="block text-2xl md:text-3xl">Teachers</span>
                         <span className="block text-2xl md:text-3xl">Collective</span>
-                        <span className="text-(--color-roti) text-2xl md:text-3xl font-normal normal-case tracking-normal mt-1 inline-block ml-2 font-[family:var(--font-script)]">Core</span>
+                        <span className="text-(--color-roti) text-2xl md:text-3xl font-normal normal-case tracking-normal mt-1 inline-block ml-2 font-[family:var(--font-script)]">Core{planSuffix}</span>
                     </h3>
                     <ul className="mt-8 space-y-4">
                         <li className="flex items-start gap-3 text-gray-800 text-sm">
@@ -85,7 +97,7 @@ export function PricingCards({ onPlanSelect }: PricingCardsProps) {
                     <h3 className="text-(--color-primary) font-bold uppercase tracking-wide">
                         <span className="block text-2xl md:text-3xl">Teachers</span>
                         <span className="block text-2xl md:text-3xl">Collective</span>
-                        <span className="text-(--color-roti) text-2xl md:text-3xl font-normal normal-case tracking-normal mt-1 inline-block ml-2 font-[family:var(--font-script)]">Pro</span>
+                        <span className="text-(--color-roti) text-2xl md:text-3xl font-normal normal-case tracking-normal mt-1 inline-block ml-2 font-[family:var(--font-script)]">Pro{planSuffix}</span>
                     </h3>
                     <ul className="mt-8 space-y-4">
                         {[
