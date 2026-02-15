@@ -5,7 +5,6 @@ import { Metadata } from 'next';
 import { SignedIn, SignedOut } from '@clerk/nextjs';
 import { ResilientPricingTable } from './ResilientPricingTable';
 import { PricingCards } from './PricingCards';
-import { BenefitsImages } from './BenefitsImages';
 
 export const metadata: Metadata = {
   title: "Join the Collective | Membership",
@@ -25,26 +24,21 @@ export default async function JoinPage() {
         <div className="container mx-auto px-4">
 
           {/* Top Image */}
-          <div className="max-w-6xl mx-auto mb-12">
-            <div className="relative w-full h-64 bg-gray-100 rounded-[30px] overflow-hidden">
+          <div className="max-w-6xl mx-auto mb-16">
+            <div className="relative w-full h-64 bg-gray-100 rounded-[30px] overflow-hidden shadow-sm">
               <Image src="/assets/images/alignment_header.jpg" fill className="object-cover" alt="Join the Teachers Collective" />
             </div>
           </div>
 
-          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-
-            {/* Left Column: Benefits Images Stacked (click to open lightbox) */}
-            <div>
-              <BenefitsImages />
+          <div className="max-w-5xl mx-auto">
+            {/* Header Content */}
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold text-(--color-primary) mb-6">Choose Your Path</h2>
+              <p className="text-xl text-gray-600 max-w-2xl mx-auto">Select a membership plan to continue your journey into the Collective.</p>
             </div>
 
-            {/* Right Column: Pricing Selection */}
-            <div className="bg-white rounded-[20px] shadow-2xl p-4 lg:p-8 border border-gray-100 sticky top-24">
-              <div className="text-center mb-10">
-                <h2 className="text-3xl font-bold text-(--color-primary) mb-4">Choose Your Path</h2>
-                <p className="text-gray-600 mb-8">Select a membership plan to continue your journey.</p>
-              </div>
-
+            {/* Pricing Selection */}
+            <div className="bg-white rounded-[30px] shadow-2xl p-6 md:p-12 border border-gray-50">
               {isFoundersPeriod ? (
                 /* Founders period: all users see PricingCards (routes to Founders checkout) */
                 <PricingCards />
@@ -60,7 +54,6 @@ export default async function JoinPage() {
                 </>
               )}
             </div>
-
           </div>
         </div>
       </section>
