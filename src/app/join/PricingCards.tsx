@@ -53,6 +53,10 @@ export function PricingCards({ onPlanSelect }: PricingCardsProps) {
                 </div>
             </div>
 
+            <p className="text-center text-xs text-gray-400 mt-2 mb-8">
+                {isSignedIn ? "Please complete your Clerk Billing setup to proceed." : "Sign up to start your membership."}
+            </p>
+
             {/* Plans Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
                 {/* TEACHERS COLLECTIVE Core */}
@@ -132,9 +136,6 @@ export function PricingCards({ onPlanSelect }: PricingCardsProps) {
                 </div>
             </div>
 
-            <p className="text-center text-xs text-gray-400 mt-12">
-                {isSignedIn ? "Please complete your Clerk Billing setup to proceed." : "Sign up to start your membership."}
-            </p>
         </div>
     );
 }
