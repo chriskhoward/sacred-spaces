@@ -42,7 +42,7 @@ class ErrorBoundary extends React.Component<{ fallback: React.ReactNode, childre
 
 export function ResilientPricingTable() {
     return (
-        <ErrorBoundary fallback={<PricingCards />}>
+        <ErrorBoundary fallback={<PricingCards plans={[]} />}>
             <PricingTable newSubscriptionRedirectUrl="/api/onboarding/pay-success" />
         </ErrorBoundary>
     );
