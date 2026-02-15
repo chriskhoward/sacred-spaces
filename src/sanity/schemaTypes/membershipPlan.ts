@@ -9,6 +9,7 @@ export const membershipPlanType = defineType({
             name: 'name',
             title: 'Plan Name',
             type: 'string',
+            description: 'e.g. Collective Core (Founders)',
             validation: (Rule) => Rule.required(),
         }),
         defineField({
@@ -20,6 +21,13 @@ export const membershipPlanType = defineType({
                 maxLength: 96,
             },
             validation: (Rule) => Rule.required(),
+        }),
+        defineField({
+            name: 'isActive',
+            title: 'Is Active?',
+            type: 'boolean',
+            description: 'Only active plans will show up on the /join page.',
+            initialValue: true,
         }),
         defineField({
             name: 'featured',
@@ -44,36 +52,24 @@ export const membershipPlanType = defineType({
             title: 'Pricing Configuration',
             type: 'object',
             fields: [
-                { name: 'monthlyPrice', title: 'Monthly Price (Regular)', type: 'number' },
-                { name: 'yearlyPrice', title: 'Yearly Price (Regular)', type: 'number' },
+                { name: 'monthlyPrice', title: 'Monthly Price', type: 'number' },
+                { name: 'yearlyPrice', title: 'Yearly Price', type: 'number' },
                 { name: 'clerkPlanIdMonth', title: 'Clerk Plan ID (Monthly)', type: 'string' },
                 { name: 'clerkPlanIdYear', title: 'Clerk Plan ID (Yearly)', type: 'string' },
-            ]
-        },
-        {
-            name: 'foundersPricing',
-            title: 'Founders Pricing (Promotional)',
-            type: 'object',
-            fields: [
-                { name: 'isActive', title: 'Is Founders Active?', type: 'boolean', initialValue: false },
-                { name: 'monthlyPrice', title: 'Monthly Price (Founders)', type: 'number' },
-                { name: 'yearlyPrice', title: 'Yearly Price (Founders)', type: 'number' },
-                { name: 'clerkPlanIdMonth', title: 'Clerk Plan ID (Founders Monthly)', type: 'string' },
-                { name: 'clerkPlanIdYear', title: 'Clerk Plan ID (Founders Yearly)', type: 'string' },
-            ]
+            ],
+            validation: (Rule) => Rule.required(),
         }
     ],
     preview: {
         select: {
             title: 'name',
             monthly: 'pricing.monthlyPrice',
-            founders: 'foundersPricing.monthlyPrice',
-            isActive: 'foundersPricing.isActive'
+            active: 'isActive'
         },
-        prepare({ title, monthly, founders, isActive }) {
+        prepare({ title, monthly, active }) {
             return {
-                title,
-                subtitle: isActive ? `Founders Active ($${founders})` : `$${monthly}/mo`
+                title: `${title}${active ? '' : ' [INACTIVE]'}`,
+                subtitle: `$${monthly}/mo`
             }
         }
     }

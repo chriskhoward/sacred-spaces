@@ -15,26 +15,7 @@ import Link from 'next/link';
  * dedicated landing pages (/join/core, /join/pro).
  */
 
-// Regular plan IDs
-const regularPlanIds: Record<string, string> = {
-    'core': 'cplan_39RVE1cg83vWrMv6WezIPHDjaF4',
-    'pro': 'cplan_39RVTnsvjEGQc6psl785lwUyjho',
-};
-
-// Founders plan IDs (active through February 2026)
-const foundersPlanIds: Record<string, string> = {
-    'core': 'cplan_39XYMfLviwQ9cVZwIW5FuAKZRGH',
-    'pro': 'cplan_39XZ6jdRLNC78T7xYK7PP4J8RLO',
-};
-
-// Use Founders plans until March 1, 2026
-function getPlanIdMap(): Record<string, string> {
-    const now = new Date();
-    const marchFirst2026 = new Date('2026-03-01T00:00:00');
-    return now < marchFirst2026 ? foundersPlanIds : regularPlanIds;
-}
-
-const planIdMap = getPlanIdMap();
+import { client } from '@/sanity/lib/client';
 
 export default function CheckoutBridgePage() {
     const searchParams = useSearchParams();
@@ -42,12 +23,13 @@ export default function CheckoutBridgePage() {
     const clerk = useClerk();
     const [error, setError] = useState<string | null>(null);
     const [attempted, setAttempted] = useState(false);
+    const [fetchingPlan, setFetchingPlan] = useState(false);
 
     const planParam = searchParams.get('plan');
     const freqParam = searchParams.get('frequency') || 'month';
 
     useEffect(() => {
-        if (!authLoaded || attempted) return;
+        if (!authLoaded || attempted || fetchingPlan) return;
 
         // Not signed in — redirect to sign-up with return URL
         if (!isSignedIn) {
@@ -55,28 +37,56 @@ export default function CheckoutBridgePage() {
             return;
         }
 
-        // Invalid or missing plan
-        if (!planParam || !planIdMap[planParam]) {
-            setError(`Unknown plan: "${planParam}". Please select a valid plan.`);
+        // Missing plan param
+        if (!planParam) {
+            setError(`Please select a valid plan.`);
             setAttempted(true);
             return;
         }
 
-        // Open Clerk's checkout modal
-        try {
-            setAttempted(true);
+        async function fetchAndOpenCheckout() {
+            setFetchingPlan(true);
+            try {
+                // Fetch the plan from Sanity
+                const plan = await client.fetch(
+                    `*[_type == "membershipPlan" && slug.current == $slug][0]`,
+                    { slug: planParam }
+                );
 
-            // Use Clerk's internal checkout opener which handles plan lookup and payment UI
-            (clerk as any).__internal_openCheckout({
-                planId: planIdMap[planParam],
-                planPeriod: freqParam === 'year' ? 'year' : 'month',
-                newSubscriptionRedirectUrl: '/api/onboarding/pay-success',
-            });
-        } catch (err: any) {
-            console.error('Failed to open checkout:', err);
-            setError(err?.message || 'Failed to open checkout. Please try again.');
+                if (!plan) {
+                    setError(`Unknown plan: "${planParam}". Please select a valid plan.`);
+                    setAttempted(true);
+                    return;
+                }
+
+                // Determine the correct Clerk Plan ID (Standalone)
+                const clerkPlanId = freqParam === 'year' ? plan.pricing.clerkPlanIdYear : plan.pricing.clerkPlanIdMonth;
+
+                if (!clerkPlanId) {
+                    setError(`Configuration error for plan "${planParam}". Please contact support.`);
+                    setAttempted(true);
+                    return;
+                }
+
+                // Open Clerk's checkout modal
+                (clerk as any).__internal_openCheckout({
+                    planId: clerkPlanId,
+                    planPeriod: freqParam === 'year' ? 'year' : 'month',
+                    newSubscriptionRedirectUrl: '/api/onboarding/pay-success',
+                });
+
+                setAttempted(true);
+            } catch (err: any) {
+                console.error('Failed to open checkout:', err);
+                setError(err?.message || 'Failed to open checkout. Please try again.');
+                setAttempted(true);
+            } finally {
+                setFetchingPlan(false);
+            }
         }
-    }, [authLoaded, isSignedIn, clerk, planParam, freqParam, attempted]);
+
+        fetchAndOpenCheckout();
+    }, [authLoaded, isSignedIn, clerk, planParam, freqParam, attempted, fetchingPlan]);
 
     // Error state
     if (error) {

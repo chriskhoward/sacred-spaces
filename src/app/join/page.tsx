@@ -2,6 +2,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Image from 'next/image';
 import { Metadata } from 'next';
+import { client } from '@/sanity/lib/client';
 import { SignedIn, SignedOut } from '@clerk/nextjs';
 import { ResilientPricingTable } from './ResilientPricingTable';
 import { PricingCards } from './PricingCards';
@@ -12,9 +13,8 @@ export const metadata: Metadata = {
 };
 
 export default async function JoinPage() {
-  // Show only Founders plans (via PricingCards) until March 1, 2026
-  const now = new Date();
-  const isFoundersPeriod = now < new Date('2026-03-01T00:00:00');
+  // Fetch only ACTIVE membership plans from Sanity
+  const plans = await client.fetch(`*[_type == "membershipPlan" && isActive == true] | order(displayOrder asc)`);
 
   return (
     <main className="bg-white min-h-screen">
@@ -39,20 +39,21 @@ export default async function JoinPage() {
 
             {/* Pricing Selection */}
             <div className="bg-white rounded-[30px] shadow-2xl p-6 md:p-12 border border-gray-50">
-              {isFoundersPeriod ? (
-                /* Founders period: all users see PricingCards (routes to Founders checkout) */
-                <PricingCards />
-              ) : (
-                /* Regular period: signed-in users see Clerk PricingTable, guests see PricingCards */
-                <>
-                  <SignedIn>
-                    <ResilientPricingTable />
-                  </SignedIn>
-                  <SignedOut>
-                    <PricingCards />
-                  </SignedOut>
-                </>
-              )}
+              {/* Show PricingCards (routes guests and handles Founders logic within) */}
+              <SignedIn>
+                <div className="mb-12 border-b border-gray-100 pb-12">
+                  <h3 className="text-xl font-bold text-center mb-6">Manage Your Membership</h3>
+                  <ResilientPricingTable />
+                </div>
+                <div className="text-center">
+                  <p className="text-gray-500 mb-6">Looking for a different plan? View the Collective tiers below:</p>
+                  <PricingCards plans={plans} />
+                </div>
+              </SignedIn>
+
+              <SignedOut>
+                <PricingCards plans={plans} />
+              </SignedOut>
             </div>
           </div>
         </div>
