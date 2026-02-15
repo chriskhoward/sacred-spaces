@@ -3,6 +3,7 @@ import { defineField, defineType } from 'sanity'
 export const resourceCategoryType = defineType({
   name: 'resourceCategory',
   title: 'Resource Category',
+  icon: () => '📂',
   type: 'document',
   fields: [
     defineField({

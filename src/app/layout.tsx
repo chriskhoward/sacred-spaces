@@ -6,6 +6,8 @@ import Script from "next/script";
 import "./globals.css";
 import VisualEditing from "@/components/VisualEditing";
 import { Analytics } from "@vercel/analytics/next";
+import AnnouncementBar from "@/components/AnnouncementBar";
+import { getClient } from "@/sanity/lib/client";
 
 const GTM_ID = "GTM-5Z6DMF5X";
 
@@ -14,36 +16,39 @@ const dmSans = DM_Sans({
   subsets: ["latin"],
 });
 
-
-
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://flowinfaith.com';
 
-export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
-  title: "Flow in Faith - Christ-Centered Yoga",
-  description: "A membership community for Christ-Centered Yoga Teachers of Color and practitioners.",
-  icons: {
-    icon: [
-      { url: '/icon.png', type: 'image/png' },
-    ],
-    apple: [
-      { url: '/apple-icon.png', type: 'image/png' },
-    ],
-  },
-  openGraph: {
-    title: "Flow in Faith - Christ-Centered Yoga",
-    description: "A membership community for Christ-Centered Yoga Teachers of Color and practitioners.",
-    siteName: "Flow in Faith",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Flow in Faith - Christ-Centered Yoga",
-    description: "A membership community for Christ-Centered Yoga Teachers of Color and practitioners.",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { isEnabled } = await draftMode();
+  const client = getClient(isEnabled);
+  const settings = await client.fetch(`*[_type == "siteSettings"][0]{ title, description }`);
 
-// Force dynamic rendering to avoid Clerk publishableKey error during static generation
+  const title = settings?.title || "Flow in Faith - Christ-Centered Yoga";
+  const description = settings?.description || "A membership community for Christ-Centered Yoga Teachers of Color and practitioners.";
+
+  return {
+    metadataBase: new URL(siteUrl),
+    title,
+    description,
+    icons: {
+      icon: [{ url: '/icon.png', type: 'image/png' }],
+      apple: [{ url: '/apple-icon.png', type: 'image/png' }],
+    },
+    openGraph: {
+      title,
+      description,
+      siteName: "Flow in Faith",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
+  };
+}
+
+// Force dynamic rendering
 export const dynamic = 'force-dynamic';
 
 export default async function RootLayout({
@@ -101,6 +106,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               title="Google Tag Manager"
             />
           </noscript>
+          <AnnouncementBar />
           {children}
           {(await draftMode()).isEnabled && <VisualEditing />}
           <Analytics />

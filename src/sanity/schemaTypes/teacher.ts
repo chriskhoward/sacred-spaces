@@ -3,6 +3,7 @@ import { defineField, defineType } from 'sanity'
 export const teacherType = defineType({
     name: 'teacher',
     title: 'Teacher',
+    icon: () => '👩‍🏫',
     type: 'document',
     fields: [
         defineField({

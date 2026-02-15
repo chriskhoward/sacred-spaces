@@ -3,6 +3,7 @@ import { defineField, defineType } from 'sanity'
 export const teacherOnboardingItemType = defineType({
   name: 'teacherOnboardingItem',
   title: 'Teacher onboarding item',
+  icon: () => '✔️',
   type: 'document',
   description: 'Videos, PDFs, and links shown on the Start here page for teachers.',
   fields: [

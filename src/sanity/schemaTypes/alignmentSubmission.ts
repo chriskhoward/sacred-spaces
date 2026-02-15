@@ -3,6 +3,7 @@ import { defineField, defineType } from 'sanity'
 export const alignmentSubmissionType = defineType({
   name: 'alignmentSubmission',
   title: 'Alignment Form Submission',
+  icon: () => '📝',
   type: 'document',
   fields: [
     defineField({

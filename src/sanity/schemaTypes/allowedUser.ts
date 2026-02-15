@@ -3,6 +3,7 @@ import { defineField, defineType } from 'sanity'
 export const allowedUserType = defineType({
     name: 'allowedUser',
     title: 'Allowed User',
+    icon: () => '👥',
     type: 'document',
     fields: [
         defineField({

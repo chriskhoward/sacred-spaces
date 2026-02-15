@@ -3,6 +3,7 @@ import { defineField, defineType } from 'sanity'
 export const pageType = defineType({
   name: 'page',
   title: 'Generic Page',
+  icon: () => '📄',
   type: 'document',
   fields: [
     defineField({

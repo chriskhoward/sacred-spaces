@@ -3,6 +3,7 @@ import { defineField, defineType } from 'sanity'
 export const liveClassCategoryType = defineType({
     name: 'liveClassCategory',
     title: 'Live Class Category',
+    icon: () => '🏷️',
     type: 'document',
     fields: [
         defineField({

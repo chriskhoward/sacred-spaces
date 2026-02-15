@@ -3,6 +3,7 @@ import { defineField, defineType } from 'sanity'
 export const membershipPlanType = defineType({
     name: 'membershipPlan',
     title: 'Membership Plan',
+    icon: () => '💎',
     type: 'document',
     fields: [
         defineField({

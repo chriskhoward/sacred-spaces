@@ -3,6 +3,7 @@ import { defineField, defineType } from 'sanity'
 export const videoType = defineType({
     name: 'video',
     title: 'Video Library',
+    icon: () => '🎬',
     type: 'document',
     fields: [
         defineField({

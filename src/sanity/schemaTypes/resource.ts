@@ -3,6 +3,7 @@ import { defineField, defineType } from 'sanity'
 export const resourceType = defineType({
   name: 'resource',
   title: 'Teacher Resources',
+  icon: () => '📚',
   type: 'document',
   fields: [
     defineField({

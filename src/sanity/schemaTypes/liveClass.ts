@@ -3,6 +3,7 @@ import { defineField, defineType } from 'sanity'
 export const liveClassType = defineType({
     name: 'liveClass',
     title: 'Live Class Schedule',
+    icon: () => '🧘',
     type: 'document',
     fields: [
         defineField({

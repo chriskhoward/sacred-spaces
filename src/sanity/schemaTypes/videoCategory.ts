@@ -3,6 +3,7 @@ import { defineField, defineType } from 'sanity'
 export const videoCategoryType = defineType({
   name: 'videoCategory',
   title: 'Video Category',
+  icon: () => '📁',
   type: 'document',
   fields: [
     defineField({
