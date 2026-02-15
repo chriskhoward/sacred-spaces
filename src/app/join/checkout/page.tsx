@@ -15,10 +15,26 @@ import Link from 'next/link';
  * dedicated landing pages (/join/core, /join/pro).
  */
 
-const planIdMap: Record<string, string> = {
+// Regular plan IDs
+const regularPlanIds: Record<string, string> = {
     'core': 'cplan_39RVE1cg83vWrMv6WezIPHDjaF4',
     'pro': 'cplan_39RVTnsvjEGQc6psl785lwUyjho',
 };
+
+// Founders plan IDs (active through February 2026)
+const foundersPlanIds: Record<string, string> = {
+    'core': 'cplan_39XYMfLviwQ9cVZwIW5FuAKZRGH',
+    'pro': 'cplan_39XZ6jdRLNC78T7xYK7PP4J8RLO',
+};
+
+// Use Founders plans until March 1, 2026
+function getPlanIdMap(): Record<string, string> {
+    const now = new Date();
+    const marchFirst2026 = new Date('2026-03-01T00:00:00');
+    return now < marchFirst2026 ? foundersPlanIds : regularPlanIds;
+}
+
+const planIdMap = getPlanIdMap();
 
 export default function CheckoutBridgePage() {
     const searchParams = useSearchParams();
