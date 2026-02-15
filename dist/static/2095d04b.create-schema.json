@@ -1,0 +1,3494 @@
+[
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "Video Title"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "instructor",
+        "type": "string",
+        "title": "Instructor Name"
+      },
+      {
+        "rows": 3,
+        "name": "description",
+        "type": "text"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "to": [
+          {
+            "type": "videoCategory"
+          }
+        ],
+        "name": "category",
+        "type": "reference"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Beginner",
+              "value": "Beginner"
+            },
+            {
+              "title": "Intermediate",
+              "value": "Intermediate"
+            },
+            {
+              "title": "Advanced",
+              "value": "Advanced"
+            },
+            {
+              "title": "All Levels",
+              "value": "All Levels"
+            }
+          ]
+        },
+        "name": "level",
+        "type": "string",
+        "title": "Difficulty Level"
+      },
+      {
+        "name": "duration",
+        "type": "string",
+        "title": "Duration (e.g. \"45 min\")"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "thumbnail",
+        "type": "image",
+        "title": "Thumbnail Image"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "videoUrl",
+        "type": "url",
+        "title": "Video URL (Vimeo/YouTube/S3)"
+      },
+      {
+        "initialValue": false,
+        "description": "When checked, this video appears in the hero “New Release” section at the top of the Video Library. Only one video should be featured at a time.",
+        "name": "isFeatured",
+        "type": "boolean",
+        "title": "Feature as “New Release”"
+      },
+      {
+        "initialValue": false,
+        "description": "If enabled, this video will be locked for non-Pro members.",
+        "name": "isLocked",
+        "type": "boolean",
+        "title": "Premium Member Only?"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Everyone",
+              "value": "all"
+            },
+            {
+              "title": "Teacher Collective - Core",
+              "value": "teacher_core"
+            },
+            {
+              "title": "Teacher Collective - Pro",
+              "value": "teacher_pro"
+            },
+            {
+              "title": "Sanctuary Collective - Core",
+              "value": "practitioner_core"
+            },
+            {
+              "title": "Sanctuary Collective - Pro",
+              "value": "practitioner_pro"
+            }
+          ]
+        },
+        "initialValue": [
+          "all"
+        ],
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "valid",
+                "constraint": [
+                  "all",
+                  "teacher_core",
+                  "teacher_pro",
+                  "practitioner_core",
+                  "practitioner_pro"
+                ]
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 1
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "targetAudience",
+        "type": "array"
+      }
+    ],
+    "name": "video",
+    "type": "document",
+    "title": "Video Library"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "Category Name"
+      },
+      {
+        "options": {
+          "source": "title",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "initialValue": 0,
+        "description": "Lower numbers appear first in the filter list",
+        "name": "order",
+        "type": "number",
+        "title": "Display Order"
+      }
+    ],
+    "name": "videoCategory",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "Resource Title"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "to": [
+          {
+            "type": "resourceCategory"
+          }
+        ],
+        "name": "category",
+        "type": "reference"
+      },
+      {
+        "rows": 3,
+        "name": "description",
+        "type": "text"
+      },
+      {
+        "name": "author",
+        "type": "string",
+        "title": "Author/Host"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image",
+        "type": "image",
+        "title": "Cover Image"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "linkUrl",
+        "type": "url",
+        "title": "Link to Resource (PDF/Video/Page)"
+      },
+      {
+        "initialValue": true,
+        "name": "isLocked",
+        "type": "boolean",
+        "title": "Premium Member Only?"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Everyone",
+              "value": "all"
+            },
+            {
+              "title": "Teacher Collective - Core",
+              "value": "teacher_core"
+            },
+            {
+              "title": "Teacher Collective - Pro",
+              "value": "teacher_pro"
+            },
+            {
+              "title": "Sanctuary Collective - Core",
+              "value": "practitioner_core"
+            },
+            {
+              "title": "Sanctuary Collective - Pro",
+              "value": "practitioner_pro"
+            }
+          ]
+        },
+        "initialValue": [
+          "all"
+        ],
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "valid",
+                "constraint": [
+                  "all",
+                  "teacher_core",
+                  "teacher_pro",
+                  "practitioner_core",
+                  "practitioner_pro"
+                ]
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 1
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "targetAudience",
+        "type": "array"
+      }
+    ],
+    "name": "resource",
+    "type": "document",
+    "title": "Teacher Resources"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "Category Name"
+      },
+      {
+        "options": {
+          "source": "title",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "initialValue": 0,
+        "description": "Lower numbers appear first in the list",
+        "name": "order",
+        "type": "number",
+        "title": "Display Order"
+      }
+    ],
+    "name": "resourceCategory",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "Class Title"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "instructor",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "dateTime",
+        "type": "datetime",
+        "title": "Date & Time"
+      },
+      {
+        "name": "duration",
+        "type": "string",
+        "title": "Duration (e.g. 60 min)"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Vinyasa",
+              "value": "Vinyasa"
+            },
+            {
+              "title": "Meditation",
+              "value": "Meditation"
+            },
+            {
+              "title": "Hatha",
+              "value": "Hatha"
+            },
+            {
+              "title": "Workshop",
+              "value": "Workshop"
+            },
+            {
+              "title": "Restorative",
+              "value": "Restorative"
+            },
+            {
+              "title": "Community Gathering",
+              "value": "Community Gathering"
+            }
+          ]
+        },
+        "description": "Used for older classes. New classes should use the Category field below.",
+        "name": "type",
+        "type": "string",
+        "title": "Class Type (Internal/Old)"
+      },
+      {
+        "to": [
+          {
+            "type": "liveClassCategory"
+          }
+        ],
+        "name": "category",
+        "type": "reference"
+      },
+      {
+        "name": "description",
+        "type": "text"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "zoomLink",
+        "type": "url",
+        "title": "Zoom/Meeting Link"
+      },
+      {
+        "initialValue": false,
+        "description": "Enable if this class repeats on a schedule",
+        "name": "isRecurring",
+        "type": "boolean",
+        "title": "Recurring Class"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Weekly",
+              "value": "weekly"
+            },
+            {
+              "title": "Bi-weekly",
+              "value": "biweekly"
+            },
+            {
+              "title": "Monthly",
+              "value": "monthly"
+            }
+          ]
+        },
+        "hidden": "conditional",
+        "name": "recurrencePattern",
+        "type": "string"
+      },
+      {
+        "description": "When should this recurring class stop? Leave empty for indefinite.",
+        "hidden": "conditional",
+        "name": "recurrenceEndDate",
+        "type": "date"
+      },
+      {
+        "initialValue": false,
+        "description": "If enabled, only Core and Pro tier members can access the Zoom link",
+        "name": "isLocked",
+        "type": "boolean",
+        "title": "Premium Member Only?"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Everyone",
+              "value": "all"
+            },
+            {
+              "title": "Teacher Collective - Core",
+              "value": "teacher_core"
+            },
+            {
+              "title": "Teacher Collective - Pro",
+              "value": "teacher_pro"
+            },
+            {
+              "title": "Sanctuary Collective - Core",
+              "value": "practitioner_core"
+            },
+            {
+              "title": "Sanctuary Collective - Pro",
+              "value": "practitioner_pro"
+            }
+          ]
+        },
+        "initialValue": [
+          "all"
+        ],
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "valid",
+                "constraint": [
+                  "all",
+                  "teacher_core",
+                  "teacher_pro",
+                  "practitioner_core",
+                  "practitioner_pro"
+                ]
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 1
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "targetAudience",
+        "type": "array"
+      }
+    ],
+    "name": "liveClass",
+    "type": "document",
+    "title": "Live Class Schedule"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "Category Name"
+      },
+      {
+        "options": {
+          "source": "title",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "initialValue": 0,
+        "description": "Lower numbers appear first in the list",
+        "name": "order",
+        "type": "number",
+        "title": "Display Order"
+      }
+    ],
+    "name": "liveClassCategory",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "initialValue": "Homepage",
+        "readOnly": true,
+        "name": "title",
+        "type": "string",
+        "title": "Page Title"
+      },
+      {
+        "of": [
+          {
+            "type": "homeHeroBlock",
+            "title": "Home Hero"
+          },
+          {
+            "type": "heroBlock",
+            "title": "Hero"
+          },
+          {
+            "type": "brandBlock",
+            "title": "Brand Message / Quote"
+          },
+          {
+            "type": "pillarsBlock",
+            "title": "Pillars of Transformation"
+          },
+          {
+            "type": "benefitsBlock",
+            "title": "Benefits Section"
+          },
+          {
+            "type": "mediaTextBlock",
+            "title": "Media + Text"
+          },
+          {
+            "type": "imageBlock",
+            "title": "Showcase Image/Gallery"
+          },
+          {
+            "type": "videoBlock",
+            "title": "Video Embed"
+          },
+          {
+            "type": "testimonialBlock",
+            "title": "Testimonials"
+          },
+          {
+            "type": "teamBlock",
+            "title": "Leadership Team"
+          },
+          {
+            "type": "richTextBlock",
+            "title": "Rich Text Section"
+          },
+          {
+            "type": "ctaBlock",
+            "title": "Call to Action"
+          },
+          {
+            "type": "faqBlock",
+            "title": "FAQ Section"
+          },
+          {
+            "type": "empathySectionBlock",
+            "title": "Empathy Section"
+          },
+          {
+            "type": "highlightTextBlock",
+            "title": "Highlight Text Section"
+          },
+          {
+            "type": "featureGridBlock",
+            "title": "Feature Grid"
+          },
+          {
+            "type": "premiumFeaturesBlock",
+            "title": "Premium Features List"
+          },
+          {
+            "type": "founderBioBlock",
+            "title": "Founder Bio Section"
+          },
+          {
+            "type": "textCtaBlock",
+            "title": "Text + CTA Section"
+          },
+          {
+            "type": "checklistBlock",
+            "title": "Checklist Section"
+          },
+          {
+            "type": "introTextBlock",
+            "title": "Intro Text Section"
+          },
+          {
+            "type": "proseSectionBlock",
+            "title": "Prose Section"
+          },
+          {
+            "type": "twoColumnCompareBlock",
+            "title": "Two Column Compare"
+          },
+          {
+            "type": "spaceCardsBlock",
+            "title": "Space Cards Section"
+          },
+          {
+            "type": "pathChooserBlock",
+            "title": "Path Chooser Section"
+          },
+          {
+            "type": "closingStatementBlock",
+            "title": "Closing Statement Section"
+          }
+        ],
+        "name": "content",
+        "type": "array",
+        "title": "Page Content"
+      }
+    ],
+    "name": "home",
+    "type": "document",
+    "title": "Homepage"
+  },
+  {
+    "fields": [
+      {
+        "initialValue": "About Page",
+        "readOnly": true,
+        "name": "title",
+        "type": "string",
+        "title": "Page Title"
+      },
+      {
+        "of": [
+          {
+            "type": "heroBlock",
+            "title": "Hero"
+          },
+          {
+            "type": "brandBlock",
+            "title": "Brand Message / Quote"
+          },
+          {
+            "type": "pillarsBlock",
+            "title": "Pillars of Transformation"
+          },
+          {
+            "type": "benefitsBlock",
+            "title": "Benefits Section"
+          },
+          {
+            "type": "mediaTextBlock",
+            "title": "Media + Text"
+          },
+          {
+            "type": "imageBlock",
+            "title": "Showcase Image/Gallery"
+          },
+          {
+            "type": "videoBlock",
+            "title": "Video Embed"
+          },
+          {
+            "type": "testimonialBlock",
+            "title": "Testimonials"
+          },
+          {
+            "type": "teamBlock",
+            "title": "Leadership Team"
+          },
+          {
+            "type": "richTextBlock",
+            "title": "Rich Text Section"
+          },
+          {
+            "type": "ctaBlock",
+            "title": "Call to Action"
+          },
+          {
+            "type": "faqBlock",
+            "title": "FAQ Section"
+          },
+          {
+            "type": "empathySectionBlock",
+            "title": "Empathy Section"
+          },
+          {
+            "type": "highlightTextBlock",
+            "title": "Highlight Text Section"
+          },
+          {
+            "type": "featureGridBlock",
+            "title": "Feature Grid"
+          },
+          {
+            "type": "premiumFeaturesBlock",
+            "title": "Premium Features List"
+          },
+          {
+            "type": "founderBioBlock",
+            "title": "Founder Bio Section"
+          },
+          {
+            "type": "textCtaBlock",
+            "title": "Text + CTA Section"
+          },
+          {
+            "type": "checklistBlock",
+            "title": "Checklist Section"
+          },
+          {
+            "type": "introTextBlock",
+            "title": "Intro Text Section"
+          },
+          {
+            "type": "proseSectionBlock",
+            "title": "Prose Section"
+          },
+          {
+            "type": "twoColumnCompareBlock",
+            "title": "Two Column Compare"
+          },
+          {
+            "type": "spaceCardsBlock",
+            "title": "Space Cards Section"
+          },
+          {
+            "type": "pathChooserBlock",
+            "title": "Path Chooser Section"
+          },
+          {
+            "type": "closingStatementBlock",
+            "title": "Closing Statement Section"
+          }
+        ],
+        "name": "content",
+        "type": "array",
+        "title": "Page Content"
+      }
+    ],
+    "name": "about",
+    "type": "document",
+    "title": "About Page"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "Page Title"
+      },
+      {
+        "options": {
+          "source": "title",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "initialValue": true,
+        "description": "If enabled, this page will appear in the main navigation menu",
+        "name": "showInNav",
+        "type": "boolean",
+        "title": "Show in Navigation"
+      },
+      {
+        "initialValue": false,
+        "description": "If enabled, this page will only be accessible to logged-in users.",
+        "name": "isLocked",
+        "type": "boolean",
+        "title": "Lock Page (Members Only)"
+      },
+      {
+        "of": [
+          {
+            "type": "heroBlock",
+            "title": "Hero"
+          },
+          {
+            "type": "brandBlock",
+            "title": "Brand Message / Quote"
+          },
+          {
+            "type": "pillarsBlock",
+            "title": "Pillars of Transformation"
+          },
+          {
+            "type": "benefitsBlock",
+            "title": "Benefits Section"
+          },
+          {
+            "type": "mediaTextBlock",
+            "title": "Media + Text"
+          },
+          {
+            "type": "imageBlock",
+            "title": "Showcase Image/Gallery"
+          },
+          {
+            "type": "videoBlock",
+            "title": "Video Embed"
+          },
+          {
+            "type": "testimonialBlock",
+            "title": "Testimonials"
+          },
+          {
+            "type": "teamBlock",
+            "title": "Leadership Team"
+          },
+          {
+            "type": "richTextBlock",
+            "title": "Rich Text Section"
+          },
+          {
+            "type": "ctaBlock",
+            "title": "Call to Action"
+          },
+          {
+            "type": "faqBlock",
+            "title": "FAQ Section"
+          },
+          {
+            "type": "empathySectionBlock",
+            "title": "Empathy Section"
+          },
+          {
+            "type": "highlightTextBlock",
+            "title": "Highlight Text Section"
+          },
+          {
+            "type": "featureGridBlock",
+            "title": "Feature Grid"
+          },
+          {
+            "type": "premiumFeaturesBlock",
+            "title": "Premium Features List"
+          },
+          {
+            "type": "founderBioBlock",
+            "title": "Founder Bio Section"
+          },
+          {
+            "type": "textCtaBlock",
+            "title": "Text + CTA Section"
+          },
+          {
+            "type": "checklistBlock",
+            "title": "Checklist Section"
+          },
+          {
+            "type": "introTextBlock",
+            "title": "Intro Text Section"
+          },
+          {
+            "type": "proseSectionBlock",
+            "title": "Prose Section"
+          },
+          {
+            "type": "twoColumnCompareBlock",
+            "title": "Two Column Compare"
+          },
+          {
+            "type": "spaceCardsBlock",
+            "title": "Space Cards Section"
+          },
+          {
+            "type": "pathChooserBlock",
+            "title": "Path Chooser Section"
+          },
+          {
+            "type": "closingStatementBlock",
+            "title": "Closing Statement Section"
+          }
+        ],
+        "name": "content",
+        "type": "array",
+        "title": "Page Content"
+      }
+    ],
+    "name": "page",
+    "type": "document",
+    "title": "Generic Page"
+  },
+  {
+    "fields": [
+      {
+        "name": "badge",
+        "type": "string",
+        "title": "Badge Text"
+      },
+      {
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "name": "subtitle",
+        "type": "text"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image",
+        "type": "image",
+        "title": "Hero Image"
+      },
+      {
+        "name": "primaryButtonText",
+        "type": "string"
+      },
+      {
+        "description": "Internal path (e.g., /sign-up) or external URL (e.g., https://example.com)",
+        "name": "primaryButtonLink",
+        "type": "string"
+      },
+      {
+        "name": "secondaryButtonText",
+        "type": "string"
+      },
+      {
+        "description": "Internal path (e.g., /about) or external URL",
+        "name": "secondaryButtonLink",
+        "type": "string"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "description": "Used for decorative overlays or background textures",
+        "name": "secondaryImage",
+        "type": "image",
+        "title": "Secondary/Overlay Image"
+      }
+    ],
+    "name": "heroBlock",
+    "type": "object",
+    "title": "Hero"
+  },
+  {
+    "fields": [
+      {
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "name": "subtitle",
+        "type": "text"
+      },
+      {
+        "initialValue": "Join the Teachers Collective",
+        "name": "primaryButtonText",
+        "type": "string"
+      },
+      {
+        "description": "Leave empty to use Fillout slider. Set a URL (e.g. /teacher-collective) to use a regular link.",
+        "name": "primaryButtonLink",
+        "type": "string"
+      },
+      {
+        "name": "secondaryButtonText",
+        "type": "string"
+      },
+      {
+        "name": "secondaryButtonLink",
+        "type": "string"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "description": "Optional. Replaces the default gold logo on the right.",
+        "name": "logoImage",
+        "type": "image",
+        "title": "Logo / Hero Image"
+      }
+    ],
+    "name": "homeHeroBlock",
+    "type": "object",
+    "title": "Home Hero"
+  },
+  {
+    "fields": [
+      {
+        "name": "quote",
+        "type": "text"
+      },
+      {
+        "name": "body",
+        "type": "text",
+        "title": "Body Text"
+      }
+    ],
+    "name": "brandBlock",
+    "type": "object",
+    "title": "Brand Message / Quote"
+  },
+  {
+    "fields": [
+      {
+        "name": "heading",
+        "type": "string",
+        "title": "Section Heading"
+      },
+      {
+        "name": "subheading",
+        "type": "string",
+        "title": "Section Subheading"
+      },
+      {
+        "name": "description",
+        "type": "text",
+        "title": "Section Description"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "title",
+                "type": "string"
+              },
+              {
+                "name": "description",
+                "type": "text"
+              },
+              {
+                "name": "icon",
+                "type": "string",
+                "title": "Icon (Emoji)"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "items",
+        "type": "array",
+        "title": "Pillar Items"
+      }
+    ],
+    "name": "pillarsBlock",
+    "type": "object",
+    "title": "Pillars of Transformation"
+  },
+  {
+    "fields": [
+      {
+        "name": "badge",
+        "type": "string",
+        "title": "Badge Text"
+      },
+      {
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "name": "description",
+        "type": "text"
+      },
+      {
+        "name": "buttonText",
+        "type": "string"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "title",
+                "type": "string"
+              },
+              {
+                "name": "description",
+                "type": "text"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "items",
+        "type": "array",
+        "title": "Benefit Items"
+      }
+    ],
+    "name": "benefitsBlock",
+    "type": "object",
+    "title": "Benefits Section"
+  },
+  {
+    "fields": [
+      {
+        "name": "badge",
+        "type": "string",
+        "title": "Badge Text"
+      },
+      {
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "of": [
+          {
+            "marks": {
+              "annotations": [
+                {
+                  "i18nTitleKey": "inputs.portable-text.annotation.link",
+                  "options": {
+                    "modal": {
+                      "type": "popover"
+                    }
+                  },
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/",
+                                    "/^tel$/",
+                                    "/^mailto$/"
+                                  ],
+                                  "allowRelative": true,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ],
+                          "level": "error"
+                        }
+                      ],
+                      "description": "A valid web, email, phone, or relative link.",
+                      "name": "href",
+                      "type": "url",
+                      "title": "Link"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Strong"
+                },
+                {
+                  "value": "em",
+                  "title": "Italic"
+                },
+                {
+                  "value": "code",
+                  "title": "Code"
+                },
+                {
+                  "value": "underline",
+                  "title": "Underline"
+                },
+                {
+                  "value": "strike-through",
+                  "title": "Strike"
+                }
+              ]
+            },
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Bulleted list"
+              },
+              {
+                "value": "number",
+                "title": "Numbered list"
+              }
+            ],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Normal"
+              },
+              {
+                "value": "h1",
+                "title": "Heading 1"
+              },
+              {
+                "value": "h2",
+                "title": "Heading 2"
+              },
+              {
+                "value": "h3",
+                "title": "Heading 3"
+              },
+              {
+                "value": "h4",
+                "title": "Heading 4"
+              },
+              {
+                "value": "h5",
+                "title": "Heading 5"
+              },
+              {
+                "value": "h6",
+                "title": "Heading 6"
+              },
+              {
+                "value": "blockquote",
+                "title": "Quote"
+              }
+            ],
+            "of": [],
+            "type": "block"
+          }
+        ],
+        "name": "body",
+        "type": "array",
+        "title": "Body Content"
+      },
+      {
+        "description": "Optional bullet list below body",
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "listItems",
+        "type": "array"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image",
+        "type": "image"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Left",
+              "value": "left"
+            },
+            {
+              "title": "Right",
+              "value": "right"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "left",
+        "name": "imagePosition",
+        "type": "string"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Default",
+              "value": "default"
+            },
+            {
+              "title": "Mission (4:5 image, gold subheading)",
+              "value": "mission"
+            },
+            {
+              "title": "Whether you are (image + list + CTA)",
+              "value": "whether"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "default",
+        "name": "variant",
+        "type": "string",
+        "title": "Layout Variant"
+      },
+      {
+        "name": "ctaText",
+        "type": "string",
+        "title": "Button Text"
+      },
+      {
+        "name": "ctaLink",
+        "type": "string",
+        "title": "Button Link"
+      },
+      {
+        "initialValue": false,
+        "description": "When on, button opens Fillout slider instead of navigating",
+        "name": "useFillout",
+        "type": "boolean",
+        "title": "Use Fillout (form) instead of link"
+      }
+    ],
+    "name": "mediaTextBlock",
+    "type": "object",
+    "title": "Media + Text"
+  },
+  {
+    "fields": [
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image",
+        "type": "image"
+      },
+      {
+        "name": "caption",
+        "type": "string"
+      },
+      {
+        "initialValue": true,
+        "name": "fullWidth",
+        "type": "boolean"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Default (full width or boxed)",
+              "value": "default"
+            },
+            {
+              "title": "Logo/Card (centered, fixed size for community card)",
+              "value": "logo"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "default",
+        "name": "variant",
+        "type": "string",
+        "title": "Display Variant"
+      }
+    ],
+    "name": "imageBlock",
+    "type": "object",
+    "title": "Showcase Image/Gallery"
+  },
+  {
+    "fields": [
+      {
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "url",
+        "type": "url",
+        "title": "Video URL (YouTube/Vimeo)"
+      }
+    ],
+    "name": "videoBlock",
+    "type": "object",
+    "title": "Video Embed"
+  },
+  {
+    "fields": [
+      {
+        "name": "heading",
+        "type": "string"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "quote",
+                "type": "text"
+              },
+              {
+                "name": "author",
+                "type": "string",
+                "title": "Author Name"
+              },
+              {
+                "name": "role",
+                "type": "string",
+                "title": "Role/Title"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "name": "image",
+                "type": "image",
+                "title": "Author Image"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "items",
+        "type": "array",
+        "title": "Testimonials"
+      }
+    ],
+    "name": "testimonialBlock",
+    "type": "object",
+    "title": "Testimonials"
+  },
+  {
+    "fields": [
+      {
+        "name": "heading",
+        "type": "string"
+      },
+      {
+        "name": "description",
+        "type": "text"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "name": "role",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "name": "image",
+                "type": "image"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "members",
+        "type": "array",
+        "title": "Team Members"
+      }
+    ],
+    "name": "teamBlock",
+    "type": "object",
+    "title": "Leadership Team"
+  },
+  {
+    "fields": [
+      {
+        "name": "heading",
+        "type": "string",
+        "title": "Heading (Optional)"
+      },
+      {
+        "of": [
+          {
+            "marks": {
+              "annotations": [
+                {
+                  "i18nTitleKey": "inputs.portable-text.annotation.link",
+                  "options": {
+                    "modal": {
+                      "type": "popover"
+                    }
+                  },
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/",
+                                    "/^tel$/",
+                                    "/^mailto$/"
+                                  ],
+                                  "allowRelative": true,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ],
+                          "level": "error"
+                        }
+                      ],
+                      "description": "A valid web, email, phone, or relative link.",
+                      "name": "href",
+                      "type": "url",
+                      "title": "Link"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Strong"
+                },
+                {
+                  "value": "em",
+                  "title": "Italic"
+                },
+                {
+                  "value": "code",
+                  "title": "Code"
+                },
+                {
+                  "value": "underline",
+                  "title": "Underline"
+                },
+                {
+                  "value": "strike-through",
+                  "title": "Strike"
+                }
+              ]
+            },
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Bulleted list"
+              },
+              {
+                "value": "number",
+                "title": "Numbered list"
+              }
+            ],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Normal"
+              },
+              {
+                "value": "h1",
+                "title": "Heading 1"
+              },
+              {
+                "value": "h2",
+                "title": "Heading 2"
+              },
+              {
+                "value": "h3",
+                "title": "Heading 3"
+              },
+              {
+                "value": "h4",
+                "title": "Heading 4"
+              },
+              {
+                "value": "h5",
+                "title": "Heading 5"
+              },
+              {
+                "value": "h6",
+                "title": "Heading 6"
+              },
+              {
+                "value": "blockquote",
+                "title": "Quote"
+              }
+            ],
+            "of": [],
+            "type": "block"
+          }
+        ],
+        "name": "body",
+        "type": "array",
+        "title": "Body Text"
+      }
+    ],
+    "name": "richTextBlock",
+    "type": "object",
+    "title": "Rich Text Section"
+  },
+  {
+    "fields": [
+      {
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "name": "description",
+        "type": "text"
+      },
+      {
+        "name": "buttonText",
+        "type": "string"
+      },
+      {
+        "description": "Internal (e.g. /sign-up) or External URL. Leave empty to use Fillout when useFillout is on.",
+        "name": "buttonLink",
+        "type": "string"
+      },
+      {
+        "initialValue": false,
+        "name": "useFillout",
+        "type": "boolean",
+        "title": "Use Fillout (form) instead of link"
+      }
+    ],
+    "name": "ctaBlock",
+    "type": "object",
+    "title": "Call to Action"
+  },
+  {
+    "fields": [
+      {
+        "name": "heading",
+        "type": "string"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "question",
+                "type": "string"
+              },
+              {
+                "name": "answer",
+                "type": "text"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "items",
+        "type": "array",
+        "title": "FAQ Items"
+      }
+    ],
+    "name": "faqBlock",
+    "type": "object",
+    "title": "FAQ Section"
+  },
+  {
+    "fields": [
+      {
+        "name": "heading",
+        "type": "string"
+      },
+      {
+        "description": "Each item becomes a styled bullet point",
+        "of": [
+          {
+            "type": "text"
+          }
+        ],
+        "name": "items",
+        "type": "array",
+        "title": "Bullet Points"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Light (White background)",
+              "value": "light"
+            },
+            {
+              "title": "Dark (Primary background)",
+              "value": "dark"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "light",
+        "name": "style",
+        "type": "string",
+        "title": "Section Style"
+      },
+      {
+        "name": "buttonText",
+        "type": "string",
+        "title": "Button Text (Optional)"
+      },
+      {
+        "name": "buttonLink",
+        "type": "string"
+      }
+    ],
+    "name": "empathySectionBlock",
+    "type": "object",
+    "title": "Empathy Section"
+  },
+  {
+    "fields": [
+      {
+        "description": "Each statement is displayed prominently",
+        "of": [
+          {
+            "type": "text"
+          }
+        ],
+        "name": "statements",
+        "type": "array"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Light (White background)",
+              "value": "light"
+            },
+            {
+              "title": "Dark (Primary background)",
+              "value": "dark"
+            },
+            {
+              "title": "Cream (Gallery background)",
+              "value": "cream"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "light",
+        "name": "style",
+        "type": "string",
+        "title": "Section Style"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Default (use style above)",
+              "value": "default"
+            },
+            {
+              "title": "Banner centered (purple, white text)",
+              "value": "bannerCentered"
+            },
+            {
+              "title": "Two lines: gold + white (purple bg)",
+              "value": "bannerTwoLineGold"
+            },
+            {
+              "title": "Banner white text (belonging)",
+              "value": "bannerWhite"
+            },
+            {
+              "title": "Banner gold large (held by God)",
+              "value": "bannerGoldLarge"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "default",
+        "description": "Use for homepage-style sections: exact fonts and backgrounds",
+        "name": "variant",
+        "type": "string",
+        "title": "Homepage Banner Variant"
+      }
+    ],
+    "name": "highlightTextBlock",
+    "type": "object",
+    "title": "Highlight Text Section"
+  },
+  {
+    "fields": [
+      {
+        "name": "heading",
+        "type": "string",
+        "title": "Heading (Optional)"
+      },
+      {
+        "name": "subheading",
+        "type": "string",
+        "title": "Subheading (Optional)"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "title",
+                "type": "string"
+              },
+              {
+                "name": "description",
+                "type": "text"
+              },
+              {
+                "name": "icon",
+                "type": "string",
+                "title": "Icon (Emoji)"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "name": "image",
+                "type": "image",
+                "title": "Image (optional)"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "items",
+        "type": "array",
+        "title": "Feature Items"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Light (White background)",
+              "value": "light"
+            },
+            {
+              "title": "Cream (Gallery background)",
+              "value": "cream"
+            },
+            {
+              "title": "Dark (Primary background, cards white)",
+              "value": "dark"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "light",
+        "name": "style",
+        "type": "string",
+        "title": "Section Style"
+      }
+    ],
+    "name": "featureGridBlock",
+    "type": "object",
+    "title": "Feature Grid"
+  },
+  {
+    "fields": [
+      {
+        "name": "heading",
+        "type": "string"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "title",
+                "type": "string"
+              },
+              {
+                "name": "description",
+                "type": "text"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "items",
+        "type": "array",
+        "title": "Feature Items"
+      },
+      {
+        "name": "buttonText",
+        "type": "string",
+        "title": "Button Text (Optional)"
+      },
+      {
+        "name": "buttonLink",
+        "type": "string"
+      }
+    ],
+    "name": "premiumFeaturesBlock",
+    "type": "object",
+    "title": "Premium Features List"
+  },
+  {
+    "fields": [
+      {
+        "name": "badge",
+        "type": "string",
+        "title": "Badge Text"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "title": "Title/Role"
+      },
+      {
+        "of": [
+          {
+            "marks": {
+              "annotations": [
+                {
+                  "i18nTitleKey": "inputs.portable-text.annotation.link",
+                  "options": {
+                    "modal": {
+                      "type": "popover"
+                    }
+                  },
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/",
+                                    "/^tel$/",
+                                    "/^mailto$/"
+                                  ],
+                                  "allowRelative": true,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ],
+                          "level": "error"
+                        }
+                      ],
+                      "description": "A valid web, email, phone, or relative link.",
+                      "name": "href",
+                      "type": "url",
+                      "title": "Link"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Strong"
+                },
+                {
+                  "value": "em",
+                  "title": "Italic"
+                },
+                {
+                  "value": "code",
+                  "title": "Code"
+                },
+                {
+                  "value": "underline",
+                  "title": "Underline"
+                },
+                {
+                  "value": "strike-through",
+                  "title": "Strike"
+                }
+              ]
+            },
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Bulleted list"
+              },
+              {
+                "value": "number",
+                "title": "Numbered list"
+              }
+            ],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Normal"
+              },
+              {
+                "value": "h1",
+                "title": "Heading 1"
+              },
+              {
+                "value": "h2",
+                "title": "Heading 2"
+              },
+              {
+                "value": "h3",
+                "title": "Heading 3"
+              },
+              {
+                "value": "h4",
+                "title": "Heading 4"
+              },
+              {
+                "value": "h5",
+                "title": "Heading 5"
+              },
+              {
+                "value": "h6",
+                "title": "Heading 6"
+              },
+              {
+                "value": "blockquote",
+                "title": "Quote"
+              }
+            ],
+            "of": [],
+            "type": "block"
+          }
+        ],
+        "name": "bio",
+        "type": "array"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image",
+        "type": "image"
+      },
+      {
+        "name": "closingText",
+        "type": "text"
+      },
+      {
+        "name": "buttonText",
+        "type": "string"
+      },
+      {
+        "name": "buttonLink",
+        "type": "string"
+      }
+    ],
+    "name": "founderBioBlock",
+    "type": "object",
+    "title": "Founder Bio Section"
+  },
+  {
+    "fields": [
+      {
+        "name": "heading",
+        "type": "string"
+      },
+      {
+        "name": "body",
+        "type": "text",
+        "title": "Body Text"
+      },
+      {
+        "name": "buttonText",
+        "type": "string"
+      },
+      {
+        "description": "Leave empty if using Fillout",
+        "name": "buttonLink",
+        "type": "string"
+      },
+      {
+        "initialValue": false,
+        "name": "useFillout",
+        "type": "boolean",
+        "title": "Use Fillout (form) instead of link"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Light (White background)",
+              "value": "light"
+            },
+            {
+              "title": "Dark (Primary background)",
+              "value": "dark"
+            },
+            {
+              "title": "Cream (Gallery background)",
+              "value": "cream"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "light",
+        "name": "style",
+        "type": "string",
+        "title": "Section Style"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Normal",
+              "value": "normal"
+            },
+            {
+              "title": "Large",
+              "value": "large"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "normal",
+        "name": "size",
+        "type": "string",
+        "title": "Text Size"
+      }
+    ],
+    "name": "textCtaBlock",
+    "type": "object",
+    "title": "Text + CTA Section"
+  },
+  {
+    "fields": [
+      {
+        "name": "heading",
+        "type": "string"
+      },
+      {
+        "of": [
+          {
+            "type": "text"
+          }
+        ],
+        "name": "items",
+        "type": "array",
+        "title": "Checklist Items"
+      },
+      {
+        "name": "closingText",
+        "type": "string"
+      },
+      {
+        "name": "buttonText",
+        "type": "string"
+      },
+      {
+        "name": "buttonLink",
+        "type": "string"
+      }
+    ],
+    "name": "checklistBlock",
+    "type": "object",
+    "title": "Checklist Section"
+  },
+  {
+    "fields": [
+      {
+        "description": "Each line will be displayed with a line break",
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "lines",
+        "type": "array",
+        "title": "Text Lines"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Light (White background)",
+              "value": "light"
+            },
+            {
+              "title": "Cream (Gallery background)",
+              "value": "cream"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "light",
+        "name": "style",
+        "type": "string"
+      }
+    ],
+    "name": "introTextBlock",
+    "type": "object",
+    "title": "Intro Text Section"
+  },
+  {
+    "fields": [
+      {
+        "name": "heading",
+        "type": "string"
+      },
+      {
+        "of": [
+          {
+            "type": "text"
+          }
+        ],
+        "name": "paragraphs",
+        "type": "array"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Light (White background)",
+              "value": "light"
+            },
+            {
+              "title": "Cream (Gallery background)",
+              "value": "cream"
+            },
+            {
+              "title": "Boxed (gold border, text left)",
+              "value": "boxed"
+            },
+            {
+              "title": "Card (gray-50, white inner card)",
+              "value": "card"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "cream",
+        "name": "style",
+        "type": "string"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Center",
+              "value": "center"
+            },
+            {
+              "title": "Left",
+              "value": "left"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "center",
+        "name": "alignment",
+        "type": "string",
+        "title": "Text Alignment"
+      },
+      {
+        "name": "buttonText",
+        "type": "string",
+        "title": "Button Text (for card style)"
+      },
+      {
+        "name": "buttonLink",
+        "type": "string"
+      }
+    ],
+    "name": "proseSectionBlock",
+    "type": "object",
+    "title": "Prose Section"
+  },
+  {
+    "fields": [
+      {
+        "name": "heading",
+        "type": "string"
+      },
+      {
+        "name": "leftIntro",
+        "type": "string",
+        "title": "Left Column Intro"
+      },
+      {
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "leftItems",
+        "type": "array",
+        "title": "Left Column Items (Problems)"
+      },
+      {
+        "name": "rightHeading",
+        "type": "string",
+        "title": "Right Column Heading"
+      },
+      {
+        "name": "rightIntro",
+        "type": "string",
+        "title": "Right Column Intro"
+      },
+      {
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "rightItems",
+        "type": "array",
+        "title": "Right Column Items (Solutions)"
+      },
+      {
+        "name": "closingText",
+        "type": "text"
+      }
+    ],
+    "name": "twoColumnCompareBlock",
+    "type": "object",
+    "title": "Two Column Compare"
+  },
+  {
+    "fields": [
+      {
+        "name": "heading",
+        "type": "string"
+      },
+      {
+        "name": "subheading",
+        "type": "text"
+      },
+      {
+        "name": "description",
+        "type": "text"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "title",
+                "type": "string"
+              },
+              {
+                "name": "badge",
+                "type": "string",
+                "title": "Badge/Tagline"
+              },
+              {
+                "name": "description",
+                "type": "text"
+              },
+              {
+                "of": [
+                  {
+                    "type": "string"
+                  }
+                ],
+                "name": "bulletPoints",
+                "type": "array",
+                "title": "Bullet Points (Optional)"
+              },
+              {
+                "name": "closingText",
+                "type": "string",
+                "title": "Closing Text (Italic)"
+              },
+              {
+                "name": "buttonText",
+                "type": "string"
+              },
+              {
+                "name": "buttonLink",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Primary",
+                      "value": "primary"
+                    },
+                    {
+                      "title": "Secondary",
+                      "value": "secondary"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "primary",
+                "name": "buttonStyle",
+                "type": "string"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "cards",
+        "type": "array"
+      }
+    ],
+    "name": "spaceCardsBlock",
+    "type": "object",
+    "title": "Space Cards Section"
+  },
+  {
+    "fields": [
+      {
+        "name": "heading",
+        "type": "string"
+      },
+      {
+        "name": "intro",
+        "type": "string",
+        "title": "Intro Text"
+      },
+      {
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "options",
+        "type": "array",
+        "title": "Path Options"
+      },
+      {
+        "name": "closingText",
+        "type": "string"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "text",
+                "type": "string",
+                "title": "Button Text"
+              },
+              {
+                "name": "link",
+                "type": "string",
+                "title": "Button Link"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Primary",
+                      "value": "primary"
+                    },
+                    {
+                      "title": "Secondary",
+                      "value": "secondary"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "primary",
+                "name": "style",
+                "type": "string",
+                "title": "Button Style"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "buttons",
+        "type": "array",
+        "title": "CTA Buttons"
+      }
+    ],
+    "name": "pathChooserBlock",
+    "type": "object",
+    "title": "Path Chooser Section"
+  },
+  {
+    "fields": [
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "text",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Normal",
+                      "value": "normal"
+                    },
+                    {
+                      "title": "Bold",
+                      "value": "bold"
+                    },
+                    {
+                      "title": "Highlight (Gold)",
+                      "value": "highlight"
+                    },
+                    {
+                      "title": "Large Highlight",
+                      "value": "largeHighlight"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "normal",
+                "name": "style",
+                "type": "string"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "lines",
+        "type": "array",
+        "title": "Statement Lines"
+      }
+    ],
+    "name": "closingStatementBlock",
+    "type": "object",
+    "title": "Closing Statement Section"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "email",
+        "type": "string"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "description": "City / State / Country from the alignment form",
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "description": "Yoga formats they teach (multi-select from alignment form)",
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "yogaFormats",
+        "type": "array"
+      },
+      {
+        "description": "How long they have been teaching yoga",
+        "name": "teachingExperience",
+        "type": "string"
+      },
+      {
+        "rows": 4,
+        "description": "What drew them to join the Teachers Collective",
+        "name": "whyJoin",
+        "type": "text"
+      },
+      {
+        "name": "submittedAt",
+        "type": "datetime"
+      },
+      {
+        "rows": 8,
+        "description": "Full raw form answers from Fillout (JSON). Structured fields above are extracted automatically.",
+        "name": "responses",
+        "type": "text",
+        "title": "Form Responses (raw)"
+      }
+    ],
+    "name": "alignmentSubmission",
+    "type": "document",
+    "title": "Alignment Form Submission"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "email",
+        "type": "string"
+      },
+      {
+        "name": "plan",
+        "type": "string",
+        "title": "Plan / Product"
+      },
+      {
+        "name": "orderId",
+        "type": "string",
+        "title": "Order ID"
+      },
+      {
+        "initialValue": false,
+        "description": "Has this user already signed up and claimed their access?",
+        "name": "redeemed",
+        "type": "boolean"
+      },
+      {
+        "description": "Sanity _id of alignment form submission (matched by email)",
+        "name": "alignmentSubmissionId",
+        "type": "string",
+        "title": "Alignment Submission"
+      }
+    ],
+    "name": "allowedUser",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "readOnly": true,
+        "name": "clerkId",
+        "type": "string",
+        "title": "Clerk User ID"
+      },
+      {
+        "description": "The internal membership ID (e.g., from Thrivecart or Airtable)",
+        "name": "membershipId",
+        "type": "string",
+        "title": "Membership ID"
+      },
+      {
+        "options": {
+          "source": "name",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "initialValue": "active",
+        "options": {
+          "list": [
+            {
+              "title": "Active",
+              "value": "active"
+            },
+            {
+              "title": "Inactive",
+              "value": "inactive"
+            },
+            {
+              "title": "Pending",
+              "value": "pending"
+            }
+          ]
+        },
+        "name": "status",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "string",
+        "title": "Display Name"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "bio",
+        "type": "text",
+        "title": "Biography"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "The profile image URL from Clerk",
+        "name": "image",
+        "type": "url",
+        "title": "Profile Image URL"
+      },
+      {
+        "name": "email",
+        "type": "string",
+        "title": "Email Address"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "website",
+        "type": "url",
+        "title": "Website URL"
+      },
+      {
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "specialties",
+        "type": "array"
+      },
+      {
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "certifications",
+        "type": "array"
+      },
+      {
+        "name": "lastSync",
+        "type": "datetime"
+      }
+    ],
+    "name": "teacher",
+    "type": "document"
+  },
+  {
+    "description": "Categories for grouping items on the Start here page (e.g. Welcome, Getting Started, Resources).",
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "Category name"
+      },
+      {
+        "options": {
+          "source": "title",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "initialValue": 0,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 0
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Lower numbers appear first.",
+        "name": "order",
+        "type": "number",
+        "title": "Display order"
+      }
+    ],
+    "name": "teacherOnboardingCategory",
+    "type": "document",
+    "title": "Onboarding category"
+  },
+  {
+    "description": "Videos, PDFs, and links shown on the Start here page for teachers.",
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "rows": 2,
+        "name": "description",
+        "type": "text"
+      },
+      {
+        "description": "Optional. Group this item under a category on the Start here page.",
+        "to": [
+          {
+            "type": "teacherOnboardingCategory"
+          }
+        ],
+        "name": "category",
+        "type": "reference"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Video",
+              "value": "video"
+            },
+            {
+              "title": "PDF",
+              "value": "pdf"
+            },
+            {
+              "title": "Link",
+              "value": "link"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "link",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "valid",
+                "constraint": [
+                  "video",
+                  "pdf",
+                  "link"
+                ]
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "itemType",
+        "type": "string",
+        "title": "Type"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "For video: YouTube or Vimeo page URL. For PDF/link: external URL. Leave empty if using an uploaded file below.",
+        "hidden": "conditional",
+        "name": "url",
+        "type": "url",
+        "title": "URL"
+      },
+      {
+        "options": {
+          "accept": "application/pdf"
+        },
+        "description": "Upload a PDF. Use this or URL, not both.",
+        "hidden": "conditional",
+        "name": "pdfFile",
+        "type": "file",
+        "title": "PDF file"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Or link to a PDF hosted elsewhere.",
+        "hidden": "conditional",
+        "name": "pdfUrl",
+        "type": "url",
+        "title": "PDF URL"
+      },
+      {
+        "initialValue": 0,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 0
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Lower numbers appear first.",
+        "name": "order",
+        "type": "number",
+        "title": "Display order"
+      }
+    ],
+    "name": "teacherOnboardingItem",
+    "type": "document",
+    "title": "Teacher onboarding item"
+  },
+  {
+    "fields": [
+      {
+        "initialValue": "Teacher Collective FAQs",
+        "readOnly": true,
+        "hidden": true,
+        "name": "title",
+        "type": "string",
+        "title": "Document Title"
+      },
+      {
+        "initialValue": "Still have questions? I understand. Let's chat!",
+        "description": "Short line above the FAQs heading (e.g. \"Still have questions? I understand. Let's chat!\")",
+        "name": "intro",
+        "type": "string",
+        "title": "Intro Text"
+      },
+      {
+        "initialValue": "FAQs",
+        "name": "heading",
+        "type": "string"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "question",
+                "type": "string"
+              },
+              {
+                "name": "answer",
+                "type": "text"
+              }
+            ],
+            "type": "object",
+            "name": "faqItem"
+          }
+        ],
+        "name": "items",
+        "type": "array",
+        "title": "FAQ Items"
+      }
+    ],
+    "name": "teacherCollectiveFaqs",
+    "type": "document",
+    "title": "Teacher Collective FAQs"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "string",
+        "title": "Plan Name"
+      },
+      {
+        "options": {
+          "source": "name",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "initialValue": false,
+        "name": "featured",
+        "type": "boolean",
+        "title": "Featured (Highlight)"
+      },
+      {
+        "initialValue": 0,
+        "name": "displayOrder",
+        "type": "number"
+      },
+      {
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "benefits",
+        "type": "array",
+        "title": "Benefits / Features"
+      },
+      {
+        "fields": [
+          {
+            "name": "monthlyPrice",
+            "type": "number",
+            "title": "Monthly Price (Regular)"
+          },
+          {
+            "name": "yearlyPrice",
+            "type": "number",
+            "title": "Yearly Price (Regular)"
+          },
+          {
+            "name": "clerkPlanIdMonth",
+            "type": "string",
+            "title": "Clerk Plan ID (Monthly)"
+          },
+          {
+            "name": "clerkPlanIdYear",
+            "type": "string",
+            "title": "Clerk Plan ID (Yearly)"
+          }
+        ],
+        "name": "pricing",
+        "type": "object",
+        "title": "Pricing Configuration"
+      },
+      {
+        "fields": [
+          {
+            "initialValue": false,
+            "name": "isActive",
+            "type": "boolean",
+            "title": "Is Founders Active?"
+          },
+          {
+            "name": "monthlyPrice",
+            "type": "number",
+            "title": "Monthly Price (Founders)"
+          },
+          {
+            "name": "yearlyPrice",
+            "type": "number",
+            "title": "Yearly Price (Founders)"
+          },
+          {
+            "name": "clerkPlanIdMonth",
+            "type": "string",
+            "title": "Clerk Plan ID (Founders Monthly)"
+          },
+          {
+            "name": "clerkPlanIdYear",
+            "type": "string",
+            "title": "Clerk Plan ID (Founders Yearly)"
+          }
+        ],
+        "name": "foundersPricing",
+        "type": "object",
+        "title": "Founders Pricing (Promotional)"
+      }
+    ],
+    "name": "membershipPlan",
+    "type": "document"
+  }
+]

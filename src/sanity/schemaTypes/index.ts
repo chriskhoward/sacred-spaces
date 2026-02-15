@@ -14,6 +14,7 @@ import { teacherType } from './teacher'
 import { teacherOnboardingCategoryType } from './teacherOnboardingCategory'
 import { teacherOnboardingItemType } from './teacherOnboardingItem'
 import { teacherCollectiveFaqsType } from './teacherCollectiveFaqs'
+import { membershipPlanType } from './membershipPlan'
 import {
   heroBlock,
   homeHeroBlock,
@@ -85,6 +86,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     teacherType,
     teacherOnboardingCategoryType,
     teacherOnboardingItemType,
-    teacherCollectiveFaqsType
+    teacherCollectiveFaqsType,
+    membershipPlanType
   ],
 }

@@ -9,6 +9,7 @@
     "lint": "eslint",
     "seed:onboarding": "npx tsx scripts/seed-onboarding.ts",
     "seed:tc-faqs": "npx tsx scripts/seed-teacher-collective-faqs.ts",
+    "seed:membership-plans": "npx tsx scripts/seed-membership-plans.ts",
     "fix-keys": "npx tsx scripts/add-missing-keys.ts"
   },
   "dependencies": {
@@ -22,6 +23,7 @@
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "sanity": "^5.0.1",
+    "styled-components": "^6.3.9",
     "svix": "^1.84.1"
   },
   "devDependencies": {
