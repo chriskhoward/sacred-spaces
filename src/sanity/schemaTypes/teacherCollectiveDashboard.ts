@@ -1,5 +1,6 @@
 import { defineArrayMember, defineField, defineType } from 'sanity'
 import { DashboardIcon } from '@sanity/icons'
+import { DashboardCardsInput } from '../components/DashboardCardsInput'
 
 export const teacherCollectiveDashboardType = defineType({
   name: 'teacherCollectiveDashboard',
@@ -21,6 +22,8 @@ export const teacherCollectiveDashboardType = defineType({
       title: 'Dashboard cards',
       type: 'array',
       description: 'Order and content of cards on the Teacher Collective dashboard. Drag to reorder.',
+      options: { layout: 'grid' },
+      components: { input: DashboardCardsInput },
       of: [
         defineArrayMember({
           type: 'object',
