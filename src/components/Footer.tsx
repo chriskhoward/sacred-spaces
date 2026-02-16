@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useUser } from '@clerk/nextjs';
+import { SignedOut } from '@clerk/nextjs';
 
 export type FooterSocialLinks = {
   instagram?: string | null;
@@ -20,7 +20,6 @@ type FooterProps = {
 const DEFAULT_LOGO = '/assets/images/tc_logo.png';
 
 export default function Footer({ logoUrl, socialLinks, contactEmail }: FooterProps = {}) {
-  const { isSignedIn } = useUser();
   const logo = logoUrl || DEFAULT_LOGO;
   const email = contactEmail || 'info@flowinfaith.com';
 
@@ -43,14 +42,14 @@ export default function Footer({ logoUrl, socialLinks, contactEmail }: FooterPro
             <p className="text-white text-sm leading-relaxed mb-6 max-w-sm">
               Flow in Faith is a Christ-centered wellness ecosystem creating culturally safe spaces where faith is lived through body, breath, rest, and community.
             </p>
-            {!isSignedIn && (
+            <SignedOut>
               <Link
                 href="/sign-in"
                 className="inline-block px-6 py-3 bg-(--color-roti) text-(--color-primary) rounded-full font-bold text-sm hover:opacity-90 transition-opacity text-center"
               >
                 Member Login
               </Link>
-            )}
+            </SignedOut>
           </div>
 
           {/* Middle Column - Quick Links */}

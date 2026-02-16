@@ -1,11 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import { useUser } from '@clerk/nextjs';
+import { SignedIn, SignedOut } from '@clerk/nextjs';
 
 export default function FooterLinks() {
-  const { isSignedIn } = useUser();
-
   return (
     <ul className="list-none p-0 m-0 space-y-4">
       <li><Link href="/" className="hover:text-(--color-roti) transition-colors">Home</Link></li>
@@ -14,29 +12,28 @@ export default function FooterLinks() {
       <li><Link href="/directory" className="hover:text-(--color-roti) transition-colors">Directory</Link></li>
       <li><Link href="/video-library" className="hover:text-(--color-roti) transition-colors">Video Library</Link></li>
       <li className="pt-2 flex flex-col gap-3">
-        {isSignedIn ? (
+        <SignedIn>
           <Link
             href="/dashboard"
             className="inline-block px-6 py-3 bg-(--color-roti) text-(--color-primary) rounded-full font-bold text-sm hover:bg-white transition-colors text-center"
           >
             Dashboard
           </Link>
-        ) : (
-          <>
-            <Link
-              href="/sign-in"
-              className="inline-block px-6 py-3 border-2 border-white text-white rounded-full font-bold text-sm hover:bg-white hover:text-(--color-primary) transition-colors text-center"
-            >
-              Member Login
-            </Link>
-            <Link
-              href="/apply"
-              className="inline-block px-6 py-3 bg-(--color-roti) text-(--color-primary) rounded-full font-bold text-sm hover:bg-white transition-colors text-center"
-            >
-              Join Now
-            </Link>
-          </>
-        )}
+        </SignedIn>
+        <SignedOut>
+          <Link
+            href="/sign-in"
+            className="inline-block px-6 py-3 border-2 border-white text-white rounded-full font-bold text-sm hover:bg-white hover:text-(--color-primary) transition-colors text-center"
+          >
+            Member Login
+          </Link>
+          <Link
+            href="/apply"
+            className="inline-block px-6 py-3 bg-(--color-roti) text-(--color-primary) rounded-full font-bold text-sm hover:bg-white transition-colors text-center"
+          >
+            Join Now
+          </Link>
+        </SignedOut>
       </li>
     </ul>
   );
