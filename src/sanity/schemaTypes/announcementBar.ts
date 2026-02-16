@@ -35,10 +35,46 @@ export const announcementBarType = defineType({
         }),
         defineField({
             name: 'backgroundColor',
-            title: 'Background Color',
+            title: 'Background Color (preset)',
             type: 'string',
-            description: 'Tailwind color class or hex (e.g. bg-roti or #D4AF37)',
+            description: 'Select a brand color, or use a custom color below.',
             initialValue: 'bg-roti',
+            options: {
+                list: [
+                    { title: 'Martinique (Purple)', value: 'bg-martinique' },
+                    { title: 'Roti (Gold)', value: 'bg-roti' },
+                    { title: 'Bronzetone (Brown)', value: 'bg-bronzetone' },
+                ],
+                layout: 'dropdown'
+            },
+        }),
+        defineField({
+            name: 'customBackgroundColor',
+            title: 'Custom Background Color',
+            type: 'string',
+            description: 'Override with any hex color (e.g. #413356). Leave blank to use the preset above.',
+        }),
+        defineField({
+            name: 'textColor',
+            title: 'Text Color (preset)',
+            type: 'string',
+            description: 'Select a preset text color, or use a custom color below.',
+            initialValue: 'text-white',
+            options: {
+                list: [
+                    { title: 'White', value: 'text-white' },
+                    { title: 'Martinique (Purple)', value: 'text-martinique' },
+                    { title: 'Roti (Gold)', value: 'text-roti' },
+                    { title: 'Bronzetone (Brown)', value: 'text-bronzetone' },
+                ],
+                layout: 'dropdown'
+            },
+        }),
+        defineField({
+            name: 'customTextColor',
+            title: 'Custom Text Color',
+            type: 'string',
+            description: 'Override with any hex color (e.g. #ffffff). Leave blank to use the preset above.',
         }),
     ],
 })
