@@ -45,7 +45,8 @@ import {
   twoColumnCompareBlock,
   spaceCardsBlock,
   pathChooserBlock,
-  closingStatementBlock
+  closingStatementBlock,
+  bannerTextBlock
 } from './pageBuilder'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
@@ -85,6 +86,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     spaceCardsBlock,
     pathChooserBlock,
     closingStatementBlock,
+    bannerTextBlock,
     alignmentSubmissionType,
     allowedUserType,
     teacherType,

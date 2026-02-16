@@ -783,3 +783,28 @@ export const closingStatementBlock = defineType({
     }),
   ]
 })
+
+// Banner Text Block - For banner sections with heading + subheading
+export const bannerTextBlock = defineType({
+  name: 'bannerTextBlock',
+  title: 'Banner Text Section',
+  type: 'object',
+  fields: [
+    defineField({ name: 'heading', title: 'Heading (Gold)', type: 'string' }),
+    defineField({ name: 'subheading', title: 'Subheading (White)', type: 'string' }),
+    defineField({
+      name: 'backgroundColor',
+      title: 'Background Color',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Purple (Primary)', value: 'primary' },
+          { title: 'White', value: 'white' },
+        ],
+        layout: 'radio'
+      },
+      initialValue: 'primary',
+      description: 'Background color for the section'
+    }),
+  ]
+})

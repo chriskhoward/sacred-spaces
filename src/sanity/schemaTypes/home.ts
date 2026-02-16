@@ -44,6 +44,7 @@ export const homeType = defineType({
         { type: 'spaceCardsBlock' },
         { type: 'pathChooserBlock' },
         { type: 'closingStatementBlock' },
+        { type: 'bannerTextBlock' },
       ],
     }),
   ],

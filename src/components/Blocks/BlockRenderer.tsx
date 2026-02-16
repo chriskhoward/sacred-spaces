@@ -24,6 +24,7 @@ import TwoColumnCompareBlock from './TwoColumnCompare';
 import SpaceCardsBlock from './SpaceCards';
 import PathChooserBlock from './PathChooser';
 import ClosingStatementBlock from './ClosingStatement';
+import BannerTextBlock from './BannerText';
 
 interface BlockRendererProps {
   blocks: Array<{ _type: string; _key: string; [key: string]: any }>;
@@ -120,6 +121,8 @@ export default function BlockRenderer({ blocks, documentId, documentType }: Bloc
             return wrapWithSanity(<PathChooserBlock {...blockProps} />);
           case 'closingStatementBlock':
             return wrapWithSanity(<ClosingStatementBlock {...blockProps} />);
+          case 'bannerTextBlock':
+            return wrapWithSanity(<BannerTextBlock {...blockProps} />);
           default:
             return <div key={_key}>Unknown block type: {_type}</div>;
         }
