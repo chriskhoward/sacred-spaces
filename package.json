@@ -11,6 +11,7 @@
     "seed:onboarding": "npx tsx scripts/seed-onboarding.ts",
     "seed:tc-faqs": "npx tsx scripts/seed-teacher-collective-faqs.ts",
     "seed:membership-plans": "npx tsx scripts/seed-membership-plans.ts",
+    "seed:home": "npx tsx sanity/seed/home.ts",
     "fix-keys": "npx tsx scripts/add-missing-keys.ts"
   },
   "dependencies": {

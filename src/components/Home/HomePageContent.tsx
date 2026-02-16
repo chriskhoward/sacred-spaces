@@ -211,7 +211,7 @@ export default function HomePageContent() {
       {/* 8b. Held by God banner (gold text, purple bg) */}
       <section className="bg-[#413356] py-14 md:py-20 px-6 sm:px-8 text-center">
         <div className={containerNarrow}>
-          <h2 className="text-3xl md:text-5xl lg:text-6xl text-[#C7A254] font-bold leading-[1.2]">
+          <h2 className="text-xl md:text-2xl lg:text-[30px] text-[#C7A254] font-bold leading-[1.2]">
             This is a space to be held by God,<br />
             by community, and by breath.
           </h2>

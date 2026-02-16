@@ -1,8 +1,9 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { SignedOut } from '@clerk/nextjs';
+import { useUser } from '@clerk/nextjs';
 
 export type FooterSocialLinks = {
   instagram?: string | null;
@@ -20,8 +21,15 @@ type FooterProps = {
 const DEFAULT_LOGO = '/assets/images/tc_logo.png';
 
 export default function Footer({ logoUrl, socialLinks, contactEmail }: FooterProps = {}) {
+  const { isSignedIn } = useUser();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   const logo = logoUrl || DEFAULT_LOGO;
   const email = contactEmail || 'info@flowinfaith.com';
+
+  // Only render auth-dependent "Member Login" after mount to avoid hydration mismatch
+  const showMemberLogin = mounted && !isSignedIn;
 
   return (
     <footer className="bg-(--color-primary) text-white pt-16 pb-8">
@@ -42,14 +50,14 @@ export default function Footer({ logoUrl, socialLinks, contactEmail }: FooterPro
             <p className="text-white text-sm leading-relaxed mb-6 max-w-sm">
               Flow in Faith is a Christ-centered wellness ecosystem creating culturally safe spaces where faith is lived through body, breath, rest, and community.
             </p>
-            <SignedOut>
+            {showMemberLogin && (
               <Link
                 href="/sign-in"
                 className="inline-block px-6 py-3 bg-(--color-roti) text-(--color-primary) rounded-full font-bold text-sm hover:opacity-90 transition-opacity text-center"
               >
                 Member Login
               </Link>
-            </SignedOut>
+            )}
           </div>
 
           {/* Middle Column - Quick Links */}

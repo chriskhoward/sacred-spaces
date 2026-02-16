@@ -1,22 +1,32 @@
 /**
- * Seed script for homepage content
- * Run with: SANITY_AUTH_TOKEN=... npx ts-node sanity/seed/home.ts
+ * Seed script for homepage content.
+ * Run with: npm run seed:home (loads .env.local automatically)
  *
- * This creates the home document with blocks matching the original hardcoded layout
+ * Creates the home document with blocks matching the original hardcoded layout.
  */
 
-import { createClient } from '@sanity/client';
+import { createClient } from 'next-sanity';
 import { config } from 'dotenv';
 import { resolve } from 'path';
 
-config({ path: resolve(process.cwd(), '.env.local') });
+const envPath = resolve(process.cwd(), '.env.local');
+config({ path: envPath, override: true });
+if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) {
+  console.error('Missing NEXT_PUBLIC_SANITY_PROJECT_ID. Ensure .env.local exists at:', envPath);
+  process.exit(1);
+}
+
+const token =
+  process.env.SANITY_API_TOKEN ||
+  process.env.SANITY_AUTH_TOKEN ||
+  '';
 
 const client = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || '',
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
-  apiVersion: '2024-12-21',
+  apiVersion: '2024-01-01',
+  token,
   useCdn: false,
-  token: process.env.SANITY_API_TOKEN,
 });
 
 const homeContent = [
@@ -24,9 +34,9 @@ const homeContent = [
   {
     _type: 'homeHeroBlock',
     _key: 'hero-1',
-    badge: 'Flow in Faith',
     title: 'A Christ-centered wellness ecosystem rooted in embodiment, rest, and community.',
-    subtitle: "Here, faith is embodied. Here, rest is sacred. Here, you don't have to choose between your calling, your culture, and your wholeness.",
+    subtitle:
+      "Here, faith is embodied. Here, rest is sacred. Here, you don't have to choose between your calling, your culture, and your wholeness.",
     primaryButtonText: 'Join the Teachers Collective',
     primaryButtonLink: '/teacher-collective',
   },
@@ -63,18 +73,8 @@ const homeContent = [
         _key: 'block-2',
         style: 'normal',
         children: [
-          {
-            _type: 'span',
-            _key: 'span-2',
-            text: 'For many—especially ',
-            marks: [],
-          },
-          {
-            _type: 'span',
-            _key: 'span-3',
-            text: 'People of Color',
-            marks: ['strong'],
-          },
+          { _type: 'span', _key: 'span-2', text: 'For many—especially ', marks: [] },
+          { _type: 'span', _key: 'span-3', text: 'People of Color', marks: ['strong'] },
           {
             _type: 'span',
             _key: 'span-4',
@@ -86,13 +86,16 @@ const homeContent = [
     ],
   },
 
-  // 4. Different Story (heading + subheading)
+  // 4. Different Story (highlightTextBlock)
   {
-    _type: 'bannerTextBlock',
+    _type: 'highlightTextBlock',
     _key: 'banner-1',
-    heading: 'Flow in Faith is here to tell a different story',
-    subheading: 'We exist to offer...',
-    backgroundColor: 'primary',
+    statements: [
+      'Flow in Faith is here to tell a different story',
+      'We exist to offer...',
+    ],
+    style: 'dark',
+    variant: 'bannerCentered',
   },
 
   // 5. Feature Grid (3 features)
@@ -107,22 +110,25 @@ const homeContent = [
         _type: 'object',
         _key: 'feature-1',
         title: 'Liberating, Christ-centered embodiment',
-        description: 'Faith-aligned practices that support rest, healing, and nervous system regulation—without fear, shame, or spiritual conflict.',
-        imageUrl: '/images/homepage/feature-1.webp',
+        description:
+          'Faith-aligned practices that support rest, healing, and nervous system regulation—without fear, shame, or spiritual conflict.',
+        icon: '🙏',
       },
       {
         _type: 'object',
         _key: 'feature-2',
         title: 'Faith that honors the whole person',
-        description: 'A faith that welcomes questions, emotions, and embodiment—grounded in Christ and rooted in wholeness.',
-        imageUrl: '/images/homepage/feature-2.webp',
+        description:
+          'A faith that welcomes questions, emotions, and embodiment—grounded in Christ and rooted in wholeness.',
+        icon: '✨',
       },
       {
         _type: 'object',
         _key: 'feature-3',
         title: 'Community that reflects lived experience',
-        description: 'A culturally grounded community where identity, faith, and lived experience are honored without explanation or erasure.',
-        imageUrl: '/images/homepage/feature-3.webp',
+        description:
+          'A culturally grounded community where identity, faith, and lived experience are honored without explanation or erasure.',
+        icon: '🤝',
       },
     ],
   },
@@ -168,7 +174,7 @@ const homeContent = [
     body: '',
   },
 
-  // 8. Community Card (using spaceCardsBlock with single item)
+  // 8. Community Card (spaceCardsBlock)
   {
     _type: 'spaceCardsBlock',
     _key: 'space-1',
@@ -179,8 +185,10 @@ const homeContent = [
       {
         _type: 'object',
         _key: 'card-1',
-        title: 'The Flow in Faith Teachers Collective is a community-centered home created exclusively for Yoga Teachers of Color who love Jesus.',
-        description: 'This is a space created so teachers could grow, collaborate, and be affirmed in the fullness of their identity, their faith, and their culture — without shrinking or separating pieces of themselves to belong.',
+        title:
+          'The Flow in Faith Teachers Collective is a community-centered home created exclusively for Yoga Teachers of Color who love Jesus.',
+        description:
+          'This is a space created so teachers could grow, collaborate, and be affirmed in the fullness of their identity, their faith, and their culture — without shrinking or separating pieces of themselves to belong.',
         buttonText: 'Learn more about the Teachers Collective',
         buttonLink: '/teacher-collective',
         buttonStyle: 'primary',
@@ -188,16 +196,19 @@ const homeContent = [
     ],
   },
 
-  // 9. Held by God Banner
+  // 9. Held by God Banner (highlightTextBlock)
   {
-    _type: 'bannerTextBlock',
+    _type: 'highlightTextBlock',
     _key: 'banner-2',
-    heading: 'This is a space to be held by God,\nby community, and by breath.',
-    subheading: '',
-    backgroundColor: 'primary',
+    statements: [
+      'This is a space to be held by God,',
+      'by community, and by breath.',
+    ],
+    style: 'dark',
+    variant: 'bannerGoldLarge',
   },
 
-  // 10. Whether You Are (Media + Text variant)
+  // 10. Whether You Are (Media + Text)
   {
     _type: 'mediaTextBlock',
     _key: 'media-2',
@@ -217,22 +228,25 @@ const homeContent = [
 ];
 
 async function seedHome() {
+  if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) {
+    console.error('Error: NEXT_PUBLIC_SANITY_PROJECT_ID is not set in .env.local');
+    process.exit(1);
+  }
+  if (!token) {
+    console.error('Error: SANITY_API_TOKEN or SANITY_AUTH_TOKEN is not set in .env.local');
+    process.exit(1);
+  }
+
   try {
     console.log('🌱 Seeding homepage content...');
 
-    // Check if home document already exists
-    const existing = await client.fetch('*[_type == "home"][0]._id');
+    const existing = await client.fetch<string | null>('*[_type == "home"][0]._id');
 
     if (existing) {
-      // Update existing document
       console.log(`📝 Updating existing home document (${existing})...`);
-      await client
-        .patch(existing)
-        .set({ content: homeContent })
-        .commit();
+      await client.patch(existing).set({ content: homeContent }).commit();
       console.log('✅ Home document updated successfully');
     } else {
-      // Create new document
       console.log('🆕 Creating new home document...');
       await client.create({
         _type: 'home',
