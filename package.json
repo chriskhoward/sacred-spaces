@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "seed:home": "npx tsx sanity/seed/home.ts",
     "seed:onboarding": "npx tsx scripts/seed-onboarding.ts",
     "seed:tc-faqs": "npx tsx scripts/seed-teacher-collective-faqs.ts",
     "seed:membership-plans": "npx tsx scripts/seed-membership-plans.ts",
