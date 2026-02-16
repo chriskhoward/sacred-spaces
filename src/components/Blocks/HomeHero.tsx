@@ -33,7 +33,7 @@ export default function HomeHeroBlock({
     <section className={`bg-white ${sectionPad} ${containerWide}`}>
       <div className="flex flex-col md:flex-row items-center gap-10 lg:gap-16">
         <div className="md:w-[55%] text-left">
-          <h1 className="text-4xl md:text-[40px] lg:text-6xl font-bold text-[#413356] mb-6 leading-[1.15] tracking-tight">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[38px] font-bold text-[#413356] mb-6 leading-[1.15] tracking-tight">
             {title}
           </h1>
           <p className="text-lg md:text-xl text-gray-700 leading-relaxed max-w-xl font-medium mb-8">

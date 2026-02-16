@@ -14,7 +14,7 @@ export default function HomePageContent() {
         <div className="flex flex-col md:flex-row items-center gap-10 lg:gap-16">
           <div className="md:w-[55%] text-left">
             <span className="inline-block py-2 px-6 rounded-full bg-(--color-roti)/10 text-(--color-roti) font-bold tracking-[3px] text-sm mb-6 border border-(--color-roti)/20 uppercase tracking-[3px]">Flow in Faith</span>
-            <h1 className="text-4xl md:text-[40px] lg:text-6xl font-bold text-[#413356] mb-6 leading-[1.15] tracking-tight">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[38px] font-bold text-[#413356] mb-6 leading-[1.15] tracking-tight">
               A Christ-centered wellness ecosystem rooted in embodiment, rest, and community.
             </h1>
             <p className="text-lg md:text-xl text-gray-700 leading-relaxed max-w-xl font-medium mb-8">
