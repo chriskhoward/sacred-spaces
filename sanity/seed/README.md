@@ -49,6 +49,15 @@ The script creates or updates a `home` document in Sanity with 10 block sections
 4. Create a new token with **Editor** or **Admin** permissions
 5. Copy the token and use it in the command above
 
+### Image Handling
+
+The feature grid items reference images using the `imageUrl` field, which points to public images:
+- `/images/homepage/feature-1.webp`
+- `/images/homepage/feature-2.webp`
+- `/images/homepage/feature-3.webp`
+
+These images are served from the public directory and display in the frontend. For a more robust approach, you can manually upload these images to Sanity Studio and update the seed script to use Sanity asset references instead.
+
 ### Idempotency
 
 The script is idempotent:
