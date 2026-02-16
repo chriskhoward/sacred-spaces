@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { client } from '@/sanity/lib/client';
 import { LiveClass, generateRecurringInstances } from '@/sanity/lib/live-classes';
 import { currentUser } from '@clerk/nextjs/server';
-import LiveClassesSection from '../live-classes/LiveClassesSection';
+import LiveClassesSection from '@/app/live-classes/LiveClassesSection';
 import { isAdmin } from '@/lib/tier';
 
 export const dynamic = 'force-dynamic';
