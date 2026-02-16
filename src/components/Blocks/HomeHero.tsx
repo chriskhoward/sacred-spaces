@@ -9,6 +9,7 @@ const sectionPad = 'pt-32 md:pt-40 lg:pt-44 pb-14 md:pb-20 px-6 sm:px-8';
 const containerWide = 'max-w-6xl mx-auto';
 
 interface HomeHeroBlockProps {
+  badge?: string;
   title?: string;
   subtitle?: string;
   primaryButtonText?: string;
@@ -19,6 +20,7 @@ interface HomeHeroBlockProps {
 }
 
 export default function HomeHeroBlock({
+  badge = 'Flow in Faith',
   title = 'A Christ-centered wellness ecosystem rooted in embodiment, rest, and community.',
   subtitle = "Here, faith is embodied. Here, rest is sacred. Here, you don't have to choose between your calling, your culture, and your wholeness.",
   primaryButtonText = 'Join the Teachers Collective',
@@ -33,6 +35,11 @@ export default function HomeHeroBlock({
     <section className={`bg-white ${sectionPad} ${containerWide}`}>
       <div className="flex flex-col md:flex-row items-center gap-10 lg:gap-16">
         <div className="md:w-[55%] text-left">
+          {badge && (
+            <span className="inline-block py-2 px-6 rounded-full bg-(--color-roti)/10 text-(--color-roti) font-bold tracking-[3px] text-sm mb-6 border border-(--color-roti)/20 uppercase">
+              {badge}
+            </span>
+          )}
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[38px] font-bold text-[#413356] mb-6 leading-[1.15] tracking-tight">
             {title}
           </h1>

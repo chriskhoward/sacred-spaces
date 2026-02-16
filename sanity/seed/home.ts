@@ -6,13 +6,17 @@
  */
 
 import { createClient } from '@sanity/client';
+import { config } from 'dotenv';
+import { resolve } from 'path';
+
+config({ path: resolve(process.cwd(), '.env.local') });
 
 const client = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || '',
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
-  apiVersion: '2024-01-01',
-  token: process.env.SANITY_AUTH_TOKEN || '',
+  apiVersion: '2024-12-21',
   useCdn: false,
+  token: process.env.SANITY_API_TOKEN,
 });
 
 const homeContent = [
@@ -20,6 +24,7 @@ const homeContent = [
   {
     _type: 'homeHeroBlock',
     _key: 'hero-1',
+    badge: 'Flow in Faith',
     title: 'A Christ-centered wellness ecosystem rooted in embodiment, rest, and community.',
     subtitle: "Here, faith is embodied. Here, rest is sacred. Here, you don't have to choose between your calling, your culture, and your wholeness.",
     primaryButtonText: 'Join the Teachers Collective',

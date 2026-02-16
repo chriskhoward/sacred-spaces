@@ -40,6 +40,7 @@ export const homeHeroBlock = defineType({
   title: 'Home Hero',
   type: 'object',
   fields: [
+    defineField({ name: 'badge', title: 'Badge Text', type: 'string', description: 'Small label above the title (e.g. "Flow in Faith")' }),
     defineField({ name: 'title', title: 'Title', type: 'string' }),
     defineField({ name: 'subtitle', title: 'Subtitle', type: 'text' }),
     defineField({
@@ -427,6 +428,7 @@ export const featureGridBlock = defineType({
           defineField({ name: 'description', title: 'Description', type: 'text' }),
           defineField({ name: 'icon', title: 'Icon (Emoji)', type: 'string' }),
           defineField({ name: 'image', title: 'Image (optional)', type: 'image', options: { hotspot: true } }),
+          defineField({ name: 'imageUrl', title: 'Image URL (fallback)', type: 'string', description: 'Public image path (e.g. /images/homepage/feature-1.webp). Used when no Sanity image asset is uploaded.' }),
         ]
       }]
     }),
