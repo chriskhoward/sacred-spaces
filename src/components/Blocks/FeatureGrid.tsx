@@ -6,6 +6,7 @@ interface FeatureItem {
   description: string;
   icon?: string;
   image?: { asset?: unknown };
+  imageUrl?: string;
 }
 
 interface FeatureGridBlockProps {
@@ -43,11 +44,11 @@ export default function FeatureGridBlock({
 
   const cardElements = items.map((item, index) => (
           <div key={index} className={cardClass}>
-            {item.image?.asset ? (
+            {item.image?.asset || item.imageUrl ? (
               <div className={imageWrapperClass || undefined}>
                 <div className="relative w-full aspect-square max-w-[220px] mx-auto rounded-lg overflow-hidden border-4 border-white shadow-md flex-shrink-0">
                   <Image
-                    src={urlForImage(item.image).url()}
+                    src={item.imageUrl || urlForImage(item.image).url()}
                     alt={item.title || ''}
                     fill
                     className="object-cover"
@@ -56,7 +57,7 @@ export default function FeatureGridBlock({
               </div>
             ) : null}
             <div className={cardBodyClass || 'p-8'}>
-              {!item.image?.asset && item.icon && (
+              {!item.image?.asset && !item.imageUrl && item.icon && (
                 <div className="w-14 h-14 bg-(--color-sidecar) text-2xl flex items-center justify-center rounded-2xl mb-6">
                   {item.icon}
                 </div>
