@@ -14,6 +14,7 @@ import { teacherType } from './teacher'
 import { teacherOnboardingCategoryType } from './teacherOnboardingCategory'
 import { teacherOnboardingItemType } from './teacherOnboardingItem'
 import { teacherCollectiveFaqsType } from './teacherCollectiveFaqs'
+import { teacherCollectiveDashboardType } from './teacherCollectiveDashboard'
 import { membershipPlanType } from './membershipPlan'
 import { siteSettingsType } from './siteSettings'
 import { navigationType } from './navigation'
@@ -90,6 +91,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     teacherOnboardingCategoryType,
     teacherOnboardingItemType,
     teacherCollectiveFaqsType,
+    teacherCollectiveDashboardType,
     membershipPlanType,
     siteSettingsType,
     navigationType,

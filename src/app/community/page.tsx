@@ -1,6 +1,8 @@
+import { currentUser } from '@clerk/nextjs/server';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Metadata } from 'next';
 import CommunityClient from './CommunityClient';
 
@@ -9,7 +11,40 @@ export const metadata: Metadata = {
   description: 'Connect, share, and grow with fellow members in our private WhatsApp community.',
 };
 
-export default function CommunityPage() {
+export const dynamic = 'force-dynamic';
+
+export default async function CommunityPage() {
+  const user = await currentUser();
+
+  if (!user) {
+    return (
+      <main className="bg-(--color-gallery) min-h-screen">
+        <Navbar />
+        <section className="pt-[160px] pb-24">
+          <div className="container mx-auto px-4 text-center">
+            <div className="max-w-2xl mx-auto bg-white rounded-3xl p-12 shadow-xl">
+              <h1 className="text-4xl font-bold text-(--color-primary) mb-6">
+                Members Only
+              </h1>
+              <p className="text-xl text-gray-600 mb-8">
+                Sign in to access our directory of Christ-centered yoga teachers.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link
+                  href="/sign-in"
+                  className="btn btn-primary"
+                >
+                  Sign In
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+        <Footer />
+      </main>
+    );
+  }
+
   return (
     <main className="bg-(--color-gallery) min-h-screen">
       <Navbar />

@@ -18,47 +18,11 @@ export const dynamic = 'force-dynamic';
 export default async function DirectoryPage() {
   const user = await currentUser();
 
-  // 1. Require login to access directory
-  if (!user) {
-    return (
-      <main className="bg-(--color-gallery) min-h-screen">
-        <Navbar />
-        <section className="pt-[160px] pb-24">
-          <div className="container mx-auto px-4 text-center">
-            <div className="max-w-2xl mx-auto bg-white rounded-3xl p-12 shadow-xl">
-              <h1 className="text-4xl font-bold text-(--color-primary) mb-6">
-                Members Only
-              </h1>
-              <p className="text-xl text-gray-600 mb-8">
-                Sign in to access our directory of Christ-centered yoga teachers.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link
-                  href="/sign-in"
-                  className="btn btn-primary"
-                >
-                  Sign In
-                </Link>
-                <Link
-                  href="/sign-up"
-                  className="px-6 py-3 border-2 border-(--color-primary) text-(--color-primary) rounded-full font-bold text-sm hover:bg-(--color-primary) hover:text-white transition-all text-center"
-                >
-                  Create Account
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
-        <Footer />
-      </main>
-    );
-  }
-
-  // 2. If user is a teacher, they must have completed onboarding to VIEW the directory
-  const membershipType = user.publicMetadata?.membershipType as string;
+  // If user is a teacher, they must have completed onboarding to VIEW the directory
+  const membershipType = user?.publicMetadata?.membershipType as string;
   const isTeacher = membershipType === 'teacher';
 
-  if (isTeacher && !isTeacherOnboarded(user)) {
+  if (user && isTeacher && !isTeacherOnboarded(user)) {
     return (
       <main className="bg-(--color-gallery) min-h-screen">
         <Navbar />

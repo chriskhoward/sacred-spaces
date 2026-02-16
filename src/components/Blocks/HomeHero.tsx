@@ -27,13 +27,13 @@ export default function HomeHeroBlock({
   secondaryButtonLink,
   logoImage,
 }: HomeHeroBlockProps) {
-  const logoUrl = logoImage?.asset ? urlForImage(logoImage).url() : '/images/homepage/logo-gold.png';
+  const logoUrl = logoImage?.asset ? urlForImage(logoImage).url() : '/assets/images/tc_logo.png';
 
   return (
     <section className={`bg-white ${sectionPad} ${containerWide}`}>
       <div className="flex flex-col md:flex-row items-center gap-10 lg:gap-16">
         <div className="md:w-[55%] text-left">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#413356] mb-6 leading-[1.15] tracking-tight">
+          <h1 className="text-4xl md:text-[40px] lg:text-6xl font-bold text-[#413356] mb-6 leading-[1.15] tracking-tight">
             {title}
           </h1>
           <p className="text-lg md:text-xl text-gray-700 leading-relaxed max-w-xl font-medium mb-8">
@@ -64,15 +64,13 @@ export default function HomeHeroBlock({
         </div>
         <div className="md:w-[45%] flex justify-center">
           <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-[360px] lg:h-[360px]">
-            <div className="absolute inset-0 bg-[#C7A254]/5 rounded-full flex items-center justify-center border-4 border-[#C7A254]/10">
-              <Image
-                src={logoUrl}
-                alt="Flow in Faith Logo"
-                fill
-                className="object-contain p-6"
-                priority
-              />
-            </div>
+            <Image
+              src={logoUrl}
+              alt="Flow in Faith Logo"
+              fill
+              className="object-contain"
+              priority
+            />
           </div>
         </div>
       </div>

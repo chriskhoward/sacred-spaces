@@ -4,6 +4,35 @@ import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { isTeacher, isTeacherOnboarded } from '@/lib/tier';
+import { client } from '@/sanity/lib/client';
+
+const DASHBOARD_QUERY = `*[_type == "teacherCollectiveDashboard" && _id == "teacherCollectiveDashboard"][0]{
+  cards[]{
+    _key,
+    title,
+    description,
+    href,
+    linkLabel
+  }
+}`;
+
+type DashboardCard = {
+  _key: string;
+  title: string;
+  description?: string | null;
+  href: string;
+  linkLabel?: string | null;
+};
+
+const DEFAULT_CARDS: DashboardCard[] = [
+  { _key: 'start', title: 'Start here', description: 'Videos, guides, and resources to get started with the Collective.', href: '/dashboard/teacher-collective/start' },
+  { _key: 'community', title: 'Community', description: 'Creating community guidelines.', href: '/community', linkLabel: 'Go to Community →' },
+  { _key: 'calls', title: 'Live Classes & Workshops', description: 'View upcoming live sessions and workshops with fellow teachers.', href: '/teacher-collective/calls' },
+  { _key: 'video-library', title: 'On-Demand Library', description: 'Browse the on-demand video library with classes, workshops, and teachings.', href: '/video-library' },
+  { _key: 'directory-profile', title: 'Edit Teacher Profile', description: 'Update your directory profile, bio, specialties, and contact information.', href: '/dashboard/directory-profile' },
+  { _key: 'directory', title: 'Teacher Directory', description: 'View all teachers in the collective and manage your directory profile.', href: '/directory' },
+  { _key: 'resources', title: 'Teaching Resources', description: 'Access curated resources, guides, and materials for Christ-Centered Yoga Teachers.', href: '/teacher-collective/resources' },
+];
 
 export default async function TeacherCollectiveDashboard() {
   const user = await currentUser();
@@ -14,18 +43,26 @@ export default async function TeacherCollectiveDashboard() {
 
   const membershipType = user.publicMetadata.membershipType as string;
 
-  // Ensure only teachers can access this
   if (!isTeacher(user.id, membershipType)) {
     redirect('/dashboard');
   }
 
   const hasProfile = isTeacherOnboarded(user);
 
+  let cards: DashboardCard[] = DEFAULT_CARDS;
+  try {
+    const data = await client.fetch<{ cards?: DashboardCard[] } | null>(DASHBOARD_QUERY);
+    if (data?.cards?.length) {
+      cards = data.cards;
+    }
+  } catch {
+    // use default cards on fetch error
+  }
+
   return (
     <main className="bg-(--color-gallery) min-h-screen">
       <Navbar />
 
-      {/* Header */}
       <section className="pt-[160px] pb-8 bg-white border-b border-gray-200">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
@@ -35,7 +72,6 @@ export default async function TeacherCollectiveDashboard() {
         </div>
       </section>
 
-      {/* Main Content */}
       <section className="py-12">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
@@ -55,69 +91,17 @@ export default async function TeacherCollectiveDashboard() {
             )}
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {/* Start here Card */}
-              <Link
-                href="/dashboard/teacher-collective/start"
-                className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
-              >
-                <h3 className="text-2xl font-bold text-(--color-primary) mb-2">Start here</h3>
-                <p className="text-gray-600">Videos, guides, and resources to get started with the Collective.</p>
-              </Link>
-
-              {/* Community Card */}
-              <Link
-                href="/community"
-                className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
-              >
-                <h3 className="text-2xl font-bold text-(--color-primary) mb-2">Community</h3>
-                <p className="text-gray-600 mb-3">Creating community guidelines.</p>
-                <span className="text-(--color-roti) font-bold text-sm">Go to Community →</span>
-              </Link>
-
-              {/* Live Classes Card */}
-              <Link
-                href="/teacher-collective/calls"
-                className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
-              >
-                <h3 className="text-2xl font-bold text-(--color-primary) mb-2">Live Classes & Workshops</h3>
-                <p className="text-gray-600">View upcoming live sessions and workshops with fellow teachers.</p>
-              </Link>
-
-              {/* On-Demand Library Card */}
-              <Link
-                href="/video-library"
-                className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
-              >
-                <h3 className="text-2xl font-bold text-(--color-primary) mb-2">On-Demand Library</h3>
-                <p className="text-gray-600">Browse the on-demand video library with classes, workshops, and teachings.</p>
-              </Link>
-
-              {/* Edit Teacher Profile Card */}
-              <Link
-                href="/dashboard/directory-profile"
-                className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
-              >
-                <h3 className="text-2xl font-bold text-(--color-primary) mb-2">Edit Teacher Profile</h3>
-                <p className="text-gray-600">Update your directory profile, bio, specialties, and contact information.</p>
-              </Link>
-
-              {/* Teacher Directory Card */}
-              <Link
-                href="/directory"
-                className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
-              >
-                <h3 className="text-2xl font-bold text-(--color-primary) mb-2">Teacher Directory</h3>
-                <p className="text-gray-600">View all teachers in the collective and manage your directory profile.</p>
-              </Link>
-
-              {/* Teaching Resources Card */}
-              <Link
-                href="/teacher-collective/resources"
-                className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
-              >
-                <h3 className="text-2xl font-bold text-(--color-primary) mb-2">Teaching Resources</h3>
-                <p className="text-gray-600">Access curated resources, guides, and materials for Christ-Centered Yoga Teachers.</p>
-              </Link>
+              {cards.map((card) => (
+                <Link
+                  key={card._key}
+                  href={card.href}
+                  className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
+                >
+                  <h3 className="text-2xl font-bold text-(--color-primary) mb-2">{card.title}</h3>
+                  {card.description && <p className="text-gray-600">{card.description}</p>}
+                  {card.linkLabel && <span className="mt-3 block text-(--color-roti) font-bold text-sm">{card.linkLabel}</span>}
+                </Link>
+              ))}
             </div>
           </div>
         </div>

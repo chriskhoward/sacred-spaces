@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import FilloutSliderButton from '@/components/FilloutSliderButton';
 
 /** Section padding and max-width to match MailerPage rhythm */
 const sectionPad = 'py-14 md:py-20 px-6 sm:px-8';
@@ -15,25 +14,25 @@ export default function HomePageContent() {
         <div className="flex flex-col md:flex-row items-center gap-10 lg:gap-16">
           <div className="md:w-[55%] text-left">
             <span className="inline-block py-2 px-6 rounded-full bg-(--color-roti)/10 text-(--color-roti) font-bold tracking-[3px] text-sm mb-6 border border-(--color-roti)/20 uppercase tracking-[3px]">Flow in Faith</span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#413356] mb-6 leading-[1.15] tracking-tight">
+            <h1 className="text-4xl md:text-[40px] lg:text-6xl font-bold text-[#413356] mb-6 leading-[1.15] tracking-tight">
               A Christ-centered wellness ecosystem rooted in embodiment, rest, and community.
             </h1>
             <p className="text-lg md:text-xl text-gray-700 leading-relaxed max-w-xl font-medium mb-8">
               Here, faith is embodied. Here, rest is sacred. Here, you don’t have to choose between your calling, your culture, and your wholeness.
             </p>
-            <FilloutSliderButton buttonText="Join the Teachers Collective" variant="hero" className="inline-block" />
+            <Link href="/teacher-collective" className="inline-block py-3 px-6 bg-[#C7A254] text-white rounded-full font-bold text-sm hover:opacity-95 transition-opacity shadow-md">
+              Join the Teachers Collective
+            </Link>
           </div>
           <div className="md:w-[45%] flex justify-center">
             <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-[360px] lg:h-[360px]">
-              <div className="absolute inset-0 bg-[#C7A254]/5 rounded-full flex items-center justify-center border-4 border-[#C7A254]/10">
-                <Image
-                  src="/images/homepage/logo-gold.png"
-                  alt="Flow in Faith Logo"
-                  fill
-                  className="object-contain p-6"
-                  priority
-                />
-              </div>
+              <Image
+                src="/assets/images/tc_logo.png"
+                alt="Flow in Faith Logo"
+                fill
+                className="object-contain"
+                priority
+              />
             </div>
           </div>
         </div>
@@ -163,8 +162,10 @@ export default function HomePageContent() {
               ))}
             </ul>
             <div className="flex flex-col sm:flex-row gap-4">
-              <div className="flex-1 max-w-md [&>div]:w-full [&_a]:w-full [&_button]:w-full [&_a]:rounded-full [&_button]:rounded-full [&_a]:justify-center [&_button]:justify-center">
-                <FilloutSliderButton buttonText="Teachers Collective" className="w-full" />
+              <div className="flex-1 max-w-md">
+                <Link href="/teacher-collective" className="inline-block w-full py-4 px-6 bg-[#C7A254] text-white rounded-full font-bold text-base text-center hover:opacity-95 transition-opacity shadow-md">
+                  Teachers Collective
+                </Link>
               </div>
             </div>
           </div>
@@ -187,7 +188,7 @@ export default function HomePageContent() {
             <div className="bg-white rounded-2xl p-8 md:p-10 shadow-md border border-gray-200 flex flex-col items-center text-center max-w-2xl w-full">
               <div className="relative w-52 h-52 md:w-64 md:h-64 flex-shrink-0 mb-6">
                 <Image
-                  src="/images/homepage/logo-gold.png"
+                  src="/assets/images/tc_logo.png"
                   alt="Flow in Faith Logo"
                   fill
                   className="object-contain"
@@ -210,7 +211,7 @@ export default function HomePageContent() {
       {/* 8b. Held by God banner (gold text, purple bg) */}
       <section className="bg-[#413356] py-14 md:py-20 px-6 sm:px-8 text-center">
         <div className={containerNarrow}>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl text-[#C7A254] font-bold leading-[1.2]">
+          <h2 className="text-3xl md:text-5xl lg:text-6xl text-[#C7A254] font-bold leading-[1.2]">
             This is a space to be held by God,<br />
             by community, and by breath.
           </h2>

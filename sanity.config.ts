@@ -14,7 +14,7 @@ import { apiVersion, dataset, projectId } from './src/sanity/env'
 import { schema } from './src/sanity/schemaTypes'
 
 const singletonActions = new Set(['publish', 'discardChanges', 'restore'])
-const singletonTypes = new Set(['home', 'about', 'teacherCollectiveFaqs'])
+const singletonTypes = new Set(['home', 'about', 'teacherCollectiveFaqs', 'teacherCollectiveDashboard'])
 
 export default defineConfig({
   basePath: '/studio',
@@ -55,6 +55,11 @@ export default defineConfig({
               .title('Teacher Collective FAQs')
               .id('teacherCollectiveFaqs')
               .child(S.document().schemaType('teacherCollectiveFaqs').documentId('teacherCollectiveFaqs')),
+            // Singleton: Teacher Collective Dashboard (card order & items)
+            S.listItem()
+              .title('Teacher Collective Dashboard')
+              .id('teacherCollectiveDashboard')
+              .child(S.document().schemaType('teacherCollectiveDashboard').documentId('teacherCollectiveDashboard')),
             S.divider(),
             // Regular types: Pages
             S.documentTypeListItem('page').title('Dynamic Pages'),
@@ -76,7 +81,7 @@ export default defineConfig({
             ...S.documentTypeListItems().filter(
               (listItem) => {
                 const id = listItem.getId() || ''
-                return !singletonTypes.has(id) && id !== 'page' && id !== 'teacherOnboardingCategory' && id !== 'teacherOnboardingItem' && id !== 'teacherCollectiveFaqs'
+                return !singletonTypes.has(id) && id !== 'page' && id !== 'teacherOnboardingCategory' && id !== 'teacherOnboardingItem' && id !== 'teacherCollectiveFaqs' && id !== 'teacherCollectiveDashboard'
               }
             ),
           ]),

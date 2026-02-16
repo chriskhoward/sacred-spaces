@@ -121,7 +121,7 @@ export default async function TeachingResourcesPage() {
               <p className="text-gray-600 max-w-2xl mx-auto mb-10">
                 Upgrade to Pro to submit resources and access Promotion of Offerings and Paid Teaching Opportunities.
               </p>
-              <Link href="/join?plan=pro" className="btn btn-primary">
+              <Link href="/join/checkout?plan=pro&frequency=month" className="btn btn-primary">
                 Upgrade to Pro
               </Link>
             </>

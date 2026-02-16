@@ -2,7 +2,6 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Image from 'next/image';
 import { Metadata } from 'next';
-import { auth } from '@clerk/nextjs/server';
 import { client } from '@/sanity/lib/client';
 import { PricingCards } from './PricingCards';
 
@@ -22,14 +21,9 @@ const plansProjection = `{
 }`;
 
 export default async function JoinPage() {
-  const { userId } = await auth();
-  const isSignedIn = !!userId;
-
-  // When signed in: only plans with isActive == true in Sanity. When signed out: all plans.
+  // Only show plans that are active in Sanity (Is Active? checked)
   const plans = await client.fetch(
-    isSignedIn
-      ? `*[_type == "membershipPlan" && isActive == true] | order(displayOrder asc) ${plansProjection}`
-      : `*[_type == "membershipPlan"] | order(displayOrder asc) ${plansProjection}`
+    `*[_type == "membershipPlan" && isActive == true] | order(displayOrder asc) ${plansProjection}`
   );
 
   return (
@@ -51,6 +45,35 @@ export default async function JoinPage() {
               />
             </div>
           </div>
+
+          {/* Founders Rate - show until Feb 28, 2026 */}
+          {new Date() < new Date('2026-03-01') && (
+            <div className="max-w-3xl mx-auto mb-16 px-4 text-center">
+              <h3 className="text-2xl md:text-3xl font-bold text-(--color-primary) mb-4">Founders Rate</h3>
+              <p className="text-(--color-primary) text-lg leading-relaxed mb-6">
+                As we open the doors, we&apos;re honoring those who join during this founding season with a special{' '}
+                <span className="text-(--color-roti) font-semibold">Founder&apos;s Rate</span>
+                {' '}— a reflection of the teachers who are helping shape this space from the ground up.
+              </p>
+              <div className="space-y-3 mb-6 text-lg">
+                <p>
+                  <span className="text-(--color-roti) font-semibold">Founder&apos;s Core</span>
+                  <span className="text-(--color-roti)"> → </span>
+                  <span className="text-(--color-primary) font-bold">$37/month ($370 annually)</span>
+                </p>
+                <p>
+                  <span className="text-(--color-roti) font-semibold">Founder&apos;s Pro</span>
+                  <span className="text-(--color-roti)"> → </span>
+                  <span className="text-(--color-primary) font-bold">$57/month ($570 annually)</span>
+                </p>
+              </div>
+              <p className="text-(--color-primary) leading-relaxed">
+                More great news! Your{' '}
+                <span className="text-(--color-roti) font-semibold underline">Founder&apos;s Rate</span>
+                {' '}is locked in as long as you remain a member. This rate is available until February 28, 2026.
+              </p>
+            </div>
+          )}
 
           <div className="max-w-5xl mx-auto">
             {/* Header Content */}

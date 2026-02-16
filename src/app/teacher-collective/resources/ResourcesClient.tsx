@@ -182,7 +182,7 @@ export default function ResourcesClient({ groupedResources, userTier }: Resource
                   Maybe Later
                 </button>
                 <Link
-                  href="/join"
+                  href="/join/checkout?plan=pro&frequency=month"
                   className="flex-1 px-6 py-3 bg-(--color-roti) text-white rounded-full font-bold hover:bg-(--color-primary) transition-colors text-center"
                 >
                   Upgrade Now
