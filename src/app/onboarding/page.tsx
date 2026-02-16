@@ -2,7 +2,6 @@ import { currentUser } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 import { completeTeacherOnboarding } from './actions';
 import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import OnboardingClient from './OnboardingClient';
 import { client } from '@/sanity/lib/client';
 
@@ -75,8 +74,6 @@ export default async function OnboardingPage() {
           />
         </div>
       </section>
-
-      <Footer />
     </main>
   );
 }

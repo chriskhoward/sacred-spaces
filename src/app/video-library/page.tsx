@@ -1,6 +1,5 @@
 import { client } from '@/sanity/lib/client';
 import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import VideoLibraryClient from './VideoLibraryClient';
 import { currentUser } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
@@ -49,7 +48,6 @@ export default async function VideoLibraryPage() {
             </div>
           </div>
         </section>
-        <Footer />
       </main>
     );
   }
@@ -113,7 +111,6 @@ export default async function VideoLibraryPage() {
         userTier={tier}
         membershipType={membershipType}
       />
-      <Footer />
     </main>
   );
 }

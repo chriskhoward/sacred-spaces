@@ -1,5 +1,4 @@
 import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import Link from 'next/link';
 
 export default function JoinProPage() {
@@ -45,7 +44,6 @@ export default function JoinProPage() {
                     </div>
                 </div>
             </section>
-            <Footer />
         </main>
     );
 }

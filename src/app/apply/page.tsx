@@ -1,5 +1,4 @@
 import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import FilloutForm from '@/components/FilloutForm';
 import Image from 'next/image';
 import { Metadata } from 'next';
@@ -49,8 +48,6 @@ export default function ApplyPage() {
           </div>
         </div>
       </section>
-
-      <Footer />
     </main>
   );
 }

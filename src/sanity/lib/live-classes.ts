@@ -6,6 +6,8 @@ export interface LiveClass {
     duration: string;
     type: string;
     category?: string;
+    categorySlug?: string | null;
+    categoryRef?: string | null;
     description: string;
     zoomLink?: string;
     isRecurring?: boolean;

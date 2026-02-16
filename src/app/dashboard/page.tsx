@@ -2,7 +2,6 @@ import { currentUser } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import Navbar from '@/components/Navbar'
-import Footer from '@/components/Footer'
 import { isTeacher } from '@/lib/tier'
 
 export default async function DashboardPage() {
@@ -83,8 +82,6 @@ export default async function DashboardPage() {
           </div>
         </div>
       </section>
-
-      <Footer />
     </main>
   )
 }

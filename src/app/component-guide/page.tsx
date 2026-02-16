@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { client } from '@/sanity/lib/client';
 import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import BlockRenderer from '@/components/Blocks/BlockRenderer';
 
 export const metadata: Metadata = {
@@ -54,8 +53,6 @@ export default async function ComponentGuidePage() {
           </div>
         </section>
       )}
-
-      <Footer />
     </main>
   );
 }

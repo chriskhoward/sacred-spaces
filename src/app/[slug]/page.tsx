@@ -1,6 +1,5 @@
 import { getClient } from '@/sanity/lib/client';
 import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import BlockRenderer from '@/components/Blocks/BlockRenderer';
 import { notFound, redirect } from 'next/navigation';
 import type { Metadata } from 'next';
@@ -52,7 +51,6 @@ export default async function GenericPage({ params }: PageProps) {
         documentId={data._id}
         documentType={data._type}
       />
-      <Footer />
     </main>
   );
 }

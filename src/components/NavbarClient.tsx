@@ -8,9 +8,13 @@ import { isMember } from "@/lib/tier";
 
 interface NavbarClientProps {
   dynamicPages: Array<{ title: string; slug: string }>;
+  logoUrl?: string | null;
 }
 
-export default function NavbarClient({ dynamicPages }: NavbarClientProps) {
+const DEFAULT_LOGO = '/assets/images/tc_logo.png';
+
+export default function NavbarClient({ dynamicPages, logoUrl }: NavbarClientProps) {
+  const logo = logoUrl || DEFAULT_LOGO;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, isLoaded } = useUser();
 
@@ -39,12 +43,13 @@ export default function NavbarClient({ dynamicPages }: NavbarClientProps) {
         <div className="container mx-auto px-4 flex justify-between items-center h-20">
           <Link href="/" className="shrink-0 flex items-center" onClick={closeMenu}>
             <Image
-              src="/assets/images/tc_logo.png"
+              src={logo}
               alt="Flow in Faith Teachers Collective Logo"
               width={200}
               height={200}
               priority
               className="h-16 w-16 object-contain"
+              unoptimized={logo.startsWith('http')}
             />
           </Link>
 

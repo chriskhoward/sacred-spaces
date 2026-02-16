@@ -1,6 +1,5 @@
 import { client } from '@/sanity/lib/client';
 import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import { currentUser } from '@clerk/nextjs/server';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -128,8 +127,6 @@ export default async function TeachingResourcesPage() {
           )}
         </div>
       </section>
-
-      <Footer />
     </main>
   );
 }

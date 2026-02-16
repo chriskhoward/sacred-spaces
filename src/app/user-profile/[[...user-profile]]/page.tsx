@@ -1,6 +1,5 @@
 import { UserProfile } from '@clerk/nextjs'
 import Navbar from '@/components/Navbar'
-import Footer from '@/components/Footer'
 
 export default function UserProfilePage() {
   return (
@@ -20,7 +19,6 @@ export default function UserProfilePage() {
            />
         </div>
       </section>
-      <Footer />
     </main>
   )
 }

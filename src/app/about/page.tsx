@@ -1,6 +1,5 @@
 import { getClient } from '@/sanity/lib/client';
 import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import BlockRenderer from '@/components/Blocks/BlockRenderer';
 import { Metadata } from 'next';
 import { draftMode } from 'next/headers';
@@ -40,8 +39,6 @@ export default async function AboutPage() {
           { _type: 'ctaBlock', _key: 'default-cta' }
         ]} />
       )}
-      
-      <Footer />
     </main>
   );
 }

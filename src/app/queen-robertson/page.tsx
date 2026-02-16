@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import FilloutSliderButton from '@/components/FilloutSliderButton';
 import { Metadata } from 'next';
 
@@ -143,8 +142,6 @@ export default function QueenRobertsonPage() {
           </div>
         </div>
       </section>
-
-      <Footer />
     </main>
   );
 }

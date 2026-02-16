@@ -3,7 +3,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { clerkClient } from '@clerk/nextjs/server';
 import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import { teachers, Teacher } from '@/data/teachers';
 import type { Metadata } from 'next';
 
@@ -207,8 +206,6 @@ export default async function TeacherProfile({ params }: PageProps) {
           </div>
         </div>
       </section>
-
-      <Footer />
     </main>
   );
 }

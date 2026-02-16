@@ -1,5 +1,4 @@
 import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import Image from 'next/image';
 import { Metadata } from 'next';
 import { client } from '@/sanity/lib/client';
@@ -93,8 +92,6 @@ export default async function JoinPage() {
           </div>
         </div>
       </section>
-
-      <Footer />
     </main>
   );
 }

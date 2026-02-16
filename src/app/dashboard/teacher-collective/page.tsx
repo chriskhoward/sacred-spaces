@@ -2,7 +2,6 @@ import { currentUser } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import { isTeacher, isTeacherOnboarded } from '@/lib/tier';
 import { client } from '@/sanity/lib/client';
 
@@ -106,8 +105,6 @@ export default async function TeacherCollectiveDashboard() {
           </div>
         </div>
       </section>
-
-      <Footer />
     </main>
   );
 }

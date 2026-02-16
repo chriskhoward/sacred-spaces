@@ -1,5 +1,4 @@
 import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import Link from 'next/link';
 
 export default function JoinCorePage() {
@@ -42,7 +41,6 @@ export default function JoinCorePage() {
                     </div>
                 </div>
             </section>
-            <Footer />
         </main>
     );
 }

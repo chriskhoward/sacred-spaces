@@ -1,10 +1,9 @@
 import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import Image from 'next/image';
 import { client } from '@/sanity/lib/client';
 import { LiveClass, generateRecurringInstances } from '@/sanity/lib/live-classes';
 import { currentUser } from '@clerk/nextjs/server';
-import LiveClassesCards from './LiveClassesCards';
+import LiveClassesSection from '../live-classes/LiveClassesSection';
 import { isAdmin } from '@/lib/tier';
 
 export const dynamic = 'force-dynamic';
@@ -16,7 +15,8 @@ export default async function LiveClassesWorkshopsPage() {
   const now = new Date().toISOString();
 
   const allowedAudiences = ["all", "teacher", "teacher_core", "teacher_pro"];
-  const query = `*[_type == "liveClass" && (targetAudience == "all" || count(targetAudience[@ in $allowedAudiences]) > 0) && dateTime >= "${now}"] | order(dateTime asc) {
+  const categoriesQuery = `*[_type == "liveClassCategory"] | order(order asc) { _id, title, "slug": slug.current }`;
+  const classesQuery = `*[_type == "liveClass" && (targetAudience == "all" || count(targetAudience[@ in $allowedAudiences]) > 0) && dateTime >= "${now}"] | order(dateTime asc) {
     _id,
     title,
     instructor,
@@ -24,6 +24,8 @@ export default async function LiveClassesWorkshopsPage() {
     duration,
     type,
     "category": category->title,
+    "categorySlug": category->slug.current,
+    "categoryRef": category._ref,
     description,
     zoomLink,
     isRecurring,
@@ -33,7 +35,10 @@ export default async function LiveClassesWorkshopsPage() {
     targetAudience
   }`;
 
-  const rawClasses: LiveClass[] = await client.fetch(query, { allowedAudiences });
+  const [categories, rawClasses] = await Promise.all([
+    client.fetch<{ _id: string; title: string; slug: string | null }[]>(categoriesQuery),
+    client.fetch<LiveClass[]>(classesQuery, { allowedAudiences }),
+  ]);
 
   // Expand recurring classes into individual instances
   const allClasses = rawClasses.flatMap(generateRecurringInstances);
@@ -77,11 +82,14 @@ export default async function LiveClassesWorkshopsPage() {
       <section className="py-16">
         <div className="container mx-auto px-4 max-w-5xl">
           <h2 className="text-3xl font-bold text-(--color-primary) mb-8 pl-4 border-l-4 border-(--color-roti)">Upcoming Sessions</h2>
-          <LiveClassesCards classes={upcomingClasses} userTier={tier} />
+          <LiveClassesSection
+            categories={categories ?? []}
+            classes={upcomingClasses}
+            userTier={tier}
+            userId={user?.id ?? null}
+          />
         </div>
       </section>
-
-      <Footer />
     </main>
   );
 }

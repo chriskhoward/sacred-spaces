@@ -1,6 +1,5 @@
 import { clerkClient, currentUser } from '@clerk/nextjs/server';
 import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import DirectoryClient from './DirectoryClient';
 import { Teacher } from '@/data/teachers';
 import { Metadata } from 'next';
@@ -56,7 +55,6 @@ export default async function DirectoryPage() {
             </div>
           </div>
         </section>
-        <Footer />
       </main>
     );
   }
@@ -112,8 +110,6 @@ export default async function DirectoryPage() {
       </header>
 
       <DirectoryClient teachers={teachers} />
-
-      <Footer />
     </main>
   );
 }

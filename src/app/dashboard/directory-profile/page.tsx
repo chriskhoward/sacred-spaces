@@ -4,7 +4,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { updateDirectoryProfile } from './actions';
 import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import SpecialtiesSelect from '@/components/SpecialtiesSelect';
 import { isTeacher } from '@/lib/tier';
 
@@ -267,8 +266,6 @@ export default async function DirectoryProfilePage() {
           </div>
         </div>
       </section>
-
-      <Footer />
     </main>
   );
 }

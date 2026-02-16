@@ -1,5 +1,4 @@
 import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import HomePageContent from '@/components/Home/HomePageContent';
 import { Metadata } from 'next';
 
@@ -17,7 +16,6 @@ export default function Home() {
     <main className="min-h-screen bg-white">
       <Navbar />
       <HomePageContent />
-      <Footer />
     </main>
   );
 }

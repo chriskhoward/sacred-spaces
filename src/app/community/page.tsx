@@ -1,6 +1,5 @@
 import { currentUser } from '@clerk/nextjs/server';
 import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Metadata } from 'next';
@@ -40,7 +39,6 @@ export default async function CommunityPage() {
             </div>
           </div>
         </section>
-        <Footer />
       </main>
     );
   }
@@ -73,8 +71,6 @@ export default async function CommunityPage() {
           <CommunityClient />
         </div>
       </section>
-
-      <Footer />
     </main>
   );
 }

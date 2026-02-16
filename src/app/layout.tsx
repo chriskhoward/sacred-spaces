@@ -7,7 +7,10 @@ import "./globals.css";
 import VisualEditing from "@/components/VisualEditing";
 import { Analytics } from "@vercel/analytics/next";
 import AnnouncementBar from "@/components/AnnouncementBar";
+import Footer from "@/components/Footer";
 import { getClient } from "@/sanity/lib/client";
+import { SITE_SETTINGS_QUERY, type SiteSettings } from "@/sanity/lib/siteSettings";
+import { urlForImage } from "@/sanity/lib/image";
 
 const GTM_ID = "GTM-5Z6DMF5X";
 
@@ -21,23 +24,30 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://flowinfaith.com';
 export async function generateMetadata(): Promise<Metadata> {
   const { isEnabled } = await draftMode();
   const client = getClient(isEnabled);
-  const settings = await client.fetch(`*[_type == "siteSettings"][0]{ title, description }`);
+  const settings = await client.fetch<SiteSettings>(SITE_SETTINGS_QUERY);
 
   const title = settings?.title || "Flow in Faith - Christ-Centered Yoga";
   const description = settings?.description || "A membership community for Christ-Centered Yoga Teachers of Color and practitioners.";
+
+  const iconUrl = settings?.favicon
+    ? urlForImage(settings.favicon).width(32).height(32).url()
+    : undefined;
+  const appleIconUrl = settings?.favicon
+    ? urlForImage(settings.favicon).width(180).height(180).url()
+    : undefined;
 
   return {
     metadataBase: new URL(siteUrl),
     title,
     description,
     icons: {
-      icon: [{ url: '/icon.png', type: 'image/png' }],
-      apple: [{ url: '/apple-icon.png', type: 'image/png' }],
+      icon: iconUrl ? [{ url: iconUrl, type: 'image/png' }] : [{ url: '/icon.png', type: 'image/png' }],
+      apple: appleIconUrl ? [{ url: appleIconUrl, sizes: '180x180' }] : [{ url: '/apple-icon.png', type: 'image/png' }],
     },
     openGraph: {
       title,
       description,
-      siteName: "Flow in Faith",
+      siteName: title,
       type: "website",
     },
     twitter: {
@@ -56,8 +66,10 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Get publishableKey from environment variable
   const publishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+  const { isEnabled } = await draftMode();
+  const client = getClient(isEnabled);
+  const settings = await client.fetch<SiteSettings>(SITE_SETTINGS_QUERY);
 
   return (
     <ClerkProvider
@@ -108,6 +120,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           </noscript>
           <AnnouncementBar />
           {children}
+          <Footer
+            logoUrl={settings?.logo ? urlForImage(settings.logo).width(400).url() : undefined}
+            socialLinks={settings?.socialLinks ?? undefined}
+            contactEmail={settings?.contactEmail ?? undefined}
+          />
           {(await draftMode()).isEnabled && <VisualEditing />}
           <Analytics />
         </body>

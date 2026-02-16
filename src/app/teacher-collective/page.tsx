@@ -2,7 +2,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Script from 'next/script';
 import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import FilloutSliderButton from '@/components/FilloutSliderButton';
 import { Metadata } from 'next';
 import { Dancing_Script } from 'next/font/google';
@@ -644,8 +643,6 @@ export default async function TeacherCollectivePage() {
           </div>
         </div>
       </section>
-
-      <Footer />
     </main>
   );
 }

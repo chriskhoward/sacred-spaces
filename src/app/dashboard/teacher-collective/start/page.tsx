@@ -3,7 +3,6 @@ import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import { Metadata } from 'next';
 import { client } from '@/sanity/lib/client';
 
@@ -293,8 +292,6 @@ export default async function TeacherCollectiveStartPage() {
           </div>
         </div>
       </section>
-
-      <Footer />
     </main>
   );
 }
