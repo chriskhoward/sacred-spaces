@@ -71,7 +71,7 @@ export default function CheckoutBridgePage() {
                 // Open Clerk's checkout modal
                 (clerk as any).__internal_openCheckout({
                     planId: clerkPlanId,
-                    planPeriod: freqParam === 'year' ? 'year' : 'month',
+                    planPeriod: freqParam === 'year' ? 'annual' : 'month',
                     newSubscriptionRedirectUrl: '/api/onboarding/pay-success',
                 });
 
