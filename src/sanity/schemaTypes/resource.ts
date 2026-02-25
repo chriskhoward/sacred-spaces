@@ -66,5 +66,19 @@ export const resourceType = defineType({
       initialValue: ['all'],
       validation: (Rule) => Rule.required().min(1),
     }),
+    defineField({
+      name: 'order',
+      title: 'Display Order',
+      type: 'number',
+      description: 'Lower numbers appear first within each category',
+      initialValue: 0,
+    }),
+  ],
+  orderings: [
+    {
+      title: 'Display Order',
+      name: 'orderAsc',
+      by: [{ field: 'order', direction: 'asc' }],
+    },
   ],
 })

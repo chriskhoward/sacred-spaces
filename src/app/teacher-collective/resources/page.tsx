@@ -26,12 +26,13 @@ export default async function TeachingResourcesPage() {
     "slug": slug.current
   }`;
 
-  // Fetch resources for relevant audiences
-  const resourcesQuery = `*[_type == "resource" && (targetAudience == "all" || count(targetAudience[@ in $allowedAudiences]) > 0)] | order(_createdAt desc) {
+  // Fetch resources for relevant audiences, sorted by display order then creation date
+  const resourcesQuery = `*[_type == "resource" && (targetAudience == "all" || count(targetAudience[@ in $allowedAudiences]) > 0)] | order(order asc, _createdAt desc) {
     _id,
     title,
     "category": category->title,
     "categorySlug": category->slug.current,
+    "categoryOrder": category->order,
     description,
     linkUrl,
     isLocked,
