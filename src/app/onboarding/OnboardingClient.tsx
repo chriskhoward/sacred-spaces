@@ -1,5 +1,7 @@
 'use client';
 
+import { useState, useRef } from 'react';
+import Image from 'next/image';
 import SpecialtiesSelect from '@/components/SpecialtiesSelect';
 import { SPECIALTIES_LIST } from '@/data/teachers';
 
@@ -15,6 +17,7 @@ interface AlignmentPrefill {
 interface OnboardingClientProps {
   userFirstName: string;
   userLastName: string;
+  currentImageUrl?: string;
   prefill?: AlignmentPrefill;
   completeTeacherOnboarding: CompleteTeacherOnboarding;
 }
@@ -55,9 +58,14 @@ function matchSpecialties(yogaFormats: string[]): string[] {
 export default function OnboardingClient({
   userFirstName,
   userLastName,
+  currentImageUrl,
   prefill = {},
   completeTeacherOnboarding,
 }: OnboardingClientProps) {
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const [photoError, setPhotoError] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   // Prefer alignment form name, fall back to Clerk name
   const defaultName = prefill.name
     || [userFirstName, userLastName].filter(Boolean).join(' ').trim()
@@ -68,6 +76,35 @@ export default function OnboardingClient({
   const defaultSpecialties = matchSpecialties(prefill.yogaFormats || []);
 
   const hasPrefill = !!(prefill.location || prefill.whyJoin || (prefill.yogaFormats && prefill.yogaFormats.length > 0));
+
+  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    setPhotoError(null);
+    if (!file) {
+      setPhotoPreview(null);
+      return;
+    }
+    if (!file.type.startsWith('image/')) {
+      setPhotoError('Please select an image file (JPG, PNG, etc.)');
+      setPhotoPreview(null);
+      return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      setPhotoError('Image must be under 10 MB');
+      setPhotoPreview(null);
+      return;
+    }
+    setPhotoPreview(URL.createObjectURL(file));
+  };
+
+  const handleSubmit = (formData: FormData) => {
+    const file = fileInputRef.current?.files?.[0];
+    if (!file) {
+      setPhotoError('A profile picture is required');
+      return;
+    }
+    completeTeacherOnboarding(formData);
+  };
 
   return (
     <div className="bg-white p-12 rounded-3xl shadow-xl">
@@ -84,7 +121,53 @@ export default function OnboardingClient({
         </div>
       )}
 
-      <form action={completeTeacherOnboarding} className="space-y-6">
+      <form action={handleSubmit} className="space-y-6">
+        {/* Profile Picture Upload */}
+        <div>
+          <label className="block text-gray-700 font-bold mb-2">Profile Picture *</label>
+          <div className="flex flex-col sm:flex-row items-center gap-6">
+            <div className="relative w-28 h-28 shrink-0">
+              {photoPreview || currentImageUrl ? (
+                <Image
+                  src={photoPreview || currentImageUrl!}
+                  alt="Profile preview"
+                  fill
+                  className="rounded-full object-cover border-4 border-(--color-sidecar) shadow-md"
+                  unoptimized={!!photoPreview}
+                />
+              ) : (
+                <div className="w-28 h-28 rounded-full bg-gray-100 border-4 border-dashed border-gray-300 flex items-center justify-center">
+                  <svg className="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                  </svg>
+                </div>
+              )}
+            </div>
+            <div className="flex-1 text-center sm:text-left">
+              <input
+                ref={fileInputRef}
+                type="file"
+                id="profilePhoto"
+                name="profilePhoto"
+                accept="image/*"
+                onChange={handlePhotoChange}
+                className="hidden"
+              />
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                className="px-6 py-2 bg-(--color-sidecar) text-(--color-bronzetone) rounded-full font-bold text-sm hover:bg-(--color-roti) hover:text-white transition-all"
+              >
+                {photoPreview ? 'Change Photo' : 'Upload Photo'}
+              </button>
+              <p className="text-sm text-gray-500 mt-2">JPG or PNG, max 10 MB. This will appear in the Teacher Directory.</p>
+              {photoError && (
+                <p className="text-sm text-red-600 font-medium mt-1">{photoError}</p>
+              )}
+            </div>
+          </div>
+        </div>
+
         <div>
           <label htmlFor="name" className="block text-gray-700 font-bold mb-2">Display Name *</label>
           <input
