@@ -109,7 +109,7 @@ export default function NavbarClient({ dynamicPages, logoUrl }: NavbarClientProp
               {dynamicPages.map((page) => (
                 <li key={page.slug}>
                   <Link
-                    href={`/${page.slug}`}
+                    href={page.slug}
                     className="font-bold text-white hover:text-(--color-roti) transition-colors text-xl py-2 block"
                     onClick={closeMenu}
                   >
