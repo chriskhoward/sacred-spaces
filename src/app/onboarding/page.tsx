@@ -69,6 +69,7 @@ export default async function OnboardingPage() {
           <OnboardingClient
             userFirstName={user.firstName ?? ''}
             userLastName={user.lastName ?? ''}
+            currentImageUrl={user.imageUrl}
             prefill={prefill}
             completeTeacherOnboarding={completeTeacherOnboarding}
           />

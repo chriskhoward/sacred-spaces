@@ -62,10 +62,15 @@ export async function completeTeacherOnboarding(formData: FormData) {
   const website = formData.get('website') as string;
   const specialtiesRaw = formData.getAll('specialties'); // Use getAll for multiple select
   const certificationsRaw = formData.get('certifications') as string;
+  const profilePhoto = formData.get('profilePhoto') as File | null;
 
   // Validation (website and social media are optional)
   if (!name?.trim() || !location?.trim() || !bio?.trim() || !certificationsRaw?.trim()) {
     throw new Error('Name, Location, Bio, and Certifications are required');
+  }
+
+  if (!profilePhoto || profilePhoto.size === 0) {
+    throw new Error('A profile picture is required');
   }
 
   // Handle specialties - getAll returns array of strings
@@ -98,12 +103,12 @@ export async function completeTeacherOnboarding(formData: FormData) {
 
   try {
     const client = await clerkClient();
-    const clerkUser = await client.users.getUser(userId);
 
-    // Use the manually uploaded image if available, otherwise fall back to imageUrl
-    // Clerk stores uploaded images in user.imageUrl, but we want to prioritize manually uploaded
-    // The issue is that Clerk syncs from Google, so we need to check if there's a way to distinguish
-    // For now, we'll use imageUrl but note that users should upload via Clerk's profile settings
+    // Upload profile photo to Clerk
+    await client.users.setProfileImage(userId, { file: profilePhoto });
+
+    // Re-fetch user to get the updated imageUrl
+    const clerkUser = await client.users.getUser(userId);
     const imageUrl = clerkUser.imageUrl;
 
     // 1. Update Clerk Metadata with teacher profile
