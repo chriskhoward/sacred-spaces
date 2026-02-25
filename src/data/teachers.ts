@@ -8,6 +8,7 @@ export interface Teacher {
   image: string;
   email: string;
   website?: string;
+  createdAt?: number;
   socialMedia?: {
     instagram?: string;
     facebook?: string;

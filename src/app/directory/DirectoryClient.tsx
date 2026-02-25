@@ -9,26 +9,35 @@ interface DirectoryClientProps {
   teachers: Teacher[];
 }
 
+type SortOption = 'oldest' | 'newest';
+
 export default function DirectoryClient({ teachers }: DirectoryClientProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSpecialty, setSelectedSpecialty] = useState('All');
+  const [sortOrder, setSortOrder] = useState<SortOption>('oldest');
 
   // Use the predefined specialties list so the dropdown always has all options
   const allSpecialties = ['All', ...SPECIALTIES_LIST];
 
-  const filteredTeachers = teachers.filter(teacher => {
-    const name = teacher.name || '';
-    const location = teacher.location || '';
-    const specialties = teacher.specialties || [];
+  const filteredTeachers = teachers
+    .filter(teacher => {
+      const name = teacher.name || '';
+      const location = teacher.location || '';
+      const specialties = teacher.specialties || [];
 
-    const matchesSearch = name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         location.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         specialties.some(s => s.toLowerCase().includes(searchQuery.toLowerCase()));
-    
-    const matchesSpecialty = selectedSpecialty === 'All' || specialties.includes(selectedSpecialty);
-    
-    return matchesSearch && matchesSpecialty;
-  });
+      const matchesSearch = name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                           location.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                           specialties.some(s => s.toLowerCase().includes(searchQuery.toLowerCase()));
+
+      const matchesSpecialty = selectedSpecialty === 'All' || specialties.includes(selectedSpecialty);
+
+      return matchesSearch && matchesSpecialty;
+    })
+    .sort((a, b) => {
+      const aTime = a.createdAt ?? 0;
+      const bTime = b.createdAt ?? 0;
+      return sortOrder === 'oldest' ? aTime - bTime : bTime - aTime;
+    });
 
   return (
     <>
@@ -48,7 +57,7 @@ export default function DirectoryClient({ teachers }: DirectoryClientProps) {
             
             <div className="flex items-center gap-4 flex-1 w-full min-w-[250px]">
               <label className="font-bold text-gray-700 whitespace-nowrap">Specialty:</label>
-              <select 
+              <select
                 className="flex-1 px-4 py-4 rounded-2xl border-2 border-(--color-gallery) bg-white outline-none focus:border-(--color-roti) transition-all cursor-pointer"
                 value={selectedSpecialty}
                 onChange={(e) => setSelectedSpecialty(e.target.value)}
@@ -56,6 +65,18 @@ export default function DirectoryClient({ teachers }: DirectoryClientProps) {
                 {allSpecialties.map(specialty => (
                   <option key={specialty} value={specialty}>{specialty}</option>
                 ))}
+              </select>
+            </div>
+
+            <div className="flex items-center gap-4 w-full md:w-auto min-w-[220px]">
+              <label className="font-bold text-gray-700 whitespace-nowrap">Sort:</label>
+              <select
+                className="flex-1 px-4 py-4 rounded-2xl border-2 border-(--color-gallery) bg-white outline-none focus:border-(--color-roti) transition-all cursor-pointer"
+                value={sortOrder}
+                onChange={(e) => setSortOrder(e.target.value as SortOption)}
+              >
+                <option value="oldest">Date Added (Oldest)</option>
+                <option value="newest">Date Added (Newest)</option>
               </select>
             </div>
           </div>

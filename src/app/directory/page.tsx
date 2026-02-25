@@ -85,6 +85,7 @@ export default async function DirectoryPage() {
         email: u.emailAddresses[0]?.emailAddress,
         website: profile.website,
         socialMedia: profile.socialMedia || {},
+        createdAt: u.createdAt,
       };
     });
 
