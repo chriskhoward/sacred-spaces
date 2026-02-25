@@ -6,7 +6,6 @@ import Script from "next/script";
 import "./globals.css";
 import VisualEditing from "@/components/VisualEditing";
 import { Analytics } from "@vercel/analytics/next";
-import AnnouncementBar from "@/components/AnnouncementBar";
 import Footer from "@/components/Footer";
 import { getClient } from "@/sanity/lib/client";
 import { SITE_SETTINGS_QUERY, type SiteSettings } from "@/sanity/lib/siteSettings";
@@ -118,7 +117,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               title="Google Tag Manager"
             />
           </noscript>
-          <AnnouncementBar />
           {children}
           <Footer
             logoUrl={settings?.logo ? urlForImage(settings.logo).width(400).url() : undefined}

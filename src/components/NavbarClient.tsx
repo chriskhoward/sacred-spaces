@@ -3,19 +3,31 @@
 import Link from "next/link";
 import Image from "next/image";
 import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/nextjs";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { isMember } from "@/lib/tier";
+import type { CSSProperties } from "react";
+
+interface AnnouncementData {
+  text: string;
+  link?: string;
+  bgClass?: string;
+  textClass?: string;
+  style?: CSSProperties;
+}
 
 interface NavbarClientProps {
   dynamicPages: Array<{ title: string; slug: string }>;
   logoUrl?: string | null;
+  announcement?: AnnouncementData | null;
 }
 
 const DEFAULT_LOGO = '/assets/images/tc_logo.png';
 
-export default function NavbarClient({ dynamicPages, logoUrl }: NavbarClientProps) {
+export default function NavbarClient({ dynamicPages, logoUrl, announcement }: NavbarClientProps) {
   const logo = logoUrl || DEFAULT_LOGO;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const lastScrollY = useRef(0);
   const { user, isLoaded } = useUser();
 
   const toggleMenu = () => {
@@ -25,6 +37,38 @@ export default function NavbarClient({ dynamicPages, logoUrl }: NavbarClientProp
   const closeMenu = () => {
     setIsMenuOpen(false);
   };
+
+  // Hide on scroll down, show on scroll up
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      // Always show at the very top
+      if (currentScrollY < 10) {
+        setIsVisible(true);
+        lastScrollY.current = currentScrollY;
+        return;
+      }
+
+      // Don't hide when mobile menu is open
+      if (isMenuOpen) {
+        lastScrollY.current = currentScrollY;
+        return;
+      }
+
+      const delta = currentScrollY - lastScrollY.current;
+      if (delta > 10) {
+        setIsVisible(false);
+      } else if (delta < -10) {
+        setIsVisible(true);
+      }
+
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isMenuOpen]);
 
   // Get membership type from user metadata
   const membershipType = user?.publicMetadata?.membershipType as string | undefined;
@@ -37,9 +81,31 @@ export default function NavbarClient({ dynamicPages, logoUrl }: NavbarClientProp
     { label: 'Teacher Directory', href: '/directory' },
   ] : [];
 
+  // Render announcement bar content
+  const announcementContent = announcement ? (
+    <div
+      className={`${announcement.bgClass ?? ''} ${announcement.textClass ?? ''} py-2 px-4 text-center text-sm font-medium`.trim()}
+      style={announcement.style}
+    >
+      {announcement.text}
+    </div>
+  ) : null;
+
+  const announcementBar = announcement?.link ? (
+    <Link href={announcement.link} className="block hover:opacity-90 transition-opacity">
+      {announcementContent}
+    </Link>
+  ) : announcementContent;
+
   return (
-    <>
-      <nav className="fixed w-full py-4 z-40 bg-(--color-primary)">
+    <div
+      className={`fixed top-0 left-0 w-full z-40 transition-transform duration-300 ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}
+    >
+      {/* Announcement Bar */}
+      {announcementBar}
+
+      {/* Main Nav */}
+      <nav className="bg-(--color-primary) py-4">
         <div className="container mx-auto px-4 flex justify-between items-center h-20">
           <Link href="/" className="shrink-0 flex items-center" onClick={closeMenu}>
             <Image
@@ -102,7 +168,7 @@ export default function NavbarClient({ dynamicPages, logoUrl }: NavbarClientProp
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="lg:hidden fixed top-20 left-0 right-0 bg-(--color-primary) z-[60] shadow-lg max-h-[calc(100vh-5rem)] overflow-y-auto">
+        <div className="lg:hidden bg-(--color-primary) shadow-lg max-h-[calc(100vh-10rem)] overflow-y-auto">
           <div className="flex flex-col pt-8 px-6 pb-8">
             <ul className="flex flex-col gap-6 list-none m-0 p-0">
               {/* Dynamic Sanity Pages (shown to everyone) */}
@@ -163,6 +229,6 @@ export default function NavbarClient({ dynamicPages, logoUrl }: NavbarClientProp
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }
