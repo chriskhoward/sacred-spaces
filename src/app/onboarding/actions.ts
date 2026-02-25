@@ -105,7 +105,7 @@ export async function completeTeacherOnboarding(formData: FormData) {
     const client = await clerkClient();
 
     // Upload profile photo to Clerk
-    await client.users.setProfileImage(userId, { file: profilePhoto });
+    await client.users.updateUserProfileImage(userId, { file: profilePhoto });
 
     // Re-fetch user to get the updated imageUrl
     const clerkUser = await client.users.getUser(userId);
