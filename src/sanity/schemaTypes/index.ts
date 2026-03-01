@@ -19,6 +19,10 @@ import { membershipPlanType } from './membershipPlan'
 import { siteSettingsType } from './siteSettings'
 import { navigationType } from './navigation'
 import { announcementBarType } from './announcementBar'
+import { summitSpeakerType } from './summitSpeaker'
+import { summitType } from './summit'
+import { summitPresentationType } from './summitPresentation'
+import { summitYogaClassType } from './summitYogaClass'
 import {
   heroBlock,
   homeHeroBlock,
@@ -97,6 +101,10 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     membershipPlanType,
     siteSettingsType,
     navigationType,
-    announcementBarType
+    announcementBarType,
+    summitType,
+    summitSpeakerType,
+    summitPresentationType,
+    summitYogaClassType,
   ],
 }
