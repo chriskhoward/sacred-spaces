@@ -18,14 +18,15 @@ export const dynamic = 'force-dynamic';
 export default async function LiveClassesPage() {
   const user = await currentUser();
   const userId = user?.id || null;
-  const adminStatus = isAdmin(userId);
+  const role = (user?.publicMetadata?.role as string) || null;
+  const adminStatus = isAdmin(role);
   const membershipType = (user?.publicMetadata?.membershipType as string) || 'practitioner';
   const tier = (user?.publicMetadata?.tier as string) || 'free';
 
   const now = new Date().toISOString();
 
   // Determine search filters based on membership collective
-  const isTeacherUser = isTeacher(userId, membershipType);
+  const isTeacherUser = isTeacher(role, membershipType);
   const collective = isTeacherUser ? 'teacher' : 'practitioner';
   const allowedAudiences = ['all', collective, `${collective}_core`, `${collective}_pro`];
 
@@ -57,11 +58,15 @@ export default async function LiveClassesPage() {
   const allClasses = rawClasses.flatMap(generateRecurringInstances);
 
   // Mark classes as locked based on Admin bypass and Pro status
-  const processedClasses = allClasses.map(cls => ({
-    ...cls,
-    // Lock if NOT admin AND (manual lock OR any audience is Pro while user is not Pro)
-    isLocked: adminStatus ? false : (cls.isLocked || (Array.isArray(cls.targetAudience) && cls.targetAudience.some((a: string) => a.endsWith('_pro')) && tier.toLowerCase() !== 'pro'))
-  }));
+  // Strip zoomLink from locked classes so it never reaches the client
+  const processedClasses = allClasses.map(cls => {
+    const isLocked = adminStatus ? false : (cls.isLocked || (Array.isArray(cls.targetAudience) && cls.targetAudience.some((a: string) => a.endsWith('_pro')) && tier.toLowerCase() !== 'pro'));
+    return {
+      ...cls,
+      zoomLink: isLocked ? undefined : cls.zoomLink,
+      isLocked,
+    };
+  });
 
   const upcomingClasses = processedClasses
     .filter(cls => new Date(cls.dateTime) >= new Date())

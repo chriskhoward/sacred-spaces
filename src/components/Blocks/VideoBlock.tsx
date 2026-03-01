@@ -1,3 +1,5 @@
+import { isAllowedIframeUrl } from '@/lib/iframe-utils';
+
 interface VideoBlockProps {
   title?: string;
   url?: string;
@@ -24,6 +26,8 @@ export default function VideoBlock({
 
   const embedUrl = getEmbedUrl(url);
 
+  if (!isAllowedIframeUrl(embedUrl)) return null;
+
   return (
     <section className="py-24 bg-white">
       <div className="container mx-auto px-4 max-w-5xl">
@@ -39,6 +43,7 @@ export default function VideoBlock({
             className="absolute inset-0 w-full h-full"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
+            sandbox="allow-scripts allow-same-origin allow-presentation"
           ></iframe>
         </div>
       </div>

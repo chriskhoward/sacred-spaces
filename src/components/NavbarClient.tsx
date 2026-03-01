@@ -72,7 +72,8 @@ export default function NavbarClient({ dynamicPages, logoUrl, announcement }: Na
 
   // Get membership type from user metadata
   const membershipType = user?.publicMetadata?.membershipType as string | undefined;
-  const isMemberUser = isMember(user?.id, membershipType);
+  const role = (user?.publicMetadata?.role as string) || null;
+  const isMemberUser = isMember(role, membershipType);
 
   // Navigation links for members
   const memberLinks = isMemberUser ? [

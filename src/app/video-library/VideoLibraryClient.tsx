@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Lock, Gem, Check } from 'lucide-react';
 import { urlForImage } from '@/sanity/lib/image';
+import { isAllowedIframeUrl } from '@/lib/iframe-utils';
 
 interface Video {
   _id: string;
@@ -232,12 +233,13 @@ export default function VideoLibraryClient({ initialVideos, categories, featured
                 >
                   Your browser does not support the video tag.
                 </video>
-              ) : selectedVideo.videoUrl ? (
+              ) : selectedVideo.videoUrl && isAllowedIframeUrl(getEmbedUrl(selectedVideo.videoUrl) || '') ? (
                 <iframe
                   src={getEmbedUrl(selectedVideo.videoUrl) || ''}
                   className="w-full h-full"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
+                  sandbox="allow-scripts allow-same-origin allow-presentation"
                 />
               ) : (
                 <div className="flex items-center justify-center h-full text-white">

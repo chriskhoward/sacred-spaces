@@ -1,4 +1,5 @@
 import { client } from '@/sanity/lib/client'
+import { isAllowedIframeUrl } from '@/lib/iframe-utils'
 import { auth } from '@clerk/nextjs/server'
 import {
   CURRENT_SUMMIT_QUERY,
@@ -110,13 +111,14 @@ export default async function PresentationPage({ params }: PageProps) {
           </div>
 
           {/* Video or CTA */}
-          {canWatch && presentation.videoUrl ? (
+          {canWatch && presentation.videoUrl && isAllowedIframeUrl(presentation.videoUrl) ? (
             <div className="aspect-video mb-8 rounded-xl overflow-hidden bg-black">
               <iframe
                 src={presentation.videoUrl}
                 title={presentation.title}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
+                sandbox="allow-scripts allow-same-origin allow-presentation"
                 className="w-full h-full"
               />
             </div>

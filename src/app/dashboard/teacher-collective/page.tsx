@@ -41,8 +41,9 @@ export default async function TeacherCollectiveDashboard() {
   }
 
   const membershipType = user.publicMetadata.membershipType as string;
+  const role = (user.publicMetadata.role as string) || null;
 
-  if (!isTeacher(user.id, membershipType)) {
+  if (!isTeacher(role, membershipType)) {
     redirect('/dashboard');
   }
 

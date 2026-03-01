@@ -1,4 +1,5 @@
 import { client } from '@/sanity/lib/client'
+import { isAllowedIframeUrl } from '@/lib/iframe-utils'
 import {
   SUMMIT_BY_YEAR_QUERY,
   SUMMIT_PRESENTATION_BY_SLUG_QUERY,
@@ -72,13 +73,14 @@ export default async function ArchivePresentationPage({ params }: PageProps) {
           </div>
 
           {/* No gating for archives — show video if available */}
-          {presentation.videoUrl && (
+          {presentation.videoUrl && isAllowedIframeUrl(presentation.videoUrl) && (
             <div className="aspect-video mb-8 rounded-xl overflow-hidden bg-black">
               <iframe
                 src={presentation.videoUrl}
                 title={presentation.title}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
+                sandbox="allow-scripts allow-same-origin allow-presentation"
                 className="w-full h-full"
               />
             </div>

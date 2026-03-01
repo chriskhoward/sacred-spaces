@@ -1,4 +1,5 @@
 import { client } from '@/sanity/lib/client'
+import { isAllowedIframeUrl } from '@/lib/iframe-utils'
 import Link from 'next/link'
 import {
   CURRENT_SUMMIT_QUERY,
@@ -61,13 +62,14 @@ export default async function YogaClassesPage() {
                       {yc.description}
                     </p>
                   )}
-                  {yc.videoUrl && (
+                  {yc.videoUrl && isAllowedIframeUrl(yc.videoUrl) && (
                     <div className="aspect-video mt-4 rounded-lg overflow-hidden bg-black">
                       <iframe
                         src={yc.videoUrl}
                         title={yc.title}
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen
+                        sandbox="allow-scripts allow-same-origin allow-presentation"
                         className="w-full h-full"
                       />
                     </div>

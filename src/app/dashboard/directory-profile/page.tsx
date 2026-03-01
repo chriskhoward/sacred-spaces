@@ -15,9 +15,10 @@ export default async function DirectoryProfilePage() {
   }
 
   const membershipType = user.publicMetadata.membershipType as string;
+  const role = (user.publicMetadata.role as string) || null;
 
   // Ensure only teachers can access this
-  if (!isTeacher(user.id, membershipType)) {
+  if (!isTeacher(role, membershipType)) {
     redirect('/dashboard');
   }
 

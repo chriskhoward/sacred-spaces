@@ -17,7 +17,8 @@ export default async function DashboardPage() {
     redirect('/onboarding');
   }
 
-  const isTeacherUser = isTeacher(user.id, membershipType);
+  const role = (user.publicMetadata.role as string) || null;
+  const isTeacherUser = isTeacher(role, membershipType);
 
   // Redirect teachers to Teacher Collective Dashboard
   if (isTeacherUser) {
