@@ -1,10 +1,11 @@
 import { defineField, defineType } from 'sanity'
+import { PresentationIcon } from '@sanity/icons'
 
 export const summitPresentationType = defineType({
   name: 'summitPresentation',
   title: 'Summit Presentation',
   type: 'document',
-  icon: () => '🎬',
+  icon: PresentationIcon,
   fields: [
     defineField({
       name: 'title',
@@ -69,6 +70,12 @@ export const summitPresentationType = defineType({
       title: 'Time Slot',
       type: 'string',
       description: 'e.g. "10:00 AM EST"',
+    }),
+    defineField({
+      name: 'startTime',
+      title: 'Start Time',
+      type: 'datetime',
+      description: 'Exact start time (used for Google Calendar links)',
     }),
     defineField({
       name: 'resources',

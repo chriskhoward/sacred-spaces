@@ -2,6 +2,7 @@ import { client } from '@/sanity/lib/client'
 import { auth } from '@clerk/nextjs/server'
 import { PricingTable } from '@clerk/nextjs'
 import { PortableText } from '@portabletext/react'
+import { Check } from 'lucide-react'
 import { CURRENT_SUMMIT_QUERY, type Summit } from '@/sanity/lib/summit'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
@@ -37,7 +38,7 @@ export default async function AllAccessPage() {
           {hasAllAccess ? (
             <div className="bg-(--color-sidecar) rounded-2xl p-8 md:p-12 text-center">
               <h2 className="text-2xl md:text-3xl font-bold text-(--color-primary) mb-4">
-                You Have All Access! ✓
+                You Have All Access! <Check className="w-6 h-6 inline" />
               </h2>
               <p className="text-(--color-primary)/80">
                 You have permanent, unlimited access to all summit content,

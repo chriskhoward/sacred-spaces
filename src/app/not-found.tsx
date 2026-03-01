@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Sparkles } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import type { Metadata } from 'next';
 
@@ -21,7 +22,7 @@ export default function NotFound() {
             </h1>
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="bg-white rounded-3xl p-8 shadow-2xl">
-                <span className="text-6xl">✨</span>
+                <Sparkles className="w-16 h-16 text-(--color-roti)" />
               </div>
             </div>
           </div>

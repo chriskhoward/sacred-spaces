@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { Lock } from 'lucide-react';
 import { isPaidTier } from '../../lib/tier';
 
 interface LiveClassCard {
@@ -73,7 +74,7 @@ export default function LiveClassesCards({ classes, userTier, userId }: LiveClas
             onClick={(e) => e.stopPropagation()}
           >
             <div className="text-center">
-              <div className="text-5xl mb-4">🔒</div>
+              <Lock className="w-12 h-12 mx-auto mb-4 text-(--color-primary)" />
               <h3 className="text-2xl font-bold text-(--color-primary) mb-2">{lockedClass.title}</h3>
               <p className="text-gray-600 mb-6">
                 This live session is available to premium members. Upgrade your membership to join.
@@ -129,8 +130,8 @@ export default function LiveClassesCards({ classes, userTier, userId }: LiveClas
                     <h3 className="text-xl md:text-2xl font-bold text-(--color-primary) mb-1">
                       {call.title}
                       {locked && (
-                        <span className="ml-2 text-sm bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full align-middle">
-                          🔒 Premium
+                        <span className="ml-2 text-sm bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full align-middle inline-flex items-center gap-1">
+                          <Lock className="w-3 h-3" /> Premium
                         </span>
                       )}
                     </h3>
@@ -167,7 +168,7 @@ export default function LiveClassesCards({ classes, userTier, userId }: LiveClas
                       onClick={() => setLockedClass(call)}
                       className="px-6 py-2 bg-gray-300 text-gray-600 font-bold rounded-full text-sm hover:bg-gray-400 hover:text-white transition-colors"
                     >
-                      🔒 Upgrade to Join
+                      <Lock className="w-4 h-4 inline" /> Upgrade to Join
                     </button>
                   ) : userId && call.zoomLink ? (
                     <a

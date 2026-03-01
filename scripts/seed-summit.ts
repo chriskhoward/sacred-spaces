@@ -254,6 +254,7 @@ async function seed() {
       expiresDate: tomorrow.toISOString(),
       dayNumber: 1,
       timeSlot: '10:00 AM EST',
+      startTime: '2025-04-14T14:00:00Z',
       displayOrder: 1,
       resources: [
         { _key: 'r1', title: 'Keynote Slides (PDF)', url: 'https://example.com/slides.pdf' },
@@ -271,6 +272,7 @@ async function seed() {
       expiresDate: tomorrow.toISOString(),
       dayNumber: 1,
       timeSlot: '2:00 PM EST',
+      startTime: '2025-04-14T18:00:00Z',
       displayOrder: 2,
       resources: [
         { _key: 'r3', title: 'Business Planning Template', url: 'https://example.com/template.pdf' },
@@ -288,6 +290,7 @@ async function seed() {
       expiresDate: nextWeek.toISOString(),
       dayNumber: 2,
       timeSlot: '10:00 AM EST',
+      startTime: '2025-04-15T14:00:00Z',
       displayOrder: 1,
       resources: [],
     },
@@ -302,6 +305,7 @@ async function seed() {
       expiresDate: nextWeek.toISOString(),
       dayNumber: 2,
       timeSlot: '2:00 PM EST',
+      startTime: '2025-04-15T18:00:00Z',
       displayOrder: 2,
       resources: [
         { _key: 'r4', title: 'Trauma-Informed Checklist', url: 'https://example.com/checklist.pdf' },
@@ -319,6 +323,7 @@ async function seed() {
       expiresDate: new Date(nextWeek.getTime() + 24 * 60 * 60 * 1000).toISOString(),
       dayNumber: 3,
       timeSlot: '10:00 AM EST',
+      startTime: '2025-04-16T14:00:00Z',
       displayOrder: 1,
       resources: [],
     },
@@ -333,6 +338,7 @@ async function seed() {
       expiresDate: new Date(nextWeek.getTime() + 24 * 60 * 60 * 1000).toISOString(),
       dayNumber: 3,
       timeSlot: '2:00 PM EST',
+      startTime: '2025-04-16T18:00:00Z',
       displayOrder: 2,
       resources: [
         { _key: 'r5', title: 'Summit Recap Guide', url: 'https://example.com/recap.pdf' },

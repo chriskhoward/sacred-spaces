@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
+import { Lock } from 'lucide-react';
 import { isPaidTier } from '../../../lib/tier';
 
 interface Resource {
@@ -120,7 +121,7 @@ export default function ResourcesClient({ groupedResources, userTier }: Resource
                         </span>
                       )}
                       {item.isLocked && (
-                        <span className="text-gray-400 text-lg">🔒</span>
+                        <Lock className="w-5 h-5 text-gray-400" />
                       )}
                     </div>
                   </div>
@@ -154,7 +155,7 @@ export default function ResourcesClient({ groupedResources, userTier }: Resource
             onClick={(e) => e.stopPropagation()}
           >
             <div className="text-center mb-6">
-              <div className="text-5xl mb-4">🔒</div>
+              <Lock className="w-12 h-12 mx-auto mb-4 text-(--color-primary)" />
               <h3 className="text-2xl font-bold text-(--color-primary) mb-2">
                 Premium Resource
               </h3>

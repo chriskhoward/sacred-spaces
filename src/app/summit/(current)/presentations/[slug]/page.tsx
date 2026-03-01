@@ -4,6 +4,7 @@ import {
   CURRENT_SUMMIT_QUERY,
   SUMMIT_PRESENTATION_BY_SLUG_QUERY,
   isPresentationAvailableFree,
+  getGoogleCalendarUrl,
   type Summit,
   type SummitPresentation,
 } from '@/sanity/lib/summit'
@@ -12,6 +13,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import UpgradeCTA from '@/components/summit/UpgradeCTA'
+import AddToCalendarButton from '@/components/summit/AddToCalendarButton'
+import AllAccessButton from '@/components/summit/AllAccessButton'
+import { Check } from 'lucide-react'
 import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
@@ -55,6 +59,8 @@ export default async function PresentationPage({ params }: PageProps) {
   const isFreeAvailable = isPresentationAvailableFree(presentation)
   const canWatch = hasAllAccess || isFreeAvailable
 
+  const calendarUrl = getGoogleCalendarUrl(presentation)
+
   return (
     <section className="py-16 md:py-20">
       <div className="container mx-auto px-4">
@@ -64,7 +70,7 @@ export default async function PresentationPage({ params }: PageProps) {
             href="/summit/schedule"
             className="text-(--color-roti) hover:opacity-80 text-sm font-medium mb-6 inline-block"
           >
-            ← Back to Schedule
+            &larr; Back to Schedule
           </Link>
 
           {/* Header */}
@@ -94,6 +100,11 @@ export default async function PresentationPage({ params }: PageProps) {
                   Day {presentation.dayNumber}
                   {presentation.timeSlot ? ` — ${presentation.timeSlot}` : ''}
                 </p>
+              )}
+              {calendarUrl && (
+                <div className="mt-3">
+                  <AddToCalendarButton calendarUrl={calendarUrl} />
+                </div>
               )}
             </div>
           </div>
@@ -171,8 +182,18 @@ export default async function PresentationPage({ params }: PageProps) {
 
           {/* All Access badge */}
           {hasAllAccess && (
-            <div className="inline-block px-4 py-2 bg-(--color-roti)/10 text-(--color-roti) rounded-full text-sm font-medium">
-              ✓ All Access
+            <div className="inline-flex items-center gap-1.5 px-4 py-2 bg-(--color-roti)/10 text-(--color-roti) rounded-full text-sm font-medium">
+              <Check className="w-4 h-4" /> All Access
+            </div>
+          )}
+
+          {/* Persistent All Access CTA for non-All Access users */}
+          {!hasAllAccess && (
+            <div className="mt-12 pt-8 border-t border-(--color-gallery) text-center">
+              <p className="text-(--color-primary)/70 mb-4">
+                Want permanent access to all presentations and bonus content?
+              </p>
+              <AllAccessButton basePath="/summit" />
             </div>
           )}
         </div>

@@ -1,4 +1,5 @@
 import { client } from '@/sanity/lib/client'
+import Link from 'next/link'
 import {
   CURRENT_SUMMIT_QUERY,
   SUMMIT_YOGA_CLASSES_QUERY,
@@ -6,6 +7,7 @@ import {
   type SummitYogaClass,
 } from '@/sanity/lib/summit'
 import { notFound } from 'next/navigation'
+import AllAccessButton from '@/components/summit/AllAccessButton'
 import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
@@ -74,6 +76,17 @@ export default async function YogaClassesPage() {
               ))}
             </div>
           )}
+
+          {/* Bottom navigation */}
+          <div className="mt-12 flex flex-wrap gap-4 justify-center">
+            <Link
+              href="/summit/schedule"
+              className="inline-block px-8 py-3 bg-(--color-primary) text-white rounded-full font-bold uppercase tracking-wide hover:opacity-90 transition-opacity shadow-md"
+            >
+              View Schedule
+            </Link>
+            <AllAccessButton basePath="/summit" />
+          </div>
         </div>
       </div>
     </section>

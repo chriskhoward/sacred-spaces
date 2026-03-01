@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { Heart, Star, HeartPulse, Dumbbell } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import FilloutSliderButton from '@/components/FilloutSliderButton';
 import { Metadata } from 'next';
@@ -84,22 +85,22 @@ export default function DeBoltonPage() {
                 <h3 className="text-2xl font-bold text-(--color-primary) mb-6">Credentials & Training</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="bg-(--color-gallery) p-6 rounded-3xl">
-                    <div className="text-3xl mb-3">🧘</div>
+                    <Heart className="w-8 h-8 text-(--color-roti) mb-3" />
                     <h4 className="font-bold text-(--color-primary) mb-2">200-Hour Yoga Certification</h4>
                     <p className="text-gray-600 text-sm">Intensive foundational training</p>
                   </div>
                   <div className="bg-(--color-gallery) p-6 rounded-3xl">
-                    <div className="text-3xl mb-3">🌟</div>
+                    <Star className="w-8 h-8 text-(--color-roti) mb-3" />
                     <h4 className="font-bold text-(--color-primary) mb-2">500-Hour Ashtanga Training</h4>
                     <p className="text-gray-600 text-sm">Advanced practice and teaching</p>
                   </div>
                   <div className="bg-(--color-gallery) p-6 rounded-3xl">
-                    <div className="text-3xl mb-3">💚</div>
+                    <HeartPulse className="w-8 h-8 text-(--color-roti) mb-3" />
                     <h4 className="font-bold text-(--color-primary) mb-2">100-Hour Trauma-Informed Certification</h4>
                     <p className="text-gray-600 text-sm">Safe, supportive healing spaces</p>
                   </div>
                   <div className="bg-(--color-gallery) p-6 rounded-3xl">
-                    <div className="text-3xl mb-3">💪</div>
+                    <Dumbbell className="w-8 h-8 text-(--color-roti) mb-3" />
                     <h4 className="font-bold text-(--color-primary) mb-2">Mat Pilates Certification</h4>
                     <p className="text-gray-600 text-sm">Strength and alignment training</p>
                   </div>

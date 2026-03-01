@@ -6,10 +6,12 @@ import {
   SUMMIT_BY_YEAR_QUERY,
   SUMMIT_PRESENTATIONS_QUERY,
   groupPresentationsByDay,
+  getGoogleCalendarUrl,
   type Summit,
   type SummitPresentation,
 } from '@/sanity/lib/summit'
 import { notFound } from 'next/navigation'
+import AddToCalendarButton from '@/components/summit/AddToCalendarButton'
 
 export const dynamic = 'force-dynamic'
 
@@ -47,12 +49,14 @@ export default async function ArchiveSchedulePage({ params }: PageProps) {
                   </h2>
                   <div className="space-y-4">
                     {grouped.get(day)!.map((p) => (
-                      <Link
+                      <div
                         key={p._id}
-                        href={`/summit/${year}/presentations/${p.slug.current}`}
-                        className="block bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow border border-(--color-gallery)"
+                        className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow border border-(--color-gallery)"
                       >
-                        <div className="flex items-start gap-4">
+                        <Link
+                          href={`/summit/${year}/presentations/${p.slug.current}`}
+                          className="flex items-start gap-4"
+                        >
                           {p.speaker?.headshot && (
                             <Image
                               src={urlForImage(p.speaker.headshot).width(80).height(80).url()}
@@ -70,8 +74,11 @@ export default async function ArchiveSchedulePage({ params }: PageProps) {
                               <p className="text-sm text-(--color-roti) font-medium mt-1">{p.timeSlot}</p>
                             )}
                           </div>
+                        </Link>
+                        <div className="mt-3 pl-0 sm:pl-[96px]">
+                          <AddToCalendarButton calendarUrl={getGoogleCalendarUrl(p)} />
                         </div>
-                      </Link>
+                      </div>
                     ))}
                   </div>
                 </div>

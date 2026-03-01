@@ -43,6 +43,7 @@ export interface SummitPresentation {
   expiresDate?: string
   dayNumber?: number
   timeSlot?: string
+  startTime?: string
   resources?: SummitPresentationResource[]
   displayOrder?: number
 }
@@ -100,6 +101,7 @@ const presentationProjection = `{
   expiresDate,
   dayNumber,
   timeSlot,
+  startTime,
   resources[] {
     title,
     url,
@@ -150,6 +152,38 @@ export function groupPresentationsByDay(presentations: SummitPresentation[]): Ma
     grouped.get(day)!.push(p)
   }
   return grouped
+}
+
+/**
+ * Generate a Google Calendar URL for a presentation.
+ */
+export function getGoogleCalendarUrl(presentation: SummitPresentation, durationMin = 60): string | null {
+  if (!presentation.startTime) return null
+  const start = new Date(presentation.startTime)
+  const end = new Date(start.getTime() + durationMin * 60 * 1000)
+  const fmt = (d: Date) => d.toISOString().replace(/-|:|\.\d\d\d/g, '')
+  const params = new URLSearchParams({
+    action: 'TEMPLATE',
+    text: presentation.title,
+    dates: `${fmt(start)}/${fmt(end)}`,
+    details: `${presentation.description || presentation.title}\n\nSpeaker: ${presentation.speaker?.name || 'TBA'}`,
+    location: 'Online',
+  })
+  return `https://www.google.com/calendar/render?${params.toString()}`
+}
+
+/**
+ * Map speaker ID to list of presentation titles.
+ */
+export function getSpeakerPresentationTitles(presentations: SummitPresentation[]): Map<string, string[]> {
+  const map = new Map<string, string[]>()
+  for (const p of presentations) {
+    if (!p.speaker?._id) continue
+    const list = map.get(p.speaker._id) || []
+    list.push(p.title)
+    map.set(p.speaker._id, list)
+  }
+  return map
 }
 
 /**

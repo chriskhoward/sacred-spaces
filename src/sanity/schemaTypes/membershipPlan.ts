@@ -1,9 +1,10 @@
 import { defineField, defineType } from 'sanity'
+import { DiamondIcon } from '@sanity/icons'
 
 export const membershipPlanType = defineType({
     name: 'membershipPlan',
     title: 'Membership Plan',
-    icon: () => '💎',
+    icon: DiamondIcon,
     type: 'document',
     fields: [
         defineField({

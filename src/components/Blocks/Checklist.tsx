@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Check } from 'lucide-react';
 
 interface ChecklistBlockProps {
   heading?: string;
@@ -27,8 +28,8 @@ export default function ChecklistBlock({
           <ul className="space-y-5">
             {items.map((item, index) => (
               <li key={index} className="flex items-start gap-4 bg-(--color-gallery) p-5 rounded-2xl">
-                <span className="w-8 h-8 bg-(--color-roti) text-white rounded-full flex items-center justify-center shrink-0 font-bold">
-                  &#10003;
+                <span className="w-8 h-8 bg-(--color-roti) text-white rounded-full flex items-center justify-center shrink-0">
+                  <Check className="w-4 h-4" />
                 </span>
                 <p className="text-lg text-gray-700 leading-relaxed pt-0.5">
                   {item}

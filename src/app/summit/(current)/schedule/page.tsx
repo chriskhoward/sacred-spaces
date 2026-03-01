@@ -6,10 +6,13 @@ import {
   CURRENT_SUMMIT_QUERY,
   SUMMIT_PRESENTATIONS_QUERY,
   groupPresentationsByDay,
+  getGoogleCalendarUrl,
   type Summit,
   type SummitPresentation,
 } from '@/sanity/lib/summit'
 import { notFound } from 'next/navigation'
+import AllAccessButton from '@/components/summit/AllAccessButton'
+import AddToCalendarButton from '@/components/summit/AddToCalendarButton'
 import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
@@ -38,9 +41,13 @@ export default async function SchedulePage() {
     <section className="py-16 md:py-20">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-(--color-primary) mb-8">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-(--color-primary) mb-6">
             Schedule
           </h1>
+
+          <div className="mb-8">
+            <AllAccessButton basePath="/summit" />
+          </div>
 
           {sortedDays.length === 0 ? (
             <p className="text-(--color-primary)/70">
@@ -55,12 +62,14 @@ export default async function SchedulePage() {
                   </h2>
                   <div className="space-y-4">
                     {grouped.get(day)!.map((p) => (
-                      <Link
+                      <div
                         key={p._id}
-                        href={`/summit/presentations/${p.slug.current}`}
-                        className="block bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow border border-(--color-gallery)"
+                        className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow border border-(--color-gallery)"
                       >
-                        <div className="flex items-start gap-4">
+                        <Link
+                          href={`/summit/presentations/${p.slug.current}`}
+                          className="flex items-start gap-4"
+                        >
                           {p.speaker?.headshot && (
                             <Image
                               src={urlForImage(p.speaker.headshot)
@@ -92,8 +101,11 @@ export default async function SchedulePage() {
                               </p>
                             )}
                           </div>
+                        </Link>
+                        <div className="mt-3 pl-0 sm:pl-[96px]">
+                          <AddToCalendarButton calendarUrl={getGoogleCalendarUrl(p)} />
                         </div>
-                      </Link>
+                      </div>
                     ))}
                   </div>
                 </div>

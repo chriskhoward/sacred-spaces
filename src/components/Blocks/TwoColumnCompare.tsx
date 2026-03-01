@@ -1,3 +1,5 @@
+import { Check } from 'lucide-react';
+
 interface TwoColumnCompareBlockProps {
   heading?: string;
   leftIntro?: string;
@@ -57,7 +59,7 @@ export default function TwoColumnCompareBlock({
               <ul className="space-y-3 mb-8 text-lg text-gray-700">
                 {rightItems.map((item, index) => (
                   <li key={index} className="flex gap-3 items-center">
-                    <span className="text-(--color-roti) text-xl shrink-0">&#10003;</span>
+                    <Check className="w-5 h-5 text-(--color-roti) shrink-0" />
                     {item}
                   </li>
                 ))}

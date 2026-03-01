@@ -2,6 +2,7 @@ import { client } from '@/sanity/lib/client'
 import {
   SUMMIT_BY_YEAR_QUERY,
   SUMMIT_PRESENTATION_BY_SLUG_QUERY,
+  getGoogleCalendarUrl,
   type Summit,
   type SummitPresentation,
 } from '@/sanity/lib/summit'
@@ -9,6 +10,7 @@ import { urlForImage } from '@/sanity/lib/image'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import AddToCalendarButton from '@/components/summit/AddToCalendarButton'
 
 export const dynamic = 'force-dynamic'
 
@@ -27,6 +29,8 @@ export default async function ArchivePresentationPage({ params }: PageProps) {
   )
   if (!presentation) notFound()
 
+  const calendarUrl = getGoogleCalendarUrl(presentation)
+
   return (
     <section className="py-16 md:py-20">
       <div className="container mx-auto px-4">
@@ -35,7 +39,7 @@ export default async function ArchivePresentationPage({ params }: PageProps) {
             href={`/summit/${year}/schedule`}
             className="text-(--color-roti) hover:opacity-80 text-sm font-medium mb-6 inline-block"
           >
-            ← Back to Schedule
+            &larr; Back to Schedule
           </Link>
 
           <div className="flex items-start gap-6 mb-8">
@@ -58,6 +62,11 @@ export default async function ArchivePresentationPage({ params }: PageProps) {
                 <p className="text-sm text-(--color-roti) font-medium mt-1">
                   Day {presentation.dayNumber}{presentation.timeSlot ? ` — ${presentation.timeSlot}` : ''}
                 </p>
+              )}
+              {calendarUrl && (
+                <div className="mt-3">
+                  <AddToCalendarButton calendarUrl={calendarUrl} />
+                </div>
               )}
             </div>
           </div>

@@ -1,10 +1,11 @@
 import { defineField, defineType } from 'sanity'
+import { MicrophoneIcon } from '@sanity/icons'
 
 export const summitSpeakerType = defineType({
   name: 'summitSpeaker',
   title: 'Summit Speaker',
   type: 'document',
-  icon: () => '🎤',
+  icon: MicrophoneIcon,
   fields: [
     defineField({
       name: 'name',

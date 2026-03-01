@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { Heart, Wind, Leaf, Sparkles } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import FilloutSliderButton from '@/components/FilloutSliderButton';
 import { Metadata } from 'next';
@@ -80,22 +81,22 @@ export default function QueenRobertsonPage() {
                 <h3 className="text-2xl font-bold text-(--color-primary) mb-6">Credentials & Training</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="bg-(--color-gallery) p-6 rounded-3xl">
-                    <div className="text-3xl mb-3">🧘</div>
+                    <Heart className="w-8 h-8 text-(--color-roti) mb-3" />
                     <h4 className="font-bold text-(--color-primary) mb-2">200-Hour Yoga Teacher Training</h4>
                     <p className="text-gray-600 text-sm">Comprehensive foundational training</p>
                   </div>
                   <div className="bg-(--color-gallery) p-6 rounded-3xl">
-                    <div className="text-3xl mb-3">🫁</div>
+                    <Wind className="w-8 h-8 text-(--color-roti) mb-3" />
                     <h4 className="font-bold text-(--color-primary) mb-2">Meditation & Breathwork</h4>
                     <p className="text-gray-600 text-sm">Ongoing study and practice</p>
                   </div>
                   <div className="bg-(--color-gallery) p-6 rounded-3xl">
-                    <div className="text-3xl mb-3">🌿</div>
+                    <Leaf className="w-8 h-8 text-(--color-roti) mb-3" />
                     <h4 className="font-bold text-(--color-primary) mb-2">Somatic Practices</h4>
                     <p className="text-gray-600 text-sm">Nervous system regulation & rest</p>
                   </div>
                   <div className="bg-(--color-gallery) p-6 rounded-3xl">
-                    <div className="text-3xl mb-3">💫</div>
+                    <Sparkles className="w-8 h-8 text-(--color-roti) mb-3" />
                     <h4 className="font-bold text-(--color-primary) mb-2">Self-Awareness & Embodiment</h4>
                     <p className="text-gray-600 text-sm">Continuous learning and growth</p>
                   </div>

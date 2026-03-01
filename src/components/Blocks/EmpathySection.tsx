@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Check } from 'lucide-react';
 
 interface EmpathySectionBlockProps {
   heading?: string;
@@ -29,9 +30,7 @@ export default function EmpathySectionBlock({
           <ul className="space-y-6">
             {items.map((item, index) => (
               <li key={index} className="flex items-start gap-4">
-                <span className={`text-2xl shrink-0 mt-1 ${isDark ? 'text-(--color-roti)' : 'text-(--color-roti)'}`}>
-                  &#10003;
-                </span>
+                <Check className="w-6 h-6 shrink-0 mt-1 text-(--color-roti)" />
                 <p className={`text-xl leading-relaxed ${isDark ? 'text-white/90' : 'text-gray-700'}`}>
                   {item}
                 </p>

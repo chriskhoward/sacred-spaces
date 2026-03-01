@@ -1,10 +1,11 @@
 import { defineField, defineType } from 'sanity'
+import { HeartIcon } from '@sanity/icons'
 
 export const summitYogaClassType = defineType({
   name: 'summitYogaClass',
   title: 'Summit Yoga Class',
   type: 'document',
-  icon: () => '🧘',
+  icon: HeartIcon,
   fields: [
     defineField({
       name: 'title',
