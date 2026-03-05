@@ -5,6 +5,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { writeClient } from '@/sanity/lib/write';
+import { rateLimit } from '@/lib/rate-limit';
 
 export const dynamic = 'force-dynamic';
 
@@ -160,6 +161,18 @@ function getWhyJoin(payload: Record<string, unknown>): string | undefined {
 }
 
 export async function POST(req: NextRequest) {
+  // Verify webhook secret to prevent unauthorized submissions
+  const secret = req.headers.get('x-webhook-secret');
+  if (!process.env.FILLOUT_WEBHOOK_SECRET || secret !== process.env.FILLOUT_WEBHOOK_SECRET) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  // Rate limit: 30 requests per minute per IP
+  const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
+  if (!rateLimit(`fillout:${ip}`, 30, 60_000)) {
+    return NextResponse.json({ error: 'Too many requests' }, { status: 429 });
+  }
+
   try {
     let payload: Record<string, unknown> = {};
     const contentType = req.headers.get('content-type') || '';

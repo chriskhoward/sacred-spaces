@@ -3,7 +3,9 @@
 import { useState, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Lock, Gem, Check } from 'lucide-react';
 import { urlForImage } from '@/sanity/lib/image';
+import { isAllowedIframeUrl } from '@/lib/iframe-utils';
 
 interface Video {
   _id: string;
@@ -231,12 +233,13 @@ export default function VideoLibraryClient({ initialVideos, categories, featured
                 >
                   Your browser does not support the video tag.
                 </video>
-              ) : selectedVideo.videoUrl ? (
+              ) : selectedVideo.videoUrl && isAllowedIframeUrl(getEmbedUrl(selectedVideo.videoUrl) || '') ? (
                 <iframe
                   src={getEmbedUrl(selectedVideo.videoUrl) || ''}
                   className="w-full h-full"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
+                  sandbox="allow-scripts allow-same-origin allow-presentation"
                 />
               ) : (
                 <div className="flex items-center justify-center h-full text-white">
@@ -272,7 +275,7 @@ export default function VideoLibraryClient({ initialVideos, categories, featured
 
             <div className="text-center mb-8 relative">
               <div className="inline-flex items-center justify-center w-20 h-20 bg-(--color-gallery) rounded-full mb-4">
-                <span className="text-4xl">💎</span>
+                <Gem className="w-10 h-10 text-(--color-roti)" />
               </div>
               <h3 className="text-3xl font-bold text-(--color-primary) mb-3">
                 Unlock Premium
@@ -287,13 +290,13 @@ export default function VideoLibraryClient({ initialVideos, categories, featured
               <h4 className="font-bold text-(--color-primary) mb-4 text-sm uppercase tracking-widest">Pro Member Benefits:</h4>
               <ul className="space-y-3 text-left">
                 <li className="flex items-center gap-3 text-gray-700 text-sm">
-                  <span className="text-(--color-roti)">✓</span> Full Access to the On-Demand Library
+                  <Check className="w-4 h-4 text-(--color-roti) shrink-0" /> Full Access to the On-Demand Library
                 </li>
                 <li className="flex items-center gap-3 text-gray-700 text-sm">
-                  <span className="text-(--color-roti)">✓</span> Paid Teaching Opportunities
+                  <Check className="w-4 h-4 text-(--color-roti) shrink-0" /> Paid Teaching Opportunities
                 </li>
                 <li className="flex items-center gap-3 text-gray-700 text-sm">
-                  <span className="text-(--color-roti)">✓</span> Visibility via Promotion of Your Offerings
+                  <Check className="w-4 h-4 text-(--color-roti) shrink-0" /> Visibility via Promotion of Your Offerings
                 </li>
               </ul>
             </div>
@@ -357,7 +360,7 @@ export default function VideoLibraryClient({ initialVideos, categories, featured
                   className="btn btn-primary flex items-center gap-3"
                 >
                   {featuredVideo.isLocked ? (
-                    <><span className="text-2xl">🔒</span> Upgrade to Watch</>
+                    <><Lock className="w-6 h-6" /> Upgrade to Watch</>
                   ) : (
                     <><span className="text-2xl">▶</span> Watch Now</>
                   )}
@@ -485,7 +488,7 @@ export default function VideoLibraryClient({ initialVideos, categories, featured
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20">
                     <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center pl-1 shadow-xl transform scale-50 group-hover:scale-100 transition-transform duration-300">
                       {video.isLocked ? (
-                        <span className="text-(--color-primary) text-2xl font-bold">🔒</span>
+                        <Lock className="w-6 h-6 text-(--color-primary)" />
                       ) : (
                         <span className="text-(--color-primary) text-2xl">▶</span>
                       )}
@@ -495,7 +498,7 @@ export default function VideoLibraryClient({ initialVideos, categories, featured
                     <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
                       <div className="bg-white/90 backdrop-blur-md px-4 py-2 rounded-full shadow-lg border border-white/20 scale-90 group-hover:scale-100 transition-transform">
                         <span className="text-(--color-primary) text-xs font-bold uppercase tracking-widest flex items-center gap-2">
-                          <span className="text-sm">🔒</span> Premium
+                          <Lock className="w-3.5 h-3.5" /> Premium
                         </span>
                       </div>
                     </div>

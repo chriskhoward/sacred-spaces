@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import FilloutSliderButton from '@/components/FilloutSliderButton';
 import { urlForImage } from '@/sanity/lib/image';
+import { getButtonSizeClasses, getButtonColorClasses, getButtonAlignClasses, type ButtonSize, type ButtonColor, type ButtonAlignment } from '@/components/Blocks/blockHelpers';
 
 const sectionPad = 'pt-32 md:pt-40 lg:pt-44 pb-14 md:pb-20 px-6 sm:px-8';
 const containerWide = 'max-w-6xl mx-auto';
@@ -17,6 +18,9 @@ interface HomeHeroBlockProps {
   secondaryButtonText?: string;
   secondaryButtonLink?: string;
   logoImage?: { asset?: unknown };
+  buttonSize?: ButtonSize;
+  buttonColor?: ButtonColor;
+  buttonAlignment?: ButtonAlignment;
 }
 
 export default function HomeHeroBlock({
@@ -28,6 +32,9 @@ export default function HomeHeroBlock({
   secondaryButtonText,
   secondaryButtonLink,
   logoImage,
+  buttonSize,
+  buttonColor,
+  buttonAlignment,
 }: HomeHeroBlockProps) {
   const logoUrl = logoImage?.asset ? urlForImage(logoImage).url() : '/assets/images/tc_logo.png';
 
@@ -46,12 +53,12 @@ export default function HomeHeroBlock({
           <p className="text-lg md:text-xl text-gray-700 leading-relaxed max-w-xl font-medium mb-8">
             {subtitle}
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 items-start">
+          <div className={`flex flex-col sm:flex-row gap-4 ${getButtonAlignClasses(buttonAlignment) === 'text-left' ? 'items-start' : getButtonAlignClasses(buttonAlignment) === 'text-right' ? 'items-end' : 'items-start'}`}>
             {primaryButtonText && (
               primaryButtonLink ? (
                 <Link
                   href={primaryButtonLink}
-                  className="inline-block py-3 px-6 bg-[#C7A254] text-white rounded-full font-bold text-sm hover:opacity-95 transition-opacity shadow-md"
+                  className={`inline-block ${getButtonSizeClasses(buttonSize)} ${getButtonColorClasses(buttonColor)} rounded-full font-bold hover:opacity-95 transition-opacity shadow-md`}
                 >
                   {primaryButtonText}
                 </Link>
@@ -62,7 +69,7 @@ export default function HomeHeroBlock({
             {secondaryButtonText && secondaryButtonLink && (
               <Link
                 href={secondaryButtonLink}
-                className="inline-block py-3 px-6 border-2 border-[#413356] text-[#413356] rounded-full font-bold text-sm hover:bg-[#413356] hover:text-white transition-colors"
+                className={`inline-block ${getButtonSizeClasses(buttonSize)} border-2 border-[#413356] text-[#413356] rounded-full font-bold hover:bg-[#413356] hover:text-white transition-colors`}
               >
                 {secondaryButtonText}
               </Link>

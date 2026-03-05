@@ -31,35 +31,27 @@ export function isCoreTier(tier: UserTier | null | undefined): boolean {
     if (!tier) return false;
     return tier.toLowerCase() === 'core';
 }
-/** Clerk user IDs that have full admin access and can see everything. */
-const ADMIN_USER_IDS = [
-    'user_398nliMV592Jf0YOcQWQYo1VwbC',
-    'user_39B7cPsIvasjGo332tYOJJHWcbC',
-    'user_39B6J0Qh1ba5UdkFl7sddtf4RS5',
-    'user_39DZQRS0ikK5lfH31vIa5gg0xvC',
-];
-
 /**
- * Checks if a user has admin rights (full access to the site).
+ * Checks if a user has admin rights via publicMetadata.role.
+ * Set role: "admin" in Clerk Dashboard → Users → publicMetadata.
  */
-export function isAdmin(userId: string | null | undefined): boolean {
-    if (!userId) return false;
-    return ADMIN_USER_IDS.includes(userId);
+export function isAdmin(role: string | null | undefined): boolean {
+    return role === 'admin';
 }
 
 /**
  * Checks if a user is an admin or specifically has teacher membership.
  */
-export function isTeacher(userId: string | null | undefined, membershipType: string | null | undefined): boolean {
-    if (isAdmin(userId)) return true;
+export function isTeacher(role: string | null | undefined, membershipType: string | null | undefined): boolean {
+    if (isAdmin(role)) return true;
     return membershipType?.toLowerCase() === 'teacher';
 }
 
 /**
  * Checks if a user is an admin or has any valid membership (teacher or practitioner).
  */
-export function isMember(userId: string | null | undefined, membershipType: string | null | undefined): boolean {
-    if (isAdmin(userId)) return true;
+export function isMember(role: string | null | undefined, membershipType: string | null | undefined): boolean {
+    if (isAdmin(role)) return true;
     return ['teacher', 'practitioner'].includes(membershipType?.toLowerCase() || '');
 }
 

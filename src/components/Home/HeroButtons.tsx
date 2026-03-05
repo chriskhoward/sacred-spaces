@@ -3,28 +3,38 @@
 import { useUser } from '@clerk/nextjs';
 import Link from 'next/link';
 import FilloutSliderButton from '@/components/FilloutSliderButton';
+import { getButtonSizeClasses, getButtonColorClasses, getButtonAlignClasses, type ButtonSize, type ButtonColor, type ButtonAlignment } from '@/components/Blocks/blockHelpers';
 
 interface HeroButtonsProps {
   primaryText?: string;
   secondaryText?: string;
   primaryUrl?: string;
   secondaryUrl?: string;
+  buttonSize?: ButtonSize;
+  buttonColor?: ButtonColor;
+  buttonAlignment?: ButtonAlignment;
 }
 
 export default function HeroButtons({
   primaryText = "Join the Collective",
   secondaryText = "Learn More",
   primaryUrl = "/apply",
-  secondaryUrl = "/about"
+  secondaryUrl = "/about",
+  buttonSize,
+  buttonColor,
+  buttonAlignment,
 }: HeroButtonsProps) {
   const { isSignedIn } = useUser();
+  const sizeClasses = getButtonSizeClasses(buttonSize);
+  const colorClasses = getButtonColorClasses(buttonColor, true);
+  const alignClasses = getButtonAlignClasses(buttonAlignment);
 
   return (
-    <div className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start items-center sm:items-stretch">
+    <div className={`flex flex-col sm:flex-row gap-6 items-center sm:items-stretch ${alignClasses === 'text-left' ? 'justify-start' : alignClasses === 'text-right' ? 'justify-end' : 'justify-center lg:justify-start'}`}>
       {isSignedIn ? (
         <Link
           href="/dashboard"
-          className="btn btn-primary shadow-xl hover:shadow-(--color-roti)/30 transition-all"
+          className={`${sizeClasses} ${colorClasses} rounded-full font-bold shadow-xl hover:shadow-(--color-roti)/30 transition-all`}
         >
           Go to Dashboard
         </Link>
@@ -32,11 +42,9 @@ export default function HeroButtons({
         <FilloutSliderButton buttonText={primaryText} variant="hero" className="inline-flex" />
       )}
 
-
-
       <Link
         href={secondaryUrl}
-        className={`px-6 py-3 border-2 border-white/30 text-white rounded-full font-bold text-sm hover:bg-white hover:text-(--color-primary) transition-all text-center ${isSignedIn ? 'block' : 'hidden sm:block'}`}
+        className={`${sizeClasses} border-2 border-white/30 text-white rounded-full font-bold hover:bg-white hover:text-(--color-primary) transition-all text-center ${isSignedIn ? 'block' : 'hidden sm:block'}`}
       >
         {secondaryText}
       </Link>

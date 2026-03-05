@@ -37,6 +37,13 @@ export const pageType = defineType({
       initialValue: false,
     }),
     defineField({
+      name: 'hideHeader',
+      title: 'Hide Header',
+      type: 'boolean',
+      description: 'If enabled, the navigation bar will not be shown on this page.',
+      initialValue: false,
+    }),
+    defineField({
       name: 'content',
       title: 'Page Content',
       type: 'array',

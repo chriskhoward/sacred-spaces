@@ -54,7 +54,8 @@ export default async function VideoLibraryPage() {
 
   const membershipType = user?.publicMetadata?.membershipType as string || 'practitioner';
   const tier = user?.publicMetadata?.tier as string || 'free';
-  const adminStatus = isAdmin(user?.id);
+  const role = (user?.publicMetadata?.role as string) || null;
+  const adminStatus = isAdmin(role);
 
   // Determine search filters based on membership collective
   // Teachers see 'all' + 'teacher_core' + 'teacher_pro'

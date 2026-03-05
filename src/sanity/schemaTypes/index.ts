@@ -17,8 +17,14 @@ import { teacherCollectiveFaqsType } from './teacherCollectiveFaqs'
 import { teacherCollectiveDashboardType } from './teacherCollectiveDashboard'
 import { membershipPlanType } from './membershipPlan'
 import { siteSettingsType } from './siteSettings'
+import { founderPageType } from './founderPage'
+import { teacherCollectivePageType } from './teacherCollectivePage'
 import { navigationType } from './navigation'
 import { announcementBarType } from './announcementBar'
+import { summitSpeakerType } from './summitSpeaker'
+import { summitType } from './summit'
+import { summitPresentationType } from './summitPresentation'
+import { summitYogaClassType } from './summitYogaClass'
 import {
   heroBlock,
   homeHeroBlock,
@@ -96,7 +102,13 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     teacherCollectiveDashboardType,
     membershipPlanType,
     siteSettingsType,
+    founderPageType,
+    teacherCollectivePageType,
     navigationType,
-    announcementBarType
+    announcementBarType,
+    summitType,
+    summitSpeakerType,
+    summitPresentationType,
+    summitYogaClassType,
   ],
 }

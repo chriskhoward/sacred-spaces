@@ -1,7 +1,10 @@
+import { Handshake, Sparkles, Link2, Shield } from 'lucide-react';
+import { type ReactNode } from 'react';
+
 interface PillarItem {
   title: string;
   description: string;
-  icon: string;
+  icon: ReactNode;
 }
 
 interface PillarsBlockProps {
@@ -16,25 +19,25 @@ export default function PillarsBlock({
   subheading = "Pillars of Transformation",
   description = "We provide a culturally-grounded home where your faith and practice can flourish together.",
   items = [
-    { 
-      title: 'Belonging', 
+    {
+      title: 'Belonging',
       description: 'Feel seen, supported, and connected inside a community that understands your faith, culture, and calling.',
-      icon: '🤝'
+      icon: <Handshake className="w-8 h-8 text-(--color-roti)" />
     },
-    { 
-      title: 'Visibility', 
+    {
+      title: 'Visibility',
       description: 'Access opportunities that highlight your gifts and amplify your voice in meaningful and aligned spaces.',
-      icon: '✨'
+      icon: <Sparkles className="w-8 h-8 text-(--color-roti)" />
     },
-    { 
-      title: 'Connection', 
-      description: 'Build relationships that spark creativity, deepen your teaching, and reaffirm you don’t have to grow alone.',
-      icon: '🔗'
+    {
+      title: 'Connection',
+      description: 'Build relationships that spark creativity, deepen your teaching, and reaffirm you don\'t have to grow alone.',
+      icon: <Link2 className="w-8 h-8 text-(--color-roti)" />
     },
-    { 
-      title: 'Lead Boldly', 
-      description: 'Move with confidence into the spaces God is guiding you—held by a community that affirms your presence and purpose.',
-      icon: '🛡️'
+    {
+      title: 'Lead Boldly',
+      description: 'Move with confidence into the spaces God is guiding you\u2014held by a community that affirms your presence and purpose.',
+      icon: <Shield className="w-8 h-8 text-(--color-roti)" />
     }
   ]
 }: PillarsBlockProps) {
@@ -51,7 +54,7 @@ export default function PillarsBlock({
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center sm:text-left">
           {items.map((pillar, index) => (
             <div key={index} className="bg-white p-10 rounded-3xl shadow-[0_10px_40px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.1)] transition-all group border border-gray-100 hover:-translate-y-2">
-              <div className="w-16 h-16 bg-(--color-sidecar) text-3xl flex items-center justify-center rounded-2xl mb-8 group-hover:scale-110 transition-transform mx-auto sm:mx-0">
+              <div className="w-16 h-16 bg-(--color-sidecar) flex items-center justify-center rounded-2xl mb-8 group-hover:scale-110 transition-transform mx-auto sm:mx-0">
                 {pillar.icon}
               </div>
               <h3 className="text-2xl font-bold mb-4 text-(--color-primary)">{pillar.title}</h3>

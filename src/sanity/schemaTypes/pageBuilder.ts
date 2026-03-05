@@ -1,5 +1,79 @@
 import { defineField, defineType } from 'sanity'
 
+const buttonSizeField = defineField({
+  name: 'buttonSize',
+  title: 'Button Size',
+  type: 'string',
+  options: {
+    list: [
+      { title: 'Small', value: 'small' },
+      { title: 'Medium (Default)', value: 'medium' },
+      { title: 'Large', value: 'large' },
+    ],
+    layout: 'radio',
+  },
+  initialValue: 'medium',
+})
+
+const buttonColorField = defineField({
+  name: 'buttonColor',
+  title: 'Button Color',
+  type: 'string',
+  options: {
+    list: [
+      { title: 'Purple (Primary)', value: 'primary' },
+      { title: 'Gold', value: 'gold' },
+    ],
+    layout: 'radio',
+  },
+  initialValue: 'primary',
+})
+
+const buttonAlignField = defineField({
+  name: 'buttonAlignment',
+  title: 'Button Alignment',
+  type: 'string',
+  options: {
+    list: [
+      { title: 'Left', value: 'left' },
+      { title: 'Center', value: 'center' },
+      { title: 'Right', value: 'right' },
+    ],
+    layout: 'radio',
+  },
+  initialValue: 'center',
+})
+
+const sectionSpacingField = defineField({
+  name: 'sectionSpacing',
+  title: 'Section Spacing',
+  type: 'string',
+  options: {
+    list: [
+      { title: 'Tight', value: 'tight' },
+      { title: 'Normal (Default)', value: 'normal' },
+      { title: 'Loose', value: 'loose' },
+    ],
+    layout: 'radio',
+  },
+  initialValue: 'normal',
+})
+
+const sectionBackgroundColorField = defineField({
+  name: 'sectionBgColor',
+  title: 'Background Color Override',
+  type: 'string',
+  description: 'CSS color value (e.g. #3D2C5E, #C9A84C) or leave empty for default',
+})
+
+const sectionBackgroundImageField = defineField({
+  name: 'sectionBgImage',
+  title: 'Background Image',
+  type: 'image',
+  options: { hotspot: true },
+  description: 'Optional background image for this section',
+})
+
 // Hero Block
 export const heroBlock = defineType({
   name: 'heroBlock',
@@ -31,6 +105,9 @@ export const heroBlock = defineType({
       options: { hotspot: true },
       description: 'Used for decorative overlays or background textures'
     }),
+    { ...buttonSizeField },
+    { ...buttonColorField },
+    { ...buttonAlignField },
   ]
 })
 
@@ -57,6 +134,9 @@ export const homeHeroBlock = defineType({
     }),
     defineField({ name: 'secondaryButtonText', title: 'Secondary Button Text', type: 'string' }),
     defineField({ name: 'secondaryButtonLink', title: 'Secondary Button Link', type: 'string' }),
+    { ...buttonSizeField },
+    { ...buttonColorField },
+    { ...buttonAlignField },
     defineField({
       name: 'logoImage',
       title: 'Logo / Hero Image',
@@ -113,6 +193,7 @@ export const benefitsBlock = defineType({
     defineField({ name: 'title', title: 'Title', type: 'string' }),
     defineField({ name: 'description', title: 'Description', type: 'text' }),
     defineField({ name: 'buttonText', title: 'Button Text', type: 'string' }),
+    defineField({ name: 'buttonLink', title: 'Button Link', type: 'string', description: 'Internal path (e.g. /sign-up) or external URL' }),
     defineField({
       name: 'items',
       title: 'Benefit Items',
@@ -124,7 +205,10 @@ export const benefitsBlock = defineType({
           defineField({ name: 'description', title: 'Description', type: 'text' }),
         ]
       }]
-    })
+    }),
+    { ...buttonSizeField },
+    { ...buttonColorField },
+    { ...buttonAlignField },
   ]
 })
 
@@ -186,6 +270,9 @@ export const mediaTextBlock = defineType({
       initialValue: false,
       description: 'When on, button opens Fillout slider instead of navigating',
     }),
+    { ...buttonSizeField },
+    { ...buttonColorField },
+    { ...buttonAlignField },
   ]
 })
 
@@ -291,6 +378,9 @@ export const richTextBlock = defineType({
       type: 'array',
       of: [{ type: 'block' }]
     }),
+    { ...sectionSpacingField },
+    { ...sectionBackgroundColorField },
+    { ...sectionBackgroundImageField },
   ]
 })
 
@@ -305,6 +395,12 @@ export const ctaBlock = defineType({
     defineField({ name: 'buttonText', title: 'Button Text', type: 'string' }),
     defineField({ name: 'buttonLink', title: 'Button Link', type: 'string', description: 'Internal (e.g. /sign-up) or External URL. Leave empty to use Fillout when useFillout is on.' }),
     defineField({ name: 'useFillout', title: 'Use Fillout (form) instead of link', type: 'boolean', initialValue: false }),
+    { ...buttonSizeField },
+    { ...buttonColorField },
+    { ...buttonAlignField },
+    { ...sectionSpacingField },
+    { ...sectionBackgroundColorField },
+    { ...sectionBackgroundImageField },
   ]
 })
 
@@ -359,6 +455,11 @@ export const empathySectionBlock = defineType({
     }),
     defineField({ name: 'buttonText', title: 'Button Text (Optional)', type: 'string' }),
     defineField({ name: 'buttonLink', title: 'Button Link', type: 'string' }),
+    { ...buttonSizeField },
+    { ...buttonColorField },
+    { ...sectionSpacingField },
+    { ...sectionBackgroundColorField },
+    { ...sectionBackgroundImageField },
   ]
 })
 
@@ -492,6 +593,9 @@ export const founderBioBlock = defineType({
     defineField({ name: 'closingText', title: 'Closing Text', type: 'text' }),
     defineField({ name: 'buttonText', title: 'Button Text', type: 'string' }),
     defineField({ name: 'buttonLink', title: 'Button Link', type: 'string' }),
+    { ...buttonSizeField },
+    { ...buttonColorField },
+    { ...buttonAlignField },
   ]
 })
 
@@ -502,7 +606,13 @@ export const textCtaBlock = defineType({
   type: 'object',
   fields: [
     defineField({ name: 'heading', title: 'Heading', type: 'string' }),
-    defineField({ name: 'body', title: 'Body Text', type: 'text' }),
+    defineField({
+      name: 'body',
+      title: 'Body Text',
+      type: 'array',
+      of: [{ type: 'block' }],
+      description: 'Rich text with formatting, links, and line breaks',
+    }),
     defineField({ name: 'buttonText', title: 'Button Text', type: 'string' }),
     defineField({ name: 'buttonLink', title: 'Button Link', type: 'string', description: 'Leave empty if using Fillout' }),
     defineField({
@@ -538,6 +648,12 @@ export const textCtaBlock = defineType({
       },
       initialValue: 'normal'
     }),
+    { ...buttonSizeField },
+    { ...buttonColorField },
+    { ...buttonAlignField },
+    { ...sectionSpacingField },
+    { ...sectionBackgroundColorField },
+    { ...sectionBackgroundImageField },
   ]
 })
 
@@ -557,6 +673,12 @@ export const checklistBlock = defineType({
     defineField({ name: 'closingText', title: 'Closing Text', type: 'string' }),
     defineField({ name: 'buttonText', title: 'Button Text', type: 'string' }),
     defineField({ name: 'buttonLink', title: 'Button Link', type: 'string' }),
+    { ...buttonSizeField },
+    { ...buttonColorField },
+    { ...buttonAlignField },
+    { ...sectionSpacingField },
+    { ...sectionBackgroundColorField },
+    { ...sectionBackgroundImageField },
   ]
 })
 
@@ -632,6 +754,12 @@ export const proseSectionBlock = defineType({
     }),
     defineField({ name: 'buttonText', title: 'Button Text (for card style)', type: 'string' }),
     defineField({ name: 'buttonLink', title: 'Button Link', type: 'string' }),
+    { ...buttonSizeField },
+    { ...buttonColorField },
+    { ...buttonAlignField },
+    { ...sectionSpacingField },
+    { ...sectionBackgroundColorField },
+    { ...sectionBackgroundImageField },
   ]
 })
 

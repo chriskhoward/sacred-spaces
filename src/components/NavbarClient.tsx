@@ -19,11 +19,13 @@ interface NavbarClientProps {
   dynamicPages: Array<{ title: string; slug: string }>;
   logoUrl?: string | null;
   announcement?: AnnouncementData | null;
+  memberLoginLabel?: string | null;
+  dashboardLabel?: string | null;
 }
 
 const DEFAULT_LOGO = '/assets/images/tc_logo.png';
 
-export default function NavbarClient({ dynamicPages, logoUrl, announcement }: NavbarClientProps) {
+export default function NavbarClient({ dynamicPages, logoUrl, announcement, memberLoginLabel, dashboardLabel }: NavbarClientProps) {
   const logo = logoUrl || DEFAULT_LOGO;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
@@ -72,7 +74,8 @@ export default function NavbarClient({ dynamicPages, logoUrl, announcement }: Na
 
   // Get membership type from user metadata
   const membershipType = user?.publicMetadata?.membershipType as string | undefined;
-  const isMemberUser = isMember(user?.id, membershipType);
+  const role = (user?.publicMetadata?.role as string) || null;
+  const isMemberUser = isMember(role, membershipType);
 
   // Navigation links for members
   const memberLinks = isMemberUser ? [
@@ -124,12 +127,12 @@ export default function NavbarClient({ dynamicPages, logoUrl, announcement }: Na
             <div className="flex items-center">
               <SignedOut>
                 <Link href="/sign-in" className="px-6 py-3 bg-(--color-roti) text-white rounded-full font-bold uppercase tracking-wide hover:opacity-90 transition-opacity text-sm whitespace-nowrap shadow-md">
-                  Member Login
+                  {memberLoginLabel || 'Member Login'}
                 </Link>
               </SignedOut>
               <SignedIn>
                 <Link href="/dashboard" className="px-6 py-3 bg-(--color-roti) text-white rounded-full font-bold uppercase tracking-wide hover:opacity-90 transition-opacity text-sm whitespace-nowrap shadow-md">
-                  Dashboard
+                  {dashboardLabel || 'Dashboard'}
                 </Link>
                 <div className="ml-4">
                   <UserButton
@@ -204,7 +207,7 @@ export default function NavbarClient({ dynamicPages, logoUrl, announcement }: Na
                   className="block w-full px-6 py-3 bg-(--color-roti) text-white rounded-full font-bold text-sm uppercase tracking-wide hover:opacity-90 transition-opacity text-center shadow-md"
                   onClick={closeMenu}
                 >
-                  Member Login
+                  {memberLoginLabel || 'Member Login'}
                 </Link>
               </SignedOut>
               <SignedIn>
@@ -213,7 +216,7 @@ export default function NavbarClient({ dynamicPages, logoUrl, announcement }: Na
                   className="block w-full px-6 py-3 bg-(--color-roti) text-white rounded-full font-bold text-sm uppercase tracking-wide hover:opacity-90 transition-opacity text-center shadow-md"
                   onClick={closeMenu}
                 >
-                  Dashboard
+                  {dashboardLabel || 'Dashboard'}
                 </Link>
                 <div className="flex justify-center mt-4">
                   <UserButton

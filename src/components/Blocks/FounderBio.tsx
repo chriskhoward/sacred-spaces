@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { urlForImage } from '@/sanity/lib/image';
 import { PortableText } from '@portabletext/react';
+import { getButtonSizeClasses, getButtonColorClasses, getButtonAlignClasses, type ButtonSize, type ButtonColor, type ButtonAlignment } from '@/components/Blocks/blockHelpers';
 
 interface FounderBioBlockProps {
   badge?: string;
@@ -12,6 +13,9 @@ interface FounderBioBlockProps {
   closingText?: string;
   buttonText?: string;
   buttonLink?: string;
+  buttonSize?: ButtonSize;
+  buttonColor?: ButtonColor;
+  buttonAlignment?: ButtonAlignment;
 }
 
 export default function FounderBioBlock({
@@ -22,7 +26,10 @@ export default function FounderBioBlock({
   image,
   closingText,
   buttonText,
-  buttonLink
+  buttonLink,
+  buttonSize,
+  buttonColor,
+  buttonAlignment,
 }: FounderBioBlockProps) {
   const imageUrl = image?.asset ? urlForImage(image).url() : '/assets/images/team/placeholder.png';
 
@@ -66,12 +73,14 @@ export default function FounderBioBlock({
                 </p>
               )}
               {buttonText && buttonLink && (
-                <Link
-                  href={buttonLink}
-                  className="inline-block px-6 py-3 bg-(--color-primary) text-white rounded-full font-bold text-sm hover:bg-(--color-roti) transition-all shadow-xl"
-                >
-                  {buttonText}
-                </Link>
+                <div className={getButtonAlignClasses(buttonAlignment)}>
+                  <Link
+                    href={buttonLink}
+                    className={`inline-block ${getButtonSizeClasses(buttonSize)} ${getButtonColorClasses(buttonColor)} rounded-full font-bold transition-all shadow-xl`}
+                  >
+                    {buttonText}
+                  </Link>
+                </div>
               )}
             </div>
           </div>

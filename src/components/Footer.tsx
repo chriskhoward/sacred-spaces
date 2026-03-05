@@ -12,30 +12,69 @@ export type FooterSocialLinks = {
   tiktok?: string | null;
 };
 
+export type FooterNavItem = {
+  label: string;
+  href: string;
+};
+
 type FooterProps = {
   logoUrl?: string | null;
   socialLinks?: FooterSocialLinks | null;
   contactEmail?: string | null;
+  secondaryEmail?: string | null;
+  websiteUrl?: string | null;
+  tagline?: string | null;
+  copyrightText?: string | null;
+  quickLinksLabel?: string | null;
+  connectLabel?: string | null;
+  socialLabel?: string | null;
+  memberLoginLabel?: string | null;
+  quickLinks?: FooterNavItem[] | null;
 };
 
 const DEFAULT_LOGO = '/assets/images/tc_logo.png';
 
-export default function Footer({ logoUrl, socialLinks, contactEmail }: FooterProps = {}) {
+const DEFAULT_QUICK_LINKS: FooterNavItem[] = [
+  { label: 'Home', href: '/' },
+  { label: 'Teacher Collective', href: '/teacher-collective' },
+  { label: 'Community', href: '/community' },
+  { label: 'Directory', href: '/directory' },
+  { label: 'Video Library', href: '/video-library' },
+];
+
+export default function Footer({
+  logoUrl,
+  socialLinks,
+  contactEmail,
+  secondaryEmail,
+  websiteUrl,
+  tagline,
+  copyrightText,
+  quickLinksLabel,
+  connectLabel,
+  socialLabel,
+  memberLoginLabel,
+  quickLinks,
+}: FooterProps) {
   const { isSignedIn } = useUser();
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
   const logo = logoUrl || DEFAULT_LOGO;
   const email = contactEmail || 'info@flowinfaith.com';
-
-  // Only render auth-dependent "Member Login" after mount to avoid hydration mismatch
+  const email2 = secondaryEmail || 'collective@flowinfaith.com';
+  const siteUrl = websiteUrl || 'https://www.flowinfaith.com';
+  const siteUrlDisplay = siteUrl.replace(/^https?:\/\//, '');
+  const mission = tagline || 'Flow in Faith is a Christ-centered wellness ecosystem creating culturally safe spaces where faith is lived through body, breath, rest, and community.';
+  const copyright = copyrightText || "Flow in Faith Teacher's Collective";
+  const links = quickLinks && quickLinks.length > 0 ? quickLinks : DEFAULT_QUICK_LINKS;
   const showMemberLogin = mounted && !isSignedIn;
 
   return (
     <footer className="bg-(--color-primary) text-white pt-16 pb-8">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
-          {/* Left Column - Logo, Mission, Member Login */}
+          {/* Left Column */}
           <div className="flex flex-col items-center md:items-start text-center md:text-left">
             <Link href="/" className="mb-6">
               <Image
@@ -48,53 +87,35 @@ export default function Footer({ logoUrl, socialLinks, contactEmail }: FooterPro
               />
             </Link>
             <p className="text-white text-sm leading-relaxed mb-6 max-w-sm">
-              Flow in Faith is a Christ-centered wellness ecosystem creating culturally safe spaces where faith is lived through body, breath, rest, and community.
+              {mission}
             </p>
             {showMemberLogin && (
               <Link
                 href="/sign-in"
                 className="inline-block px-6 py-3 bg-(--color-roti) text-(--color-primary) rounded-full font-bold text-sm hover:opacity-90 transition-opacity text-center"
               >
-                Member Login
+                {memberLoginLabel || 'Member Login'}
               </Link>
             )}
           </div>
 
-          {/* Middle Column - Quick Links */}
+          {/* Middle Column */}
           <div className="text-center md:text-left">
-            <h4 className="text-white text-lg font-bold mb-6">Quick Links</h4>
+            <h4 className="text-white text-lg font-bold mb-6">{quickLinksLabel || 'Quick Links'}</h4>
             <ul className="list-none p-0 m-0 space-y-3">
-              <li>
-                <Link href="/" className="text-white hover:text-(--color-roti) transition-colors text-sm">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link href="/teacher-collective" className="text-white hover:text-(--color-roti) transition-colors text-sm">
-                  Teacher Collective
-                </Link>
-              </li>
-              <li>
-                <Link href="/community" className="text-white hover:text-(--color-roti) transition-colors text-sm">
-                  Community
-                </Link>
-              </li>
-              <li>
-                <Link href="/directory" className="text-white hover:text-(--color-roti) transition-colors text-sm">
-                  Directory
-                </Link>
-              </li>
-              <li>
-                <Link href="/video-library" className="text-white hover:text-(--color-roti) transition-colors text-sm">
-                  Video Library
-                </Link>
-              </li>
+              {links.map((item) => (
+                <li key={item.href}>
+                  <Link href={item.href} className="text-white hover:text-(--color-roti) transition-colors text-sm">
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Right Column - Connect With Us */}
+          {/* Right Column */}
           <div className="text-center md:text-left">
-            <h4 className="text-white text-lg font-bold mb-6">Connect With Us</h4>
+            <h4 className="text-white text-lg font-bold mb-6">{connectLabel || 'Connect With Us'}</h4>
             <ul className="list-none p-0 m-0 space-y-3 mb-6">
               <li className="flex items-center justify-center md:justify-start gap-2">
                 <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -108,20 +129,20 @@ export default function Footer({ logoUrl, socialLinks, contactEmail }: FooterPro
                 <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
-                <a href="mailto:collective@flowinfaith.com" className="text-white hover:text-(--color-roti) transition-colors text-sm underline">
-                  collective@flowinfaith.com
+                <a href={`mailto:${email2}`} className="text-white hover:text-(--color-roti) transition-colors text-sm underline">
+                  {email2}
                 </a>
               </li>
               <li className="flex items-center justify-center md:justify-start gap-2">
                 <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
                 </svg>
-                <a href="https://www.flowinfaith.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-(--color-roti) transition-colors text-sm underline">
-                  www.flowinfaith.com
+                <a href={siteUrl} target="_blank" rel="noopener noreferrer" className="text-white hover:text-(--color-roti) transition-colors text-sm underline">
+                  {siteUrlDisplay}
                 </a>
               </li>
             </ul>
-            <p className="text-white text-sm mb-4">Follow us on Social Media</p>
+            <p className="text-white text-sm mb-4">{socialLabel || 'Follow us on Social Media'}</p>
             <div className="flex gap-3 justify-center md:justify-start">
               <a href={socialLinks?.facebook || 'https://www.facebook.com/itsFlowinFaith/'} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border-2 border-white flex items-center justify-center hover:bg-white hover:text-(--color-primary) transition-colors">
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -148,7 +169,7 @@ export default function Footer({ logoUrl, socialLinks, contactEmail }: FooterPro
         </div>
 
         <div className="border-t border-white/10 pt-8 text-center">
-          <p className="text-sm opacity-70 m-0">Copyright {new Date().getFullYear()}, Flow in Faith Teacher&apos;s Collective. All Rights Reserved.</p>
+          <p className="text-sm opacity-70 m-0">Copyright {new Date().getFullYear()}, {copyright}. All Rights Reserved.</p>
         </div>
       </div>
     </footer>

@@ -10,7 +10,7 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-const PAGE_QUERY = `*[_type == "page" && slug.current == $slug][0] { _id, _type, title, content, isLocked }`;
+const PAGE_QUERY = `*[_type == "page" && slug.current == $slug][0] { _id, _type, title, content, isLocked, hideHeader }`;
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
@@ -45,7 +45,7 @@ export default async function GenericPage({ params }: PageProps) {
 
   return (
     <main className="min-h-screen bg-white">
-      <Navbar />
+      {!data.hideHeader && <Navbar />}
       <BlockRenderer
         blocks={data.content as Array<{ _type: string; _key: string;[key: string]: any }>}
         documentId={data._id}
