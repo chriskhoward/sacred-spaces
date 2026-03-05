@@ -1,10 +1,13 @@
 import { client } from '@/sanity/lib/client'
+import { urlForImage } from '@/sanity/lib/image'
 import { auth } from '@clerk/nextjs/server'
 import { PricingTable } from '@clerk/nextjs'
 import { PortableText } from '@portabletext/react'
 import { Check } from 'lucide-react'
 import { CURRENT_SUMMIT_QUERY, type Summit } from '@/sanity/lib/summit'
 import { notFound } from 'next/navigation'
+import Image from 'next/image'
+import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
@@ -30,9 +33,29 @@ export default async function AllAccessPage() {
     <section className="py-16 md:py-20">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto">
+          <Link
+            href="/summit/start-here"
+            className="text-(--color-roti) hover:opacity-80 text-sm font-medium mb-6 inline-block"
+          >
+            &larr; Back to Welcome
+          </Link>
+
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-(--color-primary) mb-8">
             All Access Pass
           </h1>
+
+          {summit.allAccessImage && (
+            <div className="mb-8 rounded-xl overflow-hidden">
+              <Image
+                src={urlForImage(summit.allAccessImage).width(800).url()}
+                alt="All Access Pass"
+                width={800}
+                height={400}
+                className="w-full h-auto object-cover"
+                unoptimized
+              />
+            </div>
+          )}
 
           {/* Already purchased */}
           {hasAllAccess ? (

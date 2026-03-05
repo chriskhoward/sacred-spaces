@@ -4,11 +4,13 @@ import Link from 'next/link'
 import {
   CURRENT_SUMMIT_QUERY,
   SUMMIT_YOGA_CLASSES_QUERY,
+  getYogaCalendarUrl,
   type Summit,
   type SummitYogaClass,
 } from '@/sanity/lib/summit'
 import { notFound } from 'next/navigation'
 import AllAccessButton from '@/components/summit/AllAccessButton'
+import AddToCalendarButton from '@/components/summit/AddToCalendarButton'
 import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
@@ -62,6 +64,9 @@ export default async function YogaClassesPage() {
                       {yc.description}
                     </p>
                   )}
+                  <div className="mt-3">
+                    <AddToCalendarButton calendarUrl={getYogaCalendarUrl(yc)} />
+                  </div>
                   {yc.videoUrl && isAllowedIframeUrl(yc.videoUrl) && (
                     <div className="aspect-video mt-4 rounded-lg overflow-hidden bg-black">
                       <iframe

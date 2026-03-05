@@ -3,10 +3,12 @@ import { isAllowedIframeUrl } from '@/lib/iframe-utils'
 import {
   SUMMIT_BY_YEAR_QUERY,
   SUMMIT_YOGA_CLASSES_QUERY,
+  getYogaCalendarUrl,
   type Summit,
   type SummitYogaClass,
 } from '@/sanity/lib/summit'
 import { notFound } from 'next/navigation'
+import AddToCalendarButton from '@/components/summit/AddToCalendarButton'
 
 export const dynamic = 'force-dynamic'
 
@@ -40,6 +42,9 @@ export default async function ArchiveYogaClassesPage({ params }: PageProps) {
                   <h3 className="text-xl font-bold text-(--color-primary)">{yc.title}</h3>
                   {yc.instructor && <p className="text-sm text-(--color-primary)/70 mt-1">with {yc.instructor}</p>}
                   {yc.description && <p className="text-(--color-primary)/80 mt-3">{yc.description}</p>}
+                  <div className="mt-3">
+                    <AddToCalendarButton calendarUrl={getYogaCalendarUrl(yc)} />
+                  </div>
                   {yc.videoUrl && isAllowedIframeUrl(yc.videoUrl) && (
                     <div className="aspect-video mt-4 rounded-lg overflow-hidden bg-black">
                       <iframe

@@ -46,6 +46,7 @@ export interface SummitPresentation {
   startTime?: string
   resources?: SummitPresentationResource[]
   displayOrder?: number
+  sessionType?: 'live' | 'recorded'
 }
 
 export interface SummitYogaClass {
@@ -54,6 +55,7 @@ export interface SummitYogaClass {
   instructor?: string
   videoUrl?: string
   description?: string
+  startTime?: string
   displayOrder?: number
 }
 
@@ -73,7 +75,12 @@ export interface Summit {
   clerkPlanId?: string
   welcomeContentFree?: any[]
   welcomeContentAllAccess?: any[]
+  welcomeBannerImage?: any
+  welcomeVideoUrl?: string
   allAccessPerks?: any[]
+  allAccessImage?: any
+  communityDescription?: any[]
+  scheduleBannerImage?: any
   navLinks?: SummitNavLink[]
   faqItems?: SummitFaqItem[]
   contactEmail?: string
@@ -107,7 +114,8 @@ const presentationProjection = `{
     url,
     file { asset-> { url } }
   },
-  displayOrder
+  displayOrder,
+  sessionType
 }`
 
 // ---------- GROQ Queries ----------
@@ -126,6 +134,7 @@ export const SUMMIT_YOGA_CLASSES_QUERY = `*[_type == "summitYogaClass" && summit
   instructor,
   videoUrl,
   description,
+  startTime,
   displayOrder
 }`
 
@@ -167,6 +176,24 @@ export function getGoogleCalendarUrl(presentation: SummitPresentation, durationM
     text: presentation.title,
     dates: `${fmt(start)}/${fmt(end)}`,
     details: `${presentation.description || presentation.title}\n\nSpeaker: ${presentation.speaker?.name || 'TBA'}`,
+    location: 'Online',
+  })
+  return `https://www.google.com/calendar/render?${params.toString()}`
+}
+
+/**
+ * Generate a Google Calendar URL for a yoga class.
+ */
+export function getYogaCalendarUrl(yogaClass: SummitYogaClass, durationMin = 60): string | null {
+  if (!yogaClass.startTime) return null
+  const start = new Date(yogaClass.startTime)
+  const end = new Date(start.getTime() + durationMin * 60 * 1000)
+  const fmt = (d: Date) => d.toISOString().replace(/-|:|\.\d\d\d/g, '')
+  const params = new URLSearchParams({
+    action: 'TEMPLATE',
+    text: yogaClass.title,
+    dates: `${fmt(start)}/${fmt(end)}`,
+    details: `${yogaClass.description || yogaClass.title}\n\nInstructor: ${yogaClass.instructor || 'TBA'}`,
     location: 'Online',
   })
   return `https://www.google.com/calendar/render?${params.toString()}`

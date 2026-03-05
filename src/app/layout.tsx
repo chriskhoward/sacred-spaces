@@ -6,9 +6,10 @@ import Script from "next/script";
 import "./globals.css";
 import VisualEditing from "@/components/VisualEditing";
 import { Analytics } from "@vercel/analytics/next";
-import Footer from "@/components/Footer";
+import FooterWrapper from "@/components/FooterWrapper";
 import { getClient } from "@/sanity/lib/client";
 import { SITE_SETTINGS_QUERY, type SiteSettings } from "@/sanity/lib/siteSettings";
+import { CURRENT_SUMMIT_QUERY, type Summit } from "@/sanity/lib/summit";
 import { urlForImage } from "@/sanity/lib/image";
 
 const GTM_ID = "GTM-5Z6DMF5X";
@@ -68,7 +69,14 @@ export default async function RootLayout({
   const publishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
   const { isEnabled } = await draftMode();
   const client = getClient(isEnabled);
-  const settings = await client.fetch<SiteSettings>(SITE_SETTINGS_QUERY);
+  const [settings, summit] = await Promise.all([
+    client.fetch<SiteSettings>(SITE_SETTINGS_QUERY),
+    client.fetch<Summit | null>(CURRENT_SUMMIT_QUERY),
+  ]);
+
+  const summitLogoUrl = summit?.heroImage
+    ? urlForImage(summit.heroImage).width(200).height(200).url()
+    : undefined;
 
   return (
     <ClerkProvider
@@ -118,10 +126,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             />
           </noscript>
           {children}
-          <Footer
+          <FooterWrapper
             logoUrl={settings?.logo ? urlForImage(settings.logo).width(400).url() : undefined}
             socialLinks={settings?.socialLinks ?? undefined}
             contactEmail={settings?.contactEmail ?? undefined}
+            summitLogoUrl={summitLogoUrl}
           />
           {(await draftMode()).isEnabled && <VisualEditing />}
           <Analytics />

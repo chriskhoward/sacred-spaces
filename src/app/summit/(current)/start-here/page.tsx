@@ -1,6 +1,9 @@
 import { client } from '@/sanity/lib/client'
+import { urlForImage } from '@/sanity/lib/image'
+import { isAllowedIframeUrl } from '@/lib/iframe-utils'
 import { auth } from '@clerk/nextjs/server'
 import { PortableText } from '@portabletext/react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { CURRENT_SUMMIT_QUERY, type Summit } from '@/sanity/lib/summit'
 import { notFound } from 'next/navigation'
@@ -12,33 +15,10 @@ export const dynamic = 'force-dynamic'
 export async function generateMetadata(): Promise<Metadata> {
   const summit = await client.fetch<Summit | null>(CURRENT_SUMMIT_QUERY)
   return {
-    title: summit ? `Start Here — ${summit.title}` : 'Summit',
+    title: summit ? `Welcome — ${summit.title}` : 'Summit',
     description: summit?.description,
   }
 }
-
-const navCards = [
-  {
-    title: 'Schedule',
-    description: 'View all presentations organized by day and time.',
-    path: '/schedule',
-  },
-  {
-    title: 'Speakers',
-    description: 'Meet the inspiring speakers sharing at this summit.',
-    path: '/speakers',
-  },
-  {
-    title: 'Yoga Classes',
-    description: 'Bonus yoga classes available for All Access members.',
-    path: '/yoga-classes',
-  },
-  {
-    title: 'Contact',
-    description: 'Questions? Reach out to our team for support.',
-    path: '/contact',
-  },
-]
 
 export default async function StartHerePage() {
   const summit = await client.fetch<Summit | null>(CURRENT_SUMMIT_QUERY)
@@ -57,10 +37,38 @@ export default async function StartHerePage() {
     <section className="py-16 md:py-20">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
+          {/* Optional banner */}
+          {summit.welcomeBannerImage && (
+            <div className="mb-8 rounded-xl overflow-hidden">
+              <Image
+                src={urlForImage(summit.welcomeBannerImage).width(1200).url()}
+                alt={`${summit.title} banner`}
+                width={1200}
+                height={400}
+                className="w-full h-auto object-cover"
+                unoptimized
+              />
+            </div>
+          )}
+
           {/* Welcome */}
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-(--color-primary) mb-8">
             Welcome to {summit.title}
           </h1>
+
+          {/* Optional video */}
+          {summit.welcomeVideoUrl && isAllowedIframeUrl(summit.welcomeVideoUrl) && (
+            <div className="aspect-video mb-10 rounded-xl overflow-hidden bg-black">
+              <iframe
+                src={summit.welcomeVideoUrl}
+                title={`${summit.title} welcome video`}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                sandbox="allow-scripts allow-same-origin allow-presentation"
+                className="w-full h-full"
+              />
+            </div>
+          )}
 
           {content && content.length > 0 ? (
             <div className="prose prose-lg max-w-none text-(--color-primary) mb-10">
@@ -86,23 +94,38 @@ export default async function StartHerePage() {
             </div>
           )}
 
-          {/* Navigation Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-12">
-            {navCards.map((card) => (
-              <Link
-                key={card.path}
-                href={`/summit${card.path}`}
-                className="bg-white rounded-xl p-6 shadow-sm border border-(--color-gallery) hover:shadow-md transition-shadow"
-              >
-                <h3 className="text-lg font-bold text-(--color-primary) mb-2">
-                  {card.title}
-                </h3>
-                <p className="text-sm text-(--color-primary)/70">
-                  {card.description}
-                </p>
-              </Link>
-            ))}
-          </div>
+          {/* Navigation Cards — driven by navLinks from Sanity */}
+          {summit.navLinks && summit.navLinks.length > 0 && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-12">
+              {summit.navLinks.map((link) => {
+                const isExternal = link.path.startsWith('http')
+                const href = isExternal ? link.path : `/summit${link.path}`
+                return isExternal ? (
+                  <a
+                    key={link.path}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-white rounded-xl p-6 shadow-sm border border-(--color-gallery) hover:shadow-md transition-shadow"
+                  >
+                    <h3 className="text-lg font-bold text-(--color-primary)">
+                      {link.label}
+                    </h3>
+                  </a>
+                ) : (
+                  <Link
+                    key={link.path}
+                    href={href}
+                    className="bg-white rounded-xl p-6 shadow-sm border border-(--color-gallery) hover:shadow-md transition-shadow"
+                  >
+                    <h3 className="text-lg font-bold text-(--color-primary)">
+                      {link.label}
+                    </h3>
+                  </Link>
+                )
+              })}
+            </div>
+          )}
 
           {/* Upgrade CTA for non-All Access users */}
           {!hasAllAccess && (

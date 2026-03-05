@@ -1,5 +1,17 @@
 import Link from 'next/link';
 import { Check } from 'lucide-react';
+import { urlForImage } from '@/sanity/lib/image';
+import {
+  getButtonSizeClasses,
+  getButtonColorClasses,
+  getButtonAlignClasses,
+  getSectionSpacingClasses,
+  getSectionBackgroundStyle,
+  type ButtonSize,
+  type ButtonColor,
+  type ButtonAlignment,
+  type SectionSpacing,
+} from './blockHelpers';
 
 interface EmpathySectionBlockProps {
   heading?: string;
@@ -7,6 +19,11 @@ interface EmpathySectionBlockProps {
   style?: 'light' | 'dark';
   buttonText?: string;
   buttonLink?: string;
+  buttonSize?: ButtonSize;
+  buttonColor?: ButtonColor;
+  sectionSpacing?: SectionSpacing;
+  sectionBgColor?: string;
+  sectionBgImage?: any;
 }
 
 export default function EmpathySectionBlock({
@@ -14,12 +31,22 @@ export default function EmpathySectionBlock({
   items = [],
   style = 'light',
   buttonText,
-  buttonLink
+  buttonLink,
+  buttonSize,
+  buttonColor,
+  sectionSpacing,
+  sectionBgColor,
+  sectionBgImage,
 }: EmpathySectionBlockProps) {
   const isDark = style === 'dark';
+  const spacingCls = getSectionSpacingClasses(sectionSpacing);
+  const bgImageUrl = sectionBgImage ? urlForImage(sectionBgImage).width(1920).url() : undefined;
 
   return (
-    <section className={`py-20 lg:py-24 ${isDark ? 'bg-(--color-primary)' : 'bg-white'}`}>
+    <section
+      className={`${spacingCls} ${isDark ? 'bg-(--color-primary)' : 'bg-white'}`}
+      style={getSectionBackgroundStyle(sectionBgColor, bgImageUrl)}
+    >
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           {heading && (
@@ -41,11 +68,7 @@ export default function EmpathySectionBlock({
             <div className="mt-12 text-center">
               <Link
                 href={buttonLink}
-                className={`inline-block px-6 py-3 rounded-full font-bold text-sm transition-all shadow-xl ${
-                  isDark
-                    ? 'bg-(--color-roti) text-white hover:bg-white hover:text-(--color-primary)'
-                    : 'bg-(--color-primary) text-white hover:bg-(--color-roti)'
-                }`}
+                className={`inline-block rounded-full font-bold transition-all shadow-xl ${getButtonSizeClasses(buttonSize)} ${getButtonColorClasses(buttonColor, isDark)}`}
               >
                 {buttonText}
               </Link>

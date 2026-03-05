@@ -95,6 +95,17 @@ export default async function ArchivePresentationPage({ params }: PageProps) {
             </div>
           )}
 
+          {presentation.speaker?.bio && (
+            <div className="mb-8 bg-(--color-gallery)/30 rounded-xl p-6">
+              <h2 className="text-xl md:text-2xl font-bold text-(--color-primary) mb-3">
+                About {presentation.speaker.name}
+              </h2>
+              <p className="text-(--color-primary)/80 whitespace-pre-line">
+                {presentation.speaker.bio}
+              </p>
+            </div>
+          )}
+
           {presentation.resources && presentation.resources.length > 0 && (
             <div className="mb-8">
               <h2 className="text-xl md:text-2xl font-bold text-(--color-primary) mb-3">Resources</h2>

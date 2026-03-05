@@ -38,6 +38,12 @@ export const summitYogaClassType = defineType({
       rows: 4,
     }),
     defineField({
+      name: 'startTime',
+      title: 'Start Time',
+      type: 'datetime',
+      description: 'Exact start time (used for Google Calendar links)',
+    }),
+    defineField({
       name: 'displayOrder',
       title: 'Display Order',
       type: 'number',

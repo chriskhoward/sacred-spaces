@@ -148,6 +148,24 @@ export default async function PresentationPage({ params }: PageProps) {
             </div>
           )}
 
+          {/* Speaker Bio */}
+          {presentation.speaker?.bio && (
+            <div className="mb-8 bg-(--color-gallery)/30 rounded-xl p-6">
+              <h2 className="text-xl md:text-2xl font-bold text-(--color-primary) mb-3">
+                About {presentation.speaker.name}
+              </h2>
+              <p className="text-(--color-primary)/80 whitespace-pre-line">
+                {presentation.speaker.bio}
+              </p>
+            </div>
+          )}
+
+          {/* Included in All Access */}
+          <div className="mb-8 flex items-center gap-2 text-sm text-(--color-primary)/60">
+            <Check className="w-4 h-4 text-(--color-roti)" />
+            <span>Included in the All Access Pass</span>
+          </div>
+
           {/* Resources (only for All Access or while free-available) */}
           {canWatch &&
             presentation.resources &&

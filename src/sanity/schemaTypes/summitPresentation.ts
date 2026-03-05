@@ -115,6 +115,20 @@ export const summitPresentationType = defineType({
       description: 'Ordering within a day',
       initialValue: 0,
     }),
+    defineField({
+      name: 'sessionType',
+      title: 'Session Type',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Live', value: 'live' },
+          { title: 'Recorded', value: 'recorded' },
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'live',
+      description: 'Live sessions show full details; recorded sessions show compact view on the schedule',
+    }),
   ],
   orderings: [
     {
