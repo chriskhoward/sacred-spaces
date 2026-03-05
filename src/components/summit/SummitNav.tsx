@@ -12,6 +12,8 @@ interface SummitNavProps {
   summitTitle: string
   communityLink?: string
   logoUrl?: string
+  communityNavLabel?: string
+  signInLabel?: string
 }
 
 export default function SummitNav({
@@ -20,6 +22,8 @@ export default function SummitNav({
   summitTitle,
   communityLink,
   logoUrl,
+  communityNavLabel,
+  signInLabel,
 }: SummitNavProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isVisible, setIsVisible] = useState(true)
@@ -95,7 +99,7 @@ export default function SummitNav({
                 rel="noopener noreferrer"
                 className="text-white hover:text-(--color-roti) transition-colors font-medium text-sm"
               >
-                Community
+                {communityNavLabel || 'Community'}
               </a>
             )}
             <SignedOut>
@@ -103,7 +107,7 @@ export default function SummitNav({
                 href="/sign-in"
                 className="px-6 py-3 bg-(--color-roti) text-white rounded-full font-bold uppercase tracking-wide hover:opacity-90 transition-opacity text-sm whitespace-nowrap shadow-md"
               >
-                Sign In
+                {signInLabel || 'Sign In'}
               </Link>
             </SignedOut>
             <SignedIn>
@@ -168,7 +172,7 @@ export default function SummitNav({
                     className="font-bold text-white hover:text-(--color-roti) transition-colors text-xl py-2 block"
                     onClick={closeMenu}
                   >
-                    Community
+                    {communityNavLabel || 'Community'}
                   </a>
                 </li>
               )}
@@ -180,7 +184,7 @@ export default function SummitNav({
                   className="block w-full px-6 py-3 bg-(--color-roti) text-white rounded-full font-bold text-sm uppercase tracking-wide hover:opacity-90 transition-opacity text-center shadow-md"
                   onClick={closeMenu}
                 >
-                  Sign In
+                  {signInLabel || 'Sign In'}
                 </Link>
               </SignedOut>
               <SignedIn>

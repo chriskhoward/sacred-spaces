@@ -14,7 +14,7 @@ import { apiVersion, dataset, projectId } from './src/sanity/env'
 import { schema } from './src/sanity/schemaTypes'
 
 const singletonActions = new Set(['publish', 'discardChanges', 'restore'])
-const singletonTypes = new Set(['home', 'about', 'teacherCollectiveFaqs', 'teacherCollectiveDashboard'])
+const singletonTypes = new Set(['home', 'about', 'teacherCollectiveFaqs', 'teacherCollectiveDashboard', 'siteSettings', 'teacherCollectivePage'])
 
 export default defineConfig({
   basePath: '/studio',
@@ -36,55 +36,96 @@ export default defineConfig({
   },
   plugins: [
     structureTool({
-      structure: (S) =>
-        S.list()
+      structure: (S) => {
+        const hiddenFromList = new Set([
+          ...singletonTypes,
+          'page',
+          'founderPage',
+          'teacherOnboardingCategory',
+          'teacherOnboardingItem',
+          'navigation',
+        ])
+
+        return S.list()
           .title('Content')
           .items([
-            // Singleton: Homepage
+            // ── Global Settings ──
+            S.listItem()
+              .title('Site Settings')
+              .id('siteSettings')
+              .child(S.document().schemaType('siteSettings').documentId('siteSettings')),
+
+            // ── Navigation ──
+            S.listItem()
+              .title('Navigation Menus')
+              .id('navigation-group')
+              .child(
+                S.documentTypeList('navigation').title('Navigation Menus')
+              ),
+
+            S.divider(),
+
+            // ── Pages ──
             S.listItem()
               .title('Homepage')
               .id('home')
               .child(S.document().schemaType('home').documentId('home')),
-            // Singleton: About Page
+
             S.listItem()
               .title('About Page')
               .id('about')
               .child(S.document().schemaType('about').documentId('about')),
-            // Singleton: Teacher Collective FAQs
-            S.listItem()
-              .title('Teacher Collective FAQs')
-              .id('teacherCollectiveFaqs')
-              .child(S.document().schemaType('teacherCollectiveFaqs').documentId('teacherCollectiveFaqs')),
-            // Singleton: Teacher Collective Dashboard (card order & items)
-            S.listItem()
-              .title('Teacher Collective Dashboard')
-              .id('teacherCollectiveDashboard')
-              .child(S.document().schemaType('teacherCollectiveDashboard').documentId('teacherCollectiveDashboard')),
-            S.divider(),
-            // Regular types: Pages
+
             S.documentTypeListItem('page').title('Dynamic Pages'),
+
+            S.documentTypeListItem('founderPage').title('Founder Pages'),
+
             S.divider(),
-            // Start here (Teacher onboarding)
+
+            // ── Teacher Collective ──
             S.listItem()
-              .title('Start here (Teacher onboarding)')
+              .title('Teacher Collective')
+              .id('tc-group')
+              .child(
+                S.list()
+                  .title('Teacher Collective')
+                  .items([
+                    S.listItem()
+                      .title('Teacher Collective Page')
+                      .id('teacherCollectivePage')
+                      .child(S.document().schemaType('teacherCollectivePage').documentId('teacherCollectivePage')),
+                    S.listItem()
+                      .title('FAQs')
+                      .id('teacherCollectiveFaqs')
+                      .child(S.document().schemaType('teacherCollectiveFaqs').documentId('teacherCollectiveFaqs')),
+                    S.listItem()
+                      .title('Dashboard')
+                      .id('teacherCollectiveDashboard')
+                      .child(S.document().schemaType('teacherCollectiveDashboard').documentId('teacherCollectiveDashboard')),
+                  ])
+              ),
+
+            // ── Teacher Onboarding ──
+            S.listItem()
+              .title('Teacher Onboarding')
               .id('start-here')
               .child(
                 S.list()
-                  .title('Start here')
+                  .title('Teacher Onboarding')
                   .items([
-                    S.documentTypeListItem('teacherOnboardingCategory').title('Onboarding categories'),
-                    S.documentTypeListItem('teacherOnboardingItem').title('Onboarding items (videos, PDFs, links)'),
+                    S.documentTypeListItem('teacherOnboardingCategory').title('Onboarding Categories'),
+                    S.documentTypeListItem('teacherOnboardingItem').title('Onboarding Items'),
                   ])
               ),
+
             S.divider(),
-            // Regular types
+
+            // ── Remaining document types ──
             ...S.documentTypeListItems().filter(
-              (listItem) => {
-                const id = listItem.getId() || ''
-                return !singletonTypes.has(id) && id !== 'page' && id !== 'teacherOnboardingCategory' && id !== 'teacherOnboardingItem' && id !== 'teacherCollectiveFaqs' && id !== 'teacherCollectiveDashboard'
-              }
+              (listItem) => !hiddenFromList.has(listItem.getId() || '')
             ),
-          ]),
+          ])
+      },
     }),
     presentationTool({
       previewUrl: {
@@ -114,6 +155,26 @@ export default defineConfig({
               locations: doc?.slug
                 ? [{ title: doc.title || 'Untitled', href: `/${doc.slug}` }]
                 : [],
+            }),
+          },
+          founderPage: {
+            select: { title: 'name', slug: 'slug.current' },
+            resolve: (doc) => ({
+              locations: doc?.slug
+                ? [{ title: doc.title || 'Founder', href: `/${doc.slug}` }]
+                : [],
+            }),
+          },
+          teacherCollectivePage: {
+            select: { title: 'title' },
+            resolve: () => ({
+              locations: [{ title: 'Teacher Collective', href: '/teacher-collective' }],
+            }),
+          },
+          siteSettings: {
+            select: { title: 'title' },
+            resolve: () => ({
+              locations: [{ title: 'Homepage', href: '/' }],
             }),
           },
         },

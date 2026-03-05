@@ -15,7 +15,7 @@ export const dynamic = 'force-dynamic'
 export async function generateMetadata(): Promise<Metadata> {
   const summit = await client.fetch<Summit | null>(CURRENT_SUMMIT_QUERY)
   return {
-    title: summit ? `All Access Pass — ${summit.title}` : 'All Access Pass',
+    title: summit ? `${summit.labels?.allAccessTitle || 'All Access Pass'} — ${summit.title}` : 'All Access Pass',
     description: summit?.description,
   }
 }
@@ -37,11 +37,11 @@ export default async function AllAccessPage() {
             href="/summit/start-here"
             className="text-(--color-roti) hover:opacity-80 text-sm font-medium mb-6 inline-block"
           >
-            &larr; Back to Welcome
+            &larr; {summit.labels?.backToWelcome || 'Back to Welcome'}
           </Link>
 
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-(--color-primary) mb-8">
-            All Access Pass
+            {summit.labels?.allAccessTitle || 'All Access Pass'}
           </h1>
 
           {summit.allAccessImage && (
@@ -61,11 +61,10 @@ export default async function AllAccessPage() {
           {hasAllAccess ? (
             <div className="bg-(--color-sidecar) rounded-2xl p-8 md:p-12 text-center">
               <h2 className="text-2xl md:text-3xl font-bold text-(--color-primary) mb-4">
-                You Have All Access! <Check className="w-6 h-6 inline" />
+                {summit.labels?.allAccessSuccessHeading || 'You Have All Access!'} <Check className="w-6 h-6 inline" />
               </h2>
               <p className="text-(--color-primary)/80">
-                You have permanent, unlimited access to all summit content,
-                presentations, resources, and bonus material.
+                {summit.labels?.allAccessSuccessMessage || 'You have permanent, unlimited access to all summit content, presentations, resources, and bonus material.'}
               </p>
             </div>
           ) : (
@@ -86,7 +85,7 @@ export default async function AllAccessPage() {
                     rel="noopener noreferrer"
                     className="inline-block px-10 py-4 bg-(--color-roti) text-white rounded-full font-bold text-lg uppercase tracking-wide hover:opacity-90 transition-opacity shadow-lg"
                   >
-                    Get All Access Pass
+                    {summit.labels?.getAllAccessButton || 'Get All Access Pass'}
                   </a>
                 </div>
               ) : (

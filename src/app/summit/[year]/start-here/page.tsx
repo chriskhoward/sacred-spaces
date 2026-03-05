@@ -22,7 +22,7 @@ export default async function ArchiveStartHerePage({ params }: PageProps) {
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-(--color-primary) mb-8">
-            {summit.title} {summit.year}
+            {summit.labels?.welcomeTitle || `${summit.title} ${summit.year}`}
           </h1>
 
           {content && content.length > 0 ? (
@@ -30,7 +30,7 @@ export default async function ArchiveStartHerePage({ params }: PageProps) {
               <PortableText value={content} />
             </div>
           ) : (
-            <p className="text-(--color-primary)/70 mb-10">Welcome content not available.</p>
+            <p className="text-(--color-primary)/70 mb-10">{summit.labels?.welcomeEmptyMessage || 'Welcome content not available.'}</p>
           )}
 
           {/* Community Link */}
@@ -42,7 +42,7 @@ export default async function ArchiveStartHerePage({ params }: PageProps) {
                 rel="noopener noreferrer"
                 className="inline-block px-8 py-3 bg-(--color-primary) text-white rounded-full font-bold uppercase tracking-wide hover:opacity-90 transition-opacity shadow-md"
               >
-                Join the Community
+                {summit.labels?.joinCommunityButton || 'Join the Community'}
               </a>
             </div>
           )}

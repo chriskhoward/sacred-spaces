@@ -18,7 +18,7 @@ export const dynamic = 'force-dynamic'
 export async function generateMetadata(): Promise<Metadata> {
   const summit = await client.fetch<Summit | null>(CURRENT_SUMMIT_QUERY)
   return {
-    title: summit ? `Yoga Classes — ${summit.title}` : 'Yoga Classes',
+    title: summit ? `${summit.labels?.yogaTitle || 'Yoga Classes'} — ${summit.title}` : 'Yoga Classes',
     description: summit?.description,
   }
 }
@@ -37,12 +37,12 @@ export default async function YogaClassesPage() {
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-(--color-primary) mb-8">
-            Yoga Classes
+            {summit.labels?.yogaTitle || 'Yoga Classes'}
           </h1>
 
           {yogaClasses.length === 0 ? (
             <p className="text-(--color-primary)/70">
-              Yoga classes coming soon.
+              {summit.labels?.yogaEmptyMessage || 'Yoga classes coming soon.'}
             </p>
           ) : (
             <div className="space-y-8">
@@ -90,7 +90,7 @@ export default async function YogaClassesPage() {
               href="/summit/schedule"
               className="inline-block px-8 py-3 bg-(--color-primary) text-white rounded-full font-bold uppercase tracking-wide hover:opacity-90 transition-opacity shadow-md"
             >
-              View Schedule
+              {summit.labels?.viewScheduleButton || 'View Schedule'}
             </Link>
             <AllAccessButton basePath="/summit" />
           </div>

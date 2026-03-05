@@ -17,6 +17,8 @@ import { teacherCollectiveFaqsType } from './teacherCollectiveFaqs'
 import { teacherCollectiveDashboardType } from './teacherCollectiveDashboard'
 import { membershipPlanType } from './membershipPlan'
 import { siteSettingsType } from './siteSettings'
+import { founderPageType } from './founderPage'
+import { teacherCollectivePageType } from './teacherCollectivePage'
 import { navigationType } from './navigation'
 import { announcementBarType } from './announcementBar'
 import { summitSpeakerType } from './summitSpeaker'
@@ -100,6 +102,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     teacherCollectiveDashboardType,
     membershipPlanType,
     siteSettingsType,
+    founderPageType,
+    teacherCollectivePageType,
     navigationType,
     announcementBarType,
     summitType,

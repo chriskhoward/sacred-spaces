@@ -223,6 +223,49 @@ export const summitType = defineType({
       title: 'Contact Email',
       type: 'string',
     }),
+    defineField({
+      name: 'labels',
+      title: 'Page Labels & Text',
+      type: 'object',
+      description: 'Editable labels for all text on summit pages. Leave blank to use defaults.',
+      fields: [
+        // Welcome page
+        { name: 'welcomeTitle', title: 'Welcome Page Title', type: 'string', description: 'Default: "Welcome to {summit title}"' },
+        { name: 'welcomeEmptyMessage', title: 'Welcome Empty State', type: 'string', description: 'Default: "Welcome content coming soon."' },
+        { name: 'joinCommunityButton', title: 'Join Community Button', type: 'string', description: 'Default: "Join the Community"' },
+        { name: 'upgradeMessage', title: 'Upgrade CTA Message', type: 'string', description: 'Default: "Get lifetime access to all presentations, resources, and bonus yoga classes."' },
+        // Schedule page
+        { name: 'scheduleTitle', title: 'Schedule Page Title', type: 'string', description: 'Default: "Presentation & Workshop Schedule"' },
+        { name: 'scheduleEmptyMessage', title: 'Schedule Empty State', type: 'string', description: 'Default: "Schedule coming soon."' },
+        { name: 'recordedSessionsLabel', title: 'Recorded Sessions Label', type: 'string', description: 'Default: "Recorded Sessions"' },
+        { name: 'dayPrefix', title: 'Day Prefix', type: 'string', description: 'Default: "Day"' },
+        // Navigation labels
+        { name: 'backToWelcome', title: 'Back to Welcome Label', type: 'string', description: 'Default: "Back to Welcome"' },
+        { name: 'backToSchedule', title: 'Back to Schedule Label', type: 'string', description: 'Default: "Back to Schedule"' },
+        // All Access page
+        { name: 'allAccessTitle', title: 'All Access Page Title', type: 'string', description: 'Default: "All Access Pass"' },
+        { name: 'allAccessSuccessHeading', title: 'All Access Success Heading', type: 'string', description: 'Default: "You Have All Access!"' },
+        { name: 'allAccessSuccessMessage', title: 'All Access Success Message', type: 'string', description: 'Default: "You have permanent, unlimited access to all summit content..."' },
+        { name: 'getAllAccessButton', title: 'Get All Access Button', type: 'string', description: 'Default: "Get All Access Pass"' },
+        // Community page
+        { name: 'communityTitle', title: 'Community Page Title', type: 'string', description: 'Default: "Community"' },
+        { name: 'communityFallback', title: 'Community Fallback Text', type: 'string', description: 'Shown when no communityDescription exists.' },
+        // Yoga classes
+        { name: 'yogaTitle', title: 'Yoga Classes Title', type: 'string', description: 'Default: "Yoga Classes"' },
+        { name: 'yogaEmptyMessage', title: 'Yoga Empty State', type: 'string', description: 'Default: "Yoga classes coming soon."' },
+        { name: 'viewScheduleButton', title: 'View Schedule Button', type: 'string', description: 'Default: "View Schedule"' },
+        // Presentation detail
+        { name: 'aboutPresentationHeading', title: 'About Presentation Heading', type: 'string', description: 'Default: "About This Presentation"' },
+        { name: 'includedInAllAccess', title: 'Included in All Access Text', type: 'string', description: 'Default: "Included in the All Access Pass"' },
+        { name: 'resourcesHeading', title: 'Resources Heading', type: 'string', description: 'Default: "Resources"' },
+        { name: 'signInPrompt', title: 'Sign In Prompt', type: 'string', description: 'Default: "Sign in to check if this presentation is available..."' },
+        { name: 'noLongerFreeMessage', title: 'No Longer Free Message', type: 'string', description: 'Default: "This presentation is no longer available for free viewing."' },
+        { name: 'permanentAccessPrompt', title: 'Permanent Access Prompt', type: 'string', description: 'Default: "Want permanent access to all presentations and bonus content?"' },
+        // SummitNav labels
+        { name: 'communityNavLabel', title: 'Community Nav Label', type: 'string', description: 'Default: "Community"' },
+        { name: 'signInButton', title: 'Sign In Button', type: 'string', description: 'Default: "Sign In"' },
+      ],
+    }),
   ],
   preview: {
     select: {

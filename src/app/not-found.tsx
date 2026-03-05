@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { Sparkles } from 'lucide-react';
 import Navbar from '@/components/Navbar';
+import { client } from '@/sanity/lib/client';
+import { SITE_SETTINGS_QUERY, type SiteSettings } from '@/sanity/lib/siteSettings';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -8,7 +10,17 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function NotFound() {
+export default async function NotFound() {
+  const settings = await client.fetch<SiteSettings | null>(SITE_SETTINGS_QUERY).catch(() => null);
+
+  const heading = settings?.notFoundHeading || 'Page Not Found';
+  const message = settings?.notFoundMessage || "It seems you've wandered off the path.";
+  const quote = settings?.notFoundQuote || '"For I know the plans I have for you... plans to give you hope and a future."';
+  const attribution = settings?.notFoundQuoteAttribution || 'Jeremiah 29:11';
+  const homeLabel = settings?.notFoundHomeLabel || 'Return Home';
+  const secondaryLabel = settings?.notFoundSecondaryLabel || 'Find a Teacher';
+  const secondaryLink = settings?.notFoundSecondaryLink || '/directory';
+
   return (
     <main className="min-h-screen bg-(--color-gallery) flex flex-col">
       <Navbar />
@@ -30,14 +42,14 @@ export default function NotFound() {
           {/* Message */}
           <div className="max-w-2xl mx-auto">
             <h2 className="text-4xl md:text-5xl font-bold text-(--color-primary) mb-6">
-              Page Not Found
+              {heading}
             </h2>
             <p className="text-xl text-gray-600 mb-4">
-              It seems you've wandered off the path.
+              {message}
             </p>
             <p className="text-lg text-gray-500 mb-12 italic">
-              "For I know the plans I have for you... plans to give you hope and a future."
-              <span className="block mt-2 text-sm not-italic text-(--color-roti) font-bold">— Jeremiah 29:11</span>
+              {quote}
+              <span className="block mt-2 text-sm not-italic text-(--color-roti) font-bold">&mdash; {attribution}</span>
             </p>
 
             {/* Action buttons */}
@@ -46,13 +58,13 @@ export default function NotFound() {
                 href="/"
                 className="btn btn-primary inline-flex items-center justify-center gap-2"
               >
-                <span>←</span> Return Home
+                <span>&larr;</span> {homeLabel}
               </Link>
               <Link
-                href="/directory"
+                href={secondaryLink}
                 className="px-6 py-3 border-2 border-(--color-primary) text-(--color-primary) rounded-full font-bold text-sm hover:bg-(--color-primary) hover:text-white transition-all text-center"
               >
-                Find a Teacher
+                {secondaryLabel}
               </Link>
             </div>
           </div>

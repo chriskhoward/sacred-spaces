@@ -15,7 +15,7 @@ export const dynamic = 'force-dynamic'
 export async function generateMetadata(): Promise<Metadata> {
   const summit = await client.fetch<Summit | null>(CURRENT_SUMMIT_QUERY)
   return {
-    title: summit ? `Welcome — ${summit.title}` : 'Summit',
+    title: summit ? `${summit.labels?.welcomeTitle || 'Welcome'} — ${summit.title}` : 'Summit',
     description: summit?.description,
   }
 }
@@ -53,7 +53,7 @@ export default async function StartHerePage() {
 
           {/* Welcome */}
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-(--color-primary) mb-8">
-            Welcome to {summit.title}
+            {summit.labels?.welcomeTitle || `Welcome to ${summit.title}`}
           </h1>
 
           {/* Optional video */}
@@ -76,7 +76,7 @@ export default async function StartHerePage() {
             </div>
           ) : (
             <p className="text-(--color-primary)/70 mb-10">
-              Welcome content coming soon.
+              {summit.labels?.welcomeEmptyMessage || 'Welcome content coming soon.'}
             </p>
           )}
 
@@ -89,7 +89,7 @@ export default async function StartHerePage() {
                 rel="noopener noreferrer"
                 className="inline-block px-8 py-3 bg-(--color-primary) text-white rounded-full font-bold uppercase tracking-wide hover:opacity-90 transition-opacity shadow-md"
               >
-                Join the Community
+                {summit.labels?.joinCommunityButton || 'Join the Community'}
               </a>
             </div>
           )}
@@ -132,7 +132,7 @@ export default async function StartHerePage() {
             <UpgradeCTA
               allAccessSalesUrl={summit.allAccessSalesUrl}
               basePath="/summit"
-              message="Get lifetime access to all presentations, resources, and bonus yoga classes."
+              message={summit.labels?.upgradeMessage || 'Get lifetime access to all presentations, resources, and bonus yoga classes.'}
             />
           )}
         </div>

@@ -71,7 +71,7 @@ export default async function PresentationPage({ params }: PageProps) {
             href="/summit/schedule"
             className="text-(--color-roti) hover:opacity-80 text-sm font-medium mb-6 inline-block"
           >
-            &larr; Back to Schedule
+            &larr; {summit.labels?.backToSchedule || 'Back to Schedule'}
           </Link>
 
           {/* Header */}
@@ -98,7 +98,7 @@ export default async function PresentationPage({ params }: PageProps) {
               </p>
               {presentation.dayNumber && (
                 <p className="text-sm text-(--color-roti) font-medium mt-1">
-                  Day {presentation.dayNumber}
+                  {summit.labels?.dayPrefix || 'Day'} {presentation.dayNumber}
                   {presentation.timeSlot ? ` — ${presentation.timeSlot}` : ''}
                 </p>
               )}
@@ -129,8 +129,8 @@ export default async function PresentationPage({ params }: PageProps) {
                 basePath="/summit"
                 message={
                   !userId
-                    ? 'Sign in to check if this presentation is available for free viewing, or get All Access for permanent access.'
-                    : 'This presentation is no longer available for free viewing.'
+                    ? (summit.labels?.signInPrompt || 'Sign in to check if this presentation is available for free viewing, or get All Access for permanent access.')
+                    : (summit.labels?.noLongerFreeMessage || 'This presentation is no longer available for free viewing.')
                 }
               />
             </div>
@@ -140,7 +140,7 @@ export default async function PresentationPage({ params }: PageProps) {
           {presentation.description && (
             <div className="mb-8">
               <h2 className="text-xl md:text-2xl font-bold text-(--color-primary) mb-3">
-                About This Presentation
+                {summit.labels?.aboutPresentationHeading || 'About This Presentation'}
               </h2>
               <p className="text-(--color-primary)/80 whitespace-pre-line">
                 {presentation.description}
@@ -163,7 +163,7 @@ export default async function PresentationPage({ params }: PageProps) {
           {/* Included in All Access */}
           <div className="mb-8 flex items-center gap-2 text-sm text-(--color-primary)/60">
             <Check className="w-4 h-4 text-(--color-roti)" />
-            <span>Included in the All Access Pass</span>
+            <span>{summit.labels?.includedInAllAccess || 'Included in the All Access Pass'}</span>
           </div>
 
           {/* Resources (only for All Access or while free-available) */}
@@ -172,7 +172,7 @@ export default async function PresentationPage({ params }: PageProps) {
             presentation.resources.length > 0 && (
               <div className="mb-8">
                 <h2 className="text-xl md:text-2xl font-bold text-(--color-primary) mb-3">
-                  Resources
+                  {summit.labels?.resourcesHeading || 'Resources'}
                 </h2>
                 <ul className="space-y-2">
                   {presentation.resources.map((r, i) => {
@@ -211,7 +211,7 @@ export default async function PresentationPage({ params }: PageProps) {
           {!hasAllAccess && (
             <div className="mt-12 pt-8 border-t border-(--color-gallery) text-center">
               <p className="text-(--color-primary)/70 mb-4">
-                Want permanent access to all presentations and bonus content?
+                {summit.labels?.permanentAccessPrompt || 'Want permanent access to all presentations and bonus content?'}
               </p>
               <AllAccessButton basePath="/summit" />
             </div>

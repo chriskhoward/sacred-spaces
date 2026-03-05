@@ -39,6 +39,8 @@ export default async function ArchiveSummitLayout({
         summitTitle={`${summit.title} ${summit.year}`}
         communityLink={summit.communityLink}
         logoUrl={logoUrl}
+        communityNavLabel={summit.labels?.communityNavLabel ?? undefined}
+        signInLabel={summit.labels?.signInButton ?? undefined}
       />
       <div className="pt-28" />
       <main className="min-h-screen">

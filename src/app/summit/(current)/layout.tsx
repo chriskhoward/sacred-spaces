@@ -29,6 +29,8 @@ export default async function CurrentSummitLayout({
         summitTitle={summit.title}
         communityLink={summit.communityLink}
         logoUrl={logoUrl}
+        communityNavLabel={summit.labels?.communityNavLabel ?? undefined}
+        signInLabel={summit.labels?.signInButton ?? undefined}
       />
       {/* Spacer for fixed nav — matches h-20 + py-4 */}
       <div className="pt-28" />

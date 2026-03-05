@@ -39,14 +39,14 @@ export default async function ArchiveSchedulePage({ params }: PageProps) {
             href={`/summit/${year}/start-here`}
             className="text-(--color-roti) hover:opacity-80 text-sm font-medium mb-6 inline-block"
           >
-            &larr; Back to Welcome
+            &larr; {summit.labels?.backToWelcome || 'Back to Welcome'}
           </Link>
 
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-(--color-primary) mb-8">
-            Presentation &amp; Workshop Schedule
+            {summit.labels?.scheduleTitle || 'Presentation & Workshop Schedule'}
           </h1>
           {sortedDays.length === 0 ? (
-            <p className="text-(--color-primary)/70">No presentations found.</p>
+            <p className="text-(--color-primary)/70">{summit.labels?.scheduleEmptyMessage || 'Schedule coming soon.'}</p>
           ) : (
             <div className="space-y-12">
               {sortedDays.map((day) => {
@@ -61,7 +61,7 @@ export default async function ArchiveSchedulePage({ params }: PageProps) {
                 return (
                   <div key={day}>
                     <h2 className="text-2xl md:text-3xl font-bold text-(--color-primary) mb-6 pb-2 border-b-2 border-(--color-roti)">
-                      Day {day}
+                      {summit.labels?.dayPrefix || 'Day'} {day}
                     </h2>
 
                     {live.length > 0 && (
@@ -104,7 +104,7 @@ export default async function ArchiveSchedulePage({ params }: PageProps) {
                     {recorded.length > 0 && (
                       <div>
                         <h3 className="text-sm font-bold uppercase tracking-wide text-(--color-primary)/50 mb-3">
-                          Recorded Sessions
+                          {summit.labels?.recordedSessionsLabel || 'Recorded Sessions'}
                         </h3>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                           {recorded.map((p) => (

@@ -20,7 +20,7 @@ export const dynamic = 'force-dynamic'
 export async function generateMetadata(): Promise<Metadata> {
   const summit = await client.fetch<Summit | null>(CURRENT_SUMMIT_QUERY)
   return {
-    title: summit ? `Schedule — ${summit.title}` : 'Schedule',
+    title: summit ? `${summit.labels?.scheduleTitle || 'Schedule'} — ${summit.title}` : 'Schedule',
     description: summit?.description,
   }
 }
@@ -116,7 +116,7 @@ export default async function SchedulePage() {
             href="/summit/start-here"
             className="text-(--color-roti) hover:opacity-80 text-sm font-medium mb-6 inline-block"
           >
-            &larr; Back to Welcome
+            &larr; {summit.labels?.backToWelcome || 'Back to Welcome'}
           </Link>
 
           {/* Optional banner */}
@@ -134,7 +134,7 @@ export default async function SchedulePage() {
           )}
 
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-(--color-primary) mb-6">
-            Presentation &amp; Workshop Schedule
+            {summit.labels?.scheduleTitle || 'Presentation & Workshop Schedule'}
           </h1>
 
           <div className="mb-8">
@@ -143,7 +143,7 @@ export default async function SchedulePage() {
 
           {sortedDays.length === 0 ? (
             <p className="text-(--color-primary)/70">
-              Schedule coming soon.
+              {summit.labels?.scheduleEmptyMessage || 'Schedule coming soon.'}
             </p>
           ) : (
             <div className="space-y-12">
@@ -159,7 +159,7 @@ export default async function SchedulePage() {
                 return (
                   <div key={day}>
                     <h2 className="text-2xl md:text-3xl font-bold text-(--color-primary) mb-6 pb-2 border-b-2 border-(--color-roti)">
-                      Day {day}
+                      {summit.labels?.dayPrefix || 'Day'} {day}
                     </h2>
 
                     {/* Live sessions — full cards */}
@@ -175,7 +175,7 @@ export default async function SchedulePage() {
                     {recorded.length > 0 && (
                       <div>
                         <h3 className="text-sm font-bold uppercase tracking-wide text-(--color-primary)/50 mb-3">
-                          Recorded Sessions
+                          {summit.labels?.recordedSessionsLabel || 'Recorded Sessions'}
                         </h3>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                           {recorded.map((p) => (

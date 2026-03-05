@@ -84,6 +84,35 @@ export interface Summit {
   navLinks?: SummitNavLink[]
   faqItems?: SummitFaqItem[]
   contactEmail?: string
+  labels?: {
+    welcomeTitle?: string | null
+    welcomeEmptyMessage?: string | null
+    joinCommunityButton?: string | null
+    upgradeMessage?: string | null
+    scheduleTitle?: string | null
+    scheduleEmptyMessage?: string | null
+    recordedSessionsLabel?: string | null
+    dayPrefix?: string | null
+    backToWelcome?: string | null
+    backToSchedule?: string | null
+    allAccessTitle?: string | null
+    allAccessSuccessHeading?: string | null
+    allAccessSuccessMessage?: string | null
+    getAllAccessButton?: string | null
+    communityTitle?: string | null
+    communityFallback?: string | null
+    yogaTitle?: string | null
+    yogaEmptyMessage?: string | null
+    viewScheduleButton?: string | null
+    aboutPresentationHeading?: string | null
+    includedInAllAccess?: string | null
+    resourcesHeading?: string | null
+    signInPrompt?: string | null
+    noLongerFreeMessage?: string | null
+    permanentAccessPrompt?: string | null
+    communityNavLabel?: string | null
+    signInButton?: string | null
+  } | null
 }
 
 // ---------- GROQ Projections ----------
@@ -120,9 +149,14 @@ const presentationProjection = `{
 
 // ---------- GROQ Queries ----------
 
-export const CURRENT_SUMMIT_QUERY = `*[_type == "summit" && isCurrent == true][0]`
+const summitProjection = `{
+  ...,
+  labels{...}
+}`
 
-export const SUMMIT_BY_YEAR_QUERY = `*[_type == "summit" && year == $year][0]`
+export const CURRENT_SUMMIT_QUERY = `*[_type == "summit" && isCurrent == true][0] ${summitProjection}`
+
+export const SUMMIT_BY_YEAR_QUERY = `*[_type == "summit" && year == $year][0] ${summitProjection}`
 
 export const SUMMIT_PRESENTATIONS_QUERY = `*[_type == "summitPresentation" && summit._ref == $summitId] | order(dayNumber asc, displayOrder asc) ${presentationProjection}`
 

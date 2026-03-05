@@ -13,7 +13,7 @@ export const dynamic = 'force-dynamic'
 export async function generateMetadata(): Promise<Metadata> {
   const summit = await client.fetch<Summit | null>(CURRENT_SUMMIT_QUERY)
   return {
-    title: summit ? `Community — ${summit.title}` : 'Community',
+    title: summit ? `${summit.labels?.communityTitle || 'Community'} — ${summit.title}` : 'Community',
     description: summit?.description,
   }
 }
@@ -35,11 +35,11 @@ export default async function CommunityPage() {
             href="/summit/start-here"
             className="text-(--color-roti) hover:opacity-80 text-sm font-medium mb-6 inline-block"
           >
-            &larr; Back to Welcome
+            &larr; {summit.labels?.backToWelcome || 'Back to Welcome'}
           </Link>
 
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-(--color-primary) mb-8">
-            Community
+            {summit.labels?.communityTitle || 'Community'}
           </h1>
 
           {summit.communityDescription &&
@@ -49,8 +49,7 @@ export default async function CommunityPage() {
             </div>
           ) : (
             <p className="text-(--color-primary)/70 mb-10">
-              Join our vibrant community of like-minded individuals committed to
-              faith, wellness, and transformation.
+              {summit.labels?.communityFallback || 'Join our vibrant community of like-minded individuals committed to faith, wellness, and transformation.'}
             </p>
           )}
 
@@ -62,7 +61,7 @@ export default async function CommunityPage() {
                 rel="noopener noreferrer"
                 className="inline-block px-10 py-4 bg-(--color-roti) text-white rounded-full font-bold text-lg uppercase tracking-wide hover:opacity-90 transition-opacity shadow-lg"
               >
-                Join the Community
+                {summit.labels?.joinCommunityButton || 'Join the Community'}
               </a>
             </div>
           )}
@@ -71,7 +70,7 @@ export default async function CommunityPage() {
             <UpgradeCTA
               allAccessSalesUrl={summit.allAccessSalesUrl}
               basePath="/summit"
-              message="Get lifetime access to all presentations, resources, and bonus yoga classes."
+              message={summit.labels?.upgradeMessage || 'Get lifetime access to all presentations, resources, and bonus yoga classes.'}
             />
           )}
         </div>
