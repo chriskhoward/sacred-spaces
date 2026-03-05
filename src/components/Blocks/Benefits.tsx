@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { getButtonSizeClasses, getButtonColorClasses, getButtonAlignClasses, type ButtonSize, type ButtonColor, type ButtonAlignment } from '@/components/Blocks/blockHelpers';
 
 interface BenefitItem {
   title: string;
@@ -10,7 +11,11 @@ interface BenefitsBlockProps {
   title?: string;
   description?: string;
   buttonText?: string;
+  buttonLink?: string;
   items?: BenefitItem[];
+  buttonSize?: ButtonSize;
+  buttonColor?: ButtonColor;
+  buttonAlignment?: ButtonAlignment;
 }
 
 export default function BenefitsBlock({
@@ -18,6 +23,7 @@ export default function BenefitsBlock({
   title = "What You Receive Inside the Collective",
   description = "Beyond community, we provide the tools and opportunities you need to expand your reach and deepen your impact.",
   buttonText = "See All Member Perks",
+  buttonLink = "/sign-up",
   items = [
     { title: 'Daily Community Space', description: 'A private online space to connect, ask questions, share wins, and collaborate.' },
     { title: 'Monthly Check-ins', description: 'Virtual gatherings for networking and sharing challenges/opportunities.' },
@@ -25,7 +31,10 @@ export default function BenefitsBlock({
     { title: 'Masterclasses', description: 'Quarterly workshops on business, theology, and trauma-informed practice.' },
     { title: 'Promotion', description: 'Highlighting your offerings on our social channels and newsletter.' },
     { title: 'Teaching Roles', description: 'Paid opportunities to host classes for our practitioner membership.' },
-  ]
+  ],
+  buttonSize,
+  buttonColor,
+  buttonAlignment,
 }: BenefitsBlockProps) {
   return (
     <section className="py-24 bg-(--color-gallery)">
@@ -37,7 +46,9 @@ export default function BenefitsBlock({
             <p className="text-xl text-gray-600 mb-12 leading-relaxed">
               {description}
             </p>
-            <Link href="/sign-up" className="btn btn-primary">{buttonText}</Link>
+            <div className={getButtonAlignClasses(buttonAlignment)}>
+              <Link href={buttonLink} className={`inline-block ${getButtonSizeClasses(buttonSize)} ${getButtonColorClasses(buttonColor)} rounded-full font-bold transition-all`}>{buttonText}</Link>
+            </div>
           </div>
           <div className="lg:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-6">
             {items.map((benefit, idx) => (

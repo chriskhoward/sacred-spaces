@@ -132,6 +132,9 @@ export default async function PresentationPage({ params }: PageProps) {
                     ? (summit.labels?.signInPrompt || 'Sign in to check if this presentation is available for free viewing, or get All Access for permanent access.')
                     : (summit.labels?.noLongerFreeMessage || 'This presentation is no longer available for free viewing.')
                 }
+                heading={summit.labels?.upgradeCtaHeading ?? undefined}
+                description={summit.labels?.upgradeCtaDescription ?? undefined}
+                buttonLabel={summit.labels?.upgradeCtaButton ?? undefined}
               />
             </div>
           ) : null}
@@ -213,7 +216,7 @@ export default async function PresentationPage({ params }: PageProps) {
               <p className="text-(--color-primary)/70 mb-4">
                 {summit.labels?.permanentAccessPrompt || 'Want permanent access to all presentations and bonus content?'}
               </p>
-              <AllAccessButton basePath="/summit" />
+              <AllAccessButton basePath="/summit" label={summit.labels?.getAllAccessButton ?? undefined} />
             </div>
           )}
         </div>

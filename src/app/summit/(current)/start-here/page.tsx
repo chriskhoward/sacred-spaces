@@ -133,6 +133,9 @@ export default async function StartHerePage() {
               allAccessSalesUrl={summit.allAccessSalesUrl}
               basePath="/summit"
               message={summit.labels?.upgradeMessage || 'Get lifetime access to all presentations, resources, and bonus yoga classes.'}
+              heading={summit.labels?.upgradeCtaHeading ?? undefined}
+              description={summit.labels?.upgradeCtaDescription ?? undefined}
+              buttonLabel={summit.labels?.upgradeCtaButton ?? undefined}
             />
           )}
         </div>

@@ -129,7 +129,7 @@ export default async function SpeakersPage() {
             >
               View Schedule
             </Link>
-            <AllAccessButton basePath="/summit" />
+            <AllAccessButton basePath="/summit" label={summit.labels?.getAllAccessButton ?? undefined} />
           </div>
         </div>
       </div>

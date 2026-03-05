@@ -121,6 +121,13 @@ export const siteSettingsType = defineType({
             description: 'Text shown on the footer login button for non-signed-in visitors.',
             group: 'footer',
         }),
+        defineField({
+            name: 'dashboardLabel',
+            title: 'Dashboard Button Text',
+            type: 'string',
+            description: 'Text shown on the nav button for signed-in users (e.g. "Dashboard").',
+            group: 'general',
+        }),
 
         // ── Sign In / Sign Up ──
         defineField({

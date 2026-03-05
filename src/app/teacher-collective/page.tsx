@@ -1,7 +1,7 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import Script from 'next/script';
 import Navbar from '@/components/Navbar';
-import FilloutSliderButton from '@/components/FilloutSliderButton';
 import { Metadata } from 'next';
 import { Dancing_Script } from 'next/font/google';
 import { client } from '@/sanity/lib/client';
@@ -10,6 +10,37 @@ import { TC_PAGE_QUERY, type TeacherCollectivePageData } from '@/sanity/lib/teac
 import { PortableText } from '@portabletext/react';
 
 const dancingScript = Dancing_Script({ subsets: ['latin'], variable: '--font-script', display: 'swap' });
+
+function TCCtaButton({ text, useFillout = true, link, filloutId, variant = 'default' }: {
+  text: string;
+  useFillout?: boolean | null;
+  link?: string | null;
+  filloutId: string;
+  variant?: 'default' | 'dark';
+}) {
+  if (useFillout !== false) {
+    return (
+      <div
+        data-fillout-id={filloutId}
+        data-fillout-embed-type="slider"
+        data-fillout-button-text={text}
+        data-fillout-button-color={variant === 'dark' ? '#413356' : '#C7A254'}
+        data-fillout-button-size="large"
+        data-fillout-slider-direction="right"
+        data-fillout-inherit-parameters=""
+        data-fillout-popup-size="medium"
+      />
+    );
+  }
+  return (
+    <Link
+      href={link || '#'}
+      className="inline-block px-8 py-4 bg-(--color-roti) text-white rounded-full font-bold text-lg hover:opacity-90 transition-opacity shadow-md"
+    >
+      {text}
+    </Link>
+  );
+}
 
 const TC_FAQS_QUERY = `coalesce(
   *[_type == "teacherCollectiveFaqs" && _id == "teacherCollectiveFaqs"][0],
@@ -242,16 +273,7 @@ export default async function TeacherCollectivePage() {
           <h2 className="text-2xl lg:text-3xl italic text-white mb-8 leading-relaxed max-w-2xl mx-auto">
             {tc.itsTimeHeading || "It\u2019s time to take up space without apology, and step into community."}
           </h2>
-          <div
-            data-fillout-id={filloutId}
-            data-fillout-embed-type="slider"
-            data-fillout-button-text="Join the Teachers Collective"
-            data-fillout-button-color="#C7A254"
-            data-fillout-button-size="large"
-            data-fillout-slider-direction="right"
-            data-fillout-inherit-parameters=""
-            data-fillout-popup-size="medium"
-          />
+          <TCCtaButton text={tc.itsTimeCtaText || 'Join the Teachers Collective'} useFillout={tc.itsTimeCtaUseFillout} link={tc.itsTimeCtaLink} filloutId={filloutId} />
         </div>
       </section>
 
@@ -305,16 +327,7 @@ export default async function TeacherCollectivePage() {
           <p className="text-xl lg:text-2xl italic text-(--color-roti) mb-8">
             {tc.callingSubtext || 'Are you ready to step into the Collective?'}
           </p>
-          <div
-            data-fillout-id={filloutId}
-            data-fillout-embed-type="slider"
-            data-fillout-button-text="Yes! Enroll me now!"
-            data-fillout-button-color="#C7A254"
-            data-fillout-button-size="large"
-            data-fillout-slider-direction="right"
-            data-fillout-inherit-parameters=""
-            data-fillout-popup-size="medium"
-          />
+          <TCCtaButton text={tc.callingCtaText || 'Yes! Enroll me now!'} useFillout={tc.callingCtaUseFillout} link={tc.callingCtaLink} filloutId={filloutId} />
         </div>
       </section>
 
@@ -386,16 +399,7 @@ export default async function TeacherCollectivePage() {
 
             <div className="text-center">
               <p className="text-(--color-roti) text-lg md:text-xl font-bold italic mb-6">Are you ready to connect?</p>
-              <div
-                data-fillout-id={filloutId}
-                data-fillout-embed-type="slider"
-                data-fillout-button-text="Yes! This is exactly what I need!"
-                data-fillout-button-color="#C7A254"
-                data-fillout-button-size="large"
-                data-fillout-slider-direction="right"
-                data-fillout-inherit-parameters=""
-                data-fillout-popup-size="medium"
-              />
+              <TCCtaButton text={tc.premiumCtaText || 'Yes! This is exactly what I need!'} useFillout={tc.premiumCtaUseFillout} link={tc.premiumCtaLink} filloutId={filloutId} />
             </div>
           </div>
         </div>
@@ -455,7 +459,9 @@ export default async function TeacherCollectivePage() {
                 <div className="bg-(--color-roti) text-white p-6 text-center rounded-b-2xl space-y-3">
                   <p className="font-bold text-lg">{tc.corePriceMonthly || '$47/monthly'}</p>
                   <p className="font-bold text-lg">{tc.corePriceAnnual || '$470/annually'}</p>
-                  <FilloutSliderButton buttonText="Join Core" variant="dark" className="inline-block mt-2" />
+                  <div className="inline-block mt-2">
+                    <TCCtaButton text={tc.coreCtaText || 'Join Core'} useFillout={tc.coreCtaUseFillout} link={tc.coreCtaLink} filloutId={filloutId} variant="dark" />
+                  </div>
                 </div>
               </div>
 
@@ -489,7 +495,9 @@ export default async function TeacherCollectivePage() {
                 <div className="bg-(--color-roti) text-white p-6 text-center rounded-b-2xl space-y-3">
                   <p className="font-bold text-lg">{tc.proPriceMonthly || '$67/monthly'}</p>
                   <p className="font-bold text-lg">{tc.proPriceAnnual || '$670/annually'}</p>
-                  <FilloutSliderButton buttonText="Join Pro" variant="dark" className="inline-block mt-2" />
+                  <div className="inline-block mt-2">
+                    <TCCtaButton text={tc.proCtaText || 'Join Pro'} useFillout={tc.proCtaUseFillout} link={tc.proCtaLink} filloutId={filloutId} variant="dark" />
+                  </div>
                 </div>
               </div>
             </div>
@@ -527,16 +535,7 @@ export default async function TeacherCollectivePage() {
               </div>
             </div>
             <div className="text-center fillout-cta-its-time">
-              <div
-                data-fillout-id={filloutId}
-                data-fillout-embed-type="slider"
-                data-fillout-button-text="Join the Teachers Collective"
-                data-fillout-button-color="#C7A254"
-                data-fillout-button-size="large"
-                data-fillout-slider-direction="right"
-                data-fillout-inherit-parameters=""
-                data-fillout-popup-size="medium"
-              />
+              <TCCtaButton text={tc.itsTimeToCtaText || 'Join the Teachers Collective'} useFillout={tc.itsTimeToCtaUseFillout} link={tc.itsTimeToCtaLink} filloutId={filloutId} />
             </div>
           </div>
         </div>
@@ -632,16 +631,7 @@ export default async function TeacherCollectivePage() {
             {tc.finalCtaSubtext || 'Are you ready to grow in a space where your faith, culture, and practice are fully welcome?'}
           </p>
           <div className="fillout-cta-final">
-            <div
-              data-fillout-id={filloutId}
-              data-fillout-embed-type="slider"
-              data-fillout-button-text="Join the Teachers Collective"
-              data-fillout-button-color="#C7A254"
-              data-fillout-button-size="large"
-              data-fillout-slider-direction="right"
-              data-fillout-inherit-parameters=""
-              data-fillout-popup-size="medium"
-            />
+            <TCCtaButton text={tc.finalCtaCtaText || 'Join the Teachers Collective'} useFillout={tc.finalCtaCtaUseFillout} link={tc.finalCtaCtaLink} filloutId={filloutId} />
           </div>
         </div>
       </section>
@@ -694,16 +684,7 @@ export default async function TeacherCollectivePage() {
                   {tc.bottomLineSubtext || "Let\u2019s walk this path together."}
                 </h3>
                 <div className="fillout-cta-bottom-line">
-                  <div
-                    data-fillout-id={filloutId}
-                    data-fillout-embed-type="slider"
-                    data-fillout-button-text="Join the Teachers Collective"
-                    data-fillout-button-color="#C7A254"
-                    data-fillout-button-size="large"
-                    data-fillout-slider-direction="right"
-                    data-fillout-inherit-parameters=""
-                    data-fillout-popup-size="medium"
-                  />
+                  <TCCtaButton text={tc.bottomLineCtaText || 'Join the Teachers Collective'} useFillout={tc.bottomLineCtaUseFillout} link={tc.bottomLineCtaLink} filloutId={filloutId} />
                 </div>
               </div>
             </div>

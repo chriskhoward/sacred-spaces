@@ -10,6 +10,7 @@ export const teacherCollectivePageType = defineType({
     { name: 'sections', title: 'Section Content' },
     { name: 'benefits', title: 'Benefits & Pricing' },
     { name: 'founders', title: 'Meet the Visionaries' },
+    { name: 'ctas', title: 'CTA Buttons' },
     { name: 'seo', title: 'SEO' },
   ],
   fields: [
@@ -146,6 +147,39 @@ export const teacherCollectivePageType = defineType({
 
     // ── Fillout Config ──
     defineField({ name: 'filloutId', title: 'Fillout Form ID', type: 'string', description: 'The Fillout form ID used for CTA buttons on this page.', group: 'hero' }),
+
+    // ── CTA Buttons ──
+    defineField({ name: 'itsTimeCtaText', title: '"It\'s Time" CTA Text', type: 'string', group: 'ctas' }),
+    defineField({ name: 'itsTimeCtaUseFillout', title: '"It\'s Time" CTA: Use Fillout Form?', type: 'boolean', initialValue: true, group: 'ctas', description: 'When on, opens the Fillout form slider. When off, uses the link below.' }),
+    defineField({ name: 'itsTimeCtaLink', title: '"It\'s Time" CTA Link', type: 'string', group: 'ctas', description: 'Only used when Fillout is off. Internal path or external URL.' }),
+
+    defineField({ name: 'callingCtaText', title: '"Your Calling" CTA Text', type: 'string', group: 'ctas' }),
+    defineField({ name: 'callingCtaUseFillout', title: '"Your Calling" CTA: Use Fillout Form?', type: 'boolean', initialValue: true, group: 'ctas', description: 'When on, opens the Fillout form slider. When off, uses the link below.' }),
+    defineField({ name: 'callingCtaLink', title: '"Your Calling" CTA Link', type: 'string', group: 'ctas', description: 'Only used when Fillout is off. Internal path or external URL.' }),
+
+    defineField({ name: 'premiumCtaText', title: 'Premium CTA Text', type: 'string', group: 'ctas' }),
+    defineField({ name: 'premiumCtaUseFillout', title: 'Premium CTA: Use Fillout Form?', type: 'boolean', initialValue: true, group: 'ctas', description: 'When on, opens the Fillout form slider. When off, uses the link below.' }),
+    defineField({ name: 'premiumCtaLink', title: 'Premium CTA Link', type: 'string', group: 'ctas', description: 'Only used when Fillout is off. Internal path or external URL.' }),
+
+    defineField({ name: 'coreCtaText', title: 'Join Core CTA Text', type: 'string', group: 'ctas' }),
+    defineField({ name: 'coreCtaUseFillout', title: 'Join Core CTA: Use Fillout Form?', type: 'boolean', initialValue: true, group: 'ctas', description: 'When on, opens the Fillout form slider. When off, uses the link below.' }),
+    defineField({ name: 'coreCtaLink', title: 'Join Core CTA Link', type: 'string', group: 'ctas', description: 'Only used when Fillout is off. Internal path or external URL.' }),
+
+    defineField({ name: 'proCtaText', title: 'Join Pro CTA Text', type: 'string', group: 'ctas' }),
+    defineField({ name: 'proCtaUseFillout', title: 'Join Pro CTA: Use Fillout Form?', type: 'boolean', initialValue: true, group: 'ctas', description: 'When on, opens the Fillout form slider. When off, uses the link below.' }),
+    defineField({ name: 'proCtaLink', title: 'Join Pro CTA Link', type: 'string', group: 'ctas', description: 'Only used when Fillout is off. Internal path or external URL.' }),
+
+    defineField({ name: 'itsTimeToCtaText', title: '"It\'s Time To" CTA Text', type: 'string', group: 'ctas' }),
+    defineField({ name: 'itsTimeToCtaUseFillout', title: '"It\'s Time To" CTA: Use Fillout Form?', type: 'boolean', initialValue: true, group: 'ctas', description: 'When on, opens the Fillout form slider. When off, uses the link below.' }),
+    defineField({ name: 'itsTimeToCtaLink', title: '"It\'s Time To" CTA Link', type: 'string', group: 'ctas', description: 'Only used when Fillout is off. Internal path or external URL.' }),
+
+    defineField({ name: 'finalCtaCtaText', title: 'Final CTA Text', type: 'string', group: 'ctas' }),
+    defineField({ name: 'finalCtaCtaUseFillout', title: 'Final CTA: Use Fillout Form?', type: 'boolean', initialValue: true, group: 'ctas', description: 'When on, opens the Fillout form slider. When off, uses the link below.' }),
+    defineField({ name: 'finalCtaCtaLink', title: 'Final CTA Link', type: 'string', group: 'ctas', description: 'Only used when Fillout is off. Internal path or external URL.' }),
+
+    defineField({ name: 'bottomLineCtaText', title: 'Bottom Line CTA Text', type: 'string', group: 'ctas' }),
+    defineField({ name: 'bottomLineCtaUseFillout', title: 'Bottom Line CTA: Use Fillout Form?', type: 'boolean', initialValue: true, group: 'ctas', description: 'When on, opens the Fillout form slider. When off, uses the link below.' }),
+    defineField({ name: 'bottomLineCtaLink', title: 'Bottom Line CTA Link', type: 'string', group: 'ctas', description: 'Only used when Fillout is off. Internal path or external URL.' }),
   ],
   preview: {
     prepare: () => ({ title: 'Teacher Collective Page' }),

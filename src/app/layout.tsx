@@ -147,6 +147,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             memberLoginLabel={settings?.memberLoginLabel ?? undefined}
             quickLinks={footerQuickLinks}
             summitLogoUrl={summitLogoUrl}
+            summitTermsLabel={summit?.labels?.footerTermsLabel ?? undefined}
+            summitPrivacyLabel={summit?.labels?.footerPrivacyLabel ?? undefined}
+            summitContactLabel={summit?.labels?.footerContactLabel ?? undefined}
+            summitCopyrightBrand={summit?.labels?.footerCopyrightText ?? undefined}
           />
           {(await draftMode()).isEnabled && <VisualEditing />}
           <Analytics />

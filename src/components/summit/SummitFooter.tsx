@@ -6,9 +6,24 @@ import Image from 'next/image';
 type SummitFooterProps = {
   logoUrl?: string | null;
   contactEmail?: string | null;
+  termsLabel?: string;
+  termsLink?: string;
+  privacyLabel?: string;
+  privacyLink?: string;
+  contactLabel?: string;
+  copyrightBrand?: string;
 };
 
-export default function SummitFooter({ logoUrl, contactEmail }: SummitFooterProps) {
+export default function SummitFooter({
+  logoUrl,
+  contactEmail,
+  termsLabel = 'Terms',
+  termsLink = '/terms',
+  privacyLabel = 'Privacy Policy',
+  privacyLink = '/privacy-policy',
+  contactLabel = 'Contact',
+  copyrightBrand = 'Flow in Faith',
+}: SummitFooterProps) {
   const logo = logoUrl || '/assets/images/tc_logo.png';
   const email = contactEmail || 'info@flowinfaith.com';
 
@@ -19,7 +34,7 @@ export default function SummitFooter({ logoUrl, contactEmail }: SummitFooterProp
           <Link href="/summit/start-here">
             <Image
               src={logo}
-              alt="Flow in Faith"
+              alt={copyrightBrand}
               width={120}
               height={120}
               className="w-20 h-20 object-contain"
@@ -29,27 +44,27 @@ export default function SummitFooter({ logoUrl, contactEmail }: SummitFooterProp
 
           <nav className="flex flex-wrap items-center justify-center gap-6 text-sm">
             <Link
-              href="/terms"
+              href={termsLink}
               className="text-white hover:text-(--color-roti) transition-colors"
             >
-              Terms
+              {termsLabel}
             </Link>
             <Link
-              href="/privacy-policy"
+              href={privacyLink}
               className="text-white hover:text-(--color-roti) transition-colors"
             >
-              Privacy Policy
+              {privacyLabel}
             </Link>
             <a
               href={`mailto:${email}`}
               className="text-white hover:text-(--color-roti) transition-colors"
             >
-              Contact
+              {contactLabel}
             </a>
           </nav>
 
           <p className="text-xs opacity-60 m-0">
-            Copyright {new Date().getFullYear()}, Flow in Faith. All Rights Reserved.
+            Copyright {new Date().getFullYear()}, {copyrightBrand}. All Rights Reserved.
           </p>
         </div>
       </div>

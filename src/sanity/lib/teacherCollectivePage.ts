@@ -73,6 +73,30 @@ export type TeacherCollectivePageData = {
   metaTitle?: string | null;
   metaDescription?: string | null;
   filloutId?: string | null;
+  itsTimeCtaText?: string | null;
+  itsTimeCtaUseFillout?: boolean | null;
+  itsTimeCtaLink?: string | null;
+  callingCtaText?: string | null;
+  callingCtaUseFillout?: boolean | null;
+  callingCtaLink?: string | null;
+  premiumCtaText?: string | null;
+  premiumCtaUseFillout?: boolean | null;
+  premiumCtaLink?: string | null;
+  coreCtaText?: string | null;
+  coreCtaUseFillout?: boolean | null;
+  coreCtaLink?: string | null;
+  proCtaText?: string | null;
+  proCtaUseFillout?: boolean | null;
+  proCtaLink?: string | null;
+  itsTimeToCtaText?: string | null;
+  itsTimeToCtaUseFillout?: boolean | null;
+  itsTimeToCtaLink?: string | null;
+  finalCtaCtaText?: string | null;
+  finalCtaCtaUseFillout?: boolean | null;
+  finalCtaCtaLink?: string | null;
+  bottomLineCtaText?: string | null;
+  bottomLineCtaUseFillout?: boolean | null;
+  bottomLineCtaLink?: string | null;
 };
 
 export const TC_PAGE_QUERY = `*[_type == "teacherCollectivePage"][0]{
@@ -116,5 +140,29 @@ export const TC_PAGE_QUERY = `*[_type == "teacherCollectivePage"][0]{
   bottomLineSubtext,
   metaTitle,
   metaDescription,
-  filloutId
+  filloutId,
+  itsTimeCtaText,
+  itsTimeCtaUseFillout,
+  itsTimeCtaLink,
+  callingCtaText,
+  callingCtaUseFillout,
+  callingCtaLink,
+  premiumCtaText,
+  premiumCtaUseFillout,
+  premiumCtaLink,
+  coreCtaText,
+  coreCtaUseFillout,
+  coreCtaLink,
+  proCtaText,
+  proCtaUseFillout,
+  proCtaLink,
+  itsTimeToCtaText,
+  itsTimeToCtaUseFillout,
+  itsTimeToCtaLink,
+  finalCtaCtaText,
+  finalCtaCtaUseFillout,
+  finalCtaCtaLink,
+  bottomLineCtaText,
+  bottomLineCtaUseFillout,
+  bottomLineCtaLink
 }`;

@@ -23,6 +23,7 @@ const SITE_SETTINGS_QUERY = `*[_type == "siteSettings"][0]{
   footerConnectLabel,
   footerSocialLabel,
   memberLoginLabel,
+  dashboardLabel,
   signInHeading,
   signInSubtext,
   signUpHeading,
@@ -58,6 +59,7 @@ export type SiteSettings = {
   footerConnectLabel?: string | null;
   footerSocialLabel?: string | null;
   memberLoginLabel?: string | null;
+  dashboardLabel?: string | null;
   signInHeading?: string | null;
   signInSubtext?: string | null;
   signUpHeading?: string | null;

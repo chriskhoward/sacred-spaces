@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { urlForImage } from '@/sanity/lib/image';
 import { PortableText } from '@portabletext/react';
 import FilloutSliderButton from '@/components/FilloutSliderButton';
+import { getButtonSizeClasses, getButtonColorClasses, getButtonAlignClasses, type ButtonSize, type ButtonColor, type ButtonAlignment } from '@/components/Blocks/blockHelpers';
 
 interface MediaTextBlockProps {
   badge?: string;
@@ -17,6 +18,9 @@ interface MediaTextBlockProps {
   ctaText?: string;
   ctaLink?: string;
   useFillout?: boolean;
+  buttonSize?: ButtonSize;
+  buttonColor?: ButtonColor;
+  buttonAlignment?: ButtonAlignment;
 }
 
 const sectionPad = 'py-14 md:py-20 px-6 sm:px-8';
@@ -33,6 +37,9 @@ export default function MediaTextBlock({
   ctaText,
   ctaLink,
   useFillout = false,
+  buttonSize,
+  buttonColor,
+  buttonAlignment,
 }: MediaTextBlockProps) {
   const defaultImage =
     variant === 'mission'
@@ -78,13 +85,13 @@ export default function MediaTextBlock({
             </ul>
           )}
           {ctaText && (
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className={`flex flex-col sm:flex-row gap-4 ${getButtonAlignClasses(buttonAlignment) === 'text-right' ? 'justify-end' : getButtonAlignClasses(buttonAlignment) === 'text-left' ? 'justify-start' : ''}`}>
               {useFillout ? (
                 <FilloutSliderButton buttonText={ctaText} variant="hero" className="inline-block" />
               ) : ctaLink ? (
                 <Link
                   href={ctaLink}
-                  className="inline-block py-4 px-6 bg-[#C7A254] text-white rounded-full font-bold text-base hover:opacity-95 transition-opacity shadow-md text-center"
+                  className={`inline-block ${getButtonSizeClasses(buttonSize)} ${getButtonColorClasses(buttonColor)} rounded-full font-bold hover:opacity-95 transition-opacity shadow-md text-center`}
                 >
                   {ctaText}
                 </Link>

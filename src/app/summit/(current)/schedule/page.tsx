@@ -138,7 +138,7 @@ export default async function SchedulePage() {
           </h1>
 
           <div className="mb-8">
-            <AllAccessButton basePath="/summit" />
+            <AllAccessButton basePath="/summit" label={summit.labels?.getAllAccessButton ?? undefined} />
           </div>
 
           {sortedDays.length === 0 ? (

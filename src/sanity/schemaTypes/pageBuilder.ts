@@ -105,6 +105,9 @@ export const heroBlock = defineType({
       options: { hotspot: true },
       description: 'Used for decorative overlays or background textures'
     }),
+    { ...buttonSizeField },
+    { ...buttonColorField },
+    { ...buttonAlignField },
   ]
 })
 
@@ -131,6 +134,9 @@ export const homeHeroBlock = defineType({
     }),
     defineField({ name: 'secondaryButtonText', title: 'Secondary Button Text', type: 'string' }),
     defineField({ name: 'secondaryButtonLink', title: 'Secondary Button Link', type: 'string' }),
+    { ...buttonSizeField },
+    { ...buttonColorField },
+    { ...buttonAlignField },
     defineField({
       name: 'logoImage',
       title: 'Logo / Hero Image',
@@ -187,6 +193,7 @@ export const benefitsBlock = defineType({
     defineField({ name: 'title', title: 'Title', type: 'string' }),
     defineField({ name: 'description', title: 'Description', type: 'text' }),
     defineField({ name: 'buttonText', title: 'Button Text', type: 'string' }),
+    defineField({ name: 'buttonLink', title: 'Button Link', type: 'string', description: 'Internal path (e.g. /sign-up) or external URL' }),
     defineField({
       name: 'items',
       title: 'Benefit Items',
@@ -198,7 +205,10 @@ export const benefitsBlock = defineType({
           defineField({ name: 'description', title: 'Description', type: 'text' }),
         ]
       }]
-    })
+    }),
+    { ...buttonSizeField },
+    { ...buttonColorField },
+    { ...buttonAlignField },
   ]
 })
 
@@ -260,6 +270,9 @@ export const mediaTextBlock = defineType({
       initialValue: false,
       description: 'When on, button opens Fillout slider instead of navigating',
     }),
+    { ...buttonSizeField },
+    { ...buttonColorField },
+    { ...buttonAlignField },
   ]
 })
 
@@ -580,6 +593,9 @@ export const founderBioBlock = defineType({
     defineField({ name: 'closingText', title: 'Closing Text', type: 'text' }),
     defineField({ name: 'buttonText', title: 'Button Text', type: 'string' }),
     defineField({ name: 'buttonLink', title: 'Button Link', type: 'string' }),
+    { ...buttonSizeField },
+    { ...buttonColorField },
+    { ...buttonAlignField },
   ]
 })
 

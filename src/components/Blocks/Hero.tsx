@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { urlForImage } from '@/sanity/lib/image';
 import HeroButtons from '@/components/Home/HeroButtons';
+import { type ButtonSize, type ButtonColor, type ButtonAlignment } from '@/components/Blocks/blockHelpers';
 
 interface HeroBlockProps {
   badge?: string;
@@ -12,6 +13,9 @@ interface HeroBlockProps {
   secondaryButtonText?: string;
   primaryButtonLink?: string;
   secondaryButtonLink?: string;
+  buttonSize?: ButtonSize;
+  buttonColor?: ButtonColor;
+  buttonAlignment?: ButtonAlignment;
 }
 
 export default function HeroBlock({
@@ -23,7 +27,10 @@ export default function HeroBlock({
   primaryButtonText = "Join the Collective",
   secondaryButtonText = "Learn More",
   primaryButtonLink,
-  secondaryButtonLink
+  secondaryButtonLink,
+  buttonSize,
+  buttonColor,
+  buttonAlignment,
 }: HeroBlockProps) {
   const imageUrl = image?.asset ? urlForImage(image).url() : '/assets/images/shkrabaanthony.jpg';
   const secondaryImageUrl = secondaryImage?.asset ? urlForImage(secondaryImage).url() : null;
@@ -60,6 +67,9 @@ export default function HeroBlock({
               secondaryText={secondaryButtonText}
               primaryUrl={primaryButtonLink}
               secondaryUrl={secondaryButtonLink}
+              buttonSize={buttonSize}
+              buttonColor={buttonColor}
+              buttonAlignment={buttonAlignment}
             />
           </div>
           <div className="lg:flex-1 flex justify-center lg:justify-end">

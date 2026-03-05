@@ -60,6 +60,8 @@ export default async function Navbar() {
   let navItems: { label: string; slug?: string; externalUrl?: string; linkType: string }[] = [];
   let logoUrl: string | undefined;
   let announcementData: { text: string; link?: string; bgClass?: string; textClass?: string; style?: CSSProperties } | null = null;
+  let memberLoginLabel: string | undefined;
+  let dashboardLabel: string | undefined;
 
   try {
     const [rawNav, siteSettings, announcement] = await Promise.all([
@@ -68,6 +70,8 @@ export default async function Navbar() {
       client.fetch(announcementQuery),
     ]);
     logoUrl = siteSettings?.logo ? urlForImage(siteSettings.logo).width(200).url() : undefined;
+    memberLoginLabel = siteSettings?.memberLoginLabel || undefined;
+    dashboardLabel = siteSettings?.dashboardLabel || undefined;
     if (rawNav && rawNav.length > 0) {
       navItems = rawNav;
     } else {
@@ -110,5 +114,5 @@ export default async function Navbar() {
     slug: item.linkType === 'external' ? (item.externalUrl || '') : (item.slug ? `/${item.slug}` : '')
   })).filter(p => p.title && (p.slug !== undefined));
 
-  return <NavbarClient dynamicPages={dynamicPages} logoUrl={logoUrl} announcement={announcementData} />;
+  return <NavbarClient dynamicPages={dynamicPages} logoUrl={logoUrl} announcement={announcementData} memberLoginLabel={memberLoginLabel} dashboardLabel={dashboardLabel} />;
 }

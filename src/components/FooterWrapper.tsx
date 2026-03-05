@@ -18,6 +18,10 @@ type FooterWrapperProps = {
   memberLoginLabel?: string | null;
   quickLinks?: FooterNavItem[] | null;
   summitLogoUrl?: string | null;
+  summitTermsLabel?: string;
+  summitPrivacyLabel?: string;
+  summitContactLabel?: string;
+  summitCopyrightBrand?: string;
 };
 
 export default function FooterWrapper({
@@ -34,6 +38,10 @@ export default function FooterWrapper({
   memberLoginLabel,
   quickLinks,
   summitLogoUrl,
+  summitTermsLabel,
+  summitPrivacyLabel,
+  summitContactLabel,
+  summitCopyrightBrand,
 }: FooterWrapperProps) {
   const pathname = usePathname();
   const isSummit = pathname.startsWith('/summit');
@@ -43,6 +51,10 @@ export default function FooterWrapper({
       <SummitFooter
         logoUrl={summitLogoUrl || logoUrl}
         contactEmail={contactEmail}
+        termsLabel={summitTermsLabel}
+        privacyLabel={summitPrivacyLabel}
+        contactLabel={summitContactLabel}
+        copyrightBrand={summitCopyrightBrand}
       />
     );
   }

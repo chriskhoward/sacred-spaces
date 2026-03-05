@@ -264,6 +264,15 @@ export const summitType = defineType({
         // SummitNav labels
         { name: 'communityNavLabel', title: 'Community Nav Label', type: 'string', description: 'Default: "Community"' },
         { name: 'signInButton', title: 'Sign In Button', type: 'string', description: 'Default: "Sign In"' },
+        // Upgrade CTA
+        defineField({ name: 'upgradeCtaHeading', title: 'Upgrade CTA Heading', type: 'string', description: 'Default: "Get All Access"' }),
+        defineField({ name: 'upgradeCtaDescription', title: 'Upgrade CTA Description', type: 'text', rows: 2, description: 'Default: "Upgrade to the All Access Pass for permanent, unlimited access to all summit presentations, resources, and bonus content."' }),
+        defineField({ name: 'upgradeCtaButton', title: 'Upgrade CTA Button', type: 'string', description: 'Default: "Get All Access Pass"' }),
+        // Footer
+        defineField({ name: 'footerTermsLabel', title: 'Footer Terms Label', type: 'string', description: 'Default: "Terms"' }),
+        defineField({ name: 'footerPrivacyLabel', title: 'Footer Privacy Label', type: 'string', description: 'Default: "Privacy Policy"' }),
+        defineField({ name: 'footerContactLabel', title: 'Footer Contact Label', type: 'string', description: 'Default: "Contact"' }),
+        defineField({ name: 'footerCopyrightText', title: 'Footer Copyright Brand', type: 'string', description: 'Default: "Flow in Faith"' }),
       ],
     }),
   ],

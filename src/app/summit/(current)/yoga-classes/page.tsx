@@ -92,7 +92,7 @@ export default async function YogaClassesPage() {
             >
               {summit.labels?.viewScheduleButton || 'View Schedule'}
             </Link>
-            <AllAccessButton basePath="/summit" />
+            <AllAccessButton basePath="/summit" label={summit.labels?.getAllAccessButton ?? undefined} />
           </div>
         </div>
       </div>

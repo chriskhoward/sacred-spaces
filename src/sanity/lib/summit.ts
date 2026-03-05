@@ -112,6 +112,13 @@ export interface Summit {
     permanentAccessPrompt?: string | null
     communityNavLabel?: string | null
     signInButton?: string | null
+    upgradeCtaHeading?: string | null
+    upgradeCtaDescription?: string | null
+    upgradeCtaButton?: string | null
+    footerTermsLabel?: string | null
+    footerPrivacyLabel?: string | null
+    footerContactLabel?: string | null
+    footerCopyrightText?: string | null
   } | null
 }
 
