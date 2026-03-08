@@ -1,9 +1,10 @@
 import { defineField, defineType } from 'sanity'
+import { HeartIcon } from '@sanity/icons'
 
 export const liveClassType = defineType({
     name: 'liveClass',
     title: 'Live Class Schedule',
-    icon: () => '🧘',
+    icon: HeartIcon,
     type: 'document',
     fields: [
         defineField({

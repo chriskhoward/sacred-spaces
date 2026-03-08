@@ -1,4 +1,17 @@
 import Link from 'next/link';
+import { Check } from 'lucide-react';
+import { urlForImage } from '@/sanity/lib/image';
+import {
+  getButtonSizeClasses,
+  getButtonColorClasses,
+  getButtonAlignClasses,
+  getSectionSpacingClasses,
+  getSectionBackgroundStyle,
+  type ButtonSize,
+  type ButtonColor,
+  type ButtonAlignment,
+  type SectionSpacing,
+} from './blockHelpers';
 
 interface ChecklistBlockProps {
   heading?: string;
@@ -6,6 +19,12 @@ interface ChecklistBlockProps {
   closingText?: string;
   buttonText?: string;
   buttonLink?: string;
+  buttonSize?: ButtonSize;
+  buttonColor?: ButtonColor;
+  buttonAlignment?: ButtonAlignment;
+  sectionSpacing?: SectionSpacing;
+  sectionBgColor?: string;
+  sectionBgImage?: any;
 }
 
 export default function ChecklistBlock({
@@ -13,10 +32,22 @@ export default function ChecklistBlock({
   items = [],
   closingText,
   buttonText,
-  buttonLink
+  buttonLink,
+  buttonSize,
+  buttonColor,
+  buttonAlignment,
+  sectionSpacing,
+  sectionBgColor,
+  sectionBgImage,
 }: ChecklistBlockProps) {
+  const spacingCls = getSectionSpacingClasses(sectionSpacing);
+  const bgImageUrl = sectionBgImage ? urlForImage(sectionBgImage).width(1920).url() : undefined;
+
   return (
-    <section className="py-20 lg:py-24 bg-white">
+    <section
+      className={`${spacingCls} bg-white`}
+      style={getSectionBackgroundStyle(sectionBgColor, bgImageUrl)}
+    >
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto">
           {heading && (
@@ -27,8 +58,8 @@ export default function ChecklistBlock({
           <ul className="space-y-5">
             {items.map((item, index) => (
               <li key={index} className="flex items-start gap-4 bg-(--color-gallery) p-5 rounded-2xl">
-                <span className="w-8 h-8 bg-(--color-roti) text-white rounded-full flex items-center justify-center shrink-0 font-bold">
-                  &#10003;
+                <span className="w-8 h-8 bg-(--color-roti) text-white rounded-full flex items-center justify-center shrink-0">
+                  <Check className="w-4 h-4" />
                 </span>
                 <p className="text-lg text-gray-700 leading-relaxed pt-0.5">
                   {item}
@@ -42,10 +73,10 @@ export default function ChecklistBlock({
             </p>
           )}
           {buttonText && buttonLink && (
-            <div className="mt-8 text-center">
+            <div className={`mt-8 ${getButtonAlignClasses(buttonAlignment)}`}>
               <Link
                 href={buttonLink}
-                className="inline-block px-6 py-3 bg-(--color-primary) text-white rounded-full font-bold text-sm hover:bg-(--color-roti) transition-all shadow-xl"
+                className={`inline-block rounded-full font-bold transition-all shadow-xl ${getButtonSizeClasses(buttonSize)} ${getButtonColorClasses(buttonColor)}`}
               >
                 {buttonText}
               </Link>

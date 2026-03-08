@@ -1,5 +1,6 @@
 import Navbar from '@/components/Navbar';
 import Link from 'next/link';
+import { Check } from 'lucide-react';
 
 export default function JoinCorePage() {
     return (
@@ -22,7 +23,7 @@ export default function JoinCorePage() {
                                     'Quarterly Masterclasses'
                                 ].map(feature => (
                                     <li key={feature} className="flex items-start gap-4 text-gray-800 text-lg">
-                                        <span className="flex-shrink-0 w-6 h-6 rounded-full bg-(--color-primary) flex items-center justify-center text-white mt-1">✓</span>
+                                        <span className="flex-shrink-0 w-6 h-6 rounded-full bg-(--color-primary) flex items-center justify-center text-white mt-1"><Check className="w-3.5 h-3.5" /></span>
                                         {feature}
                                     </li>
                                 ))}

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Navbar from '@/components/Navbar';
 import { Metadata } from 'next';
 import { client } from '@/sanity/lib/client';
+import { isAllowedIframeUrl } from '@/lib/iframe-utils';
 
 export const metadata: Metadata = {
   title: 'Start here | Teacher Collective',
@@ -177,23 +178,25 @@ export default async function TeacherCollectiveStartPage() {
                                 <span className="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-md bg-(--color-primary) text-white text-xs font-bold uppercase tracking-wide">
                                   Video
                                 </span>
-                                {getYouTubeEmbedUrl(item.url) ? (
+                                {getYouTubeEmbedUrl(item.url) && isAllowedIframeUrl(getYouTubeEmbedUrl(item.url)!) ? (
                                   <div className="aspect-video w-full overflow-hidden bg-black">
                                     <iframe
                                       src={getYouTubeEmbedUrl(item.url)!}
                                       title={item.title}
                                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                       allowFullScreen
+                                      sandbox="allow-scripts allow-same-origin allow-presentation"
                                       className="w-full h-full"
                                     />
                                   </div>
-                                ) : getVimeoEmbedUrl(item.url) ? (
+                                ) : getVimeoEmbedUrl(item.url) && isAllowedIframeUrl(getVimeoEmbedUrl(item.url)!) ? (
                                   <div className="aspect-video w-full overflow-hidden bg-black">
                                     <iframe
                                       src={getVimeoEmbedUrl(item.url)!}
                                       title={item.title}
                                       allow="fullscreen; picture-in-picture"
                                       allowFullScreen
+                                      sandbox="allow-scripts allow-same-origin allow-presentation"
                                       className="w-full h-full"
                                     />
                                   </div>

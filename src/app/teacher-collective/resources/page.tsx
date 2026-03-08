@@ -12,10 +12,11 @@ export default async function TeachingResourcesPage() {
   const user = await currentUser();
   const membershipType = user?.publicMetadata?.membershipType as string || 'practitioner';
   const tier = user?.publicMetadata?.tier as string || 'free';
-  const adminStatus = isAdmin(user?.id);
+  const role = (user?.publicMetadata?.role as string) || null;
+  const adminStatus = isAdmin(role);
 
   // Determine search filters based on membership collective
-  const isTeacherUser = isTeacher(user?.id, membershipType);
+  const isTeacherUser = isTeacher(role, membershipType);
   const collective = isTeacherUser ? 'teacher' : 'practitioner';
   const allowedAudiences = ['all', `${collective}_core`, `${collective}_pro`];
 

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Leaf } from 'lucide-react';
 
 interface PremiumFeatureItem {
   title: string;
@@ -33,7 +34,7 @@ export default function PremiumFeaturesBlock({
                 key={index}
                 className="flex items-start gap-4 bg-white p-6 rounded-2xl shadow-sm"
               >
-                <span className="text-2xl shrink-0">🌿</span>
+                <Leaf className="w-6 h-6 text-(--color-roti) shrink-0 mt-0.5" />
                 <div>
                   <h4 className="font-bold text-(--color-primary) text-lg mb-1">
                     {item.title}
