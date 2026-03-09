@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Sparkles } from 'lucide-react';
 import Navbar from '@/components/Navbar';
+import PortableTextOrString from '@/components/summit/PortableTextOrString';
 import { client } from '@/sanity/lib/client';
 import { SITE_SETTINGS_QUERY, type SiteSettings } from '@/sanity/lib/siteSettings';
 import type { Metadata } from 'next';
@@ -47,10 +48,10 @@ export default async function NotFound() {
             <p className="text-xl text-gray-600 mb-4">
               {message}
             </p>
-            <p className="text-lg text-gray-500 mb-12 italic">
-              {quote}
+            <div className="text-lg text-gray-500 mb-12 italic">
+              <PortableTextOrString value={quote} className="" />
               <span className="block mt-2 text-sm not-italic text-(--color-roti) font-bold">&mdash; {attribution}</span>
-            </p>
+            </div>
 
             {/* Action buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

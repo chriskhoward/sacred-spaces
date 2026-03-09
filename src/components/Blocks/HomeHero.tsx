@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import FilloutSliderButton from '@/components/FilloutSliderButton';
 import { urlForImage } from '@/sanity/lib/image';
+import PortableTextOrString from '@/components/summit/PortableTextOrString';
 import { getButtonSizeClasses, getButtonColorClasses, getButtonAlignClasses, type ButtonSize, type ButtonColor, type ButtonAlignment } from '@/components/Blocks/blockHelpers';
 
 const sectionPad = 'pt-32 md:pt-40 lg:pt-44 pb-14 md:pb-20 px-6 sm:px-8';
@@ -12,7 +13,7 @@ const containerWide = 'max-w-6xl mx-auto';
 interface HomeHeroBlockProps {
   badge?: string;
   title?: string;
-  subtitle?: string;
+  subtitle?: any;
   primaryButtonText?: string;
   primaryButtonLink?: string;
   secondaryButtonText?: string;
@@ -50,9 +51,7 @@ export default function HomeHeroBlock({
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[38px] font-bold text-[#413356] mb-6 leading-[1.15] tracking-tight">
             {title}
           </h1>
-          <p className="text-lg md:text-xl text-gray-700 leading-relaxed max-w-xl font-medium mb-8">
-            {subtitle}
-          </p>
+          <PortableTextOrString value={subtitle} className="text-lg md:text-xl text-gray-700 leading-relaxed max-w-xl font-medium mb-8" />
           <div className={`flex flex-col sm:flex-row gap-4 ${getButtonAlignClasses(buttonAlignment) === 'text-left' ? 'items-start' : getButtonAlignClasses(buttonAlignment) === 'text-right' ? 'items-end' : 'items-start'}`}>
             {primaryButtonText && (
               primaryButtonLink ? (

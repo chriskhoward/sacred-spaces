@@ -1,6 +1,8 @@
+import PortableTextOrString from '@/components/summit/PortableTextOrString';
+
 interface BrandBlockProps {
-  quote?: string;
-  body?: string;
+  quote?: any;
+  body?: any;
 }
 
 export default function BrandBlock({
@@ -11,12 +13,8 @@ export default function BrandBlock({
     <section className="py-24 lg:py-32 bg-(--color-gallery)">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl lg:text-4xl text-(--color-bronzetone) font-bold mb-10 leading-relaxed italic">
-            {quote}
-          </h2>
-          <p className="text-xl text-gray-700 leading-relaxed mb-8">
-            {body}
-          </p>
+          <PortableTextOrString value={quote} className="text-3xl lg:text-4xl text-(--color-bronzetone) font-bold mb-10 leading-relaxed italic" />
+          <PortableTextOrString value={body} className="text-xl text-gray-700 leading-relaxed mb-8" />
           <div className="w-20 h-1 bg-(--color-roti) mx-auto"></div>
         </div>
       </div>

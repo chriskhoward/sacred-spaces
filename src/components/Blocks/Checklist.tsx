@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Check } from 'lucide-react';
+import PortableTextOrString from '@/components/summit/PortableTextOrString';
 import { urlForImage } from '@/sanity/lib/image';
 import {
   getButtonSizeClasses,
@@ -15,7 +16,7 @@ import {
 
 interface ChecklistBlockProps {
   heading?: string;
-  items?: string[];
+  items?: any[];
   closingText?: string;
   buttonText?: string;
   buttonLink?: string;
@@ -61,9 +62,7 @@ export default function ChecklistBlock({
                 <span className="w-8 h-8 bg-(--color-roti) text-white rounded-full flex items-center justify-center shrink-0">
                   <Check className="w-4 h-4" />
                 </span>
-                <p className="text-lg text-gray-700 leading-relaxed pt-0.5">
-                  {item}
-                </p>
+                <PortableTextOrString value={item} className="text-lg text-gray-700 leading-relaxed pt-0.5" />
               </li>
             ))}
           </ul>

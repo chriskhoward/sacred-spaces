@@ -4,6 +4,7 @@ import { Heart, Wind, Leaf, Sparkles } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import FilloutSliderButton from '@/components/FilloutSliderButton';
 import { PortableText } from '@portabletext/react';
+import PortableTextOrString from '@/components/summit/PortableTextOrString';
 import { client } from '@/sanity/lib/client';
 import { urlForImage } from '@/sanity/lib/image';
 import { FOUNDER_PAGE_BY_SLUG_QUERY, type FounderPage } from '@/sanity/lib/founderPage';
@@ -149,9 +150,7 @@ export default async function QueenRobertsonPage() {
               <div className="mt-12 pt-12 border-t-2 border-(--color-gallery)">
                 <h3 className="text-2xl font-bold text-(--color-primary) mb-6">{philHeading}</h3>
                 <div className="bg-(--color-sidecar) p-8 rounded-3xl">
-                  <p className="text-lg text-(--color-bronzetone) leading-relaxed italic">
-                    {philQuote}
-                  </p>
+                  <PortableTextOrString value={philQuote} className="text-lg text-(--color-bronzetone) leading-relaxed italic" />
                 </div>
               </div>
             </div>
@@ -166,9 +165,7 @@ export default async function QueenRobertsonPage() {
             <h2 className="text-4xl font-bold text-(--color-primary) mb-6">
               {ctaHeading}
             </h2>
-            <p className="text-xl text-gray-700 mb-10 leading-relaxed">
-              {ctaText}
-            </p>
+            <PortableTextOrString value={ctaText} className="text-xl text-gray-700 mb-10 leading-relaxed" />
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
               <FilloutSliderButton
                 buttonText={ctaBtn}

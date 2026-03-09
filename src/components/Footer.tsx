@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useUser } from '@clerk/nextjs';
+import PortableTextOrString from '@/components/summit/PortableTextOrString';
 
 export type FooterSocialLinks = {
   instagram?: string | null;
@@ -23,7 +24,7 @@ type FooterProps = {
   contactEmail?: string | null;
   secondaryEmail?: string | null;
   websiteUrl?: string | null;
-  tagline?: string | null;
+  tagline?: any;
   copyrightText?: string | null;
   quickLinksLabel?: string | null;
   connectLabel?: string | null;
@@ -86,9 +87,7 @@ export default function Footer({
                 unoptimized={logo.startsWith('http')}
               />
             </Link>
-            <p className="text-white text-sm leading-relaxed mb-6 max-w-sm">
-              {mission}
-            </p>
+            <PortableTextOrString value={mission} className="text-white text-sm leading-relaxed mb-6 max-w-sm" />
             {showMemberLogin && (
               <Link
                 href="/sign-in"

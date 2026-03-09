@@ -1,8 +1,9 @@
 import Image from 'next/image';
 import { urlForImage } from '@/sanity/lib/image';
+import PortableTextOrString from '@/components/summit/PortableTextOrString';
 
 interface TestimonialItem {
-  quote: string;
+  quote: any;
   author: string;
   role?: string;
   image?: any;
@@ -46,9 +47,7 @@ export default function TestimonialsBlock({
                 />
               </div>
               <div className="pt-8">
-                <p className="text-xl italic text-gray-700 leading-relaxed mb-8">
-                  &ldquo;{item.quote}&rdquo;
-                </p>
+                <PortableTextOrString value={item.quote} className="text-xl italic text-gray-700 leading-relaxed mb-8" />
                 <div>
                   <h4 className="font-bold text-(--color-primary) text-lg">{item.author}</h4>
                   {item.role && <p className="text-gray-500 text-sm font-medium uppercase tracking-wider">{item.role}</p>}

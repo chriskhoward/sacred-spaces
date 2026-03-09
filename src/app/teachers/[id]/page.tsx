@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { clerkClient } from '@clerk/nextjs/server';
 import Navbar from '@/components/Navbar';
+import PortableTextOrString from '@/components/summit/PortableTextOrString';
 import { teachers, Teacher } from '@/data/teachers';
 import type { Metadata } from 'next';
 
@@ -135,7 +136,7 @@ export default async function TeacherProfile({ params }: PageProps) {
         <div className="container mx-auto px-4 grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-24">
           <div>
             <h2 className="text-4xl font-bold mb-8 text-(--color-primary)">About {teacher.name.split(' ')[0]}</h2>
-            <p className="text-xl leading-relaxed text-gray-700">{teacher.bio}</p>
+            <PortableTextOrString value={teacher.bio} className="text-xl leading-relaxed text-gray-700" />
           </div>
 
           <div className="space-y-8">

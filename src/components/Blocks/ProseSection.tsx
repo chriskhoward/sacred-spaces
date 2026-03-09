@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import PortableTextOrString from '@/components/summit/PortableTextOrString';
 import { urlForImage } from '@/sanity/lib/image';
 import {
   getButtonSizeClasses,
@@ -14,7 +15,7 @@ import {
 
 interface ProseSectionBlockProps {
   heading?: string;
-  paragraphs?: string[];
+  paragraphs?: any[];
   style?: 'light' | 'cream' | 'boxed' | 'card';
   alignment?: 'center' | 'left';
   buttonText?: string;
@@ -60,7 +61,7 @@ export default function ProseSectionBlock({
           <div className="border-2 border-[#C7A254] rounded-2xl p-8 md:p-12 bg-white shadow-sm">
             <div className={`space-y-6 text-base md:text-lg text-gray-800 leading-relaxed ${alignClass}`}>
               {paragraphs.map((paragraph, index) => (
-                <p key={index}>{paragraph}</p>
+                <PortableTextOrString key={index} value={paragraph} className="" />
               ))}
             </div>
           </div>
@@ -85,7 +86,7 @@ export default function ProseSectionBlock({
               )}
               <div className="space-y-4 text-base text-gray-700 leading-relaxed flex-grow mb-8">
                 {paragraphs.map((paragraph, index) => (
-                  <p key={index}>{paragraph}</p>
+                  <PortableTextOrString key={index} value={paragraph} className="" />
                 ))}
               </div>
               {buttonText && buttonLink && (
@@ -119,7 +120,7 @@ export default function ProseSectionBlock({
           )}
           <div className="space-y-6 text-xl text-gray-700 leading-relaxed">
             {paragraphs.map((paragraph, index) => (
-              <p key={index}>{paragraph}</p>
+              <PortableTextOrString key={index} value={paragraph} className="" />
             ))}
           </div>
           {buttonText && buttonLink && (

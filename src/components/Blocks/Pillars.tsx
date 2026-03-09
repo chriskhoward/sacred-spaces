@@ -1,16 +1,17 @@
 import { Handshake, Sparkles, Link2, Shield } from 'lucide-react';
 import { type ReactNode } from 'react';
+import PortableTextOrString from '@/components/summit/PortableTextOrString';
 
 interface PillarItem {
   title: string;
-  description: string;
+  description: any;
   icon: ReactNode;
 }
 
 interface PillarsBlockProps {
   heading?: string;
   subheading?: string;
-  description?: string;
+  description?: any;
   items?: PillarItem[];
 }
 
@@ -47,9 +48,7 @@ export default function PillarsBlock({
         <div className="text-center mb-16 lg:mb-24">
           <h5 className="text-(--color-roti) uppercase tracking-[4px] font-bold mb-4">{heading}</h5>
           <h2 className="text-4xl lg:text-6xl font-bold mb-6 text-(--color-primary)">{subheading}</h2>
-          <p className="max-w-2xl mx-auto text-gray-600 text-lg leading-relaxed">
-            {description}
-          </p>
+          <PortableTextOrString value={description} className="max-w-2xl mx-auto text-gray-600 text-lg leading-relaxed" />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center sm:text-left">
           {items.map((pillar, index) => (
@@ -58,7 +57,7 @@ export default function PillarsBlock({
                 {pillar.icon}
               </div>
               <h3 className="text-2xl font-bold mb-4 text-(--color-primary)">{pillar.title}</h3>
-              <p className="text-gray-600 leading-relaxed">{pillar.description}</p>
+              <PortableTextOrString value={pillar.description} className="text-gray-600 leading-relaxed" />
             </div>
           ))}
         </div>

@@ -1,4 +1,5 @@
 import { Check } from 'lucide-react';
+import PortableTextOrString from '@/components/summit/PortableTextOrString';
 
 interface TwoColumnCompareBlockProps {
   heading?: string;
@@ -7,7 +8,7 @@ interface TwoColumnCompareBlockProps {
   rightHeading?: string;
   rightIntro?: string;
   rightItems?: string[];
-  closingText?: string;
+  closingText?: any;
 }
 
 export default function TwoColumnCompareBlock({
@@ -65,9 +66,7 @@ export default function TwoColumnCompareBlock({
                 ))}
               </ul>
               {closingText && (
-                <p className="text-xl font-medium text-(--color-primary) italic whitespace-pre-line">
-                  {closingText}
-                </p>
+                <PortableTextOrString value={closingText} className="text-xl font-medium text-(--color-primary) italic" />
               )}
             </div>
           </div>

@@ -8,6 +8,7 @@ import { client } from '@/sanity/lib/client';
 import { urlForImage } from '@/sanity/lib/image';
 import { TC_PAGE_QUERY, type TeacherCollectivePageData } from '@/sanity/lib/teacherCollectivePage';
 import { PortableText } from '@portabletext/react';
+import PortableTextOrString from '@/components/summit/PortableTextOrString';
 
 const dancingScript = Dancing_Script({ subsets: ['latin'], variable: '--font-script', display: 'swap' });
 
@@ -186,9 +187,7 @@ export default async function TeacherCollectivePage() {
               <h1 className="text-3xl md:text-4xl lg:text-[52px] font-bold text-(--color-primary) mb-6 leading-[1.25]">
                 {tc.heroHeading || 'Your path to belonging, visibility, and spiritually grounded growth.'}
               </h1>
-              <p className="text-xl text-gray-700 mb-8 leading-relaxed">
-                {tc.heroSubtext || 'Step into a faith-affirming, culturally grounded community designed to support Christ-Centered Yoga Teachers of Color in growing confidently, connecting deeply, and leading boldly in their calling.'}
-              </p>
+              <PortableTextOrString value={tc.heroSubtext || 'Step into a faith-affirming, culturally grounded community designed to support Christ-Centered Yoga Teachers of Color in growing confidently, connecting deeply, and leading boldly in their calling.'} className="text-xl text-gray-700 mb-8 leading-relaxed" />
               <div
                 data-fillout-id={filloutId}
                 data-fillout-embed-type="slider"
@@ -229,9 +228,7 @@ export default async function TeacherCollectivePage() {
                     <Image src={card.src} alt="" fill className="object-cover object-top" />
                   </div>
                   <div className="p-6">
-                    <p className="text-gray-700 leading-relaxed">
-                      {card.text}
-                    </p>
+                    <PortableTextOrString value={card.text} className="text-gray-700 leading-relaxed" />
                   </div>
                 </div>
               ))}
@@ -306,9 +303,7 @@ export default async function TeacherCollectivePage() {
                       ]
                   ).map((item, idx) => (
                     <div key={idx} className="border-l-4 border-(--color-roti) pl-6 py-4 bg-white rounded-r-lg shadow-sm">
-                      <p className="text-gray-700 leading-relaxed">
-                        {item}
-                      </p>
+                      <PortableTextOrString value={item} className="text-gray-700 leading-relaxed" />
                     </div>
                   ))}
                 </div>
@@ -363,9 +358,7 @@ export default async function TeacherCollectivePage() {
                   <h3 className="font-bold text-(--color-primary) mb-3 text-center">
                     {card.heading}
                   </h3>
-                  <p className="text-gray-700 text-sm leading-relaxed text-center">
-                    {card.description}
-                  </p>
+                  <PortableTextOrString value={card.description} className="text-gray-700 text-sm leading-relaxed text-center" />
                 </div>
               ))}
             </div>
@@ -389,9 +382,7 @@ export default async function TeacherCollectivePage() {
                       <span key={li}>{li > 0 && <br />}{line}</span>
                     ))}
                   </h4>
-                  <p className="text-gray-600 leading-normal text-base mb-4">
-                    {item.description}
-                  </p>
+                  <PortableTextOrString value={item.description} className="text-gray-600 leading-normal text-base mb-4" />
                   <p className="text-gray-500 text-xs">{item.value}</p>
                 </div>
               ))}
@@ -530,7 +521,7 @@ export default async function TeacherCollectivePage() {
                       'Grow professionally through aligned opportunities for visibility, collaboration, and leadership that honor your values.',
                     ]
                 ).map((point, idx) => (
-                  <p key={idx}>{point}</p>
+                  <PortableTextOrString key={idx} value={point} className="" />
                 ))}
               </div>
             </div>
@@ -548,9 +539,7 @@ export default async function TeacherCollectivePage() {
             <h2 className="text-3xl lg:text-4xl font-bold text-(--color-primary) mb-6 text-center uppercase tracking-wide">
               {tc.visionariesHeading || 'Meet the Visionaries'}
             </h2>
-            <p className="text-lg text-gray-700 mb-14 text-center leading-relaxed max-w-3xl mx-auto">
-              {tc.visionariesSubtext || 'Led by Queen and De, the Flow in Faith Teachers Collective was created from lived experience, prayerful discernment, and a deep belief that Christ-Centered Yoga Teachers of Color were never meant to walk this calling alone.'}
-            </p>
+            <PortableTextOrString value={tc.visionariesSubtext || 'Led by Queen and De, the Flow in Faith Teachers Collective was created from lived experience, prayerful discernment, and a deep belief that Christ-Centered Yoga Teachers of Color were never meant to walk this calling alone.'} className="text-lg text-gray-700 mb-14 text-center leading-relaxed max-w-3xl mx-auto" />
 
             {/* Founder Profiles */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
@@ -651,7 +640,7 @@ export default async function TeacherCollectivePage() {
                     <svg className="w-5 h-5 flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
                   </summary>
                   <div className="bg-white px-6 py-5 text-gray-700 leading-relaxed">
-                    {faq.answer}
+                    <PortableTextOrString value={faq.answer} className="" />
                   </div>
                 </details>
               ))}

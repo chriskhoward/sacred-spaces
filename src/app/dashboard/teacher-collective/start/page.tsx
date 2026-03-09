@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import Navbar from '@/components/Navbar';
+import PortableTextOrString from '@/components/summit/PortableTextOrString';
 import { Metadata } from 'next';
 import { client } from '@/sanity/lib/client';
 import { isAllowedIframeUrl } from '@/lib/iframe-utils';
@@ -66,7 +67,7 @@ type OnboardingCategory = {
 type OnboardingItem = {
   _id: string;
   title: string;
-  description?: string | null;
+  description?: any;
   itemType: 'video' | 'pdf' | 'link';
   url?: string | null;
   pdfFileUrl?: string | null;
@@ -214,7 +215,7 @@ export default async function TeacherCollectiveStartPage() {
                               <div className="p-6 md:p-8">
                                 <h3 className="text-xl font-bold text-(--color-primary) mb-2">{item.title}</h3>
                                 {item.description && (
-                                  <p className="text-gray-600">{item.description}</p>
+                                  <PortableTextOrString value={item.description} className="text-gray-600" />
                                 )}
                               </div>
                             </article>
@@ -223,7 +224,7 @@ export default async function TeacherCollectiveStartPage() {
                             <div className="bg-white rounded-xl shadow-lg p-6 md:p-8">
                               <h3 className="text-xl font-bold text-(--color-primary) mb-2">{item.title}</h3>
                               {item.description && (
-                                <p className="text-gray-600 mb-4">{item.description}</p>
+                                {item.description && <PortableTextOrString value={item.description} className="text-gray-600 mb-4" />}
                               )}
                               {item.itemType === 'pdf' && (item.pdfFileUrl || item.pdfUrl) && (
                                 <a

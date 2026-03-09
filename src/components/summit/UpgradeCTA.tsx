@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import PortableTextOrString from '@/components/summit/PortableTextOrString'
 import { getSectionStyles, getButtonStyles } from '@/lib/summit-styles'
 import type { SummitButtonPreset } from '@/sanity/lib/summit'
 
@@ -7,7 +8,7 @@ interface UpgradeCTAProps {
   basePath?: string
   message?: string
   heading?: string
-  description?: string
+  description?: any
   buttonLabel?: string
   // Style overrides
   sectionBgColor?: string
@@ -60,9 +61,7 @@ export default function UpgradeCTA({
         {heading}
       </h3>
       <p className="text-(--color-primary)/80 mb-6">{message}</p>
-      <p className="text-(--color-primary)/70 text-sm mb-6">
-        {description}
-      </p>
+      <PortableTextOrString value={description} className="text-(--color-primary)/70 text-sm mb-6" />
       {upgradeHref && (
         allAccessSalesUrl ? (
           <a

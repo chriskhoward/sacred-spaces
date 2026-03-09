@@ -10,7 +10,7 @@ type FooterWrapperProps = {
   contactEmail?: string | null;
   secondaryEmail?: string | null;
   websiteUrl?: string | null;
-  tagline?: string | null;
+  tagline?: any;
   copyrightText?: string | null;
   quickLinksLabel?: string | null;
   connectLabel?: string | null;
@@ -44,6 +44,11 @@ export default function FooterWrapper({
   summitCopyrightBrand,
 }: FooterWrapperProps) {
   const pathname = usePathname();
+
+  if (pathname.startsWith('/studio')) {
+    return null;
+  }
+
   const isSummit = pathname.startsWith('/summit');
 
   if (isSummit) {
