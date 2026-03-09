@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
-import { client } from '@/sanity/lib/client'
+import { getClient } from '@/sanity/lib/client'
+import { draftMode } from 'next/headers'
 import { urlForImage } from '@/sanity/lib/image'
 import { SUMMIT_BY_YEAR_QUERY, type Summit } from '@/sanity/lib/summit'
 import SummitNav from '@/components/summit/SummitNav'
@@ -15,6 +16,8 @@ export default async function ArchiveSummitLayout({
   children,
   params,
 }: LayoutProps) {
+  const { isEnabled } = await draftMode()
+  const client = getClient(isEnabled)
   const { year } = await params
   const yearNum = parseInt(year, 10)
   if (isNaN(yearNum)) notFound()

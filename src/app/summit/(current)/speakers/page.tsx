@@ -1,4 +1,5 @@
-import { client } from '@/sanity/lib/client'
+import { getClient } from '@/sanity/lib/client'
+import { draftMode } from 'next/headers'
 import { urlForImage } from '@/sanity/lib/image'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -21,6 +22,8 @@ import type { Metadata } from 'next'
 export const dynamic = 'force-dynamic'
 
 export async function generateMetadata(): Promise<Metadata> {
+  const { isEnabled } = await draftMode()
+  const client = getClient(isEnabled)
   const summit = await client.fetch<Summit | null>(CURRENT_SUMMIT_QUERY)
   return {
     title: summit ? `Speakers — ${summit.title}` : 'Speakers',
@@ -29,6 +32,8 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function SpeakersPage() {
+  const { isEnabled } = await draftMode()
+  const client = getClient(isEnabled)
   const summit = await client.fetch<Summit | null>(CURRENT_SUMMIT_QUERY)
   if (!summit) notFound()
 

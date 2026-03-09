@@ -1,4 +1,5 @@
-import { client } from '@/sanity/lib/client'
+import { getClient } from '@/sanity/lib/client'
+import { draftMode } from 'next/headers'
 import { PortableText } from '@portabletext/react'
 import { CURRENT_SUMMIT_QUERY, type Summit } from '@/sanity/lib/summit'
 import { notFound } from 'next/navigation'
@@ -13,6 +14,8 @@ import type { Metadata } from 'next'
 export const dynamic = 'force-dynamic'
 
 export async function generateMetadata(): Promise<Metadata> {
+  const { isEnabled } = await draftMode()
+  const client = getClient(isEnabled)
   const summit = await client.fetch<Summit | null>(CURRENT_SUMMIT_QUERY)
   return {
     title: summit ? `${summit.labels?.communityTitle || 'Community'} — ${summit.title}` : 'Community',
@@ -21,6 +24,8 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function CommunityPage() {
+  const { isEnabled } = await draftMode()
+  const client = getClient(isEnabled)
   const summit = await client.fetch<Summit | null>(CURRENT_SUMMIT_QUERY)
   if (!summit) notFound()
 

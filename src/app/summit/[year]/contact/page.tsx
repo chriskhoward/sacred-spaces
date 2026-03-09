@@ -1,4 +1,5 @@
-import { client } from '@/sanity/lib/client'
+import { getClient } from '@/sanity/lib/client'
+import { draftMode } from 'next/headers'
 import { SUMMIT_BY_YEAR_QUERY, type Summit } from '@/sanity/lib/summit'
 import { notFound } from 'next/navigation'
 import { getSectionStyles } from '@/lib/summit-styles'
@@ -10,6 +11,8 @@ export const dynamic = 'force-dynamic'
 type PageProps = { params: Promise<{ year: string }> }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { isEnabled } = await draftMode()
+  const client = getClient(isEnabled)
   const { year } = await params
   const summit = await client.fetch<Summit | null>(SUMMIT_BY_YEAR_QUERY, {
     year: parseInt(year, 10),
@@ -21,6 +24,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function ArchiveContactPage({ params }: PageProps) {
+  const { isEnabled } = await draftMode()
+  const client = getClient(isEnabled)
   const { year } = await params
   const summit = await client.fetch<Summit | null>(SUMMIT_BY_YEAR_QUERY, {
     year: parseInt(year, 10),

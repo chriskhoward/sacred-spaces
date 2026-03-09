@@ -1,4 +1,5 @@
-import { client } from '@/sanity/lib/client'
+import { getClient } from '@/sanity/lib/client'
+import { draftMode } from 'next/headers'
 import { urlForImage } from '@/sanity/lib/image'
 import { isAllowedIframeUrl } from '@/lib/iframe-utils'
 import { auth } from '@clerk/nextjs/server'
@@ -15,6 +16,8 @@ import type { Metadata } from 'next'
 export const dynamic = 'force-dynamic'
 
 export async function generateMetadata(): Promise<Metadata> {
+  const { isEnabled } = await draftMode()
+  const client = getClient(isEnabled)
   const summit = await client.fetch<Summit | null>(CURRENT_SUMMIT_QUERY)
   return {
     title: summit ? `${summit.labels?.welcomeTitle || 'Welcome'} — ${summit.title}` : 'Summit',
@@ -23,6 +26,8 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function StartHerePage() {
+  const { isEnabled } = await draftMode()
+  const client = getClient(isEnabled)
   const summit = await client.fetch<Summit | null>(CURRENT_SUMMIT_QUERY)
   if (!summit) notFound()
 

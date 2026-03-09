@@ -1,4 +1,5 @@
-import { client } from '@/sanity/lib/client'
+import { getClient } from '@/sanity/lib/client'
+import { draftMode } from 'next/headers'
 import { CURRENT_SUMMIT_QUERY, type Summit } from '@/sanity/lib/summit'
 import { notFound } from 'next/navigation'
 import { getSectionStyles } from '@/lib/summit-styles'
@@ -8,6 +9,8 @@ import type { Metadata } from 'next'
 export const dynamic = 'force-dynamic'
 
 export async function generateMetadata(): Promise<Metadata> {
+  const { isEnabled } = await draftMode()
+  const client = getClient(isEnabled)
   const summit = await client.fetch<Summit | null>(CURRENT_SUMMIT_QUERY)
   return {
     title: summit ? `Contact — ${summit.title}` : 'Contact',
@@ -16,6 +19,8 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ContactPage() {
+  const { isEnabled } = await draftMode()
+  const client = getClient(isEnabled)
   const summit = await client.fetch<Summit | null>(CURRENT_SUMMIT_QUERY)
   if (!summit) notFound()
 

@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
-import { client } from '@/sanity/lib/client'
+import { getClient } from '@/sanity/lib/client'
+import { draftMode } from 'next/headers'
 import { urlForImage } from '@/sanity/lib/image'
 import { CURRENT_SUMMIT_QUERY, type Summit } from '@/sanity/lib/summit'
 import SummitNav from '@/components/summit/SummitNav'
@@ -11,6 +12,8 @@ export default async function CurrentSummitLayout({
 }: {
   children: React.ReactNode
 }) {
+  const { isEnabled } = await draftMode()
+  const client = getClient(isEnabled)
   const summit = await client.fetch<Summit | null>(CURRENT_SUMMIT_QUERY)
 
   if (!summit) {

@@ -1,4 +1,5 @@
-import { client } from '@/sanity/lib/client'
+import { getClient } from '@/sanity/lib/client'
+import { draftMode } from 'next/headers'
 import { isAllowedIframeUrl } from '@/lib/iframe-utils'
 import {
   SUMMIT_BY_YEAR_QUERY,
@@ -21,6 +22,8 @@ export const dynamic = 'force-dynamic'
 type PageProps = { params: Promise<{ year: string; slug: string }> }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { isEnabled } = await draftMode()
+  const client = getClient(isEnabled)
   const { year, slug } = await params
   const summit = await client.fetch<Summit | null>(SUMMIT_BY_YEAR_QUERY, {
     year: parseInt(year, 10),
@@ -39,6 +42,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function ArchivePresentationPage({ params }: PageProps) {
+  const { isEnabled } = await draftMode()
+  const client = getClient(isEnabled)
   const { year, slug } = await params
   const summit = await client.fetch<Summit | null>(SUMMIT_BY_YEAR_QUERY, {
     year: parseInt(year, 10),

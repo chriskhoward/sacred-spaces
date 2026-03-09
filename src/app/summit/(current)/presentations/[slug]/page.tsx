@@ -1,4 +1,5 @@
-import { client } from '@/sanity/lib/client'
+import { getClient } from '@/sanity/lib/client'
+import { draftMode } from 'next/headers'
 import { isAllowedIframeUrl } from '@/lib/iframe-utils'
 import { auth } from '@clerk/nextjs/server'
 import {
@@ -28,6 +29,8 @@ type PageProps = {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { isEnabled } = await draftMode()
+  const client = getClient(isEnabled)
   const { slug } = await params
   const summit = await client.fetch<Summit | null>(CURRENT_SUMMIT_QUERY)
   if (!summit) return { title: 'Presentation' }
@@ -44,6 +47,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function PresentationPage({ params }: PageProps) {
+  const { isEnabled } = await draftMode()
+  const client = getClient(isEnabled)
   const { slug } = await params
   const summit = await client.fetch<Summit | null>(CURRENT_SUMMIT_QUERY)
   if (!summit) notFound()
