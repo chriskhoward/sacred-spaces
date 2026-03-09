@@ -67,6 +67,9 @@ export interface SummitPresentation {
   timeSlot?: string
   startTime?: string
   resources?: SummitPresentationResource[]
+  speakerPromoLabel?: string
+  speakerPromoUrl?: string
+  customContent?: any[]
   displayOrder?: number
   sessionType?: 'live' | 'recorded'
   buttonBgColor?: string
@@ -177,6 +180,9 @@ const presentationProjection = `{
     url,
     file { asset-> { url } }
   },
+  speakerPromoLabel,
+  speakerPromoUrl,
+  customContent,
   displayOrder,
   sessionType
 }`

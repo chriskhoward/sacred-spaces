@@ -129,6 +129,35 @@ export const summitPresentationType = defineType({
       ],
     }),
     defineField({
+      name: 'speakerPromoLabel',
+      title: 'Speaker Promo Button Label',
+      type: 'string',
+      description: 'e.g. "Visit Sarah\'s Website". Leave blank to hide.',
+    }),
+    defineField({
+      name: 'speakerPromoUrl',
+      title: 'Speaker Promo Button URL',
+      type: 'url',
+      description: 'Link for the speaker promo button. Falls back to speaker website if blank.',
+    }),
+    defineField({
+      name: 'customContent',
+      title: 'Custom Content Section',
+      type: 'array',
+      options: { canvasApp: { purpose: 'Optional custom content section added by the client below the main presentation details' } },
+      of: [
+        { type: 'block' },
+        {
+          type: 'image',
+          options: { hotspot: true },
+          fields: [
+            defineField({ name: 'alt', title: 'Alt Text', type: 'string' }),
+          ],
+        },
+      ],
+      description: 'Optional extra content section displayed on the presentation page',
+    }),
+    defineField({
       name: 'displayOrder',
       title: 'Display Order',
       type: 'number',

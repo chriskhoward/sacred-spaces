@@ -17,7 +17,7 @@ import UpgradeCTA from '@/components/summit/UpgradeCTA'
 import AddToCalendarButton from '@/components/summit/AddToCalendarButton'
 import AllAccessButton from '@/components/summit/AllAccessButton'
 import SummitBreadcrumbs from '@/components/summit/SummitBreadcrumbs'
-import { Check } from 'lucide-react'
+import { Check, ExternalLink } from 'lucide-react'
 import { getSectionStyles } from '@/lib/summit-styles'
 import PortableTextOrString from '@/components/summit/PortableTextOrString'
 import type { Metadata } from 'next'
@@ -158,14 +158,78 @@ export default async function PresentationPage({ params }: PageProps) {
             </div>
           )}
 
-          {/* Speaker Bio */}
-          {presentation.speaker?.bio && (
-            <div className="mb-8 bg-(--color-gallery)/30 rounded-xl p-6">
-              <h2 className="text-xl md:text-2xl font-bold text-(--color-primary) mb-3">
-                About {presentation.speaker.name}
-              </h2>
+          {/* Speaker Card */}
+          {presentation.speaker && (
+            <div className="mb-8 bg-(--color-gallery)/30 rounded-xl p-6 sm:p-8">
+              <div className="flex flex-col sm:flex-row gap-6">
+                {presentation.speaker.headshot && (
+                  <Image
+                    src={urlForImage(presentation.speaker.headshot).width(200).height(200).url()}
+                    alt={presentation.speaker.name}
+                    width={200}
+                    height={200}
+                    className="rounded-xl object-cover shrink-0 self-start"
+                    unoptimized
+                  />
+                )}
+                <div className="flex-1">
+                  <h2 className="text-xl md:text-2xl font-bold text-(--color-primary) mb-2">
+                    About {presentation.speaker.name}
+                  </h2>
+                  {presentation.speaker.bio && (
+                    <PortableTextOrString
+                      value={presentation.speaker.bio}
+                      className="prose prose-lg max-w-none text-(--color-primary)/80 mb-4"
+                    />
+                  )}
+                  <div className="flex flex-wrap items-center gap-3 mt-4">
+                    {/* Speaker promo button */}
+                    {presentation.speakerPromoLabel && (
+                      <a
+                        href={presentation.speakerPromoUrl || presentation.speaker.websiteUrl || '#'}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-5 py-2.5 bg-(--color-roti) text-white rounded-lg font-medium hover:opacity-90 transition-opacity text-sm"
+                      >
+                        {presentation.speakerPromoLabel}
+                        <ExternalLink className="w-4 h-4" />
+                      </a>
+                    )}
+                    {/* Speaker website (shown if no promo button or as secondary) */}
+                    {!presentation.speakerPromoLabel && presentation.speaker.websiteUrl && (
+                      <a
+                        href={presentation.speaker.websiteUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-4 py-2 border border-(--color-primary)/20 rounded-lg text-(--color-primary) hover:bg-(--color-primary)/5 transition-colors text-sm font-medium"
+                      >
+                        Visit Website
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </a>
+                    )}
+                    {/* Social links */}
+                    {presentation.speaker.socialLinks?.map((link) => (
+                      <a
+                        key={link.url}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 px-3 py-2 border border-(--color-primary)/20 rounded-lg text-(--color-primary)/70 hover:bg-(--color-primary)/5 transition-colors text-sm capitalize"
+                      >
+                        {link.platform}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Custom Content Section */}
+          {presentation.customContent && presentation.customContent.length > 0 && (
+            <div className="mb-8">
               <PortableTextOrString
-                value={presentation.speaker.bio}
+                value={presentation.customContent}
                 className="prose prose-lg max-w-none text-(--color-primary)/80"
               />
             </div>
