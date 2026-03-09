@@ -12,10 +12,23 @@ import {
 } from '@/sanity/lib/summit'
 import { notFound } from 'next/navigation'
 import AddToCalendarButton from '@/components/summit/AddToCalendarButton'
+import { getSectionStyles } from '@/lib/summit-styles'
+import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
 
 type PageProps = { params: Promise<{ year: string }> }
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { year } = await params
+  const summit = await client.fetch<Summit | null>(SUMMIT_BY_YEAR_QUERY, {
+    year: parseInt(year, 10),
+  })
+  return {
+    title: summit ? `${summit.labels?.scheduleTitle || 'Schedule'} — ${summit.title}` : 'Schedule',
+    description: typeof summit?.description === 'string' ? summit.description : undefined,
+  }
+}
 
 export default async function ArchiveSchedulePage({ params }: PageProps) {
   const { year } = await params
@@ -31,8 +44,14 @@ export default async function ArchiveSchedulePage({ params }: PageProps) {
   const grouped = groupPresentationsByDay(presentations)
   const sortedDays = Array.from(grouped.keys()).sort((a, b) => a - b)
 
+  const sectionStyles = getSectionStyles({
+    summitStyles: summit.styles,
+    pageKey: 'scheduleBg',
+    fallbackPadding: 'normal',
+  })
+
   return (
-    <section className="py-16 md:py-20">
+    <section className={sectionStyles.className} style={sectionStyles.style}>
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <Link

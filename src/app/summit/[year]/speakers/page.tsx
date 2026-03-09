@@ -1,7 +1,6 @@
 import { client } from '@/sanity/lib/client'
 import { urlForImage } from '@/sanity/lib/image'
 import Image from 'next/image'
-import Link from 'next/link'
 import { Mic } from 'lucide-react'
 import {
   SUMMIT_BY_YEAR_QUERY,
@@ -12,10 +11,25 @@ import {
   type SummitPresentation,
 } from '@/sanity/lib/summit'
 import { notFound } from 'next/navigation'
+import { getSectionStyles } from '@/lib/summit-styles'
+import SummitButton from '@/components/summit/SummitButton'
+import PortableTextOrString from '@/components/summit/PortableTextOrString'
+import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
 
 type PageProps = { params: Promise<{ year: string }> }
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { year } = await params
+  const summit = await client.fetch<Summit | null>(SUMMIT_BY_YEAR_QUERY, {
+    year: parseInt(year, 10),
+  })
+  return {
+    title: summit ? `Speakers — ${summit.title}` : 'Speakers',
+    description: typeof summit?.description === 'string' ? summit.description : undefined,
+  }
+}
 
 export default async function ArchiveSpeakersPage({ params }: PageProps) {
   const { year } = await params
@@ -31,8 +45,14 @@ export default async function ArchiveSpeakersPage({ params }: PageProps) {
   const speakers = getUniqueSpeakers(presentations)
   const titleMap = getSpeakerPresentationTitles(presentations)
 
+  const sectionStyles = getSectionStyles({
+    summitStyles: summit.styles,
+    pageKey: 'speakersBg',
+    fallbackPadding: 'normal',
+  })
+
   return (
-    <section className="py-16 md:py-20">
+    <section className={sectionStyles.className} style={sectionStyles.style}>
       <div className="container mx-auto px-4">
         <div className="max-w-5xl mx-auto">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-(--color-primary) mb-8">
@@ -70,7 +90,14 @@ export default async function ArchiveSpeakersPage({ params }: PageProps) {
                         ))}
                       </div>
                     )}
-                    {speaker.bio && <p className="text-sm text-(--color-primary)/70 mt-2 line-clamp-3">{speaker.bio}</p>}
+                    {speaker.bio && (
+                      <div className="mt-2">
+                        <PortableTextOrString
+                          value={speaker.bio}
+                          className="text-sm text-(--color-primary)/70 line-clamp-3"
+                        />
+                      </div>
+                    )}
                     <div className="flex justify-center gap-3 mt-4 flex-wrap">
                       {speaker.websiteUrl && (
                         <a href={speaker.websiteUrl} target="_blank" rel="noopener noreferrer" className="text-(--color-roti) hover:opacity-80 text-sm font-medium">Website</a>
@@ -87,12 +114,11 @@ export default async function ArchiveSpeakersPage({ params }: PageProps) {
 
           {/* Bottom navigation */}
           <div className="mt-12 flex justify-center">
-            <Link
+            <SummitButton
+              label="View Schedule"
               href={`/summit/${year}/schedule`}
-              className="inline-block px-8 py-3 bg-(--color-primary) text-white rounded-full font-bold uppercase tracking-wide hover:opacity-90 transition-opacity shadow-md"
-            >
-              View Schedule
-            </Link>
+              preset={summit.styles?.buttonPrimary}
+            />
           </div>
         </div>
       </div>

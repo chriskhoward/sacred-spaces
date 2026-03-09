@@ -12,10 +12,31 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import AddToCalendarButton from '@/components/summit/AddToCalendarButton'
+import { getSectionStyles } from '@/lib/summit-styles'
+import PortableTextOrString from '@/components/summit/PortableTextOrString'
+import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
 
 type PageProps = { params: Promise<{ year: string; slug: string }> }
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { year, slug } = await params
+  const summit = await client.fetch<Summit | null>(SUMMIT_BY_YEAR_QUERY, {
+    year: parseInt(year, 10),
+  })
+  if (!summit) return { title: 'Presentation' }
+  const presentation = await client.fetch<SummitPresentation | null>(
+    SUMMIT_PRESENTATION_BY_SLUG_QUERY,
+    { summitId: summit._id, slug }
+  )
+  return {
+    title: presentation
+      ? `${presentation.title} — ${summit.title}`
+      : 'Presentation',
+    description: typeof presentation?.description === 'string' ? presentation.description : undefined,
+  }
+}
 
 export default async function ArchivePresentationPage({ params }: PageProps) {
   const { year, slug } = await params
@@ -32,8 +53,13 @@ export default async function ArchivePresentationPage({ params }: PageProps) {
 
   const calendarUrl = getGoogleCalendarUrl(presentation)
 
+  const sectionStyles = getSectionStyles({
+    summitStyles: summit.styles,
+    fallbackPadding: 'normal',
+  })
+
   return (
-    <section className="py-16 md:py-20">
+    <section className={sectionStyles.className} style={sectionStyles.style}>
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <Link
@@ -91,7 +117,10 @@ export default async function ArchivePresentationPage({ params }: PageProps) {
               <h2 className="text-xl md:text-2xl font-bold text-(--color-primary) mb-3">
                 About This Presentation
               </h2>
-              <p className="text-(--color-primary)/80 whitespace-pre-line">{presentation.description}</p>
+              <PortableTextOrString
+                value={presentation.description}
+                className="prose prose-lg max-w-none text-(--color-primary)/80"
+              />
             </div>
           )}
 
@@ -100,9 +129,10 @@ export default async function ArchivePresentationPage({ params }: PageProps) {
               <h2 className="text-xl md:text-2xl font-bold text-(--color-primary) mb-3">
                 About {presentation.speaker.name}
               </h2>
-              <p className="text-(--color-primary)/80 whitespace-pre-line">
-                {presentation.speaker.bio}
-              </p>
+              <PortableTextOrString
+                value={presentation.speaker.bio}
+                className="prose prose-lg max-w-none text-(--color-primary)/80"
+              />
             </div>
           )}
 
