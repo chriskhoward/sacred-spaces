@@ -128,8 +128,21 @@ export default async function YogaClassesPage() {
                           />
                         </div>
                       )}
+                      {/* Start time display */}
+                      {yc.startTime && status !== 'replay' && (
+                        <p className="text-sm text-(--color-roti) font-medium mt-2">
+                          {new Date(yc.startTime).toLocaleString('en-US', {
+                            weekday: 'short',
+                            month: 'short',
+                            day: 'numeric',
+                            hour: 'numeric',
+                            minute: '2-digit',
+                            timeZoneName: 'short',
+                          })}
+                        </p>
+                      )}
                       <div className="mt-4 flex flex-wrap gap-3">
-                        {status === 'upcoming' && (
+                        {(status === 'upcoming' || status === 'live') && (
                           <AddToCalendarButton calendarUrl={getYogaCalendarUrl(yc)} />
                         )}
                         {status === 'live' && yc.liveUrl && (
