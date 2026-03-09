@@ -19,7 +19,7 @@ export const teacherCollectivePageType = defineType({
     // ── Hero ──
     defineField({ name: 'heroBadge', title: 'Hero Badge Text', type: 'string', group: 'hero' }),
     defineField({ name: 'heroHeading', title: 'Hero Heading', type: 'text', rows: 2, group: 'hero' }),
-    defineField({ name: 'heroSubtext', title: 'Hero Sub-text', type: 'text', rows: 3, group: 'hero' }),
+    defineField({ name: 'heroSubtext', title: 'Hero Sub-text', type: 'array', of: [{ type: 'block' }], group: 'hero' }),
     defineField({ name: 'heroImage', title: 'Hero Image', type: 'image', options: { hotspot: true }, group: 'hero' }),
     defineField({ name: 'heroCtaText', title: 'Hero CTA Button Text', type: 'string', group: 'hero' }),
 
@@ -35,7 +35,7 @@ export const teacherCollectivePageType = defineType({
         name: 'imagineCard',
         fields: [
           { name: 'image', title: 'Image', type: 'image', options: { hotspot: true } },
-          { name: 'text', title: 'Text', type: 'text', rows: 2 },
+          { name: 'text', title: 'Text', type: 'array', of: [{ type: 'block' }] },
         ],
         preview: { select: { title: 'text', media: 'image' } },
       }],
@@ -50,7 +50,7 @@ export const teacherCollectivePageType = defineType({
       title: '"You Don\'t Have To" Points',
       type: 'array',
       group: 'sections',
-      of: [{ type: 'text', rows: 2 }],
+      of: [{ type: 'block' }],
     }),
     defineField({ name: 'callingHeading', title: '"Your Calling" CTA Heading', type: 'string', group: 'sections' }),
     defineField({ name: 'callingSubtext', title: '"Your Calling" CTA Subtext', type: 'string', group: 'sections' }),
@@ -70,7 +70,7 @@ export const teacherCollectivePageType = defineType({
         fields: [
           { name: 'image', title: 'Image', type: 'image', options: { hotspot: true } },
           { name: 'heading', title: 'Heading', type: 'string' },
-          { name: 'description', title: 'Description', type: 'text', rows: 3 },
+          { name: 'description', title: 'Description', type: 'array', of: [{ type: 'block' }] },
         ],
         preview: { select: { title: 'heading', media: 'image' } },
       }],
@@ -86,7 +86,7 @@ export const teacherCollectivePageType = defineType({
         name: 'premiumItem',
         fields: [
           { name: 'heading', title: 'Heading', type: 'string' },
-          { name: 'description', title: 'Description', type: 'text', rows: 3 },
+          { name: 'description', title: 'Description', type: 'array', of: [{ type: 'block' }] },
           { name: 'value', title: 'Value Text', type: 'string' },
         ],
         preview: { select: { title: 'heading' } },
@@ -107,12 +107,12 @@ export const teacherCollectivePageType = defineType({
       title: '"It\'s Time To" Points',
       type: 'array',
       group: 'sections',
-      of: [{ type: 'text', rows: 2 }],
+      of: [{ type: 'block' }],
     }),
 
     // ── Meet the Visionaries ──
     defineField({ name: 'visionariesHeading', title: 'Section Heading', type: 'string', group: 'founders' }),
-    defineField({ name: 'visionariesSubtext', title: 'Section Subtext', type: 'text', rows: 3, group: 'founders' }),
+    defineField({ name: 'visionariesSubtext', title: 'Section Subtext', type: 'array', of: [{ type: 'block' }], group: 'founders' }),
     defineField({
       name: 'visionaries',
       title: 'Founder Profiles',

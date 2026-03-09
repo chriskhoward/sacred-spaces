@@ -56,7 +56,8 @@ export const teacherType = defineType({
         defineField({
             name: 'bio',
             title: 'Biography',
-            type: 'text',
+            type: 'array',
+            of: [{ type: 'block' }],
         }),
         defineField({
             name: 'image',

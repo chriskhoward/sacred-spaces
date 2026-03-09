@@ -82,7 +82,7 @@ export const heroBlock = defineType({
   fields: [
     defineField({ name: 'badge', title: 'Badge Text', type: 'string' }),
     defineField({ name: 'title', title: 'Title', type: 'string' }),
-    defineField({ name: 'subtitle', title: 'Subtitle', type: 'text' }),
+    defineField({ name: 'subtitle', title: 'Subtitle', type: 'array', of: [{ type: 'block' }] }),
     defineField({ name: 'image', title: 'Hero Image', type: 'image', options: { hotspot: true } }),
     defineField({ name: 'primaryButtonText', title: 'Primary Button Text', type: 'string' }),
     defineField({
@@ -119,7 +119,7 @@ export const homeHeroBlock = defineType({
   fields: [
     defineField({ name: 'badge', title: 'Badge Text', type: 'string', description: 'Small label above the title (e.g. "Flow in Faith")' }),
     defineField({ name: 'title', title: 'Title', type: 'string' }),
-    defineField({ name: 'subtitle', title: 'Subtitle', type: 'text' }),
+    defineField({ name: 'subtitle', title: 'Subtitle', type: 'array', of: [{ type: 'block' }] }),
     defineField({
       name: 'primaryButtonText',
       title: 'Primary Button Text',
@@ -153,8 +153,8 @@ export const brandBlock = defineType({
   title: 'Brand Message / Quote',
   type: 'object',
   fields: [
-    defineField({ name: 'quote', title: 'Quote', type: 'text' }),
-    defineField({ name: 'body', title: 'Body Text', type: 'text' }),
+    defineField({ name: 'quote', title: 'Quote', type: 'array', of: [{ type: 'block' }] }),
+    defineField({ name: 'body', title: 'Body Text', type: 'array', of: [{ type: 'block' }] }),
   ]
 })
 
@@ -166,7 +166,7 @@ export const pillarsBlock = defineType({
   fields: [
     defineField({ name: 'heading', title: 'Section Heading', type: 'string' }),
     defineField({ name: 'subheading', title: 'Section Subheading', type: 'string' }),
-    defineField({ name: 'description', title: 'Section Description', type: 'text' }),
+    defineField({ name: 'description', title: 'Section Description', type: 'array', of: [{ type: 'block' }] }),
     defineField({
       name: 'items',
       title: 'Pillar Items',
@@ -175,7 +175,7 @@ export const pillarsBlock = defineType({
         type: 'object',
         fields: [
           defineField({ name: 'title', title: 'Title', type: 'string' }),
-          defineField({ name: 'description', title: 'Description', type: 'text' }),
+          defineField({ name: 'description', title: 'Description', type: 'array', of: [{ type: 'block' }] }),
           defineField({ name: 'icon', title: 'Icon (Emoji)', type: 'string' }),
         ]
       }]
@@ -191,7 +191,7 @@ export const benefitsBlock = defineType({
   fields: [
     defineField({ name: 'badge', title: 'Badge Text', type: 'string' }),
     defineField({ name: 'title', title: 'Title', type: 'string' }),
-    defineField({ name: 'description', title: 'Description', type: 'text' }),
+    defineField({ name: 'description', title: 'Description', type: 'array', of: [{ type: 'block' }] }),
     defineField({ name: 'buttonText', title: 'Button Text', type: 'string' }),
     defineField({ name: 'buttonLink', title: 'Button Link', type: 'string', description: 'Internal path (e.g. /sign-up) or external URL' }),
     defineField({
@@ -202,7 +202,7 @@ export const benefitsBlock = defineType({
         type: 'object',
         fields: [
           defineField({ name: 'title', title: 'Title', type: 'string' }),
-          defineField({ name: 'description', title: 'Description', type: 'text' }),
+          defineField({ name: 'description', title: 'Description', type: 'array', of: [{ type: 'block' }] }),
         ]
       }]
     }),
@@ -331,7 +331,7 @@ export const testimonialBlock = defineType({
       of: [{
         type: 'object',
         fields: [
-          defineField({ name: 'quote', title: 'Quote', type: 'text' }),
+          defineField({ name: 'quote', title: 'Quote', type: 'array', of: [{ type: 'block' }] }),
           defineField({ name: 'author', title: 'Author Name', type: 'string' }),
           defineField({ name: 'role', title: 'Role/Title', type: 'string' }),
           defineField({ name: 'image', title: 'Author Image', type: 'image', options: { hotspot: true } }),
@@ -348,7 +348,7 @@ export const teamBlock = defineType({
   type: 'object',
   fields: [
     defineField({ name: 'heading', title: 'Heading', type: 'string' }),
-    defineField({ name: 'description', title: 'Description', type: 'text' }),
+    defineField({ name: 'description', title: 'Description', type: 'array', of: [{ type: 'block' }] }),
     defineField({
       name: 'members',
       title: 'Team Members',
@@ -391,7 +391,7 @@ export const ctaBlock = defineType({
   type: 'object',
   fields: [
     defineField({ name: 'title', title: 'Title', type: 'string' }),
-    defineField({ name: 'description', title: 'Description', type: 'text' }),
+    defineField({ name: 'description', title: 'Description', type: 'array', of: [{ type: 'block' }] }),
     defineField({ name: 'buttonText', title: 'Button Text', type: 'string' }),
     defineField({ name: 'buttonLink', title: 'Button Link', type: 'string', description: 'Internal (e.g. /sign-up) or External URL. Leave empty to use Fillout when useFillout is on.' }),
     defineField({ name: 'useFillout', title: 'Use Fillout (form) instead of link', type: 'boolean', initialValue: false }),
@@ -419,7 +419,7 @@ export const faqBlock = defineType({
         type: 'object',
         fields: [
           defineField({ name: 'question', title: 'Question', type: 'string' }),
-          defineField({ name: 'answer', title: 'Answer', type: 'text' }),
+          defineField({ name: 'answer', title: 'Answer', type: 'array', of: [{ type: 'block' }] }),
         ]
       }]
     })
@@ -437,7 +437,7 @@ export const empathySectionBlock = defineType({
       name: 'items',
       title: 'Bullet Points',
       type: 'array',
-      of: [{ type: 'text' }],
+      of: [{ type: 'block' }],
       description: 'Each item becomes a styled bullet point'
     }),
     defineField({
@@ -473,7 +473,7 @@ export const highlightTextBlock = defineType({
       name: 'statements',
       title: 'Statements',
       type: 'array',
-      of: [{ type: 'text' }],
+      of: [{ type: 'block' }],
       description: 'Each statement is displayed prominently'
     }),
     defineField({
@@ -526,7 +526,7 @@ export const featureGridBlock = defineType({
         type: 'object',
         fields: [
           defineField({ name: 'title', title: 'Title', type: 'string' }),
-          defineField({ name: 'description', title: 'Description', type: 'text' }),
+          defineField({ name: 'description', title: 'Description', type: 'array', of: [{ type: 'block' }] }),
           defineField({ name: 'icon', title: 'Icon (Emoji)', type: 'string' }),
           defineField({ name: 'image', title: 'Image (optional)', type: 'image', options: { hotspot: true } }),
           defineField({ name: 'imageUrl', title: 'Image URL (fallback)', type: 'string', description: 'Public image path (e.g. /images/homepage/feature-1.webp). Used when no Sanity image asset is uploaded.' }),
@@ -565,7 +565,7 @@ export const premiumFeaturesBlock = defineType({
         type: 'object',
         fields: [
           defineField({ name: 'title', title: 'Title', type: 'string' }),
-          defineField({ name: 'description', title: 'Description', type: 'text' }),
+          defineField({ name: 'description', title: 'Description', type: 'array', of: [{ type: 'block' }] }),
         ]
       }]
     }),
@@ -590,7 +590,7 @@ export const founderBioBlock = defineType({
       of: [{ type: 'block' }]
     }),
     defineField({ name: 'image', title: 'Image', type: 'image', options: { hotspot: true } }),
-    defineField({ name: 'closingText', title: 'Closing Text', type: 'text' }),
+    defineField({ name: 'closingText', title: 'Closing Text', type: 'array', of: [{ type: 'block' }] }),
     defineField({ name: 'buttonText', title: 'Button Text', type: 'string' }),
     defineField({ name: 'buttonLink', title: 'Button Link', type: 'string' }),
     { ...buttonSizeField },
@@ -668,7 +668,7 @@ export const checklistBlock = defineType({
       name: 'items',
       title: 'Checklist Items',
       type: 'array',
-      of: [{ type: 'text' }]
+      of: [{ type: 'block' }]
     }),
     defineField({ name: 'closingText', title: 'Closing Text', type: 'string' }),
     defineField({ name: 'buttonText', title: 'Button Text', type: 'string' }),
@@ -722,7 +722,7 @@ export const proseSectionBlock = defineType({
       name: 'paragraphs',
       title: 'Paragraphs',
       type: 'array',
-      of: [{ type: 'text' }]
+      of: [{ type: 'block' }]
     }),
     defineField({
       name: 'style',
@@ -785,7 +785,7 @@ export const twoColumnCompareBlock = defineType({
       type: 'array',
       of: [{ type: 'string' }]
     }),
-    defineField({ name: 'closingText', title: 'Closing Text', type: 'text' }),
+    defineField({ name: 'closingText', title: 'Closing Text', type: 'array', of: [{ type: 'block' }] }),
   ]
 })
 
@@ -796,8 +796,8 @@ export const spaceCardsBlock = defineType({
   type: 'object',
   fields: [
     defineField({ name: 'heading', title: 'Heading', type: 'string' }),
-    defineField({ name: 'subheading', title: 'Subheading', type: 'text' }),
-    defineField({ name: 'description', title: 'Description', type: 'text' }),
+    defineField({ name: 'subheading', title: 'Subheading', type: 'array', of: [{ type: 'block' }] }),
+    defineField({ name: 'description', title: 'Description', type: 'array', of: [{ type: 'block' }] }),
     defineField({
       name: 'cards',
       title: 'Cards',
@@ -807,7 +807,7 @@ export const spaceCardsBlock = defineType({
         fields: [
           defineField({ name: 'title', title: 'Title', type: 'string' }),
           defineField({ name: 'badge', title: 'Badge/Tagline', type: 'string' }),
-          defineField({ name: 'description', title: 'Description', type: 'text' }),
+          defineField({ name: 'description', title: 'Description', type: 'array', of: [{ type: 'block' }] }),
           defineField({
             name: 'bulletPoints',
             title: 'Bullet Points (Optional)',

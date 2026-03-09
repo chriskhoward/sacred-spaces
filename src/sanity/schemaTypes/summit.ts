@@ -289,7 +289,7 @@ export const summitType = defineType({
         { name: 'signInButton', title: 'Sign In Button', type: 'string', description: 'Default: "Sign In"' },
         // Upgrade CTA
         defineField({ name: 'upgradeCtaHeading', title: 'Upgrade CTA Heading', type: 'string', description: 'Default: "Get All Access"' }),
-        defineField({ name: 'upgradeCtaDescription', title: 'Upgrade CTA Description', type: 'text', rows: 2, description: 'Default: "Upgrade to the All Access Pass for permanent, unlimited access to all summit presentations, resources, and bonus content."' }),
+        defineField({ name: 'upgradeCtaDescription', title: 'Upgrade CTA Description', type: 'array', of: [{ type: 'block' }], description: 'Default: "Upgrade to the All Access Pass for permanent, unlimited access to all summit presentations, resources, and bonus content."' }),
         defineField({ name: 'upgradeCtaButton', title: 'Upgrade CTA Button', type: 'string', description: 'Default: "Get All Access Pass"' }),
         // Footer
         defineField({ name: 'footerTermsLabel', title: 'Footer Terms Label', type: 'string', description: 'Default: "Terms"' }),

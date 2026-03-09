@@ -110,8 +110,8 @@ export const founderPageType = defineType({
     defineField({
       name: 'philosophyQuote',
       title: 'Philosophy / Approach Quote',
-      type: 'text',
-      rows: 4,
+      type: 'array',
+      of: [{ type: 'block' }],
     }),
     defineField({
       name: 'ctaHeading',
@@ -122,8 +122,8 @@ export const founderPageType = defineType({
     defineField({
       name: 'ctaText',
       title: 'CTA Body Text',
-      type: 'text',
-      rows: 2,
+      type: 'array',
+      of: [{ type: 'block' }],
     }),
     defineField({
       name: 'ctaButtonText',

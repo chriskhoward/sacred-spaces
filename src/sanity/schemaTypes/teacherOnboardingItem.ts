@@ -16,8 +16,8 @@ export const teacherOnboardingItemType = defineType({
     defineField({
       name: 'description',
       title: 'Description',
-      type: 'text',
-      rows: 2,
+      type: 'array',
+      of: [{ type: 'block' }],
     }),
     defineField({
       name: 'category',
