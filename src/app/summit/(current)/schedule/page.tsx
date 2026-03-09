@@ -72,27 +72,29 @@ function LivePresentationCard({ p }: { p: SummitPresentation }) {
   )
 }
 
-function RecordedPresentationRow({ p }: { p: SummitPresentation }) {
+function RecordedPresentationCard({ p, basePath = '/summit' }: { p: SummitPresentation; basePath?: string }) {
+  const thumbnail = p.image || p.speaker?.headshot
   return (
     <Link
-      href={`/summit/presentations/${p.slug.current}`}
-      className="flex items-center gap-3 p-3 rounded-lg hover:bg-(--color-gallery)/40 transition-colors"
+      href={`${basePath}/presentations/${p.slug.current}`}
+      className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow border border-(--color-gallery) overflow-hidden"
     >
-      {p.speaker?.headshot && (
-        <Image
-          src={urlForImage(p.speaker.headshot).width(48).height(48).url()}
-          alt={p.speaker.name}
-          width={48}
-          height={48}
-          className="rounded-full object-cover shrink-0"
-          unoptimized
-        />
+      {thumbnail && (
+        <div className="aspect-[4/3] relative">
+          <Image
+            src={urlForImage(thumbnail).width(400).height(300).url()}
+            alt={p.image ? p.title : p.speaker?.name || p.title}
+            fill
+            className="object-cover"
+            unoptimized
+          />
+        </div>
       )}
-      <div className="flex-1 min-w-0">
-        <p className="font-semibold text-(--color-primary) text-sm truncate">
+      <div className="p-4">
+        <p className="font-bold text-(--color-primary) text-sm line-clamp-2">
           {p.title}
         </p>
-        <p className="text-xs text-(--color-primary)/60">
+        <p className="text-xs text-(--color-primary)/60 mt-1">
           {p.speaker?.name}
         </p>
       </div>
@@ -179,15 +181,15 @@ export default async function SchedulePage() {
                       </div>
                     )}
 
-                    {/* Recorded sessions — compact rows */}
+                    {/* Recorded sessions — thumbnail cards */}
                     {recorded.length > 0 && (
                       <div>
-                        <h3 className="text-sm font-bold uppercase tracking-wide text-(--color-primary)/50 mb-3">
+                        <h3 className="text-sm font-bold uppercase tracking-wide text-(--color-primary)/50 mb-4">
                           {summit.labels?.recordedSessionsLabel || 'Recorded Sessions'}
                         </h3>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                           {recorded.map((p) => (
-                            <RecordedPresentationRow key={p._id} p={p} />
+                            <RecordedPresentationCard key={p._id} p={p} />
                           ))}
                         </div>
                       </div>
