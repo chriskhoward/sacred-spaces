@@ -177,6 +177,43 @@ export default defineConfig({
               locations: [{ title: 'Homepage', href: '/' }],
             }),
           },
+          summit: {
+            select: { title: 'title', year: 'year', isCurrent: 'isCurrent' },
+            resolve: (doc) => ({
+              locations: [
+                { title: 'Start Here', href: doc?.isCurrent ? '/summit/start-here' : `/summit/${doc?.year}/start-here` },
+                { title: 'Schedule', href: doc?.isCurrent ? '/summit/schedule' : `/summit/${doc?.year}/schedule` },
+                { title: 'Speakers', href: doc?.isCurrent ? '/summit/speakers' : `/summit/${doc?.year}/speakers` },
+                { title: 'Yoga Classes', href: doc?.isCurrent ? '/summit/yoga-classes' : `/summit/${doc?.year}/yoga-classes` },
+                { title: 'All Access', href: doc?.isCurrent ? '/summit/all-access' : `/summit/${doc?.year}/all-access` },
+                { title: 'Community', href: doc?.isCurrent ? '/summit/community' : `/summit/${doc?.year}/community` },
+                { title: 'Contact', href: doc?.isCurrent ? '/summit/contact' : `/summit/${doc?.year}/contact` },
+              ],
+            }),
+          },
+          summitSpeaker: {
+            select: { title: 'name' },
+            resolve: () => ({
+              locations: [{ title: 'Speakers', href: '/summit/speakers' }],
+            }),
+          },
+          summitPresentation: {
+            select: { title: 'title', slug: 'slug.current' },
+            resolve: (doc) => ({
+              locations: doc?.slug
+                ? [
+                    { title: doc.title || 'Presentation', href: `/summit/presentations/${doc.slug}` },
+                    { title: 'Schedule', href: '/summit/schedule' },
+                  ]
+                : [{ title: 'Schedule', href: '/summit/schedule' }],
+            }),
+          },
+          summitYogaClass: {
+            select: { title: 'title' },
+            resolve: () => ({
+              locations: [{ title: 'Yoga Classes', href: '/summit/yoga-classes' }],
+            }),
+          },
         },
       },
     }),
