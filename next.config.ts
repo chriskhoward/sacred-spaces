@@ -70,7 +70,16 @@ const nextConfig: NextConfig = {
         ]
       }
     ]
-  }
+  },
+  async redirects() {
+    return [
+      {
+        source: '/flow-in-faith-virtual-summit-2025',
+        destination: '/summit',
+        permanent: true,
+      },
+    ]
+  },
 };
 
 export default nextConfig;
