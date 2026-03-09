@@ -8,6 +8,8 @@ import { CURRENT_SUMMIT_QUERY, type Summit } from '@/sanity/lib/summit'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
+import { getSectionStyles } from '@/lib/summit-styles'
+import SummitButton from '@/components/summit/SummitButton'
 import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
@@ -16,7 +18,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const summit = await client.fetch<Summit | null>(CURRENT_SUMMIT_QUERY)
   return {
     title: summit ? `${summit.labels?.allAccessTitle || 'All Access Pass'} — ${summit.title}` : 'All Access Pass',
-    description: summit?.description,
+    description: typeof summit?.description === 'string' ? summit.description : undefined,
   }
 }
 
@@ -29,8 +31,14 @@ export default async function AllAccessPage() {
     ? await has({ plan: summit.clerkPlanId })
     : false
 
+  const sectionStyles = getSectionStyles({
+    summitStyles: summit.styles,
+    pageKey: 'allAccessBg',
+    fallbackPadding: 'normal',
+  })
+
   return (
-    <section className="py-16 md:py-20">
+    <section className={sectionStyles.className} style={sectionStyles.style}>
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto">
           <Link
@@ -79,14 +87,12 @@ export default async function AllAccessPage() {
               {/* Purchase option */}
               {summit.allAccessSalesUrl ? (
                 <div className="text-center">
-                  <a
+                  <SummitButton
+                    label={summit.labels?.getAllAccessButton || 'Get All Access Pass'}
                     href={summit.allAccessSalesUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block px-10 py-4 bg-(--color-roti) text-white rounded-full font-bold text-lg uppercase tracking-wide hover:opacity-90 transition-opacity shadow-lg"
-                  >
-                    {summit.labels?.getAllAccessButton || 'Get All Access Pass'}
-                  </a>
+                    external
+                    preset={summit.styles?.buttonPrimary}
+                  />
                 </div>
               ) : (
                 <PricingTable />

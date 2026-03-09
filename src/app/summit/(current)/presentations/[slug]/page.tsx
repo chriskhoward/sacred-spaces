@@ -17,6 +17,8 @@ import UpgradeCTA from '@/components/summit/UpgradeCTA'
 import AddToCalendarButton from '@/components/summit/AddToCalendarButton'
 import AllAccessButton from '@/components/summit/AllAccessButton'
 import { Check } from 'lucide-react'
+import { getSectionStyles } from '@/lib/summit-styles'
+import PortableTextOrString from '@/components/summit/PortableTextOrString'
 import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
@@ -37,7 +39,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: presentation
       ? `${presentation.title} — ${summit.title}`
       : 'Presentation',
-    description: presentation?.description,
+    description: typeof presentation?.description === 'string' ? presentation.description : undefined,
   }
 }
 
@@ -62,8 +64,13 @@ export default async function PresentationPage({ params }: PageProps) {
 
   const calendarUrl = getGoogleCalendarUrl(presentation)
 
+  const sectionStyles = getSectionStyles({
+    summitStyles: summit.styles,
+    fallbackPadding: 'normal',
+  })
+
   return (
-    <section className="py-16 md:py-20">
+    <section className={sectionStyles.className} style={sectionStyles.style}>
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           {/* Back link */}
@@ -145,9 +152,10 @@ export default async function PresentationPage({ params }: PageProps) {
               <h2 className="text-xl md:text-2xl font-bold text-(--color-primary) mb-3">
                 {summit.labels?.aboutPresentationHeading || 'About This Presentation'}
               </h2>
-              <p className="text-(--color-primary)/80 whitespace-pre-line">
-                {presentation.description}
-              </p>
+              <PortableTextOrString
+                value={presentation.description}
+                className="prose prose-lg max-w-none text-(--color-primary)/80"
+              />
             </div>
           )}
 
@@ -157,9 +165,10 @@ export default async function PresentationPage({ params }: PageProps) {
               <h2 className="text-xl md:text-2xl font-bold text-(--color-primary) mb-3">
                 About {presentation.speaker.name}
               </h2>
-              <p className="text-(--color-primary)/80 whitespace-pre-line">
-                {presentation.speaker.bio}
-              </p>
+              <PortableTextOrString
+                value={presentation.speaker.bio}
+                className="prose prose-lg max-w-none text-(--color-primary)/80"
+              />
             </div>
           )}
 

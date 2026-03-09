@@ -11,6 +11,9 @@ import {
 import { notFound } from 'next/navigation'
 import AllAccessButton from '@/components/summit/AllAccessButton'
 import AddToCalendarButton from '@/components/summit/AddToCalendarButton'
+import { getSectionStyles } from '@/lib/summit-styles'
+import SummitButton from '@/components/summit/SummitButton'
+import PortableTextOrString from '@/components/summit/PortableTextOrString'
 import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
@@ -19,7 +22,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const summit = await client.fetch<Summit | null>(CURRENT_SUMMIT_QUERY)
   return {
     title: summit ? `${summit.labels?.yogaTitle || 'Yoga Classes'} — ${summit.title}` : 'Yoga Classes',
-    description: summit?.description,
+    description: typeof summit?.description === 'string' ? summit.description : undefined,
   }
 }
 
@@ -32,8 +35,14 @@ export default async function YogaClassesPage() {
     { summitId: summit._id }
   )
 
+  const sectionStyles = getSectionStyles({
+    summitStyles: summit.styles,
+    pageKey: 'yogaClassesBg',
+    fallbackPadding: 'normal',
+  })
+
   return (
-    <section className="py-16 md:py-20">
+    <section className={sectionStyles.className} style={sectionStyles.style}>
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-(--color-primary) mb-8">
@@ -60,9 +69,12 @@ export default async function YogaClassesPage() {
                     </p>
                   )}
                   {yc.description && (
-                    <p className="text-(--color-primary)/80 mt-3">
-                      {yc.description}
-                    </p>
+                    <div className="mt-3">
+                      <PortableTextOrString
+                        value={yc.description}
+                        className="prose prose-lg max-w-none text-(--color-primary)/80"
+                      />
+                    </div>
                   )}
                   <div className="mt-3">
                     <AddToCalendarButton calendarUrl={getYogaCalendarUrl(yc)} />
@@ -86,12 +98,11 @@ export default async function YogaClassesPage() {
 
           {/* Bottom navigation */}
           <div className="mt-12 flex flex-wrap gap-4 justify-center">
-            <Link
+            <SummitButton
+              label={summit.labels?.viewScheduleButton || 'View Schedule'}
               href="/summit/schedule"
-              className="inline-block px-8 py-3 bg-(--color-primary) text-white rounded-full font-bold uppercase tracking-wide hover:opacity-90 transition-opacity shadow-md"
-            >
-              {summit.labels?.viewScheduleButton || 'View Schedule'}
-            </Link>
+              preset={summit.styles?.buttonPrimary}
+            />
             <AllAccessButton basePath="/summit" label={summit.labels?.getAllAccessButton ?? undefined} />
           </div>
         </div>

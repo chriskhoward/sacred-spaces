@@ -8,6 +8,8 @@ import Link from 'next/link'
 import { CURRENT_SUMMIT_QUERY, type Summit } from '@/sanity/lib/summit'
 import { notFound } from 'next/navigation'
 import UpgradeCTA from '@/components/summit/UpgradeCTA'
+import { getSectionStyles } from '@/lib/summit-styles'
+import SummitButton from '@/components/summit/SummitButton'
 import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
@@ -16,7 +18,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const summit = await client.fetch<Summit | null>(CURRENT_SUMMIT_QUERY)
   return {
     title: summit ? `${summit.labels?.welcomeTitle || 'Welcome'} — ${summit.title}` : 'Summit',
-    description: summit?.description,
+    description: typeof summit?.description === 'string' ? summit.description : undefined,
   }
 }
 
@@ -33,8 +35,14 @@ export default async function StartHerePage() {
     ? summit.welcomeContentAllAccess
     : summit.welcomeContentFree
 
+  const sectionStyles = getSectionStyles({
+    summitStyles: summit.styles,
+    pageKey: 'startHereBg',
+    fallbackPadding: 'normal',
+  })
+
   return (
-    <section className="py-16 md:py-20">
+    <section className={sectionStyles.className} style={sectionStyles.style}>
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           {/* Optional banner */}
@@ -81,18 +89,14 @@ export default async function StartHerePage() {
           )}
 
           {/* Community Link */}
-          {summit.communityLink && (
-            <div className="mb-10">
-              <a
-                href={summit.communityLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block px-8 py-3 bg-(--color-primary) text-white rounded-full font-bold uppercase tracking-wide hover:opacity-90 transition-opacity shadow-md"
-              >
-                {summit.labels?.joinCommunityButton || 'Join the Community'}
-              </a>
-            </div>
-          )}
+          <div className="mb-10">
+            <SummitButton
+              label={summit.labels?.joinCommunityButton || 'Join the Community'}
+              href={summit.communityLink}
+              external
+              preset={summit.styles?.buttonPrimary}
+            />
+          </div>
 
           {/* Navigation Cards — driven by navLinks from Sanity */}
           {summit.navLinks && summit.navLinks.length > 0 && (
