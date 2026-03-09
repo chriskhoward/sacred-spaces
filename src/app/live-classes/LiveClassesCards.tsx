@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Lock } from 'lucide-react';
+import PortableTextOrString from '@/components/summit/PortableTextOrString';
 import { isPaidTier } from '../../lib/tier';
 
 interface LiveClassCard {
@@ -149,9 +150,7 @@ export default function LiveClassesCards({ classes, userTier, userId }: LiveClas
                 </p>
 
                 {call.description && (
-                  <p className="text-gray-700 leading-relaxed mb-4 text-sm">
-                    {call.description}
-                  </p>
+                  <PortableTextOrString value={call.description} className="text-gray-700 leading-relaxed mb-4 text-sm" />
                 )}
 
                 <div className="flex flex-wrap gap-3">

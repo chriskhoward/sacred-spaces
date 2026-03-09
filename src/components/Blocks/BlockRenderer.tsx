@@ -25,6 +25,7 @@ import SpaceCardsBlock from './SpaceCards';
 import PathChooserBlock from './PathChooser';
 import ClosingStatementBlock from './ClosingStatement';
 import BannerTextBlock from './BannerText';
+import { getSectionStyles } from '@/lib/summit-styles';
 
 interface BlockRendererProps {
   blocks: Array<{ _type: string; _key: string; [key: string]: any }>;
@@ -62,11 +63,27 @@ export default function BlockRenderer({ blocks, documentId, documentType }: Bloc
         const sanityAttrs = createSanityDataAttribute(documentId, documentType, blockPath);
 
         // Wrapper div with data-sanity for click-to-edit
-        const wrapWithSanity = (component: React.ReactNode) => (
-          <div key={_key} {...sanityAttrs}>
-            {component}
-          </div>
-        );
+        const wrapWithSanity = (component: React.ReactNode) => {
+          // Extract section style overrides from block data
+          const bgColor = block.sectionBackground?.type === 'color' ? block.sectionBackground.color : undefined;
+          const sectionStyles = getSectionStyles({
+            overrideBgColor: bgColor,
+            overridePadding: block.sectionSpacing || undefined,
+          });
+
+          const hasStyles = bgColor || block.sectionSpacing;
+
+          return (
+            <div
+              key={_key}
+              {...sanityAttrs}
+              className={hasStyles ? sectionStyles.className : undefined}
+              style={hasStyles ? sectionStyles.style : undefined}
+            >
+              {component}
+            </div>
+          );
+        };
 
         switch (_type) {
           case 'homeHeroBlock':

@@ -13,6 +13,7 @@ import {
 import { notFound } from 'next/navigation'
 import AllAccessButton from '@/components/summit/AllAccessButton'
 import AddToCalendarButton from '@/components/summit/AddToCalendarButton'
+import { getSectionStyles } from '@/lib/summit-styles'
 import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
@@ -21,7 +22,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const summit = await client.fetch<Summit | null>(CURRENT_SUMMIT_QUERY)
   return {
     title: summit ? `${summit.labels?.scheduleTitle || 'Schedule'} — ${summit.title}` : 'Schedule',
-    description: summit?.description,
+    description: typeof summit?.description === 'string' ? summit.description : undefined,
   }
 }
 
@@ -108,8 +109,14 @@ export default async function SchedulePage() {
   const grouped = groupPresentationsByDay(presentations)
   const sortedDays = Array.from(grouped.keys()).sort((a, b) => a - b)
 
+  const sectionStyles = getSectionStyles({
+    summitStyles: summit.styles,
+    pageKey: 'scheduleBg',
+    fallbackPadding: 'normal',
+  })
+
   return (
-    <section className="py-16 md:py-20">
+    <section className={sectionStyles.className} style={sectionStyles.style}>
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <Link

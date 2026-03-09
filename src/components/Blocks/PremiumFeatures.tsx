@@ -1,9 +1,10 @@
 import Link from 'next/link';
 import { Leaf } from 'lucide-react';
+import PortableTextOrString from '@/components/summit/PortableTextOrString';
 
 interface PremiumFeatureItem {
   title: string;
-  description: string;
+  description: any;
 }
 
 interface PremiumFeaturesBlockProps {
@@ -39,9 +40,7 @@ export default function PremiumFeaturesBlock({
                   <h4 className="font-bold text-(--color-primary) text-lg mb-1">
                     {item.title}
                   </h4>
-                  <p className="text-gray-600 leading-relaxed">
-                    {item.description}
-                  </p>
+                  <PortableTextOrString value={item.description} className="text-gray-600 leading-relaxed" />
                 </div>
               </div>
             ))}

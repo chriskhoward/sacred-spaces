@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import FilloutSliderButton from '@/components/FilloutSliderButton';
+import PortableTextOrString from '@/components/summit/PortableTextOrString';
 import { urlForImage } from '@/sanity/lib/image';
 import {
   getButtonSizeClasses,
@@ -15,7 +16,7 @@ import {
 
 interface CTABlockProps {
   title?: string;
-  description?: string;
+  description?: any;
   buttonText?: string;
   buttonLink?: string;
   useFillout?: boolean;
@@ -53,9 +54,7 @@ export default function CTABlock({
       <div className="absolute inset-0 bg-[url('/assets/images/banner_section_background.jpg')] bg-cover bg-center opacity-10"></div>
       <div className="container mx-auto px-4 relative z-10 text-center">
         <h2 className="text-4xl lg:text-6xl font-bold text-white mb-8">{title}</h2>
-        <p className="text-xl text-white/80 mb-12 max-w-2xl mx-auto leading-relaxed">
-          {description}
-        </p>
+        <PortableTextOrString value={description} className="text-xl text-white/80 mb-12 max-w-2xl mx-auto leading-relaxed" />
         {hasButton && (
           <div className={getButtonAlignClasses(buttonAlignment)}>
             {useFillout ? (

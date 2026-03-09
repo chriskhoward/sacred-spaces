@@ -1,5 +1,6 @@
 import { defineField, defineType } from 'sanity'
 import { PresentationIcon } from '@sanity/icons'
+import { buttonOverrideFields } from './shared/buttonFields'
 
 export const summitPresentationType = defineType({
   name: 'summitPresentation',
@@ -37,8 +38,17 @@ export const summitPresentationType = defineType({
     defineField({
       name: 'description',
       title: 'Description',
-      type: 'text',
-      rows: 4,
+      type: 'array',
+      of: [
+        { type: 'block' },
+        {
+          type: 'image',
+          options: { hotspot: true },
+          fields: [
+            defineField({ name: 'alt', title: 'Alt Text', type: 'string' }),
+          ],
+        },
+      ],
     }),
     defineField({
       name: 'videoUrl',
@@ -129,6 +139,7 @@ export const summitPresentationType = defineType({
       initialValue: 'live',
       description: 'Live sessions show full details; recorded sessions show compact view on the schedule',
     }),
+    ...buttonOverrideFields(),
   ],
   orderings: [
     {

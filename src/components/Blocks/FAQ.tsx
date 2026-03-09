@@ -1,10 +1,11 @@
 'use client';
 
 import { useState } from 'react';
+import PortableTextOrString from '@/components/summit/PortableTextOrString';
 
 interface FAQItem {
   question: string;
-  answer: string;
+  answer: any;
 }
 
 interface FAQBlockProps {
@@ -55,9 +56,7 @@ export default function FAQBlock({
                 </button>
                 {openIndex === index && (
                   <div className="px-8 pb-8 pt-2 border-t border-(--color-gallery)">
-                    <p className="text-gray-700 leading-relaxed text-lg pt-4">
-                      {item.answer}
-                    </p>
+                    <PortableTextOrString value={item.answer} className="text-gray-700 leading-relaxed text-lg pt-4" />
                   </div>
                 )}
               </div>

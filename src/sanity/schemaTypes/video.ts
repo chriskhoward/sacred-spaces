@@ -22,8 +22,8 @@ export const videoType = defineType({
         defineField({
             name: 'description',
             title: 'Description',
-            type: 'text',
-            rows: 3,
+            type: 'array',
+            of: [{ type: 'block' }],
         }),
         defineField({
             name: 'category',

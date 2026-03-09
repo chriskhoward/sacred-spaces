@@ -4,6 +4,7 @@ import { useState, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Lock, Gem, Check } from 'lucide-react';
+import PortableTextOrString from '@/components/summit/PortableTextOrString';
 import { urlForImage } from '@/sanity/lib/image';
 import { isAllowedIframeUrl } from '@/lib/iframe-utils';
 
@@ -15,7 +16,7 @@ interface Video {
   category: string;
   categorySlug?: string;
   level: string;
-  description: string;
+  description: any;
   thumbnail: any;
   videoUrl?: string;
   isFeatured?: boolean;
@@ -253,7 +254,7 @@ export default function VideoLibraryClient({ initialVideos, categories, featured
               <h2 className="text-2xl font-bold text-white">{selectedVideo.title}</h2>
               <p className="text-gray-400 mt-1">with {selectedVideo.instructor} · {selectedVideo.duration} · {selectedVideo.level}</p>
               {selectedVideo.description && (
-                <p className="text-gray-300 mt-4 leading-relaxed">{selectedVideo.description}</p>
+                <PortableTextOrString value={selectedVideo.description} className="text-gray-300 mt-4 leading-relaxed" />
               )}
             </div>
           </div>
@@ -347,9 +348,7 @@ export default function VideoLibraryClient({ initialVideos, categories, featured
               <div className="lg:w-1/2">
                 <span className="text-(--color-roti) font-bold uppercase tracking-widest mb-4 block">New Release</span>
                 <h1 className="text-4xl lg:text-6xl font-bold mb-6 leading-tight text-white">{featuredVideo.title}</h1>
-                <p className="text-xl text-(--color-sidecar) mb-8 leading-relaxed max-w-xl">
-                  {featuredVideo.description}
-                </p>
+                <PortableTextOrString value={featuredVideo.description} className="text-xl text-(--color-sidecar) mb-8 leading-relaxed max-w-xl" />
                 <div className="flex items-center gap-4 text-sm font-bold uppercase tracking-wider mb-8">
                   <span className="bg-white/10 px-4 py-2 rounded-full">{featuredVideo.category}</span>
                   <span className="bg-white/10 px-4 py-2 rounded-full">{featuredVideo.duration}</span>
@@ -512,9 +511,7 @@ export default function VideoLibraryClient({ initialVideos, categories, featured
                 <div className="p-6">
                   <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-1">{video.title}</h3>
                   <p className="text-gray-500 text-sm mb-4">with {video.instructor}</p>
-                  <p className="text-gray-600 text-sm leading-relaxed line-clamp-2 mb-6">
-                    {video.description}
-                  </p>
+                  <PortableTextOrString value={video.description} className="text-gray-600 text-sm leading-relaxed line-clamp-2 mb-6" />
                   <div className="flex justify-between items-center text-xs font-bold uppercase tracking-wider text-gray-400">
                     <span>{video.level}</span>
                     <span className="text-(--color-roti)">{video.videoUrl ? 'Watch' : 'Coming Soon'}</span>

@@ -6,6 +6,8 @@ import AllAccessButton from '@/components/summit/AllAccessButton'
 import UpgradeCTA from '@/components/summit/UpgradeCTA'
 import { auth } from '@clerk/nextjs/server'
 import Link from 'next/link'
+import { getSectionStyles } from '@/lib/summit-styles'
+import SummitButton from '@/components/summit/SummitButton'
 import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
@@ -14,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const summit = await client.fetch<Summit | null>(CURRENT_SUMMIT_QUERY)
   return {
     title: summit ? `${summit.labels?.communityTitle || 'Community'} — ${summit.title}` : 'Community',
-    description: summit?.description,
+    description: typeof summit?.description === 'string' ? summit.description : undefined,
   }
 }
 
@@ -27,8 +29,14 @@ export default async function CommunityPage() {
     ? await has({ plan: summit.clerkPlanId })
     : false
 
+  const sectionStyles = getSectionStyles({
+    summitStyles: summit.styles,
+    pageKey: 'communityBg',
+    fallbackPadding: 'normal',
+  })
+
   return (
-    <section className="py-16 md:py-20">
+    <section className={sectionStyles.className} style={sectionStyles.style}>
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto">
           <Link
@@ -53,18 +61,14 @@ export default async function CommunityPage() {
             </p>
           )}
 
-          {summit.communityLink && (
-            <div className="mb-12 text-center">
-              <a
-                href={summit.communityLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block px-10 py-4 bg-(--color-roti) text-white rounded-full font-bold text-lg uppercase tracking-wide hover:opacity-90 transition-opacity shadow-lg"
-              >
-                {summit.labels?.joinCommunityButton || 'Join the Community'}
-              </a>
-            </div>
-          )}
+          <div className="mb-12 text-center">
+            <SummitButton
+              label={summit.labels?.joinCommunityButton || 'Join the Community'}
+              href={summit.communityLink}
+              external
+              preset={summit.styles?.buttonPrimary}
+            />
+          </div>
 
           {!hasAllAccess && (
             <UpgradeCTA

@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { urlForImage } from '@/sanity/lib/image';
 import { PortableText } from '@portabletext/react';
+import PortableTextOrString from '@/components/summit/PortableTextOrString';
 import { getButtonSizeClasses, getButtonColorClasses, getButtonAlignClasses, type ButtonSize, type ButtonColor, type ButtonAlignment } from '@/components/Blocks/blockHelpers';
 
 interface FounderBioBlockProps {
@@ -10,7 +11,7 @@ interface FounderBioBlockProps {
   title?: string;
   bio?: any[];
   image?: any;
-  closingText?: string;
+  closingText?: any;
   buttonText?: string;
   buttonLink?: string;
   buttonSize?: ButtonSize;
@@ -68,9 +69,7 @@ export default function FounderBioBlock({
                 </div>
               )}
               {closingText && (
-                <p className="text-xl font-semibold text-(--color-primary) mb-8 italic">
-                  {closingText}
-                </p>
+                <PortableTextOrString value={closingText} className="text-xl font-semibold text-(--color-primary) mb-8 italic" />
               )}
               {buttonText && buttonLink && (
                 <div className={getButtonAlignClasses(buttonAlignment)}>

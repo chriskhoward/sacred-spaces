@@ -1,12 +1,13 @@
 import Image from 'next/image';
 import { urlForImage } from '@/sanity/lib/image';
 import HeroButtons from '@/components/Home/HeroButtons';
+import PortableTextOrString from '@/components/summit/PortableTextOrString';
 import { type ButtonSize, type ButtonColor, type ButtonAlignment } from '@/components/Blocks/blockHelpers';
 
 interface HeroBlockProps {
   badge?: string;
   title?: string;
-  subtitle?: string;
+  subtitle?: any;
   image?: { asset?: any };
   secondaryImage?: { asset?: any };
   primaryButtonText?: string;
@@ -59,9 +60,7 @@ export default function HeroBlock({
             <h1 className="text-white text-4xl lg:text-7xl font-bold mb-8 leading-tight">
               {title}
             </h1>
-            <p className="text-white/80 text-xl mb-12 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-              {subtitle}
-            </p>
+            <PortableTextOrString value={subtitle} className="text-white/80 text-xl mb-12 max-w-xl mx-auto lg:mx-0 leading-relaxed" />
             <HeroButtons
               primaryText={primaryButtonText}
               secondaryText={secondaryButtonText}

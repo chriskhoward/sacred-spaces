@@ -9,10 +9,24 @@ import {
 } from '@/sanity/lib/summit'
 import { notFound } from 'next/navigation'
 import AddToCalendarButton from '@/components/summit/AddToCalendarButton'
+import { getSectionStyles } from '@/lib/summit-styles'
+import PortableTextOrString from '@/components/summit/PortableTextOrString'
+import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
 
 type PageProps = { params: Promise<{ year: string }> }
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { year } = await params
+  const summit = await client.fetch<Summit | null>(SUMMIT_BY_YEAR_QUERY, {
+    year: parseInt(year, 10),
+  })
+  return {
+    title: summit ? `${summit.labels?.yogaTitle || 'Yoga Classes'} — ${summit.title}` : 'Yoga Classes',
+    description: typeof summit?.description === 'string' ? summit.description : undefined,
+  }
+}
 
 export default async function ArchiveYogaClassesPage({ params }: PageProps) {
   const { year } = await params
@@ -26,8 +40,14 @@ export default async function ArchiveYogaClassesPage({ params }: PageProps) {
     { summitId: summit._id }
   )
 
+  const sectionStyles = getSectionStyles({
+    summitStyles: summit.styles,
+    pageKey: 'yogaClassesBg',
+    fallbackPadding: 'normal',
+  })
+
   return (
-    <section className="py-16 md:py-20">
+    <section className={sectionStyles.className} style={sectionStyles.style}>
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-(--color-primary) mb-8">
@@ -41,7 +61,14 @@ export default async function ArchiveYogaClassesPage({ params }: PageProps) {
                 <div key={yc._id} className="bg-white rounded-xl p-6 shadow-sm border border-(--color-gallery)">
                   <h3 className="text-xl font-bold text-(--color-primary)">{yc.title}</h3>
                   {yc.instructor && <p className="text-sm text-(--color-primary)/70 mt-1">with {yc.instructor}</p>}
-                  {yc.description && <p className="text-(--color-primary)/80 mt-3">{yc.description}</p>}
+                  {yc.description && (
+                    <div className="mt-3">
+                      <PortableTextOrString
+                        value={yc.description}
+                        className="prose prose-lg max-w-none text-(--color-primary)/80"
+                      />
+                    </div>
+                  )}
                   <div className="mt-3">
                     <AddToCalendarButton calendarUrl={getYogaCalendarUrl(yc)} />
                   </div>

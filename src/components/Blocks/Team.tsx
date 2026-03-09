@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { urlForImage } from '@/sanity/lib/image';
+import PortableTextOrString from '@/components/summit/PortableTextOrString';
 
 interface TeamMember {
   name: string;
@@ -23,7 +24,7 @@ function getBioLink(name: string): string | null {
 
 interface TeamBlockProps {
   heading?: string;
-  description?: string;
+  description?: any;
   members?: TeamMember[];
 }
 
@@ -43,9 +44,7 @@ export default function TeamBlock({
         <div className="flex flex-col lg:flex-row gap-16 items-start">
           <div className="lg:w-1/3 sticky top-[150px]">
             <h2 className="text-5xl font-bold text-(--color-primary) mb-8">{heading}</h2>
-            <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-              {description}
-            </p>
+            <PortableTextOrString value={description} className="text-xl text-gray-600 mb-8 leading-relaxed" />
             <div className="space-y-6">
               {members.map((m, i) => {
                 const bioLink = m.bioLink || getBioLink(m.name);

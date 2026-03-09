@@ -1,9 +1,10 @@
 import Image from 'next/image';
 import { urlForImage } from '@/sanity/lib/image';
+import PortableTextOrString from '@/components/summit/PortableTextOrString';
 
 interface FeatureItem {
   title: string;
-  description: string;
+  description: any;
   icon?: string;
   image?: { asset?: unknown };
   imageUrl?: string;
@@ -63,7 +64,7 @@ export default function FeatureGridBlock({
                 </div>
               )}
               <h3 className={itemTitleClass}>{item.title}</h3>
-              <p className="text-gray-800 text-base leading-relaxed flex-grow">{item.description}</p>
+              <PortableTextOrString value={item.description} className="text-gray-800 text-base leading-relaxed flex-grow" />
             </div>
           </div>
         ));

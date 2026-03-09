@@ -3,12 +3,13 @@
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { Lock } from 'lucide-react';
+import PortableTextOrString from '@/components/summit/PortableTextOrString';
 import { isPaidTier } from '../../../lib/tier';
 
 interface Resource {
   _id: string;
   title: string;
-  description?: string;
+  description?: any;
   linkUrl?: string;
   isLocked?: boolean;
   author?: string;
@@ -131,9 +132,7 @@ export default function ResourcesClient({ groupedResources, userTier }: Resource
                   {item.author && (
                     <p className="text-sm text-gray-500 mb-2">by {item.author}</p>
                   )}
-                  <p className="text-gray-600 mb-6 text-sm leading-relaxed">
-                    {item.description}
-                  </p>
+                  <PortableTextOrString value={item.description} className="text-gray-600 mb-6 text-sm leading-relaxed" />
                   <button className="text-(--color-primary) font-bold text-sm uppercase tracking-wider hover:underline">
                     {item.isLocked ? 'Upgrade to Access →' : 'Access Resource →'}
                   </button>
@@ -167,7 +166,7 @@ export default function ResourcesClient({ groupedResources, userTier }: Resource
             <div className="bg-(--color-gallery) p-4 rounded-lg mb-6">
               <p className="font-bold text-(--color-primary) mb-2">{selectedResource.title}</p>
               {selectedResource.description && (
-                <p className="text-sm text-gray-600">{selectedResource.description}</p>
+                <PortableTextOrString value={selectedResource.description} className="text-sm text-gray-600" />
               )}
             </div>
 

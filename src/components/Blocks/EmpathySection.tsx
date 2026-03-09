@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Check } from 'lucide-react';
+import PortableTextOrString from '@/components/summit/PortableTextOrString';
 import { urlForImage } from '@/sanity/lib/image';
 import {
   getButtonSizeClasses,
@@ -15,7 +16,7 @@ import {
 
 interface EmpathySectionBlockProps {
   heading?: string;
-  items?: string[];
+  items?: any[];
   style?: 'light' | 'dark';
   buttonText?: string;
   buttonLink?: string;
@@ -58,9 +59,7 @@ export default function EmpathySectionBlock({
             {items.map((item, index) => (
               <li key={index} className="flex items-start gap-4">
                 <Check className="w-6 h-6 shrink-0 mt-1 text-(--color-roti)" />
-                <p className={`text-xl leading-relaxed ${isDark ? 'text-white/90' : 'text-gray-700'}`}>
-                  {item}
-                </p>
+                <PortableTextOrString value={item} className={`text-xl leading-relaxed ${isDark ? 'text-white/90' : 'text-gray-700'}`} />
               </li>
             ))}
           </ul>

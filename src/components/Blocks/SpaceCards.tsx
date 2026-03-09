@@ -1,9 +1,10 @@
 import Link from 'next/link';
+import PortableTextOrString from '@/components/summit/PortableTextOrString';
 
 interface SpaceCard {
   title?: string;
   badge?: string;
-  description?: string;
+  description?: any;
   bulletPoints?: string[];
   closingText?: string;
   buttonText?: string;
@@ -13,8 +14,8 @@ interface SpaceCard {
 
 interface SpaceCardsBlockProps {
   heading?: string;
-  subheading?: string;
-  description?: string;
+  subheading?: any;
+  description?: any;
   cards?: SpaceCard[];
 }
 
@@ -34,14 +35,10 @@ export default function SpaceCardsBlock({
             </h2>
           )}
           {subheading && (
-            <p className="text-xl text-gray-700 mb-8">
-              {subheading}
-            </p>
+            <PortableTextOrString value={subheading} className="text-xl text-gray-700 mb-8" />
           )}
           {description && (
-            <p className="text-lg text-gray-600">
-              {description}
-            </p>
+            <PortableTextOrString value={description} className="text-lg text-gray-600" />
           )}
         </div>
 
@@ -62,9 +59,7 @@ export default function SpaceCardsBlock({
                 </p>
               )}
               {card.description && (
-                <p className="text-gray-700 mb-6 flex-grow whitespace-pre-line">
-                  {card.description}
-                </p>
+                <PortableTextOrString value={card.description} className="text-gray-700 mb-6 flex-grow" />
               )}
               {card.bulletPoints && card.bulletPoints.length > 0 && (
                 <ul className="space-y-2 mb-8 text-gray-600 text-sm">

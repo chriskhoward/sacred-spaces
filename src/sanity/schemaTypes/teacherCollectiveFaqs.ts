@@ -37,7 +37,7 @@ export const teacherCollectiveFaqsType = defineType({
           name: 'faqItem',
           fields: [
             defineField({ name: 'question', title: 'Question', type: 'string' }),
-            defineField({ name: 'answer', title: 'Answer', type: 'text' }),
+            defineField({ name: 'answer', title: 'Answer', type: 'array', of: [{ type: 'block' }] }),
           ],
           preview: {
             select: { question: 'question' },

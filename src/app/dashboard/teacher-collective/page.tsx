@@ -2,6 +2,7 @@ import { currentUser } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
+import PortableTextOrString from '@/components/summit/PortableTextOrString';
 import { isTeacher, isTeacherOnboarded } from '@/lib/tier';
 import { client } from '@/sanity/lib/client';
 
@@ -18,7 +19,7 @@ const DASHBOARD_QUERY = `*[_type == "teacherCollectiveDashboard" && _id == "teac
 type DashboardCard = {
   _key: string;
   title: string;
-  description?: string | null;
+  description?: any;
   href: string;
   linkLabel?: string | null;
 };
@@ -98,7 +99,7 @@ export default async function TeacherCollectiveDashboard() {
                   className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
                 >
                   <h3 className="text-2xl font-bold text-(--color-primary) mb-2">{card.title}</h3>
-                  {card.description && <p className="text-gray-600">{card.description}</p>}
+                  {card.description && <PortableTextOrString value={card.description} className="text-gray-600" />}
                   {card.linkLabel && <span className="mt-3 block text-(--color-roti) font-bold text-sm">{card.linkLabel}</span>}
                 </Link>
               ))}

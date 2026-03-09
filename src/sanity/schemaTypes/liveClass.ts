@@ -55,7 +55,8 @@ export const liveClassType = defineType({
         defineField({
             name: 'description',
             title: 'Description',
-            type: 'text',
+            type: 'array',
+            of: [{ type: 'block' }],
         }),
         defineField({
             name: 'zoomLink',

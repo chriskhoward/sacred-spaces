@@ -1,5 +1,7 @@
+import PortableTextOrString from '@/components/summit/PortableTextOrString';
+
 interface HighlightTextBlockProps {
-  statements?: string[];
+  statements?: any[];
   style?: 'light' | 'dark' | 'cream';
   variant?: 'default' | 'bannerCentered' | 'bannerTwoLineGold' | 'bannerWhite' | 'bannerGoldLarge';
 }
@@ -18,9 +20,9 @@ export default function HighlightTextBlock({
     return (
       <section className={`bg-[#413356] ${sectionPad} overflow-hidden`}>
         <div className={containerNarrow}>
-          <h2 className="text-white text-2xl md:text-4xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-bold text-center leading-tight lg:whitespace-nowrap">
-            {statements[0] || ''}
-          </h2>
+          <div className="text-white text-2xl md:text-4xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-bold text-center leading-tight lg:whitespace-nowrap">
+            <PortableTextOrString value={statements[0] || ''} className="" />
+          </div>
         </div>
       </section>
     );
@@ -30,12 +32,12 @@ export default function HighlightTextBlock({
       <section className="bg-[#413356] pt-14 md:pt-20 pb-6 px-6 sm:px-8">
         <div className={containerWide}>
           {statements[0] && (
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#C7A254] text-center mb-4">
-              {statements[0]}
-            </h2>
+            <div className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#C7A254] text-center mb-4">
+              <PortableTextOrString value={statements[0]} className="" />
+            </div>
           )}
           {statements[1] && (
-            <p className="text-white text-lg md:text-xl lg:text-2xl text-center">{statements[1]}</p>
+            <PortableTextOrString value={statements[1]} className="text-white text-lg md:text-xl lg:text-2xl text-center" />
           )}
         </div>
       </section>
@@ -45,9 +47,9 @@ export default function HighlightTextBlock({
     return (
       <section className={`bg-[#413356] ${sectionPad} text-center`}>
         <div className={containerNarrow}>
-          <h2 className="text-white text-2xl md:text-[35px] lg:text-4xl font-bold text-center leading-tight">
-            {statements[0] || ''}
-          </h2>
+          <div className="text-white text-2xl md:text-[35px] lg:text-4xl font-bold text-center leading-tight">
+            <PortableTextOrString value={statements[0] || ''} className="" />
+          </div>
         </div>
       </section>
     );
@@ -56,14 +58,14 @@ export default function HighlightTextBlock({
     return (
       <section className={`bg-[#413356] ${sectionPad} text-center`}>
         <div className={containerNarrow}>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl text-[#C7A254] font-bold leading-[1.2]">
+          <div className="text-4xl md:text-5xl lg:text-6xl text-[#C7A254] font-bold leading-[1.2]">
             {statements.map((line, i) => (
               <span key={i}>
-                {line}
+                <PortableTextOrString value={line} className="" />
                 {i < statements.length - 1 && <br />}
               </span>
             ))}
-          </h2>
+          </div>
         </div>
       </section>
     );
@@ -83,14 +85,14 @@ export default function HighlightTextBlock({
       <div className="container mx-auto px-4">
         <div className="max-w-5xl mx-auto space-y-10">
           {statements.map((statement, index) => (
-            <h3
+            <div
               key={index}
               className={`text-2xl lg:text-3xl font-bold leading-relaxed ${textClass} ${
                 index > 0 ? 'pt-6 border-t border-gray-200' : ''
               }`}
             >
-              {statement}
-            </h3>
+              <PortableTextOrString value={statement} className="" />
+            </div>
           ))}
         </div>
       </div>

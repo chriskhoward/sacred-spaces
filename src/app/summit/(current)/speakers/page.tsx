@@ -13,6 +13,9 @@ import {
 } from '@/sanity/lib/summit'
 import { notFound } from 'next/navigation'
 import AllAccessButton from '@/components/summit/AllAccessButton'
+import { getSectionStyles } from '@/lib/summit-styles'
+import SummitButton from '@/components/summit/SummitButton'
+import PortableTextOrString from '@/components/summit/PortableTextOrString'
 import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
@@ -21,7 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const summit = await client.fetch<Summit | null>(CURRENT_SUMMIT_QUERY)
   return {
     title: summit ? `Speakers — ${summit.title}` : 'Speakers',
-    description: summit?.description,
+    description: typeof summit?.description === 'string' ? summit.description : undefined,
   }
 }
 
@@ -37,8 +40,14 @@ export default async function SpeakersPage() {
   const speakers = getUniqueSpeakers(presentations)
   const titleMap = getSpeakerPresentationTitles(presentations)
 
+  const sectionStyles = getSectionStyles({
+    summitStyles: summit.styles,
+    pageKey: 'speakersBg',
+    fallbackPadding: 'normal',
+  })
+
   return (
-    <section className="py-16 md:py-20">
+    <section className={sectionStyles.className} style={sectionStyles.style}>
       <div className="container mx-auto px-4">
         <div className="max-w-5xl mx-auto">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-(--color-primary) mb-8">
@@ -88,9 +97,12 @@ export default async function SpeakersPage() {
                       </div>
                     )}
                     {speaker.bio && (
-                      <p className="text-sm text-(--color-primary)/70 mt-2 line-clamp-3">
-                        {speaker.bio}
-                      </p>
+                      <div className="mt-2">
+                        <PortableTextOrString
+                          value={speaker.bio}
+                          className="text-sm text-(--color-primary)/70 line-clamp-3"
+                        />
+                      </div>
                     )}
                     <div className="flex justify-center gap-3 mt-4 flex-wrap">
                       {speaker.websiteUrl && (
@@ -123,12 +135,11 @@ export default async function SpeakersPage() {
 
           {/* Bottom navigation */}
           <div className="mt-12 flex flex-wrap gap-4 justify-center">
-            <Link
+            <SummitButton
+              label="View Schedule"
               href="/summit/schedule"
-              className="inline-block px-8 py-3 bg-(--color-primary) text-white rounded-full font-bold uppercase tracking-wide hover:opacity-90 transition-opacity shadow-md"
-            >
-              View Schedule
-            </Link>
+              preset={summit.styles?.buttonPrimary}
+            />
             <AllAccessButton basePath="/summit" label={summit.labels?.getAllAccessButton ?? undefined} />
           </div>
         </div>

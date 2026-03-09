@@ -83,8 +83,8 @@ export const siteSettingsType = defineType({
         defineField({
             name: 'tagline',
             title: 'Footer Tagline / Mission',
-            type: 'text',
-            rows: 3,
+            type: 'array',
+            of: [{ type: 'block' }],
             description: 'Short mission statement displayed in the footer.',
             group: 'footer',
         }),
@@ -177,8 +177,8 @@ export const siteSettingsType = defineType({
         defineField({
             name: 'notFoundQuote',
             title: '404 Quote',
-            type: 'text',
-            rows: 2,
+            type: 'array',
+            of: [{ type: 'block' }],
             description: 'Inspirational quote shown on the 404 page.',
             group: 'notFound',
         }),

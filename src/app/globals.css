@@ -30,38 +30,45 @@
 @layer base {
   * {
     box-sizing: border-box;
-    padding: 0;
-    margin: 0;
   }
 
   html,
   body {
     max-width: 100vw;
+    scroll-behavior: smooth;
+  }
+
+  /* Site styles — scoped to avoid breaking Sanity Studio */
+  body:not(:has(#sanity)) {
     overflow-x: hidden;
     font-family: var(--font-body);
     color: var(--color-text);
-    scroll-behavior: smooth;
     background-color: var(--color-white);
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
+  body:not(:has(#sanity)) * {
+    padding: 0;
+    margin: 0;
+  }
+
+  body:not(:has(#sanity)) h1,
+  body:not(:has(#sanity)) h2,
+  body:not(:has(#sanity)) h3,
+  body:not(:has(#sanity)) h4,
+  body:not(:has(#sanity)) h5,
+  body:not(:has(#sanity)) h6 {
     font-family: var(--font-heading);
     color: var(--color-primary);
     font-weight: 700;
   }
 
-  p {
+  body:not(:has(#sanity)) p {
     font-size: 1.125rem;
     line-height: 1.6;
     margin-bottom: 1.5rem;
   }
 
-  a {
+  body:not(:has(#sanity)) a {
     color: inherit;
     text-decoration: none;
     transition: all 0.3s ease-in-out;
