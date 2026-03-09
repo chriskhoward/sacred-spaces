@@ -1,10 +1,15 @@
 import { defineField, defineType } from 'sanity'
+import { brandColorField } from './shared/brandColorField'
+import { buttonPresetFields } from './shared/buttonFields'
 
 export const summitType = defineType({
   name: 'summit',
   title: 'Summit',
   type: 'document',
   icon: () => '🏔️',
+  groups: [
+    { name: 'styles', title: 'Styles' },
+  ],
   fields: [
     defineField({
       name: 'title',
@@ -37,8 +42,17 @@ export const summitType = defineType({
     defineField({
       name: 'description',
       title: 'Description',
-      type: 'text',
-      rows: 3,
+      type: 'array',
+      of: [
+        { type: 'block' },
+        {
+          type: 'image',
+          options: { hotspot: true },
+          fields: [
+            defineField({ name: 'alt', title: 'Alt Text', type: 'string' }),
+          ],
+        },
+      ],
       description: 'Short summary for SEO/meta',
     }),
     defineField({
@@ -207,8 +221,17 @@ export const summitType = defineType({
             defineField({
               name: 'answer',
               title: 'Answer',
-              type: 'text',
-              rows: 4,
+              type: 'array',
+              of: [
+                { type: 'block' },
+                {
+                  type: 'image',
+                  options: { hotspot: true },
+                  fields: [
+                    defineField({ name: 'alt', title: 'Alt Text', type: 'string' }),
+                  ],
+                },
+              ],
               validation: (Rule) => Rule.required(),
             }),
           ],
@@ -273,6 +296,44 @@ export const summitType = defineType({
         defineField({ name: 'footerPrivacyLabel', title: 'Footer Privacy Label', type: 'string', description: 'Default: "Privacy Policy"' }),
         defineField({ name: 'footerContactLabel', title: 'Footer Contact Label', type: 'string', description: 'Default: "Contact"' }),
         defineField({ name: 'footerCopyrightText', title: 'Footer Copyright Brand', type: 'string', description: 'Default: "Flow in Faith"' }),
+      ],
+    }),
+    defineField({
+      name: 'styles',
+      title: 'Styles',
+      type: 'object',
+      group: 'styles',
+      fields: [
+        buttonPresetFields('buttonPrimary', 'Primary Button Style'),
+        buttonPresetFields('buttonSecondary', 'Secondary Button Style'),
+        brandColorField('defaultSectionBg', 'Default Section Background'),
+        defineField({
+          name: 'defaultSectionPadding',
+          title: 'Default Section Padding',
+          type: 'string',
+          options: {
+            list: [
+              { title: 'None', value: 'none' },
+              { title: 'Tight', value: 'tight' },
+              { title: 'Normal', value: 'normal' },
+              { title: 'Loose', value: 'loose' },
+              { title: 'Extra Loose', value: 'extra-loose' },
+            ],
+          },
+        }),
+        defineField({
+          name: 'defaultSectionPaddingCustom',
+          title: 'Default Section Padding (Custom)',
+          type: 'string',
+          description: 'CSS value, e.g. "80px". Overrides the preset above.',
+        }),
+        brandColorField('scheduleBg', 'Schedule Page Background'),
+        brandColorField('contactBg', 'Contact Page Background'),
+        brandColorField('startHereBg', 'Start Here Page Background'),
+        brandColorField('allAccessBg', 'All Access Page Background'),
+        brandColorField('communityBg', 'Community Page Background'),
+        brandColorField('yogaClassesBg', 'Yoga Classes Page Background'),
+        brandColorField('speakersBg', 'Speakers Page Background'),
       ],
     }),
   ],
