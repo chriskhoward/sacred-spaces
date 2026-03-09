@@ -37,6 +37,13 @@ export const summitPresentationType = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'image',
+      title: 'Image',
+      type: 'image',
+      options: { hotspot: true },
+      description: 'Optional image displayed on the schedule card',
+    }),
+    defineField({
       name: 'description',
       title: 'Description',
       type: 'array',

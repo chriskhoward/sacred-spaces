@@ -31,23 +31,22 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 function LivePresentationCard({ p }: { p: SummitPresentation }) {
+  const cardImage = p.image || p.speaker?.headshot
   return (
-    <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow border border-(--color-gallery)">
-      <Link
-        href={`/summit/presentations/${p.slug.current}`}
-        className="flex items-start gap-4"
-      >
-        {p.speaker?.headshot && (
-          <Image
-            src={urlForImage(p.speaker.headshot).width(80).height(80).url()}
-            alt={p.speaker.name}
-            width={80}
-            height={80}
-            className="rounded-full object-cover shrink-0"
-            unoptimized
-          />
+    <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow border border-(--color-gallery) overflow-hidden">
+      <Link href={`/summit/presentations/${p.slug.current}`}>
+        {cardImage && (
+          <div className="aspect-[3/1] relative">
+            <Image
+              src={urlForImage(cardImage).width(800).height(267).url()}
+              alt={p.image ? p.title : p.speaker?.name || p.title}
+              fill
+              className="object-cover"
+              unoptimized
+            />
+          </div>
         )}
-        <div className="flex-1 min-w-0">
+        <div className="p-6">
           <h3 className="text-lg font-bold text-(--color-primary)">
             {p.title}
           </h3>
@@ -66,7 +65,7 @@ function LivePresentationCard({ p }: { p: SummitPresentation }) {
           )}
         </div>
       </Link>
-      <div className="mt-3 pl-0 sm:pl-[96px]">
+      <div className="px-6 pb-4">
         <AddToCalendarButton calendarUrl={getGoogleCalendarUrl(p)} />
       </div>
     </div>

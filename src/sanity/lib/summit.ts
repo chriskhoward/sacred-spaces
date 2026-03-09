@@ -58,6 +58,7 @@ export interface SummitPresentation {
   title: string
   slug: { current: string }
   speaker: SummitSpeaker
+  image?: any
   description?: any[]
   videoUrl?: string
   availableDate?: string
@@ -163,6 +164,7 @@ const presentationProjection = `{
   title,
   slug,
   speaker->${speakerProjection},
+  image,
   description,
   videoUrl,
   availableDate,
