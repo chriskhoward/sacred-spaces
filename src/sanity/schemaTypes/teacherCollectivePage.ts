@@ -14,12 +14,12 @@ export const teacherCollectivePageType = defineType({
     { name: 'seo', title: 'SEO' },
   ],
   fields: [
-    defineField({ name: 'title', title: 'Internal Title', type: 'string', hidden: true, initialValue: 'Teacher Collective Page' }),
+    defineField({ name: 'title', title: 'Internal Title', type: 'string', options: { canvasApp: { exclude: true } }, hidden: true, initialValue: 'Teacher Collective Page' }),
 
     // ── Hero ──
     defineField({ name: 'heroBadge', title: 'Hero Badge Text', type: 'string', group: 'hero' }),
-    defineField({ name: 'heroHeading', title: 'Hero Heading', type: 'text', rows: 2, group: 'hero' }),
-    defineField({ name: 'heroSubtext', title: 'Hero Sub-text', type: 'array', of: [{ type: 'block' }], group: 'hero' }),
+    defineField({ name: 'heroHeading', title: 'Hero Heading', type: 'text', options: { canvasApp: { purpose: 'Main hero heading text' } }, rows: 2, group: 'hero' }),
+    defineField({ name: 'heroSubtext', title: 'Hero Sub-text', type: 'array', options: { canvasApp: { purpose: 'Supporting text below the hero heading' } }, of: [{ type: 'block' }], group: 'hero' }),
     defineField({ name: 'heroImage', title: 'Hero Image', type: 'image', options: { hotspot: true }, group: 'hero' }),
     defineField({ name: 'heroCtaText', title: 'Hero CTA Button Text', type: 'string', group: 'hero' }),
 
@@ -29,6 +29,7 @@ export const teacherCollectivePageType = defineType({
       name: 'imagineCards',
       title: '"Imagine" Cards',
       type: 'array',
+      options: { canvasApp: { purpose: 'Cards describing what members can imagine achieving' } },
       group: 'sections',
       of: [{
         type: 'object',
@@ -63,6 +64,7 @@ export const teacherCollectivePageType = defineType({
       name: 'benefitCards',
       title: 'Benefit Cards',
       type: 'array',
+      options: { canvasApp: { purpose: 'Membership benefit descriptions with images' } },
       group: 'benefits',
       of: [{
         type: 'object',
@@ -80,6 +82,7 @@ export const teacherCollectivePageType = defineType({
       name: 'premiumItems',
       title: 'Premium Items',
       type: 'array',
+      options: { canvasApp: { purpose: 'Premium membership opportunity descriptions' } },
       group: 'benefits',
       of: [{
         type: 'object',
@@ -112,7 +115,7 @@ export const teacherCollectivePageType = defineType({
 
     // ── Meet the Visionaries ──
     defineField({ name: 'visionariesHeading', title: 'Section Heading', type: 'string', group: 'founders' }),
-    defineField({ name: 'visionariesSubtext', title: 'Section Subtext', type: 'array', of: [{ type: 'block' }], group: 'founders' }),
+    defineField({ name: 'visionariesSubtext', title: 'Section Subtext', type: 'array', options: { canvasApp: { purpose: 'Introduction text for the founders section' } }, of: [{ type: 'block' }], group: 'founders' }),
     defineField({
       name: 'visionaries',
       title: 'Founder Profiles',
@@ -142,44 +145,44 @@ export const teacherCollectivePageType = defineType({
     defineField({ name: 'bottomLineSubtext', title: 'Bottom Line Subtext', type: 'string', group: 'sections' }),
 
     // ── SEO ──
-    defineField({ name: 'metaTitle', title: 'SEO Title', type: 'string', group: 'seo' }),
-    defineField({ name: 'metaDescription', title: 'SEO Description', type: 'text', rows: 2, group: 'seo' }),
+    defineField({ name: 'metaTitle', title: 'SEO Title', type: 'string', options: { canvasApp: { exclude: true } }, group: 'seo' }),
+    defineField({ name: 'metaDescription', title: 'SEO Description', type: 'text', options: { canvasApp: { exclude: true } }, rows: 2, group: 'seo' }),
 
     // ── Fillout Config ──
-    defineField({ name: 'filloutId', title: 'Fillout Form ID', type: 'string', description: 'The Fillout form ID used for CTA buttons on this page.', group: 'hero' }),
+    defineField({ name: 'filloutId', title: 'Fillout Form ID', type: 'string', options: { canvasApp: { exclude: true } }, description: 'The Fillout form ID used for CTA buttons on this page.', group: 'hero' }),
 
     // ── CTA Buttons ──
-    defineField({ name: 'itsTimeCtaText', title: '"It\'s Time" CTA Text', type: 'string', group: 'ctas' }),
-    defineField({ name: 'itsTimeCtaUseFillout', title: '"It\'s Time" CTA: Use Fillout Form?', type: 'boolean', initialValue: true, group: 'ctas', description: 'When on, opens the Fillout form slider. When off, uses the link below.' }),
-    defineField({ name: 'itsTimeCtaLink', title: '"It\'s Time" CTA Link', type: 'string', group: 'ctas', description: 'Only used when Fillout is off. Internal path or external URL.' }),
+    defineField({ name: 'itsTimeCtaText', title: '"It\'s Time" CTA Text', type: 'string', options: { canvasApp: { exclude: true } }, group: 'ctas' }),
+    defineField({ name: 'itsTimeCtaUseFillout', title: '"It\'s Time" CTA: Use Fillout Form?', type: 'boolean', options: { canvasApp: { exclude: true } }, initialValue: true, group: 'ctas', description: 'When on, opens the Fillout form slider. When off, uses the link below.' }),
+    defineField({ name: 'itsTimeCtaLink', title: '"It\'s Time" CTA Link', type: 'string', options: { canvasApp: { exclude: true } }, group: 'ctas', description: 'Only used when Fillout is off. Internal path or external URL.' }),
 
-    defineField({ name: 'callingCtaText', title: '"Your Calling" CTA Text', type: 'string', group: 'ctas' }),
-    defineField({ name: 'callingCtaUseFillout', title: '"Your Calling" CTA: Use Fillout Form?', type: 'boolean', initialValue: true, group: 'ctas', description: 'When on, opens the Fillout form slider. When off, uses the link below.' }),
-    defineField({ name: 'callingCtaLink', title: '"Your Calling" CTA Link', type: 'string', group: 'ctas', description: 'Only used when Fillout is off. Internal path or external URL.' }),
+    defineField({ name: 'callingCtaText', title: '"Your Calling" CTA Text', type: 'string', options: { canvasApp: { exclude: true } }, group: 'ctas' }),
+    defineField({ name: 'callingCtaUseFillout', title: '"Your Calling" CTA: Use Fillout Form?', type: 'boolean', options: { canvasApp: { exclude: true } }, initialValue: true, group: 'ctas', description: 'When on, opens the Fillout form slider. When off, uses the link below.' }),
+    defineField({ name: 'callingCtaLink', title: '"Your Calling" CTA Link', type: 'string', options: { canvasApp: { exclude: true } }, group: 'ctas', description: 'Only used when Fillout is off. Internal path or external URL.' }),
 
-    defineField({ name: 'premiumCtaText', title: 'Premium CTA Text', type: 'string', group: 'ctas' }),
-    defineField({ name: 'premiumCtaUseFillout', title: 'Premium CTA: Use Fillout Form?', type: 'boolean', initialValue: true, group: 'ctas', description: 'When on, opens the Fillout form slider. When off, uses the link below.' }),
-    defineField({ name: 'premiumCtaLink', title: 'Premium CTA Link', type: 'string', group: 'ctas', description: 'Only used when Fillout is off. Internal path or external URL.' }),
+    defineField({ name: 'premiumCtaText', title: 'Premium CTA Text', type: 'string', options: { canvasApp: { exclude: true } }, group: 'ctas' }),
+    defineField({ name: 'premiumCtaUseFillout', title: 'Premium CTA: Use Fillout Form?', type: 'boolean', options: { canvasApp: { exclude: true } }, initialValue: true, group: 'ctas', description: 'When on, opens the Fillout form slider. When off, uses the link below.' }),
+    defineField({ name: 'premiumCtaLink', title: 'Premium CTA Link', type: 'string', options: { canvasApp: { exclude: true } }, group: 'ctas', description: 'Only used when Fillout is off. Internal path or external URL.' }),
 
-    defineField({ name: 'coreCtaText', title: 'Join Core CTA Text', type: 'string', group: 'ctas' }),
-    defineField({ name: 'coreCtaUseFillout', title: 'Join Core CTA: Use Fillout Form?', type: 'boolean', initialValue: true, group: 'ctas', description: 'When on, opens the Fillout form slider. When off, uses the link below.' }),
-    defineField({ name: 'coreCtaLink', title: 'Join Core CTA Link', type: 'string', group: 'ctas', description: 'Only used when Fillout is off. Internal path or external URL.' }),
+    defineField({ name: 'coreCtaText', title: 'Join Core CTA Text', type: 'string', options: { canvasApp: { exclude: true } }, group: 'ctas' }),
+    defineField({ name: 'coreCtaUseFillout', title: 'Join Core CTA: Use Fillout Form?', type: 'boolean', options: { canvasApp: { exclude: true } }, initialValue: true, group: 'ctas', description: 'When on, opens the Fillout form slider. When off, uses the link below.' }),
+    defineField({ name: 'coreCtaLink', title: 'Join Core CTA Link', type: 'string', options: { canvasApp: { exclude: true } }, group: 'ctas', description: 'Only used when Fillout is off. Internal path or external URL.' }),
 
-    defineField({ name: 'proCtaText', title: 'Join Pro CTA Text', type: 'string', group: 'ctas' }),
-    defineField({ name: 'proCtaUseFillout', title: 'Join Pro CTA: Use Fillout Form?', type: 'boolean', initialValue: true, group: 'ctas', description: 'When on, opens the Fillout form slider. When off, uses the link below.' }),
-    defineField({ name: 'proCtaLink', title: 'Join Pro CTA Link', type: 'string', group: 'ctas', description: 'Only used when Fillout is off. Internal path or external URL.' }),
+    defineField({ name: 'proCtaText', title: 'Join Pro CTA Text', type: 'string', options: { canvasApp: { exclude: true } }, group: 'ctas' }),
+    defineField({ name: 'proCtaUseFillout', title: 'Join Pro CTA: Use Fillout Form?', type: 'boolean', options: { canvasApp: { exclude: true } }, initialValue: true, group: 'ctas', description: 'When on, opens the Fillout form slider. When off, uses the link below.' }),
+    defineField({ name: 'proCtaLink', title: 'Join Pro CTA Link', type: 'string', options: { canvasApp: { exclude: true } }, group: 'ctas', description: 'Only used when Fillout is off. Internal path or external URL.' }),
 
-    defineField({ name: 'itsTimeToCtaText', title: '"It\'s Time To" CTA Text', type: 'string', group: 'ctas' }),
-    defineField({ name: 'itsTimeToCtaUseFillout', title: '"It\'s Time To" CTA: Use Fillout Form?', type: 'boolean', initialValue: true, group: 'ctas', description: 'When on, opens the Fillout form slider. When off, uses the link below.' }),
-    defineField({ name: 'itsTimeToCtaLink', title: '"It\'s Time To" CTA Link', type: 'string', group: 'ctas', description: 'Only used when Fillout is off. Internal path or external URL.' }),
+    defineField({ name: 'itsTimeToCtaText', title: '"It\'s Time To" CTA Text', type: 'string', options: { canvasApp: { exclude: true } }, group: 'ctas' }),
+    defineField({ name: 'itsTimeToCtaUseFillout', title: '"It\'s Time To" CTA: Use Fillout Form?', type: 'boolean', options: { canvasApp: { exclude: true } }, initialValue: true, group: 'ctas', description: 'When on, opens the Fillout form slider. When off, uses the link below.' }),
+    defineField({ name: 'itsTimeToCtaLink', title: '"It\'s Time To" CTA Link', type: 'string', options: { canvasApp: { exclude: true } }, group: 'ctas', description: 'Only used when Fillout is off. Internal path or external URL.' }),
 
-    defineField({ name: 'finalCtaCtaText', title: 'Final CTA Text', type: 'string', group: 'ctas' }),
-    defineField({ name: 'finalCtaCtaUseFillout', title: 'Final CTA: Use Fillout Form?', type: 'boolean', initialValue: true, group: 'ctas', description: 'When on, opens the Fillout form slider. When off, uses the link below.' }),
-    defineField({ name: 'finalCtaCtaLink', title: 'Final CTA Link', type: 'string', group: 'ctas', description: 'Only used when Fillout is off. Internal path or external URL.' }),
+    defineField({ name: 'finalCtaCtaText', title: 'Final CTA Text', type: 'string', options: { canvasApp: { exclude: true } }, group: 'ctas' }),
+    defineField({ name: 'finalCtaCtaUseFillout', title: 'Final CTA: Use Fillout Form?', type: 'boolean', options: { canvasApp: { exclude: true } }, initialValue: true, group: 'ctas', description: 'When on, opens the Fillout form slider. When off, uses the link below.' }),
+    defineField({ name: 'finalCtaCtaLink', title: 'Final CTA Link', type: 'string', options: { canvasApp: { exclude: true } }, group: 'ctas', description: 'Only used when Fillout is off. Internal path or external URL.' }),
 
-    defineField({ name: 'bottomLineCtaText', title: 'Bottom Line CTA Text', type: 'string', group: 'ctas' }),
-    defineField({ name: 'bottomLineCtaUseFillout', title: 'Bottom Line CTA: Use Fillout Form?', type: 'boolean', initialValue: true, group: 'ctas', description: 'When on, opens the Fillout form slider. When off, uses the link below.' }),
-    defineField({ name: 'bottomLineCtaLink', title: 'Bottom Line CTA Link', type: 'string', group: 'ctas', description: 'Only used when Fillout is off. Internal path or external URL.' }),
+    defineField({ name: 'bottomLineCtaText', title: 'Bottom Line CTA Text', type: 'string', options: { canvasApp: { exclude: true } }, group: 'ctas' }),
+    defineField({ name: 'bottomLineCtaUseFillout', title: 'Bottom Line CTA: Use Fillout Form?', type: 'boolean', options: { canvasApp: { exclude: true } }, initialValue: true, group: 'ctas', description: 'When on, opens the Fillout form slider. When off, uses the link below.' }),
+    defineField({ name: 'bottomLineCtaLink', title: 'Bottom Line CTA Link', type: 'string', options: { canvasApp: { exclude: true } }, group: 'ctas', description: 'Only used when Fillout is off. Internal path or external URL.' }),
   ],
   preview: {
     prepare: () => ({ title: 'Teacher Collective Page' }),

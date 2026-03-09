@@ -13,6 +13,7 @@ export const teacherCollectiveDashboardType = defineType({
       name: 'title',
       title: 'Dashboard title (for Studio only)',
       type: 'string',
+      options: { canvasApp: { exclude: true } },
       initialValue: 'Teacher Collective Dashboard',
       readOnly: true,
       hidden: true,
@@ -22,7 +23,7 @@ export const teacherCollectiveDashboardType = defineType({
       title: 'Dashboard cards',
       type: 'array',
       description: 'Order and content of cards on the Teacher Collective dashboard. Drag to reorder.',
-      options: { layout: 'grid' },
+      options: { layout: 'grid', canvasApp: { purpose: 'Dashboard cards with titles, descriptions, and links' } },
       components: { input: DashboardCardsInput },
       of: [
         defineArrayMember({

@@ -12,13 +12,14 @@ export const summitPresentationType = defineType({
       name: 'title',
       title: 'Title',
       type: 'string',
+      options: { canvasApp: { purpose: 'Presentation title' } },
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
-      options: { source: 'title', maxLength: 96 },
+      options: { source: 'title', maxLength: 96, canvasApp: { exclude: true } },
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -39,6 +40,7 @@ export const summitPresentationType = defineType({
       name: 'description',
       title: 'Description',
       type: 'array',
+      options: { canvasApp: { purpose: 'Description of the presentation content' } },
       of: [
         { type: 'block' },
         {
@@ -72,6 +74,7 @@ export const summitPresentationType = defineType({
       name: 'dayNumber',
       title: 'Day Number',
       type: 'number',
+      options: { canvasApp: { exclude: true } },
       description: 'Day 1, Day 2, etc.',
       validation: (Rule) => Rule.integer().min(1),
     }),
@@ -122,6 +125,7 @@ export const summitPresentationType = defineType({
       name: 'displayOrder',
       title: 'Display Order',
       type: 'number',
+      options: { canvasApp: { exclude: true } },
       description: 'Ordering within a day',
       initialValue: 0,
     }),

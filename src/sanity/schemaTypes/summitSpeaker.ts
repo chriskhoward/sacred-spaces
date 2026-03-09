@@ -11,6 +11,7 @@ export const summitSpeakerType = defineType({
       name: 'name',
       title: 'Name',
       type: 'string',
+      options: { canvasApp: { purpose: "Speaker's full name" } },
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -23,6 +24,7 @@ export const summitSpeakerType = defineType({
       name: 'bio',
       title: 'Bio',
       type: 'array',
+      options: { canvasApp: { purpose: 'Speaker biography' } },
       of: [
         { type: 'block' },
         {

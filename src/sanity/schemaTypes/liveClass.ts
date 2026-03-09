@@ -11,6 +11,7 @@ export const liveClassType = defineType({
             name: 'title',
             title: 'Class Title',
             type: 'string',
+            options: { canvasApp: { purpose: 'Class title' } },
             validation: (Rule) => Rule.required(),
         }),
         defineField({
@@ -56,17 +57,20 @@ export const liveClassType = defineType({
             name: 'description',
             title: 'Description',
             type: 'array',
+            options: { canvasApp: { purpose: 'Class description' } },
             of: [{ type: 'block' }],
         }),
         defineField({
             name: 'zoomLink',
             title: 'Zoom/Meeting Link',
             type: 'url',
+            options: { canvasApp: { exclude: true } },
         }),
         defineField({
             name: 'isRecurring',
             title: 'Recurring Class',
             type: 'boolean',
+            options: { canvasApp: { exclude: true } },
             description: 'Enable if this class repeats on a schedule',
             initialValue: false,
         }),
@@ -75,6 +79,7 @@ export const liveClassType = defineType({
             title: 'Recurrence Pattern',
             type: 'string',
             options: {
+                canvasApp: { exclude: true },
                 list: [
                     { title: 'Weekly', value: 'weekly' },
                     { title: 'Bi-weekly', value: 'biweekly' },
@@ -87,6 +92,7 @@ export const liveClassType = defineType({
             name: 'recurrenceEndDate',
             title: 'Recurrence End Date',
             type: 'date',
+            options: { canvasApp: { exclude: true } },
             description: 'When should this recurring class stop? Leave empty for indefinite.',
             hidden: ({ parent }) => !parent?.isRecurring,
         }),
@@ -94,6 +100,7 @@ export const liveClassType = defineType({
             name: 'isLocked',
             title: 'Premium Member Only?',
             type: 'boolean',
+            options: { canvasApp: { exclude: true } },
             description: 'If enabled, only Core and Pro tier members can access the Zoom link',
             initialValue: false,
         }),
@@ -103,6 +110,7 @@ export const liveClassType = defineType({
             type: 'array',
             of: [{ type: 'string' }],
             options: {
+                canvasApp: { exclude: true },
                 list: [
                     { title: 'Everyone', value: 'all' },
                     { title: 'Teacher Collective - Core', value: 'teacher_core' },

@@ -15,12 +15,14 @@ export const summitType = defineType({
       name: 'title',
       title: 'Title',
       type: 'string',
+      options: { canvasApp: { purpose: 'The name of the summit event' } },
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'year',
       title: 'Year',
       type: 'number',
+      options: { canvasApp: { exclude: true } },
       validation: (Rule) => Rule.required().integer().min(2024),
     }),
     defineField({
@@ -30,12 +32,14 @@ export const summitType = defineType({
       options: {
         source: (doc) => `${doc.title}-${doc.year}`,
         maxLength: 96,
+        canvasApp: { exclude: true },
       },
     }),
     defineField({
       name: 'isCurrent',
       title: 'Is Current Summit',
       type: 'boolean',
+      options: { canvasApp: { exclude: true } },
       description: 'Only one summit should be marked as current. This one shows at /summit/*.',
       initialValue: false,
     }),
@@ -43,6 +47,7 @@ export const summitType = defineType({
       name: 'description',
       title: 'Description',
       type: 'array',
+      options: { canvasApp: { purpose: 'Short summary of the summit for SEO and meta descriptions' } },
       of: [
         { type: 'block' },
         {
@@ -65,40 +70,47 @@ export const summitType = defineType({
       name: 'startDate',
       title: 'Start Date',
       type: 'datetime',
+      options: { canvasApp: { exclude: true } },
     }),
     defineField({
       name: 'endDate',
       title: 'End Date',
       type: 'datetime',
+      options: { canvasApp: { exclude: true } },
     }),
     defineField({
       name: 'communityLink',
       title: 'Community Link',
       type: 'url',
+      options: { canvasApp: { exclude: true } },
       description: 'WhatsApp group link',
     }),
     defineField({
       name: 'registrationUrl',
       title: 'Registration URL',
       type: 'url',
+      options: { canvasApp: { exclude: true } },
       description: 'External registration page',
     }),
     defineField({
       name: 'allAccessSalesUrl',
       title: 'All Access Sales URL',
       type: 'url',
+      options: { canvasApp: { exclude: true } },
       description: 'External sales page for All Access Pass',
     }),
     defineField({
       name: 'clerkPlanId',
       title: 'Clerk Plan ID',
       type: 'string',
+      options: { canvasApp: { exclude: true } },
       description: 'e.g. summit_all_access — used for gating content',
     }),
     defineField({
       name: 'welcomeContentFree',
       title: 'Welcome Content (Free)',
       type: 'array',
+      options: { canvasApp: { purpose: 'Welcome page content shown to free registrants' } },
       of: [
         { type: 'block' },
         {
@@ -119,6 +131,7 @@ export const summitType = defineType({
       name: 'welcomeContentAllAccess',
       title: 'Welcome Content (All Access)',
       type: 'array',
+      options: { canvasApp: { purpose: 'Welcome page content shown to All Access Pass holders' } },
       of: [
         { type: 'block' },
         {
@@ -139,6 +152,7 @@ export const summitType = defineType({
       name: 'allAccessPerks',
       title: 'All Access Perks',
       type: 'array',
+      options: { canvasApp: { purpose: 'List of benefits included in the All Access Pass' } },
       of: [{ type: 'block' }],
       description: 'Describes what All Access includes — shown on /summit/all-access',
     }),
@@ -166,6 +180,7 @@ export const summitType = defineType({
       name: 'communityDescription',
       title: 'Community Description',
       type: 'array',
+      options: { canvasApp: { purpose: 'Content for the summit community page' } },
       of: [{ type: 'block' }],
       description: 'Content for the Community page — shown on /summit/community',
     }),
@@ -180,6 +195,7 @@ export const summitType = defineType({
       name: 'navLinks',
       title: 'Navigation Links',
       type: 'array',
+      options: { canvasApp: { exclude: true } },
       of: [
         {
           type: 'object',
@@ -208,6 +224,7 @@ export const summitType = defineType({
       name: 'faqItems',
       title: 'FAQ Items',
       type: 'array',
+      options: { canvasApp: { purpose: 'Frequently asked questions and answers about the summit' } },
       of: [
         {
           type: 'object',
@@ -245,11 +262,13 @@ export const summitType = defineType({
       name: 'contactEmail',
       title: 'Contact Email',
       type: 'string',
+      options: { canvasApp: { exclude: true } },
     }),
     defineField({
       name: 'labels',
       title: 'Page Labels & Text',
       type: 'object',
+      options: { canvasApp: { purpose: 'Editable UI labels and button text across summit pages' } },
       description: 'Editable labels for all text on summit pages. Leave blank to use defaults.',
       fields: [
         // Welcome page
@@ -302,6 +321,7 @@ export const summitType = defineType({
       name: 'styles',
       title: 'Styles',
       type: 'object',
+      options: { canvasApp: { exclude: true } },
       group: 'styles',
       fields: [
         buttonPresetFields('buttonPrimary', 'Primary Button Style'),

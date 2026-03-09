@@ -10,6 +10,7 @@ export const resourceType = defineType({
       name: 'title',
       title: 'Resource Title',
       type: 'string',
+      options: { canvasApp: { purpose: 'Resource title' } },
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -23,6 +24,7 @@ export const resourceType = defineType({
       name: 'description',
       title: 'Description',
       type: 'array',
+      options: { canvasApp: { purpose: 'Description of the resource' } },
       of: [{ type: 'block' }],
     }),
     defineField({
@@ -42,11 +44,13 @@ export const resourceType = defineType({
       name: 'linkUrl',
       title: 'Link to Resource (PDF/Video/Page)',
       type: 'url',
+      options: { canvasApp: { exclude: true } },
     }),
     defineField({
       name: 'isLocked',
       title: 'Premium Member Only?',
       type: 'boolean',
+      options: { canvasApp: { exclude: true } },
       initialValue: true,
     }),
     defineField({
@@ -55,6 +59,7 @@ export const resourceType = defineType({
       type: 'array',
       of: [{ type: 'string' }],
       options: {
+        canvasApp: { exclude: true },
         list: [
           { title: 'Everyone', value: 'all' },
           { title: 'Teacher Collective - Core', value: 'teacher_core' },
@@ -70,6 +75,7 @@ export const resourceType = defineType({
       name: 'order',
       title: 'Display Order',
       type: 'number',
+      options: { canvasApp: { exclude: true } },
       description: 'Lower numbers appear first within each category',
       initialValue: 0,
     }),

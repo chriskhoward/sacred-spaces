@@ -10,6 +10,7 @@ export const teacherCollectiveFaqsType = defineType({
       name: 'title',
       title: 'Document Title',
       type: 'string',
+      options: { canvasApp: { exclude: true } },
       initialValue: 'Teacher Collective FAQs',
       readOnly: true,
       hidden: true,
@@ -18,6 +19,7 @@ export const teacherCollectiveFaqsType = defineType({
       name: 'intro',
       title: 'Intro Text',
       type: 'string',
+      options: { canvasApp: { purpose: 'Introductory text above the FAQ section' } },
       description: 'Short line above the FAQs heading (e.g. "Still have questions? I understand. Let\'s chat!")',
       initialValue: "Still have questions? I understand. Let's chat!",
     }),
@@ -25,12 +27,14 @@ export const teacherCollectiveFaqsType = defineType({
       name: 'heading',
       title: 'Heading',
       type: 'string',
+      options: { canvasApp: { purpose: 'FAQ section heading' } },
       initialValue: 'FAQs',
     }),
     defineField({
       name: 'items',
       title: 'FAQ Items',
       type: 'array',
+      options: { canvasApp: { purpose: 'FAQ questions and answers for the Teacher Collective' } },
       of: [
         {
           type: 'object',

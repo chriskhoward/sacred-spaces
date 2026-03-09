@@ -11,6 +11,7 @@ export const summitYogaClassType = defineType({
       name: 'title',
       title: 'Title',
       type: 'string',
+      options: { canvasApp: { purpose: 'Yoga class title' } },
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -35,6 +36,7 @@ export const summitYogaClassType = defineType({
       name: 'description',
       title: 'Description',
       type: 'array',
+      options: { canvasApp: { purpose: 'Description of the yoga class' } },
       of: [
         { type: 'block' },
         {

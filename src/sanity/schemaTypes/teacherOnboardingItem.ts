@@ -11,12 +11,14 @@ export const teacherOnboardingItemType = defineType({
       name: 'title',
       title: 'Title',
       type: 'string',
+      options: { canvasApp: { purpose: 'Onboarding item title' } },
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'description',
       title: 'Description',
       type: 'array',
+      options: { canvasApp: { purpose: 'Description of the onboarding step' } },
       of: [{ type: 'block' }],
     }),
     defineField({
@@ -31,6 +33,7 @@ export const teacherOnboardingItemType = defineType({
       title: 'Type',
       type: 'string',
       options: {
+        canvasApp: { exclude: true },
         list: [
           { title: 'Video', value: 'video' },
           { title: 'PDF', value: 'pdf' },
@@ -69,6 +72,7 @@ export const teacherOnboardingItemType = defineType({
       name: 'order',
       title: 'Display order',
       type: 'number',
+      options: { canvasApp: { exclude: true } },
       description: 'Lower numbers appear first.',
       initialValue: 0,
       validation: (Rule) => Rule.required().min(0),

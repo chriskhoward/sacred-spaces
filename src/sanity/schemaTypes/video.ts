@@ -11,6 +11,7 @@ export const videoType = defineType({
             name: 'title',
             title: 'Video Title',
             type: 'string',
+            options: { canvasApp: { purpose: 'Video title' } },
             validation: (Rule) => Rule.required(),
         }),
         defineField({
@@ -23,6 +24,7 @@ export const videoType = defineType({
             name: 'description',
             title: 'Description',
             type: 'array',
+            options: { canvasApp: { purpose: 'Video description' } },
             of: [{ type: 'block' }],
         }),
         defineField({
@@ -62,11 +64,13 @@ export const videoType = defineType({
             name: 'videoUrl',
             title: 'Video URL (Vimeo/YouTube/S3)',
             type: 'url',
+            options: { canvasApp: { exclude: true } },
         }),
         defineField({
             name: 'isFeatured',
             title: 'Feature as “New Release”',
             type: 'boolean',
+            options: { canvasApp: { exclude: true } },
             description: 'When checked, this video appears in the hero “New Release” section at the top of the Video Library. Only one video should be featured at a time.',
             initialValue: false,
         }),
@@ -74,6 +78,7 @@ export const videoType = defineType({
             name: 'isLocked',
             title: 'Premium Member Only?',
             type: 'boolean',
+            options: { canvasApp: { exclude: true } },
             description: 'If enabled, this video will be locked for non-Pro members.',
             initialValue: false,
         }),
@@ -83,6 +88,7 @@ export const videoType = defineType({
             type: 'array',
             of: [{ type: 'string' }],
             options: {
+                canvasApp: { exclude: true },
                 list: [
                     { title: 'Everyone', value: 'all' },
                     { title: 'Teacher Collective - Core', value: 'teacher_core' },

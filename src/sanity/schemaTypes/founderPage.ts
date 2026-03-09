@@ -10,13 +10,14 @@ export const founderPageType = defineType({
       name: 'name',
       title: 'Full Name',
       type: 'string',
+      options: { canvasApp: { purpose: "Founder's full name" } },
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
-      options: { source: 'name', maxLength: 96 },
+      options: { source: 'name', maxLength: 96, canvasApp: { exclude: true } },
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -60,6 +61,7 @@ export const founderPageType = defineType({
       name: 'bio',
       title: 'Bio',
       type: 'array',
+      options: { canvasApp: { purpose: "Founder's biography" } },
       of: [{ type: 'block' }],
     }),
     defineField({
@@ -111,6 +113,7 @@ export const founderPageType = defineType({
       name: 'philosophyQuote',
       title: 'Philosophy / Approach Quote',
       type: 'array',
+      options: { canvasApp: { purpose: 'Teaching philosophy or approach quote' } },
       of: [{ type: 'block' }],
     }),
     defineField({
@@ -123,6 +126,7 @@ export const founderPageType = defineType({
       name: 'ctaText',
       title: 'CTA Body Text',
       type: 'array',
+      options: { canvasApp: { purpose: 'Call-to-action body text' } },
       of: [{ type: 'block' }],
     }),
     defineField({
@@ -146,11 +150,13 @@ export const founderPageType = defineType({
       name: 'metaTitle',
       title: 'SEO Title',
       type: 'string',
+      options: { canvasApp: { exclude: true } },
     }),
     defineField({
       name: 'metaDescription',
       title: 'SEO Description',
       type: 'text',
+      options: { canvasApp: { exclude: true } },
       rows: 2,
     }),
   ],

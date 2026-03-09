@@ -10,6 +10,7 @@ export const teacherType = defineType({
             name: 'clerkId',
             title: 'Clerk User ID',
             type: 'string',
+            options: { canvasApp: { exclude: true } },
             validation: Rule => Rule.required(),
             readOnly: true,
         }),
@@ -17,6 +18,7 @@ export const teacherType = defineType({
             name: 'membershipId',
             title: 'Membership ID',
             type: 'string',
+            options: { canvasApp: { exclude: true } },
             description: 'The internal membership ID (e.g., from Thrivecart or Airtable)',
         }),
         defineField({
@@ -26,6 +28,7 @@ export const teacherType = defineType({
             options: {
                 source: 'name',
                 maxLength: 96,
+                canvasApp: { exclude: true },
             },
             validation: Rule => Rule.required(),
         }),
@@ -35,6 +38,7 @@ export const teacherType = defineType({
             type: 'string',
             initialValue: 'active',
             options: {
+                canvasApp: { exclude: true },
                 list: [
                     { title: 'Active', value: 'active' },
                     { title: 'Inactive', value: 'inactive' },
@@ -46,6 +50,7 @@ export const teacherType = defineType({
             name: 'name',
             title: 'Display Name',
             type: 'string',
+            options: { canvasApp: { purpose: "Teacher's display name" } },
             validation: Rule => Rule.required(),
         }),
         defineField({
@@ -57,6 +62,7 @@ export const teacherType = defineType({
             name: 'bio',
             title: 'Biography',
             type: 'array',
+            options: { canvasApp: { purpose: 'Teacher biography' } },
             of: [{ type: 'block' }],
         }),
         defineField({
@@ -69,6 +75,7 @@ export const teacherType = defineType({
             name: 'email',
             title: 'Email Address',
             type: 'string',
+            options: { canvasApp: { exclude: true } },
         }),
         defineField({
             name: 'website',
@@ -91,6 +98,7 @@ export const teacherType = defineType({
             name: 'lastSync',
             title: 'Last Sync',
             type: 'datetime',
+            options: { canvasApp: { exclude: true } },
             initialValue: () => new Date().toISOString(),
         }),
     ],
