@@ -223,9 +223,7 @@ export default async function TeacherCollectiveStartPage() {
                             /* PDF / Link: standard list card */
                             <div className="bg-white rounded-xl shadow-lg p-6 md:p-8">
                               <h3 className="text-xl font-bold text-(--color-primary) mb-2">{item.title}</h3>
-                              {item.description && (
-                                {item.description && <PortableTextOrString value={item.description} className="text-gray-600 mb-4" />}
-                              )}
+                              {item.description && <PortableTextOrString value={item.description} className="text-gray-600 mb-4" />}
                               {item.itemType === 'pdf' && (item.pdfFileUrl || item.pdfUrl) && (
                                 <a
                                   href={item.pdfFileUrl || item.pdfUrl || '#'}
