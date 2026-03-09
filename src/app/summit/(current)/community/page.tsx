@@ -6,7 +6,7 @@ import { notFound } from 'next/navigation'
 import AllAccessButton from '@/components/summit/AllAccessButton'
 import UpgradeCTA from '@/components/summit/UpgradeCTA'
 import { auth } from '@clerk/nextjs/server'
-import Link from 'next/link'
+import SummitBreadcrumbs from '@/components/summit/SummitBreadcrumbs'
 import { getSectionStyles } from '@/lib/summit-styles'
 import SummitButton from '@/components/summit/SummitButton'
 import type { Metadata } from 'next'
@@ -44,12 +44,7 @@ export default async function CommunityPage() {
     <section className={sectionStyles.className} style={sectionStyles.style}>
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto">
-          <Link
-            href="/summit/start-here"
-            className="text-(--color-roti) hover:opacity-80 text-sm font-medium mb-6 inline-block"
-          >
-            &larr; {summit.labels?.backToWelcome || 'Back to Welcome'}
-          </Link>
+          <SummitBreadcrumbs summitTitle={summit.title} basePath="/summit" current={summit.labels?.communityTitle || 'Community'} />
 
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-(--color-primary) mb-8">
             {summit.labels?.communityTitle || 'Community'}

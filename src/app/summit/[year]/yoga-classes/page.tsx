@@ -10,6 +10,7 @@ import {
 } from '@/sanity/lib/summit'
 import { notFound } from 'next/navigation'
 import AddToCalendarButton from '@/components/summit/AddToCalendarButton'
+import SummitBreadcrumbs from '@/components/summit/SummitBreadcrumbs'
 import { getSectionStyles } from '@/lib/summit-styles'
 import PortableTextOrString from '@/components/summit/PortableTextOrString'
 import type { Metadata } from 'next'
@@ -55,6 +56,7 @@ export default async function ArchiveYogaClassesPage({ params }: PageProps) {
     <section className={sectionStyles.className} style={sectionStyles.style}>
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
+          <SummitBreadcrumbs summitTitle={summit.title} basePath={`/summit/${year}`} current={summit.labels?.yogaTitle || 'Yoga Classes'} />
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-(--color-primary) mb-8">
             Yoga Classes
           </h1>

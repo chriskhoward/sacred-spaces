@@ -12,11 +12,11 @@ import {
 } from '@/sanity/lib/summit'
 import { urlForImage } from '@/sanity/lib/image'
 import Image from 'next/image'
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import UpgradeCTA from '@/components/summit/UpgradeCTA'
 import AddToCalendarButton from '@/components/summit/AddToCalendarButton'
 import AllAccessButton from '@/components/summit/AllAccessButton'
+import SummitBreadcrumbs from '@/components/summit/SummitBreadcrumbs'
 import { Check } from 'lucide-react'
 import { getSectionStyles } from '@/lib/summit-styles'
 import PortableTextOrString from '@/components/summit/PortableTextOrString'
@@ -78,13 +78,7 @@ export default async function PresentationPage({ params }: PageProps) {
     <section className={sectionStyles.className} style={sectionStyles.style}>
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
-          {/* Back link */}
-          <Link
-            href="/summit/schedule"
-            className="text-(--color-roti) hover:opacity-80 text-sm font-medium mb-6 inline-block"
-          >
-            &larr; {summit.labels?.backToSchedule || 'Back to Schedule'}
-          </Link>
+          <SummitBreadcrumbs summitTitle={summit.title} basePath="/summit" current={presentation.title} />
 
           {/* Header */}
           <div className="flex items-start gap-6 mb-8">

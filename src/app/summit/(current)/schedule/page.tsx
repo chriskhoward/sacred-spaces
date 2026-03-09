@@ -15,6 +15,7 @@ import { notFound } from 'next/navigation'
 import AllAccessButton from '@/components/summit/AllAccessButton'
 import PortableTextOrString from '@/components/summit/PortableTextOrString'
 import AddToCalendarButton from '@/components/summit/AddToCalendarButton'
+import SummitBreadcrumbs from '@/components/summit/SummitBreadcrumbs'
 import { getSectionStyles } from '@/lib/summit-styles'
 import type { Metadata } from 'next'
 
@@ -126,12 +127,7 @@ export default async function SchedulePage() {
     <section className={sectionStyles.className} style={sectionStyles.style}>
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
-          <Link
-            href="/summit/start-here"
-            className="text-(--color-roti) hover:opacity-80 text-sm font-medium mb-6 inline-block"
-          >
-            &larr; {summit.labels?.backToWelcome || 'Back to Welcome'}
-          </Link>
+          <SummitBreadcrumbs summitTitle={summit.title} basePath="/summit" current={summit.labels?.scheduleTitle || 'Schedule'} />
 
           {/* Optional banner */}
           {summit.scheduleBannerImage && (

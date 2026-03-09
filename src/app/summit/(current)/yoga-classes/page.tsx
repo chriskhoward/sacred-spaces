@@ -12,6 +12,7 @@ import {
 import { notFound } from 'next/navigation'
 import AllAccessButton from '@/components/summit/AllAccessButton'
 import AddToCalendarButton from '@/components/summit/AddToCalendarButton'
+import SummitBreadcrumbs from '@/components/summit/SummitBreadcrumbs'
 import { getSectionStyles } from '@/lib/summit-styles'
 import SummitButton from '@/components/summit/SummitButton'
 import PortableTextOrString from '@/components/summit/PortableTextOrString'
@@ -50,6 +51,7 @@ export default async function YogaClassesPage() {
     <section className={sectionStyles.className} style={sectionStyles.style}>
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
+          <SummitBreadcrumbs summitTitle={summit.title} basePath="/summit" current={summit.labels?.yogaTitle || 'Yoga Classes'} />
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-(--color-primary) mb-8">
             {summit.labels?.yogaTitle || 'Yoga Classes'}
           </h1>

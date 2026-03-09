@@ -12,6 +12,7 @@ import {
   type SummitPresentation,
 } from '@/sanity/lib/summit'
 import { notFound } from 'next/navigation'
+import SummitBreadcrumbs from '@/components/summit/SummitBreadcrumbs'
 import { getSectionStyles } from '@/lib/summit-styles'
 import SummitButton from '@/components/summit/SummitButton'
 import PortableTextOrString from '@/components/summit/PortableTextOrString'
@@ -60,6 +61,7 @@ export default async function ArchiveSpeakersPage({ params }: PageProps) {
     <section className={sectionStyles.className} style={sectionStyles.style}>
       <div className="container mx-auto px-4">
         <div className="max-w-5xl mx-auto">
+          <SummitBreadcrumbs summitTitle={summit.title} basePath={`/summit/${year}`} current="Speakers" />
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-(--color-primary) mb-8">
             Speakers
           </h1>

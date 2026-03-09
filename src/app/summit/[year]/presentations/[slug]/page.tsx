@@ -10,9 +10,9 @@ import {
 } from '@/sanity/lib/summit'
 import { urlForImage } from '@/sanity/lib/image'
 import Image from 'next/image'
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import AddToCalendarButton from '@/components/summit/AddToCalendarButton'
+import SummitBreadcrumbs from '@/components/summit/SummitBreadcrumbs'
 import { getSectionStyles } from '@/lib/summit-styles'
 import PortableTextOrString from '@/components/summit/PortableTextOrString'
 import type { Metadata } from 'next'
@@ -67,12 +67,7 @@ export default async function ArchivePresentationPage({ params }: PageProps) {
     <section className={sectionStyles.className} style={sectionStyles.style}>
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
-          <Link
-            href={`/summit/${year}/schedule`}
-            className="text-(--color-roti) hover:opacity-80 text-sm font-medium mb-6 inline-block"
-          >
-            &larr; Back to Schedule
-          </Link>
+          <SummitBreadcrumbs summitTitle={summit.title} basePath={`/summit/${year}`} current={presentation.title} />
 
           <div className="flex items-start gap-6 mb-8">
             {presentation.speaker?.headshot && (
