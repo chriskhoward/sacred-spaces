@@ -75,7 +75,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/flow-in-faith-virtual-summit-2025',
-        destination: '/summit',
+        destination: '/summit/start-here',
         permanent: true,
       },
     ]
