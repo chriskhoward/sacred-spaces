@@ -13,6 +13,7 @@ import {
 } from '@/sanity/lib/summit'
 import { notFound } from 'next/navigation'
 import AllAccessButton from '@/components/summit/AllAccessButton'
+import PortableTextOrString from '@/components/PortableTextOrString'
 import AddToCalendarButton from '@/components/summit/AddToCalendarButton'
 import { getSectionStyles } from '@/lib/summit-styles'
 import type { Metadata } from 'next'
@@ -59,9 +60,9 @@ function LivePresentationCard({ p }: { p: SummitPresentation }) {
             </p>
           )}
           {p.description && (
-            <p className="text-sm text-(--color-primary)/60 mt-2 line-clamp-2">
-              {p.description}
-            </p>
+            <div className="text-sm text-(--color-primary)/60 mt-2 line-clamp-2">
+              <PortableTextOrString value={p.description} />
+            </div>
           )}
         </div>
       </Link>
