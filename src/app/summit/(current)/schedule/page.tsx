@@ -13,7 +13,7 @@ import {
 } from '@/sanity/lib/summit'
 import { notFound } from 'next/navigation'
 import AllAccessButton from '@/components/summit/AllAccessButton'
-import PortableTextOrString from '@/components/PortableTextOrString'
+import PortableTextOrString from '@/components/summit/PortableTextOrString'
 import AddToCalendarButton from '@/components/summit/AddToCalendarButton'
 import { getSectionStyles } from '@/lib/summit-styles'
 import type { Metadata } from 'next'
