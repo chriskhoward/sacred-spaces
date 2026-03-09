@@ -150,10 +150,6 @@ export default async function SchedulePage() {
             {summit.labels?.scheduleTitle || 'Presentation & Workshop Schedule'}
           </h1>
 
-          <div className="mb-8">
-            <AllAccessButton basePath="/summit" label={summit.labels?.getAllAccessButton ?? undefined} />
-          </div>
-
           {sortedDays.length === 0 ? (
             <p className="text-(--color-primary)/70">
               {summit.labels?.scheduleEmptyMessage || 'Schedule coming soon.'}
@@ -202,6 +198,10 @@ export default async function SchedulePage() {
               })}
             </div>
           )}
+
+          <div className="mt-12">
+            <AllAccessButton basePath="/summit" label={summit.labels?.getAllAccessButton ?? undefined} />
+          </div>
         </div>
       </div>
     </section>

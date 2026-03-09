@@ -66,6 +66,20 @@ export default async function ArchiveSchedulePage({ params }: PageProps) {
             &larr; {summit.labels?.backToWelcome || 'Back to Welcome'}
           </Link>
 
+          {/* Optional banner */}
+          {summit.scheduleBannerImage && (
+            <div className="mb-8 rounded-xl overflow-hidden">
+              <Image
+                src={urlForImage(summit.scheduleBannerImage).width(1200).url()}
+                alt="Schedule banner"
+                width={1200}
+                height={400}
+                className="w-full h-auto object-cover"
+                unoptimized
+              />
+            </div>
+          )}
+
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-(--color-primary) mb-8">
             {summit.labels?.scheduleTitle || 'Presentation & Workshop Schedule'}
           </h1>

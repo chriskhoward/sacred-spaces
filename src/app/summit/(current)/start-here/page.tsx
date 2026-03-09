@@ -69,6 +69,16 @@ export default async function StartHerePage() {
             {summit.labels?.welcomeTitle || `Welcome to ${summit.title}`}
           </h1>
 
+          {content && content.length > 0 ? (
+            <div className="prose prose-lg max-w-none text-(--color-primary) mb-10">
+              <PortableText value={content} />
+            </div>
+          ) : (
+            <p className="text-(--color-primary)/70 mb-10">
+              {summit.labels?.welcomeEmptyMessage || 'Welcome content coming soon.'}
+            </p>
+          )}
+
           {/* Optional video */}
           {summit.welcomeVideoUrl && isAllowedIframeUrl(summit.welcomeVideoUrl) && (
             <div className="aspect-video mb-10 rounded-xl overflow-hidden bg-black">
@@ -81,16 +91,6 @@ export default async function StartHerePage() {
                 className="w-full h-full"
               />
             </div>
-          )}
-
-          {content && content.length > 0 ? (
-            <div className="prose prose-lg max-w-none text-(--color-primary) mb-10">
-              <PortableText value={content} />
-            </div>
-          ) : (
-            <p className="text-(--color-primary)/70 mb-10">
-              {summit.labels?.welcomeEmptyMessage || 'Welcome content coming soon.'}
-            </p>
           )}
 
           {/* Community Link */}
