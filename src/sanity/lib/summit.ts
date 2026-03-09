@@ -81,6 +81,9 @@ export interface SummitYogaClass {
   _id: string
   title: string
   instructor?: string
+  image?: any
+  status?: 'upcoming' | 'live' | 'replay'
+  liveUrl?: string
   videoUrl?: string
   description?: any[]
   startTime?: string
@@ -107,6 +110,7 @@ export interface Summit {
   welcomeVideoUrl?: string
   allAccessPerks?: any[]
   allAccessImage?: any
+  allAccessContent?: any[]
   communityDescription?: any[]
   scheduleBannerImage?: any
   navLinks?: SummitNavLink[]
@@ -206,6 +210,9 @@ export const SUMMIT_YOGA_CLASSES_QUERY = `*[_type == "summitYogaClass" && summit
   _id,
   title,
   instructor,
+  image,
+  status,
+  liveUrl,
   videoUrl,
   description,
   startTime,

@@ -67,7 +67,7 @@ export default async function AllAccessPage() {
 
           {/* Already purchased */}
           {hasAllAccess ? (
-            <div className="bg-(--color-sidecar) rounded-2xl p-8 md:p-12 text-center">
+            <div className="bg-(--color-sidecar) rounded-2xl p-8 md:p-12 text-center mb-10">
               <h2 className="text-2xl md:text-3xl font-bold text-(--color-primary) mb-4">
                 {summit.labels?.allAccessSuccessHeading || 'You Have All Access!'} <Check className="w-6 h-6 inline" />
               </h2>
@@ -86,7 +86,7 @@ export default async function AllAccessPage() {
 
               {/* Purchase option */}
               {summit.allAccessSalesUrl ? (
-                <div className="text-center">
+                <div className="text-center mb-10">
                   <SummitButton
                     label={summit.labels?.getAllAccessButton || 'Get All Access Pass'}
                     href={summit.allAccessSalesUrl}
@@ -95,9 +95,18 @@ export default async function AllAccessPage() {
                   />
                 </div>
               ) : (
-                <PricingTable />
+                <div className="mb-10">
+                  <PricingTable />
+                </div>
               )}
             </>
+          )}
+
+          {/* Custom content section - client can build anything here */}
+          {summit.allAccessContent && summit.allAccessContent.length > 0 && (
+            <div className="prose prose-lg max-w-none text-(--color-primary)">
+              <PortableText value={summit.allAccessContent} />
+            </div>
           )}
         </div>
       </div>

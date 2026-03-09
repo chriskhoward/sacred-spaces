@@ -164,6 +164,23 @@ export const summitType = defineType({
       description: 'Optional image displayed on the All Access page',
     }),
     defineField({
+      name: 'allAccessContent',
+      title: 'All Access Page Content',
+      type: 'array',
+      options: { canvasApp: { purpose: 'Full page content for the All Access page - add text, images, videos, etc.' } },
+      of: [
+        { type: 'block' },
+        {
+          type: 'image',
+          options: { hotspot: true },
+          fields: [
+            defineField({ name: 'alt', title: 'Alt Text', type: 'string' }),
+          ],
+        },
+      ],
+      description: 'Rich content section for the All Access page. Client can build out any content here.',
+    }),
+    defineField({
       name: 'welcomeBannerImage',
       title: 'Welcome Banner Image',
       type: 'image',

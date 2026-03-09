@@ -28,9 +28,38 @@ export const summitYogaClassType = defineType({
       description: 'Instructor name',
     }),
     defineField({
-      name: 'videoUrl',
-      title: 'Video URL',
+      name: 'image',
+      title: 'Image',
+      type: 'image',
+      options: { hotspot: true },
+      description: 'Thumbnail for the yoga class card',
+    }),
+    defineField({
+      name: 'status',
+      title: 'Status',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Upcoming', value: 'upcoming' },
+          { title: 'Live Now', value: 'live' },
+          { title: 'Replay Available', value: 'replay' },
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'upcoming',
+      description: 'Controls what is shown: upcoming shows calendar link, live shows live stream link, replay shows video',
+    }),
+    defineField({
+      name: 'liveUrl',
+      title: 'Live Stream URL',
       type: 'url',
+      description: 'Link to the live stream (Zoom, YouTube Live, etc.)',
+    }),
+    defineField({
+      name: 'videoUrl',
+      title: 'Replay Video URL',
+      type: 'url',
+      description: 'Embed URL for the replay (YouTube, Vimeo)',
     }),
     defineField({
       name: 'description',
