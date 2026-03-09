@@ -1,5 +1,26 @@
 // ---------- Types ----------
 
+export interface SummitButtonPreset {
+  bgColor?: string
+  textColor?: string
+  size?: string
+}
+
+export interface SummitStyles {
+  buttonPrimary?: SummitButtonPreset
+  buttonSecondary?: SummitButtonPreset
+  defaultSectionBg?: string
+  defaultSectionPadding?: string
+  defaultSectionPaddingCustom?: string
+  scheduleBg?: string
+  contactBg?: string
+  startHereBg?: string
+  allAccessBg?: string
+  communityBg?: string
+  yogaClassesBg?: string
+  speakersBg?: string
+}
+
 export interface SummitNavLink {
   label: string
   path: string
@@ -7,14 +28,14 @@ export interface SummitNavLink {
 
 export interface SummitFaqItem {
   question: string
-  answer: string
+  answer: any[]
 }
 
 export interface SummitSpeaker {
   _id: string
   name: string
   headshot?: any // Sanity image reference
-  bio?: string
+  bio?: any[]
   websiteUrl?: string
   socialLinks?: Array<{
     platform: string
@@ -37,7 +58,7 @@ export interface SummitPresentation {
   title: string
   slug: { current: string }
   speaker: SummitSpeaker
-  description?: string
+  description?: any[]
   videoUrl?: string
   availableDate?: string
   expiresDate?: string
@@ -47,6 +68,9 @@ export interface SummitPresentation {
   resources?: SummitPresentationResource[]
   displayOrder?: number
   sessionType?: 'live' | 'recorded'
+  buttonBgColor?: string
+  buttonTextColor?: string
+  buttonSize?: string
 }
 
 export interface SummitYogaClass {
@@ -54,7 +78,7 @@ export interface SummitYogaClass {
   title: string
   instructor?: string
   videoUrl?: string
-  description?: string
+  description?: any[]
   startTime?: string
   displayOrder?: number
 }
@@ -65,7 +89,7 @@ export interface Summit {
   year: number
   slug?: { current: string }
   isCurrent?: boolean
-  description?: string
+  description?: any[]
   heroImage?: any
   startDate?: string
   endDate?: string
@@ -120,6 +144,7 @@ export interface Summit {
     footerContactLabel?: string | null
     footerCopyrightText?: string | null
   } | null
+  styles?: SummitStyles
 }
 
 // ---------- GROQ Projections ----------
@@ -216,7 +241,7 @@ export function getGoogleCalendarUrl(presentation: SummitPresentation, durationM
     action: 'TEMPLATE',
     text: presentation.title,
     dates: `${fmt(start)}/${fmt(end)}`,
-    details: `${presentation.description || presentation.title}\n\nSpeaker: ${presentation.speaker?.name || 'TBA'}`,
+    details: `${presentation.title}\n\nSpeaker: ${presentation.speaker?.name || 'TBA'}`,
     location: 'Online',
   })
   return `https://www.google.com/calendar/render?${params.toString()}`
@@ -234,7 +259,7 @@ export function getYogaCalendarUrl(yogaClass: SummitYogaClass, durationMin = 60)
     action: 'TEMPLATE',
     text: yogaClass.title,
     dates: `${fmt(start)}/${fmt(end)}`,
-    details: `${yogaClass.description || yogaClass.title}\n\nInstructor: ${yogaClass.instructor || 'TBA'}`,
+    details: `${yogaClass.title}\n\nInstructor: ${yogaClass.instructor || 'TBA'}`,
     location: 'Online',
   })
   return `https://www.google.com/calendar/render?${params.toString()}`
