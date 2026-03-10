@@ -141,6 +141,7 @@ export default async function PresentationPage({ params }: PageProps) {
                 heading={summit.labels?.upgradeCtaHeading ?? undefined}
                 description={summit.labels?.upgradeCtaDescription ?? undefined}
                 buttonLabel={summit.labels?.upgradeCtaButton ?? undefined}
+                buttonPreset={summit.styles?.buttonPrimary}
               />
             </div>
           ) : null}

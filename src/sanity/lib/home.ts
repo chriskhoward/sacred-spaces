@@ -5,7 +5,15 @@
 
 const HOME_QUERY = `*[_type == "home"][0]{
   _id,
-  content[]
+  content[] {
+    ...,
+    buttonSize,
+    buttonColor,
+    buttonAlignment,
+    sectionSpacing,
+    sectionBgColor,
+    sectionBgImage
+  }
 }`;
 
 export type HomePage = {

@@ -10,7 +10,22 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-const PAGE_QUERY = `*[_type == "page" && slug.current == $slug][0] { _id, _type, title, content, isLocked, hideHeader }`;
+const PAGE_QUERY = `*[_type == "page" && slug.current == $slug][0] {
+  _id,
+  _type,
+  title,
+  isLocked,
+  hideHeader,
+  content[] {
+    ...,
+    buttonSize,
+    buttonColor,
+    buttonAlignment,
+    sectionSpacing,
+    sectionBgColor,
+    sectionBgImage
+  }
+}`;
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;

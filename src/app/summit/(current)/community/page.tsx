@@ -78,6 +78,7 @@ export default async function CommunityPage() {
               heading={summit.labels?.upgradeCtaHeading ?? undefined}
               description={summit.labels?.upgradeCtaDescription ?? undefined}
               buttonLabel={summit.labels?.upgradeCtaButton ?? undefined}
+              buttonPreset={summit.styles?.buttonPrimary}
             />
           )}
         </div>

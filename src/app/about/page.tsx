@@ -15,7 +15,15 @@ export default async function AboutPage() {
   const { isEnabled } = await draftMode();
   const client = getClient(isEnabled);
   const query = `*[_type == "about"][0] {
-    content
+    content[] {
+      ...,
+      buttonSize,
+      buttonColor,
+      buttonAlignment,
+      sectionSpacing,
+      sectionBgColor,
+      sectionBgImage
+    }
   }`;
 
   const data = await client.fetch(query);

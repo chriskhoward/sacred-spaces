@@ -18,7 +18,15 @@ export default async function ComponentGuidePage() {
     _id,
     _type,
     title,
-    content
+    content[] {
+      ...,
+      buttonSize,
+      buttonColor,
+      buttonAlignment,
+      sectionSpacing,
+      sectionBgColor,
+      sectionBgImage
+    }
   }`;
 
   const data = await client.fetch(query);
