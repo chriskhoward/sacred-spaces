@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import PortableTextOrString from '@/components/summit/PortableTextOrString';
-import { getButtonSizeClasses, getButtonColorClasses, getButtonAlignClasses, type ButtonSize, type ButtonColor, type ButtonAlignment } from '@/components/Blocks/blockHelpers';
+import { getBlockButtonProps, getButtonAlignClasses, type ButtonSize, type ButtonColor, type ButtonAlignment } from '@/components/Blocks/blockHelpers';
+import type { PageButtonPreset } from '@/sanity/lib/pageStyles';
 
 interface BenefitItem {
   title: string;
@@ -17,6 +18,7 @@ interface BenefitsBlockProps {
   buttonSize?: ButtonSize;
   buttonColor?: ButtonColor;
   buttonAlignment?: ButtonAlignment;
+  buttonPreset?: PageButtonPreset;
 }
 
 export default function BenefitsBlock({
@@ -36,6 +38,7 @@ export default function BenefitsBlock({
   buttonSize,
   buttonColor,
   buttonAlignment,
+  buttonPreset,
 }: BenefitsBlockProps) {
   return (
     <section className="py-24 bg-(--color-gallery)">
@@ -46,7 +49,7 @@ export default function BenefitsBlock({
             <h2 className="text-4xl lg:text-5xl font-bold text-(--color-primary) mb-8">{title}</h2>
             <PortableTextOrString value={description} className="text-xl text-gray-600 mb-12 leading-relaxed" />
             <div className={getButtonAlignClasses(buttonAlignment)}>
-              <Link href={buttonLink} className={`inline-block ${getButtonSizeClasses(buttonSize)} ${getButtonColorClasses(buttonColor)} rounded-full font-bold transition-all`}>{buttonText}</Link>
+              <Link href={buttonLink} {...getBlockButtonProps({ buttonSize, buttonColor, buttonPreset })}>{buttonText}</Link>
             </div>
           </div>
           <div className="lg:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-6">

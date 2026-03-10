@@ -26,11 +26,13 @@ import PathChooserBlock from './PathChooser';
 import ClosingStatementBlock from './ClosingStatement';
 import BannerTextBlock from './BannerText';
 import { getSectionStyles } from '@/lib/summit-styles';
+import type { PageStyles } from '@/sanity/lib/pageStyles';
 
 interface BlockRendererProps {
   blocks: Array<{ _type: string; _key: string; [key: string]: any }>;
   documentId?: string;
   documentType?: string;
+  pageStyles?: PageStyles | null;
 }
 
 // Helper to create data-sanity attribute for visual editing
@@ -49,7 +51,7 @@ function createSanityDataAttribute(
   };
 }
 
-export default function BlockRenderer({ blocks, documentId, documentType }: BlockRendererProps) {
+export default function BlockRenderer({ blocks, documentId, documentType, pageStyles }: BlockRendererProps) {
   if (!blocks) return null;
 
   return (
@@ -58,20 +60,45 @@ export default function BlockRenderer({ blocks, documentId, documentType }: Bloc
         // Destructure out Sanity internal fields, keep the rest as props
         const { _type, _key, ...blockProps } = block;
 
+        // Merge page-level style fallbacks for blocks that support them
+        const hasBlockButton = block.buttonSize != null || block.buttonColor != null || block.buttonAlignment != null;
+        const blocksWithButtons = new Set([
+          'heroBlock', 'homeHeroBlock', 'benefitsBlock', 'mediaTextBlock', 'ctaBlock',
+          'founderBioBlock', 'textCtaBlock', 'checklistBlock', 'proseSectionBlock', 'empathySectionBlock',
+        ]);
+        const blocksWithSections = new Set([
+          'checklistBlock', 'ctaBlock', 'richTextBlock', 'empathySectionBlock', 'textCtaBlock',
+          'proseSectionBlock', 'introTextBlock',
+        ]);
+        const useMerged = blocksWithButtons.has(_type) || blocksWithSections.has(_type);
+        const mergedProps = useMerged
+          ? {
+              ...blockProps,
+              sectionSpacing: block.sectionSpacing ?? pageStyles?.defaultSectionPadding,
+              sectionBgColor: block.sectionBgColor ?? pageStyles?.defaultSectionBg,
+              sectionBgImage: block.sectionBgImage,
+              ...(blocksWithButtons.has(_type) && !hasBlockButton && pageStyles?.buttonPrimary
+                ? { buttonPreset: pageStyles.buttonPrimary }
+                : {}),
+            }
+          : blockProps;
+
         // Create the path for this block in the content array
         const blockPath = `content[_key=="${_key}"]`;
         const sanityAttrs = createSanityDataAttribute(documentId, documentType, blockPath);
 
         // Wrapper div with data-sanity for click-to-edit
         const wrapWithSanity = (component: React.ReactNode) => {
-          // Extract section style overrides from block data
-          const bgColor = block.sectionBackground?.type === 'color' ? block.sectionBackground.color : undefined;
+          const bgColor = block.sectionBgColor ?? pageStyles?.defaultSectionBg ?? undefined;
           const sectionStyles = getSectionStyles({
             overrideBgColor: bgColor,
-            overridePadding: block.sectionSpacing || undefined,
+            overridePadding: block.sectionSpacing ?? pageStyles?.defaultSectionPadding ?? undefined,
+            overridePaddingCustom: pageStyles?.defaultSectionPaddingCustom,
+            pageStyles: pageStyles ?? undefined,
+            fallbackPadding: 'normal',
           });
 
-          const hasStyles = bgColor || block.sectionSpacing;
+          const hasStyles = bgColor || block.sectionSpacing || pageStyles?.defaultSectionBg || pageStyles?.defaultSectionPadding;
 
           return (
             <div
@@ -87,59 +114,59 @@ export default function BlockRenderer({ blocks, documentId, documentType }: Bloc
 
         switch (_type) {
           case 'homeHeroBlock':
-            return wrapWithSanity(<HomeHeroBlock {...blockProps} />);
+            return wrapWithSanity(<HomeHeroBlock {...mergedProps} />);
           case 'heroBlock':
-            return wrapWithSanity(<HeroBlock {...blockProps} />);
+            return wrapWithSanity(<HeroBlock {...mergedProps} />);
           case 'pillarsBlock':
-            return wrapWithSanity(<PillarsBlock {...blockProps} />);
+            return wrapWithSanity(<PillarsBlock {...mergedProps} />);
           case 'benefitsBlock':
-            return wrapWithSanity(<BenefitsBlock {...blockProps} />);
+            return wrapWithSanity(<BenefitsBlock {...mergedProps} />);
           case 'brandBlock':
-            return wrapWithSanity(<BrandBlock {...blockProps} />);
+            return wrapWithSanity(<BrandBlock {...mergedProps} />);
           case 'mediaTextBlock':
-            return wrapWithSanity(<MediaTextBlock {...blockProps} />);
+            return wrapWithSanity(<MediaTextBlock {...mergedProps} />);
           case 'imageBlock':
-            return wrapWithSanity(<ShowcaseImage {...blockProps} />);
+            return wrapWithSanity(<ShowcaseImage {...mergedProps} />);
           case 'videoBlock':
-            return wrapWithSanity(<VideoBlock {...blockProps} />);
+            return wrapWithSanity(<VideoBlock {...mergedProps} />);
           case 'testimonialBlock':
-            return wrapWithSanity(<TestimonialsBlock {...blockProps} />);
+            return wrapWithSanity(<TestimonialsBlock {...mergedProps} />);
           case 'teamBlock':
-            return wrapWithSanity(<TeamBlock {...blockProps} />);
+            return wrapWithSanity(<TeamBlock {...mergedProps} />);
           case 'richTextBlock':
-            return wrapWithSanity(<RichTextBlock {...blockProps} />);
+            return wrapWithSanity(<RichTextBlock {...mergedProps} />);
           case 'ctaBlock':
-            return wrapWithSanity(<CTABlock {...blockProps} />);
+            return wrapWithSanity(<CTABlock {...mergedProps} />);
           case 'faqBlock':
-            return wrapWithSanity(<FAQBlock {...blockProps} />);
+            return wrapWithSanity(<FAQBlock {...mergedProps} />);
           case 'empathySectionBlock':
-            return wrapWithSanity(<EmpathySectionBlock {...blockProps} />);
+            return wrapWithSanity(<EmpathySectionBlock {...mergedProps} />);
           case 'highlightTextBlock':
-            return wrapWithSanity(<HighlightTextBlock {...blockProps} />);
+            return wrapWithSanity(<HighlightTextBlock {...mergedProps} />);
           case 'featureGridBlock':
-            return wrapWithSanity(<FeatureGridBlock {...blockProps} />);
+            return wrapWithSanity(<FeatureGridBlock {...mergedProps} />);
           case 'premiumFeaturesBlock':
-            return wrapWithSanity(<PremiumFeaturesBlock {...blockProps} />);
+            return wrapWithSanity(<PremiumFeaturesBlock {...mergedProps} />);
           case 'founderBioBlock':
-            return wrapWithSanity(<FounderBioBlock {...blockProps} />);
+            return wrapWithSanity(<FounderBioBlock {...mergedProps} />);
           case 'textCtaBlock':
-            return wrapWithSanity(<TextCtaBlock {...blockProps} />);
+            return wrapWithSanity(<TextCtaBlock {...mergedProps} />);
           case 'checklistBlock':
-            return wrapWithSanity(<ChecklistBlock {...blockProps} />);
+            return wrapWithSanity(<ChecklistBlock {...mergedProps} />);
           case 'introTextBlock':
-            return wrapWithSanity(<IntroTextBlock {...blockProps} />);
+            return wrapWithSanity(<IntroTextBlock {...mergedProps} />);
           case 'proseSectionBlock':
-            return wrapWithSanity(<ProseSectionBlock {...blockProps} />);
+            return wrapWithSanity(<ProseSectionBlock {...mergedProps} />);
           case 'twoColumnCompareBlock':
-            return wrapWithSanity(<TwoColumnCompareBlock {...blockProps} />);
+            return wrapWithSanity(<TwoColumnCompareBlock {...mergedProps} />);
           case 'spaceCardsBlock':
-            return wrapWithSanity(<SpaceCardsBlock {...blockProps} />);
+            return wrapWithSanity(<SpaceCardsBlock {...mergedProps} />);
           case 'pathChooserBlock':
-            return wrapWithSanity(<PathChooserBlock {...blockProps} />);
+            return wrapWithSanity(<PathChooserBlock {...mergedProps} />);
           case 'closingStatementBlock':
-            return wrapWithSanity(<ClosingStatementBlock {...blockProps} />);
+            return wrapWithSanity(<ClosingStatementBlock {...mergedProps} />);
           case 'bannerTextBlock':
-            return wrapWithSanity(<BannerTextBlock {...blockProps} />);
+            return wrapWithSanity(<BannerTextBlock {...mergedProps} />);
           default:
             return <div key={_key}>Unknown block type: {_type}</div>;
         }

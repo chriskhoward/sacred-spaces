@@ -3,8 +3,7 @@ import FilloutSliderButton from '@/components/FilloutSliderButton';
 import PortableTextOrString from '@/components/summit/PortableTextOrString';
 import { urlForImage } from '@/sanity/lib/image';
 import {
-  getButtonSizeClasses,
-  getButtonColorClasses,
+  getBlockButtonProps,
   getButtonAlignClasses,
   getSectionSpacingClasses,
   getSectionBackgroundStyle,
@@ -13,6 +12,7 @@ import {
   type ButtonAlignment,
   type SectionSpacing,
 } from './blockHelpers';
+import type { PageButtonPreset } from '@/sanity/lib/pageStyles';
 
 interface CTABlockProps {
   title?: string;
@@ -23,6 +23,7 @@ interface CTABlockProps {
   buttonSize?: ButtonSize;
   buttonColor?: ButtonColor;
   buttonAlignment?: ButtonAlignment;
+  buttonPreset?: PageButtonPreset;
   sectionSpacing?: SectionSpacing;
   sectionBgColor?: string;
   sectionBgImage?: any;
@@ -37,6 +38,7 @@ export default function CTABlock({
   buttonSize,
   buttonColor,
   buttonAlignment,
+  buttonPreset,
   sectionSpacing,
   sectionBgColor,
   sectionBgImage,
@@ -62,7 +64,7 @@ export default function CTABlock({
             ) : buttonLink ? (
               <Link
                 href={buttonLink}
-                className={`inline-block rounded-full font-bold transition-all shadow-2xl ${getButtonSizeClasses(buttonSize)} ${getButtonColorClasses(buttonColor, true)}`}
+                {...getBlockButtonProps({ buttonSize, buttonColor, buttonPreset, onDarkBg: true })}
               >
                 {buttonText}
               </Link>

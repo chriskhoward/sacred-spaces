@@ -1,4 +1,5 @@
 import type { SummitButtonPreset, SummitStyles } from '@/sanity/lib/summit'
+import type { PageStyles, PageButtonPreset } from '@/sanity/lib/pageStyles'
 
 // ---------- Button Sizing ----------
 
@@ -15,7 +16,7 @@ interface ButtonStyleOptions {
   overrideBgColor?: string
   overrideTextColor?: string
   overrideSize?: string
-  preset?: SummitButtonPreset
+  preset?: SummitButtonPreset | PageButtonPreset
 }
 
 const FALLBACK_BUTTON = {
@@ -67,6 +68,7 @@ interface SectionStyleOptions {
   overridePadding?: string
   overridePaddingCustom?: string
   summitStyles?: SummitStyles
+  pageStyles?: PageStyles
   pageKey?: keyof SummitStyles
   fallbackBgColor?: string
   fallbackPadding?: string
@@ -81,6 +83,7 @@ export function getSectionStyles(options: SectionStyleOptions = {}): {
     overridePadding,
     overridePaddingCustom,
     summitStyles,
+    pageStyles,
     pageKey,
     fallbackBgColor,
     fallbackPadding = 'normal',
@@ -90,17 +93,20 @@ export function getSectionStyles(options: SectionStyleOptions = {}): {
     overrideBgColor ||
     (pageKey && summitStyles?.[pageKey] as string | undefined) ||
     summitStyles?.defaultSectionBg ||
+    pageStyles?.defaultSectionBg ||
     fallbackBgColor ||
     undefined
 
   const paddingCustom =
     overridePaddingCustom ||
     summitStyles?.defaultSectionPaddingCustom ||
+    pageStyles?.defaultSectionPaddingCustom ||
     undefined
 
   const paddingPreset =
     overridePadding ||
     summitStyles?.defaultSectionPadding ||
+    pageStyles?.defaultSectionPadding ||
     fallbackPadding
 
   const paddingClass = paddingCustom

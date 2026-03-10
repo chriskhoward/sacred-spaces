@@ -2,7 +2,7 @@ import Link from 'next/link';
 import PortableTextOrString from '@/components/summit/PortableTextOrString';
 import { urlForImage } from '@/sanity/lib/image';
 import {
-  getButtonSizeClasses,
+  getBlockButtonProps,
   getButtonColorClasses,
   getButtonAlignClasses,
   getSectionSpacingClasses,
@@ -12,6 +12,7 @@ import {
   type ButtonAlignment,
   type SectionSpacing,
 } from './blockHelpers';
+import type { PageButtonPreset } from '@/sanity/lib/pageStyles';
 
 interface ProseSectionBlockProps {
   heading?: string;
@@ -23,6 +24,7 @@ interface ProseSectionBlockProps {
   buttonSize?: ButtonSize;
   buttonColor?: ButtonColor;
   buttonAlignment?: ButtonAlignment;
+  buttonPreset?: PageButtonPreset;
   sectionSpacing?: SectionSpacing;
   sectionBgColor?: string;
   sectionBgImage?: any;
@@ -41,6 +43,7 @@ export default function ProseSectionBlock({
   buttonSize,
   buttonColor,
   buttonAlignment,
+  buttonPreset,
   sectionSpacing,
   sectionBgColor,
   sectionBgImage,
@@ -89,14 +92,18 @@ export default function ProseSectionBlock({
                   <PortableTextOrString key={index} value={paragraph} className="" />
                 ))}
               </div>
-              {buttonText && buttonLink && (
-                <Link
-                  href={buttonLink}
-                  className={`w-full py-4 rounded-full font-bold text-base transition-opacity shadow-md text-center ${getButtonColorClasses(buttonColor)}`}
-                >
-                  {buttonText}
-                </Link>
-              )}
+              {buttonText && buttonLink && (() => {
+                const btn = getBlockButtonProps({ buttonSize, buttonColor, buttonPreset });
+                return (
+                  <Link
+                    href={buttonLink}
+                    className={`w-full py-4 rounded-full font-bold text-base transition-opacity shadow-md text-center ${!buttonPreset ? getButtonColorClasses(buttonColor) : ''}`}
+                    style={btn.style}
+                  >
+                    {buttonText}
+                  </Link>
+                );
+              })()}
             </div>
           </div>
         </div>
@@ -127,7 +134,7 @@ export default function ProseSectionBlock({
             <div className={`mt-10 ${getButtonAlignClasses(buttonAlignment)}`}>
               <Link
                 href={buttonLink}
-                className={`inline-block rounded-full font-bold transition-all shadow-xl ${getButtonSizeClasses(buttonSize)} ${getButtonColorClasses(buttonColor)}`}
+                {...getBlockButtonProps({ buttonSize, buttonColor, buttonPreset })}
               >
                 {buttonText}
               </Link>

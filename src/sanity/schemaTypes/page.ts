@@ -1,21 +1,29 @@
 import { defineField, defineType } from 'sanity'
+import { buttonPresetFields } from './shared/buttonFields'
+import { brandColorField } from './shared/brandColorField'
 
 export const pageType = defineType({
   name: 'page',
   title: 'Generic Page',
   icon: () => '📄',
   type: 'document',
+  groups: [
+    { name: 'content', title: 'Content', default: true },
+    { name: 'styles', title: 'Page Styles' },
+  ],
   fields: [
     defineField({
       name: 'title',
       title: 'Page Title',
       type: 'string',
+      group: 'content',
       validation: Rule => Rule.required(),
     }),
     defineField({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
+      group: 'content',
       options: {
         source: 'title',
         maxLength: 96,
@@ -26,6 +34,7 @@ export const pageType = defineType({
       name: 'showInNav',
       title: 'Show in Navigation',
       type: 'boolean',
+      group: 'content',
       description: 'If enabled, this page will appear in the main navigation menu',
       initialValue: true,
     }),
@@ -33,6 +42,7 @@ export const pageType = defineType({
       name: 'isLocked',
       title: 'Lock Page (Members Only)',
       type: 'boolean',
+      group: 'content',
       description: 'If enabled, this page will only be accessible to logged-in users.',
       initialValue: false,
     }),
@@ -40,6 +50,7 @@ export const pageType = defineType({
       name: 'hideHeader',
       title: 'Hide Header',
       type: 'boolean',
+      group: 'content',
       description: 'If enabled, the navigation bar will not be shown on this page.',
       initialValue: false,
     }),
@@ -47,6 +58,7 @@ export const pageType = defineType({
       name: 'content',
       title: 'Page Content',
       type: 'array',
+      group: 'content',
       of: [
         { type: 'heroBlock' },
         { type: 'brandBlock' },
@@ -73,6 +85,61 @@ export const pageType = defineType({
         { type: 'spaceCardsBlock' },
         { type: 'pathChooserBlock' },
         { type: 'closingStatementBlock' },
+      ],
+    }),
+    defineField({
+      name: 'styles',
+      title: 'Page Styles',
+      type: 'object',
+      group: 'styles',
+      description: 'Default styles for buttons, sections, and text across this page. Block-level settings override these.',
+      fields: [
+        buttonPresetFields('buttonPrimary', 'Primary Button (default for all CTAs)'),
+        buttonPresetFields('buttonSecondary', 'Secondary Button'),
+        brandColorField('defaultSectionBg', 'Default Section Background'),
+        defineField({
+          name: 'defaultSectionPadding',
+          title: 'Default Section Padding',
+          type: 'string',
+          options: {
+            list: [
+              { title: 'None', value: 'none' },
+              { title: 'Tight', value: 'tight' },
+              { title: 'Normal', value: 'normal' },
+              { title: 'Loose', value: 'loose' },
+              { title: 'Extra Loose', value: 'extra-loose' },
+            ],
+          },
+        }),
+        defineField({
+          name: 'defaultSectionPaddingCustom',
+          title: 'Default Section Padding (Custom)',
+          type: 'string',
+          description: 'CSS value, e.g. "80px". Overrides the preset above.',
+        }),
+        defineField({
+          name: 'headingSize',
+          title: 'Default Heading Size',
+          type: 'string',
+          options: {
+            list: [
+              { title: 'Normal', value: 'normal' },
+              { title: 'Large', value: 'large' },
+              { title: 'Extra Large', value: 'xl' },
+            ],
+          },
+        }),
+        defineField({
+          name: 'bodySize',
+          title: 'Default Body Text Size',
+          type: 'string',
+          options: {
+            list: [
+              { title: 'Normal', value: 'normal' },
+              { title: 'Large', value: 'large' },
+            ],
+          },
+        }),
       ],
     }),
   ],

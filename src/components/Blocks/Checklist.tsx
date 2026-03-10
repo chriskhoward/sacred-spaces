@@ -3,8 +3,7 @@ import { Check } from 'lucide-react';
 import PortableTextOrString from '@/components/summit/PortableTextOrString';
 import { urlForImage } from '@/sanity/lib/image';
 import {
-  getButtonSizeClasses,
-  getButtonColorClasses,
+  getBlockButtonProps,
   getButtonAlignClasses,
   getSectionSpacingClasses,
   getSectionBackgroundStyle,
@@ -13,6 +12,7 @@ import {
   type ButtonAlignment,
   type SectionSpacing,
 } from './blockHelpers';
+import type { PageButtonPreset } from '@/sanity/lib/pageStyles';
 
 interface ChecklistBlockProps {
   heading?: string;
@@ -23,6 +23,7 @@ interface ChecklistBlockProps {
   buttonSize?: ButtonSize;
   buttonColor?: ButtonColor;
   buttonAlignment?: ButtonAlignment;
+  buttonPreset?: PageButtonPreset;
   sectionSpacing?: SectionSpacing;
   sectionBgColor?: string;
   sectionBgImage?: any;
@@ -37,6 +38,7 @@ export default function ChecklistBlock({
   buttonSize,
   buttonColor,
   buttonAlignment,
+  buttonPreset,
   sectionSpacing,
   sectionBgColor,
   sectionBgImage,
@@ -75,7 +77,7 @@ export default function ChecklistBlock({
             <div className={`mt-8 ${getButtonAlignClasses(buttonAlignment)}`}>
               <Link
                 href={buttonLink}
-                className={`inline-block rounded-full font-bold transition-all shadow-xl ${getButtonSizeClasses(buttonSize)} ${getButtonColorClasses(buttonColor)}`}
+                {...getBlockButtonProps({ buttonSize, buttonColor, buttonPreset })}
               >
                 {buttonText}
               </Link>

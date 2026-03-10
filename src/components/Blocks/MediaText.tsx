@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { urlForImage } from '@/sanity/lib/image';
 import { PortableText } from '@portabletext/react';
 import FilloutSliderButton from '@/components/FilloutSliderButton';
-import { getButtonSizeClasses, getButtonColorClasses, getButtonAlignClasses, type ButtonSize, type ButtonColor, type ButtonAlignment } from '@/components/Blocks/blockHelpers';
+import { getBlockButtonProps, getButtonAlignClasses, type ButtonSize, type ButtonColor, type ButtonAlignment } from '@/components/Blocks/blockHelpers';
+import type { PageButtonPreset } from '@/sanity/lib/pageStyles';
 
 interface MediaTextBlockProps {
   badge?: string;
@@ -21,6 +22,7 @@ interface MediaTextBlockProps {
   buttonSize?: ButtonSize;
   buttonColor?: ButtonColor;
   buttonAlignment?: ButtonAlignment;
+  buttonPreset?: PageButtonPreset;
 }
 
 const sectionPad = 'py-14 md:py-20 px-6 sm:px-8';
@@ -40,6 +42,7 @@ export default function MediaTextBlock({
   buttonSize,
   buttonColor,
   buttonAlignment,
+  buttonPreset,
 }: MediaTextBlockProps) {
   const defaultImage =
     variant === 'mission'
@@ -91,7 +94,7 @@ export default function MediaTextBlock({
               ) : ctaLink ? (
                 <Link
                   href={ctaLink}
-                  className={`inline-block ${getButtonSizeClasses(buttonSize)} ${getButtonColorClasses(buttonColor)} rounded-full font-bold hover:opacity-95 transition-opacity shadow-md text-center`}
+                  {...getBlockButtonProps({ buttonSize, buttonColor, buttonPreset })}
                 >
                   {ctaText}
                 </Link>

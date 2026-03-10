@@ -3,7 +3,8 @@
 import { useUser } from '@clerk/nextjs';
 import Link from 'next/link';
 import FilloutSliderButton from '@/components/FilloutSliderButton';
-import { getButtonSizeClasses, getButtonColorClasses, getButtonAlignClasses, type ButtonSize, type ButtonColor, type ButtonAlignment } from '@/components/Blocks/blockHelpers';
+import { getBlockButtonProps, getButtonSizeClasses, getButtonColorClasses, getButtonAlignClasses, type ButtonSize, type ButtonColor, type ButtonAlignment } from '@/components/Blocks/blockHelpers';
+import type { PageButtonPreset } from '@/sanity/lib/pageStyles';
 
 interface HeroButtonsProps {
   primaryText?: string;
@@ -13,6 +14,7 @@ interface HeroButtonsProps {
   buttonSize?: ButtonSize;
   buttonColor?: ButtonColor;
   buttonAlignment?: ButtonAlignment;
+  buttonPreset?: PageButtonPreset;
 }
 
 export default function HeroButtons({
@@ -23,10 +25,11 @@ export default function HeroButtons({
   buttonSize,
   buttonColor,
   buttonAlignment,
+  buttonPreset,
 }: HeroButtonsProps) {
   const { isSignedIn } = useUser();
-  const sizeClasses = getButtonSizeClasses(buttonSize);
-  const colorClasses = getButtonColorClasses(buttonColor, true);
+  const primaryBtn = getBlockButtonProps({ buttonSize, buttonColor, buttonPreset, onDarkBg: true });
+  const sizeClasses = getButtonSizeClasses(buttonPreset?.size ?? buttonSize);
   const alignClasses = getButtonAlignClasses(buttonAlignment);
 
   return (
@@ -34,7 +37,7 @@ export default function HeroButtons({
       {isSignedIn ? (
         <Link
           href="/dashboard"
-          className={`${sizeClasses} ${colorClasses} rounded-full font-bold shadow-xl hover:shadow-(--color-roti)/30 transition-all`}
+          {...(buttonPreset ? { className: primaryBtn.className, style: primaryBtn.style } : { className: `${sizeClasses} ${getButtonColorClasses(buttonColor, true)} rounded-full font-bold shadow-xl hover:shadow-(--color-roti)/30 transition-all` })}
         >
           Go to Dashboard
         </Link>

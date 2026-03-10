@@ -16,6 +16,15 @@ const PAGE_QUERY = `*[_type == "page" && slug.current == $slug][0] {
   title,
   isLocked,
   hideHeader,
+  styles {
+    buttonPrimary { bgColor, textColor, size },
+    buttonSecondary { bgColor, textColor, size },
+    defaultSectionBg,
+    defaultSectionPadding,
+    defaultSectionPaddingCustom,
+    headingSize,
+    bodySize
+  },
   content[] {
     ...,
     buttonSize,
@@ -65,6 +74,7 @@ export default async function GenericPage({ params }: PageProps) {
         blocks={data.content as Array<{ _type: string; _key: string;[key: string]: any }>}
         documentId={data._id}
         documentType={data._type}
+        pageStyles={data.styles}
       />
     </main>
   );

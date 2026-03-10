@@ -3,7 +3,8 @@ import Link from 'next/link';
 import { urlForImage } from '@/sanity/lib/image';
 import { PortableText } from '@portabletext/react';
 import PortableTextOrString from '@/components/summit/PortableTextOrString';
-import { getButtonSizeClasses, getButtonColorClasses, getButtonAlignClasses, type ButtonSize, type ButtonColor, type ButtonAlignment } from '@/components/Blocks/blockHelpers';
+import { getBlockButtonProps, getButtonAlignClasses, type ButtonSize, type ButtonColor, type ButtonAlignment } from '@/components/Blocks/blockHelpers';
+import type { PageButtonPreset } from '@/sanity/lib/pageStyles';
 
 interface FounderBioBlockProps {
   badge?: string;
@@ -17,6 +18,7 @@ interface FounderBioBlockProps {
   buttonSize?: ButtonSize;
   buttonColor?: ButtonColor;
   buttonAlignment?: ButtonAlignment;
+  buttonPreset?: PageButtonPreset;
 }
 
 export default function FounderBioBlock({
@@ -31,6 +33,7 @@ export default function FounderBioBlock({
   buttonSize,
   buttonColor,
   buttonAlignment,
+  buttonPreset,
 }: FounderBioBlockProps) {
   const imageUrl = image?.asset ? urlForImage(image).url() : '/assets/images/team/placeholder.png';
 
@@ -75,7 +78,7 @@ export default function FounderBioBlock({
                 <div className={getButtonAlignClasses(buttonAlignment)}>
                   <Link
                     href={buttonLink}
-                    className={`inline-block ${getButtonSizeClasses(buttonSize)} ${getButtonColorClasses(buttonColor)} rounded-full font-bold transition-all shadow-xl`}
+                    {...getBlockButtonProps({ buttonSize, buttonColor, buttonPreset })}
                   >
                     {buttonText}
                   </Link>

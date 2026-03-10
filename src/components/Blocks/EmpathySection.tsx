@@ -3,16 +3,14 @@ import { Check } from 'lucide-react';
 import PortableTextOrString from '@/components/summit/PortableTextOrString';
 import { urlForImage } from '@/sanity/lib/image';
 import {
-  getButtonSizeClasses,
-  getButtonColorClasses,
-  getButtonAlignClasses,
+  getBlockButtonProps,
   getSectionSpacingClasses,
   getSectionBackgroundStyle,
   type ButtonSize,
   type ButtonColor,
-  type ButtonAlignment,
   type SectionSpacing,
 } from './blockHelpers';
+import type { PageButtonPreset } from '@/sanity/lib/pageStyles';
 
 interface EmpathySectionBlockProps {
   heading?: string;
@@ -22,6 +20,7 @@ interface EmpathySectionBlockProps {
   buttonLink?: string;
   buttonSize?: ButtonSize;
   buttonColor?: ButtonColor;
+  buttonPreset?: PageButtonPreset;
   sectionSpacing?: SectionSpacing;
   sectionBgColor?: string;
   sectionBgImage?: any;
@@ -35,6 +34,7 @@ export default function EmpathySectionBlock({
   buttonLink,
   buttonSize,
   buttonColor,
+  buttonPreset,
   sectionSpacing,
   sectionBgColor,
   sectionBgImage,
@@ -67,7 +67,7 @@ export default function EmpathySectionBlock({
             <div className="mt-12 text-center">
               <Link
                 href={buttonLink}
-                className={`inline-block rounded-full font-bold transition-all shadow-xl ${getButtonSizeClasses(buttonSize)} ${getButtonColorClasses(buttonColor, isDark)}`}
+                {...getBlockButtonProps({ buttonSize, buttonColor, buttonPreset, onDarkBg: isDark })}
               >
                 {buttonText}
               </Link>

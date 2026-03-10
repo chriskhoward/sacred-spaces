@@ -3,6 +3,7 @@ import { urlForImage } from '@/sanity/lib/image';
 import HeroButtons from '@/components/Home/HeroButtons';
 import PortableTextOrString from '@/components/summit/PortableTextOrString';
 import { type ButtonSize, type ButtonColor, type ButtonAlignment } from '@/components/Blocks/blockHelpers';
+import type { PageButtonPreset } from '@/sanity/lib/pageStyles';
 
 interface HeroBlockProps {
   badge?: string;
@@ -17,6 +18,7 @@ interface HeroBlockProps {
   buttonSize?: ButtonSize;
   buttonColor?: ButtonColor;
   buttonAlignment?: ButtonAlignment;
+  buttonPreset?: PageButtonPreset;
 }
 
 export default function HeroBlock({
@@ -32,6 +34,7 @@ export default function HeroBlock({
   buttonSize,
   buttonColor,
   buttonAlignment,
+  buttonPreset,
 }: HeroBlockProps) {
   const imageUrl = image?.asset ? urlForImage(image).url() : '/assets/images/shkrabaanthony.jpg';
   const secondaryImageUrl = secondaryImage?.asset ? urlForImage(secondaryImage).url() : null;
@@ -69,6 +72,7 @@ export default function HeroBlock({
               buttonSize={buttonSize}
               buttonColor={buttonColor}
               buttonAlignment={buttonAlignment}
+              buttonPreset={buttonPreset}
             />
           </div>
           <div className="lg:flex-1 flex justify-center lg:justify-end">

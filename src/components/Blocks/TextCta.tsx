@@ -5,8 +5,7 @@ import { PortableText } from '@portabletext/react';
 import FilloutSliderButton from '@/components/FilloutSliderButton';
 import { urlForImage } from '@/sanity/lib/image';
 import {
-  getButtonSizeClasses,
-  getButtonColorClasses,
+  getBlockButtonProps,
   getButtonAlignClasses,
   getSectionSpacingClasses,
   getSectionBackgroundStyle,
@@ -15,6 +14,7 @@ import {
   type ButtonAlignment,
   type SectionSpacing,
 } from './blockHelpers';
+import type { PageButtonPreset } from '@/sanity/lib/pageStyles';
 
 interface TextCtaBlockProps {
   heading?: string;
@@ -27,6 +27,7 @@ interface TextCtaBlockProps {
   buttonSize?: ButtonSize;
   buttonColor?: ButtonColor;
   buttonAlignment?: ButtonAlignment;
+  buttonPreset?: PageButtonPreset;
   sectionSpacing?: SectionSpacing;
   sectionBgColor?: string;
   sectionBgImage?: any;
@@ -43,6 +44,7 @@ export default function TextCtaBlock({
   buttonSize,
   buttonColor,
   buttonAlignment,
+  buttonPreset,
   sectionSpacing,
   sectionBgColor,
   sectionBgImage,
@@ -100,7 +102,7 @@ export default function TextCtaBlock({
               ) : buttonLink ? (
                 <Link
                   href={buttonLink}
-                  className={`inline-block rounded-full font-bold transition-all shadow-xl ${getButtonSizeClasses(buttonSize)} ${getButtonColorClasses(buttonColor, isDark)}`}
+                  {...getBlockButtonProps({ buttonSize, buttonColor, buttonPreset, onDarkBg: isDark })}
                 >
                   {buttonText}
                 </Link>
