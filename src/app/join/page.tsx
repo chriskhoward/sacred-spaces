@@ -45,8 +45,7 @@ export default async function JoinPage() {
             </div>
           </div>
 
-          {/* Founders Rate - show until Feb 28, 2026 */}
-          {new Date() < new Date('2026-03-01') && (
+          {/* Founders Rate */}
             <div className="max-w-3xl mx-auto mb-16 px-4 text-center">
               <h3 className="text-2xl md:text-3xl font-bold text-(--color-primary) mb-4">Founders Rate</h3>
               <p className="text-(--color-primary) text-lg leading-relaxed mb-6">
@@ -69,10 +68,9 @@ export default async function JoinPage() {
               <p className="text-(--color-primary) leading-relaxed">
                 More great news! Your{' '}
                 <span className="text-(--color-roti) font-semibold underline">Founder&apos;s Rate</span>
-                {' '}is locked in as long as you remain a member. This rate is available until February 28, 2026.
+                {' '}is locked in as long as you remain a member.
               </p>
             </div>
-          )}
 
           <div className="max-w-5xl mx-auto">
             {/* Header Content */}
