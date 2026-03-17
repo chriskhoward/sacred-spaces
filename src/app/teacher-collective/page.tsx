@@ -178,16 +178,26 @@ export default async function TeacherCollectivePage() {
       <Navbar />
       <Script src="https://server.fillout.com/embed/v1/" strategy="lazyOnload" />
 
-      {/* Hero Section */}
-      <section className="bg-white pt-32 pb-20">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
-            <div className="text-center lg:text-left">
-              <span className="inline-block py-2 px-6 rounded-full bg-(--color-roti)/10 text-(--color-roti) font-bold tracking-[3px] text-sm mb-6 border border-(--color-roti)/20 uppercase tracking-[3px]">{tc.heroBadge || 'Teachers Collective'}</span>
-              <h1 className="text-3xl md:text-4xl lg:text-[52px] font-bold text-(--color-primary) mb-6 leading-[1.25]">
+      {/* Hero Section – Nike-style two-panel layout */}
+      <section className="pt-24 md:pt-28 px-2 md:px-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-3">
+          {/* Left Panel */}
+          <div className="relative aspect-[4/5] md:aspect-[3/4] lg:aspect-[4/5] overflow-hidden rounded-md">
+            <Image
+              src={tc.heroImage ? urlForImage(tc.heroImage).width(1200).url() : '/images/homepage/hero-image.jpg'}
+              alt="Flow in Faith Community"
+              fill
+              className="object-cover"
+              priority
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+            <div className="absolute bottom-0 left-0 p-6 md:p-10 lg:p-12">
+              <span className="inline-block py-1.5 px-4 rounded-full bg-white/15 text-white font-bold tracking-[2px] text-xs mb-4 uppercase backdrop-blur-sm border border-white/20">
+                {tc.heroBadge || 'Teachers Collective'}
+              </span>
+              <h1 className="text-2xl md:text-3xl lg:text-[42px] font-bold text-white mb-5 leading-[1.15] max-w-lg">
                 {tc.heroHeading || 'Your path to belonging, visibility, and spiritually grounded growth.'}
               </h1>
-              <PortableTextOrString value={tc.heroSubtext || 'Step into a faith-affirming, culturally grounded community designed to support Christ-Centered Yoga Teachers of Color in growing confidently, connecting deeply, and leading boldly in their calling.'} className="text-xl text-gray-700 mb-8 leading-relaxed" />
               <div
                 data-fillout-id={filloutId}
                 data-fillout-embed-type="slider"
@@ -199,16 +209,27 @@ export default async function TeacherCollectivePage() {
                 data-fillout-popup-size="medium"
               />
             </div>
-            <div className="flex justify-center lg:justify-end">
-              <div className="relative w-full max-w-[500px] aspect-square rounded-3xl overflow-hidden shadow-2xl">
-                <Image
-                  src={tc.heroImage ? urlForImage(tc.heroImage).width(1000).url() : '/images/homepage/hero-image.jpg'}
-                  alt="Flow in Faith Community"
-                  fill
-                  className="object-cover"
-                  priority
-                />
-              </div>
+          </div>
+
+          {/* Right Panel */}
+          <div className="relative aspect-[4/5] md:aspect-[3/4] lg:aspect-[4/5] overflow-hidden rounded-md bg-[--color-primary]">
+            <Image
+              src="/images/homepage/community-image.png"
+              alt="Community and connection"
+              fill
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+            <div className="absolute bottom-0 left-0 p-6 md:p-10 lg:p-12">
+              <p className="text-2xl md:text-3xl lg:text-[42px] font-bold text-white mb-5 leading-[1.15] max-w-lg">
+                Faith is embodied. Rest is sacred. You belong here.
+              </p>
+              <Link
+                href="#membership"
+                className="inline-block py-3 px-8 bg-white text-[--color-primary] rounded-full font-bold text-sm hover:bg-white/90 transition-colors shadow-md"
+              >
+                See Membership Options
+              </Link>
             </div>
           </div>
         </div>
@@ -397,7 +418,7 @@ export default async function TeacherCollectivePage() {
       </section>
 
       {/* Membership Options */}
-      <section className={`py-20 bg-(--color-gallery) ${dancingScript.variable}`}>
+      <section id="membership" className={`py-20 bg-(--color-gallery) ${dancingScript.variable}`}>
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
             <h2 className="text-3xl lg:text-4xl font-bold text-(--color-primary) mb-4 text-center">
