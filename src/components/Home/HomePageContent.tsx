@@ -14,7 +14,7 @@ export default function HomePageContent() {
         <div className="flex flex-col md:flex-row items-center gap-10 lg:gap-16">
           <div className="md:w-[55%] text-left">
             <span className="inline-block py-2 px-6 rounded-full bg-(--color-roti)/10 text-(--color-roti) font-bold tracking-[3px] text-sm mb-6 border border-(--color-roti)/20 uppercase tracking-[3px]">Flow in Faith</span>
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[38px] font-bold text-[#413356] mb-6 leading-[1.15] tracking-tight">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[38px] font-bold text-[#8B1A1A] mb-6 leading-[1.15] tracking-tight">
               A Christ-centered wellness ecosystem rooted in embodiment, rest, and community.
             </h1>
             <p className="text-lg md:text-xl text-gray-700 leading-relaxed max-w-xl font-medium mb-8">
@@ -39,7 +39,7 @@ export default function HomePageContent() {
       </section>
 
       {/* 2. Sacred Banner */}
-      <section className="bg-[#413356] py-14 md:py-20 px-6 sm:px-8 overflow-hidden">
+      <section className="bg-[#8B1A1A] py-14 md:py-20 px-6 sm:px-8 overflow-hidden">
         <div className={containerNarrow}>
           <h2 className="text-white text-2xl md:text-4xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-bold text-center leading-tight lg:whitespace-nowrap">
             Rest is sacred. The body is holy. Healing belongs in faith.
@@ -64,7 +64,7 @@ export default function HomePageContent() {
       </section>
 
       {/* 4. Different Story + We exist to offer - heading gold, subheading white */}
-      <section className="bg-[#413356] py-14 md:py-20 px-6 sm:px-8">
+      <section className="bg-[#8B1A1A] py-14 md:py-20 px-6 sm:px-8">
         <div className={containerWide}>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#C7A254] text-center mb-4">
             Flow in Faith is here to tell a different story
@@ -74,7 +74,7 @@ export default function HomePageContent() {
       </section>
 
       {/* 5. Feature Grid - white cards with framed images, gold titles, dark text */}
-      <section className="bg-[#413356] pb-14 md:pb-20 pt-6 px-6 sm:px-8">
+      <section className="bg-[#8B1A1A] pb-14 md:pb-20 pt-6 px-6 sm:px-8">
         <div className={`${containerWide} grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10`}>
           {/* Feature 1 */}
           <div className="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col text-left">
@@ -173,7 +173,7 @@ export default function HomePageContent() {
       </section>
 
       {/* 7. Belonging Banner */}
-      <section className="bg-[#413356] py-14 md:py-20 px-6 sm:px-8 text-center">
+      <section className="bg-[#8B1A1A] py-14 md:py-20 px-6 sm:px-8 text-center">
         <div className={containerNarrow}>
           <h2 className="text-white text-2xl md:text-[35px] lg:text-4xl font-bold text-center leading-tight">
             This is a place to belong & become. This is Flow in Faith.
@@ -209,7 +209,7 @@ export default function HomePageContent() {
       </section>
 
       {/* 8b. Held by God banner (gold text, purple bg) */}
-      <section className="bg-[#413356] py-14 md:py-20 px-6 sm:px-8 text-center">
+      <section className="bg-[#8B1A1A] py-14 md:py-20 px-6 sm:px-8 text-center">
         <div className={containerNarrow}>
           <h2 className="text-xl md:text-2xl lg:text-[30px] text-[#C7A254] font-bold leading-[1.2]">
             This is a space to be held by God,<br />

@@ -2,14 +2,14 @@
 
 @theme {
   /* Flow in Faith Brand Colors */
-  --color-martinique: #413356;
+  --color-martinique: #8B1A1A;
   --color-roti: #c7a254;
   --color-gallery: #ececec;
   --color-sidecar: #f6edc8;
   --color-bronzetone: #553f0f;
 
   /* Semantic Color Mappings */
-  --color-primary: #413356;
+  --color-primary: #8B1A1A;
   /* Martinique */
   --color-secondary: #c7a254;
   /* Roti */
@@ -19,7 +19,7 @@
   /* Gallery */
   --color-soft: #f6edc8;
   /* Sidecar */
-  --color-text: #413356;
+  --color-text: #8B1A1A;
   /* Martinique for text */
   --color-white: #ffffff;
 
@@ -100,7 +100,7 @@
 }
 
 .mobile-menu-overlay {
-  background-color: #413356 !important;
+  background-color: #8B1A1A !important;
   opacity: 1 !important;
 }
 
@@ -150,8 +150,8 @@ details>summary::marker {
 .fillout-cta-dark a,
 .fillout-cta-dark button,
 .fillout-cta-dark [class*="fillout-embed-popup-button"] {
-  background-color: #413356 !important;
-  background: #413356 !important;
+  background-color: #8B1A1A !important;
+  background: #8B1A1A !important;
   color: #fff !important;
   border: none !important;
   border-radius: 9999px !important;
